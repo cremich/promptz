@@ -3,6 +3,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { usePromptCollection } from "@/hooks/usePromptCollection";
 import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
 import { PromptCategory, PromptViewModel, SdlcPhase } from "@/models/PromptViewModel";
+import { PromptViewModelCollection } from "@/models/PromptViewModelCollection";
 
 vi.mock("@/repositories/PromptRepository");
 
@@ -12,29 +13,10 @@ describe("usePromptCollection", () => {
   });
 
   it("should fetch prompts and update state", async () => {
-    const mockPrompts = [
-      new PromptViewModel(
-        "1",
-        "Test Prompt 1",
-        "Content 1",
-        SdlcPhase.DEPLOY,
-        PromptCategory.CHAT,
-        "instruction",
-        "user1",
-        "owner1"
-      ),
-      new PromptViewModel(
-        "2",
-        "Test Prompt 2",
-        "Content 2",
-        SdlcPhase.DEPLOY,
-        PromptCategory.CHAT,
-        "instruction",
-        "user2",
-        "owner2"
-      ),
-    ];
-    vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockResolvedValue(mockPrompts);
+    const mockPrompts = [new PromptViewModel(), new PromptViewModel()];
+    vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockResolvedValue(
+      new PromptViewModelCollection(mockPrompts)
+    );
 
     const { result } = renderHook(() => usePromptCollection());
 
@@ -62,20 +44,10 @@ describe("usePromptCollection", () => {
     const limit = 5;
     const mockPrompts = Array(limit)
       .fill(null)
-      .map(
-        (_, index) =>
-          new PromptViewModel(
-            String(index + 1),
-            `Test Prompt ${index + 1}`,
-            `Content ${index + 1}`,
-            SdlcPhase.DEPLOY,
-            PromptCategory.CHAT,
-            "instruction",
-            `user${index + 1}`,
-            `owner${index + 1}`
-          )
-      );
-    vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockResolvedValue(mockPrompts);
+      .map((_, index) => new PromptViewModel());
+    vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockResolvedValue(
+      new PromptViewModelCollection(mockPrompts)
+    );
 
     const { result } = renderHook(() => usePromptCollection(limit));
 
@@ -86,29 +58,10 @@ describe("usePromptCollection", () => {
   });
 
   it("should not make unnecessary API calls on re-render", async () => {
-    const mockPrompts = [
-      new PromptViewModel(
-        "1",
-        "Test Prompt 1",
-        "Content 1",
-        SdlcPhase.DEPLOY,
-        PromptCategory.CHAT,
-        "instruction",
-        "user1",
-        "owner1"
-      ),
-      new PromptViewModel(
-        "2",
-        "Test Prompt 2",
-        "Content 2",
-        SdlcPhase.DEPLOY,
-        PromptCategory.CHAT,
-        "instruction",
-        "user2",
-        "owner2"
-      ),
-    ];
-    vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockResolvedValue(mockPrompts);
+    const mockPrompts = [new PromptViewModel(), new PromptViewModel()];
+    vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockResolvedValue(
+      new PromptViewModelCollection(mockPrompts)
+    );
 
     const { result, rerender } = renderHook(() => usePromptCollection());
 

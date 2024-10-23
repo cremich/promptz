@@ -3,11 +3,8 @@ import { BreadcrumbGroup, ContentLayout, Header } from "@cloudscape-design/compo
 
 import PromptForm from "@/components/PromptForm";
 import { PromptViewModel } from "@/models/PromptViewModel";
-import { useUser } from "@/hooks/useUser";
 
 export default function CreatePrompt() {
-  const { userViewModel } = useUser();
-
   return (
     <ContentLayout
       defaultPadding
@@ -29,7 +26,7 @@ export default function CreatePrompt() {
         </Header>
       }
     >
-      <PromptForm prompt={new PromptViewModel()} user={userViewModel!} />
+      <PromptForm prompt={new PromptViewModel()} />
     </ContentLayout>
   );
 }

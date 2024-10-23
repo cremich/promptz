@@ -2,10 +2,11 @@ import { PromptViewModel } from "@/models/PromptViewModel";
 import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../amplify/data/resource";
 import { UserViewModel } from "@/models/UserViewModel";
+import { PromptViewModelCollection } from "@/models/PromptViewModelCollection";
 
 export interface PromptRepository {
   getPrompt(id: string): Promise<PromptViewModel>;
-  listPrompts(limit?: number): Promise<Array<PromptViewModel>>;
+  listPrompts(limit?: number): Promise<PromptViewModelCollection>;
   createPrompt(prompt: PromptViewModel, owner: UserViewModel): Promise<PromptViewModel>;
   updatePrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
 }
@@ -71,16 +72,26 @@ export class PromptGraphQLRepository implements PromptRepository {
     }
   }
 
-  async listPrompts(limit?: number): Promise<Array<PromptViewModel>> {
-    const { data: prompts, errors } = await this.client.models.prompt.list({
+  async listPrompts(limit?: number, pageToken?: string | null | undefined): Promise<PromptViewModelCollection> {
+    const {
+      data: prompts,
+      errors,
+      nextToken,
+    } = await this.client.models.prompt.list({
       limit: limit ?? 0,
+      nextToken: pageToken,
     });
 
     if (errors && errors.length > 0) {
       throw new Error(errors[0].message);
     }
     if (prompts) {
-      return prompts.map((p) => PromptViewModel.fromSchema(p)); //PromptViewModel.fromSchema(prompt);
+      const promptViewModelList = prompts.map((p) => PromptViewModel.fromSchema(p)); //PromptViewModel.fromSchema(prompt);
+      const promptList = nextToken
+        ? new PromptViewModelCollection(promptViewModelList, nextToken)
+        : new PromptViewModelCollection(promptViewModelList);
+
+      return promptList;
     } else {
       throw new Error("No prompts found");
     }
