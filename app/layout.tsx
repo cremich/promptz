@@ -5,6 +5,7 @@ import "./globals.css";
 import TopNav from "@/components/TopNav";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Suspense } from "react";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "PROMPTZ - Discover, Create, and Share Prompts for Amazon Q Developer",
@@ -63,6 +64,7 @@ export default function RootLayout({
         <AuthProvider>
           <TopNav />
           <Suspense>{children}</Suspense>
+          <Footer />
         </AuthProvider>
       </body>
     </html>
