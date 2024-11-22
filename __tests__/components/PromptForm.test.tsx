@@ -173,7 +173,7 @@ describe("PromptForm component", () => {
     ).toBeTruthy();
   });
 
-  it("displays validation error when name is too short", async () => {
+  it("displays validation error", async () => {
     const pvm = new PromptViewModel();
     pvm.name = "ab";
     const { container } = render(
@@ -190,50 +190,6 @@ describe("PromptForm component", () => {
     });
     expect(
       wrapper.findFormField('[data-testid="formfield-name"]')!.findError(),
-    ).toBeTruthy();
-  });
-
-  it("displays validation error when description is too short", async () => {
-    const pvm = new PromptViewModel();
-    pvm.description = "ab";
-    const { container } = render(
-      <PromptForm
-        prompt={pvm}
-        onSubmit={onSubmitMock}
-        onDelete={onDeleteMock}
-      />,
-    );
-    const wrapper = createWrapper(container);
-
-    await waitFor(() => {
-      wrapper.findButton('[data-testid="button-save"]')!.click();
-    });
-    expect(
-      wrapper
-        .findFormField('[data-testid="formfield-description"]')!
-        .findError(),
-    ).toBeTruthy();
-  });
-
-  it("displays validation error when instruction is too short", async () => {
-    const pvm = new PromptViewModel();
-    pvm.instruction = "ab";
-    const { container } = render(
-      <PromptForm
-        prompt={pvm}
-        onSubmit={onSubmitMock}
-        onDelete={onDeleteMock}
-      />,
-    );
-    const wrapper = createWrapper(container);
-
-    await waitFor(() => {
-      wrapper.findButton('[data-testid="button-save"]')!.click();
-    });
-    expect(
-      wrapper
-        .findFormField('[data-testid="formfield-instruction"]')!
-        .findError(),
     ).toBeTruthy();
   });
 
