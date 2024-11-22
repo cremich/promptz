@@ -42,6 +42,9 @@ const schemaPrompt = {
   updatedAt: "",
 };
 
+const user1 = new UserViewModel("user123", "testuser", "preferred");
+const user2 = new UserViewModel("user456", "testuser2", "preferred2");
+
 describe("PromptViewModel", () => {
   it("should create a PromptViewModel instance from a schema object", () => {
     const promptViewModel = PromptViewModel.fromSchema(schemaPrompt);
@@ -73,9 +76,8 @@ describe("PromptViewModel", () => {
   });
 
   it("should return true if the user is the owner of the prompt", () => {
-    const user = new UserViewModel("user123", "testuser");
     const promptViewModel = PromptViewModel.fromSchema(schemaPrompt);
-    expect(promptViewModel.isOwnedBy(user)).toBe(true);
+    expect(promptViewModel.isOwnedBy(user1)).toBe(true);
   });
 
   it("should not mark prompt as draft when created from schema", () => {
@@ -84,10 +86,9 @@ describe("PromptViewModel", () => {
   });
 
   it("should return false if the user is not the owner of the prompt", () => {
-    const user = new UserViewModel("user456", "testuser");
     const promptViewModel = PromptViewModel.fromSchema(schemaPrompt);
 
-    expect(promptViewModel.isOwnedBy(user)).toBe(false);
+    expect(promptViewModel.isOwnedBy(user2)).toBe(false);
   });
 
   it("should name a new prompt as draft", () => {
@@ -98,7 +99,6 @@ describe("PromptViewModel", () => {
 
   it("should create a new prompt from a draft", async () => {
     const promptViewModel = new PromptViewModel();
-    const user = new UserViewModel("user456", "testuser");
 
     vi.mocked(createPromptMock).mockResolvedValue(
       PromptViewModel.fromSchema(schemaPrompt),
@@ -112,7 +112,7 @@ describe("PromptViewModel", () => {
       instruction: "Test instruction",
     };
 
-    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    await promptViewModel.publish(promptFormInputs, user2, mockRepository);
     expect(createPromptMock).toHaveBeenCalled();
     expect(promptViewModel.isDraft()).toBeFalsy();
   });
@@ -147,8 +147,6 @@ describe("PromptViewModel", () => {
 
   it("should update an existing prompt", async () => {
     const promptViewModel = PromptViewModel.fromSchema(schemaPrompt);
-    const user = new UserViewModel("user456", "testuser");
-
     vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
 
     const promptFormInputs: PromptFormInputs = {
@@ -160,7 +158,7 @@ describe("PromptViewModel", () => {
       howto: "Updated",
     };
 
-    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    await promptViewModel.publish(promptFormInputs, user2, mockRepository);
     expect(updatePromptMock).toHaveBeenCalled();
     expect(promptViewModel.id).toBe(schemaPrompt.id);
     expect(promptViewModel.name).toBe(promptFormInputs.name);
