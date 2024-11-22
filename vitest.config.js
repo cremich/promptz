@@ -5,13 +5,10 @@ export default defineConfig({
   plugins: [react()],
   test: {
     coverage: {
-      reporter: ["json", "text"],
+      reporter: ["json", "text", "json-summary"],
+      reportOnFailure: true,
       exclude: [
-        "API.ts",
-        "mutations.ts",
         "next.config.js",
-        "queries.ts",
-        "subscriptions.ts",
         "commitlint.config.js",
         "amplify/**",
         ...coverageConfigDefaults.exclude,
