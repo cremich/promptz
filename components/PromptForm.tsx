@@ -68,7 +68,7 @@ export default function PromptForm(props: PromptFormProps) {
     handleSubmit,
     getValues,
     reset,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -115,6 +115,7 @@ export default function PromptForm(props: PromptFormProps) {
               variant="primary"
               formAction="submit"
               form="prompt-form"
+              loading={isSubmitting}
               data-testid="button-save"
             >
               Publish prompt

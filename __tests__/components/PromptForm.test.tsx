@@ -154,25 +154,23 @@ describe("PromptForm component", () => {
 
     await waitFor(() => {
       wrapper.findButton('[data-testid="button-save"]')!.click();
-      expect(
-        wrapper
-          .findFormField('[data-testid="formfield-description"]')!
-          .findError(),
-      ).toBeTruthy();
-      expect(
-        wrapper.findFormField('[data-testid="formfield-sdlc"]')!.findError(),
-      ).toBeTruthy();
-      expect(
-        wrapper
-          .findFormField('[data-testid="formfield-category"]')!
-          .findError(),
-      ).toBeTruthy();
-      expect(
-        wrapper
-          .findFormField('[data-testid="formfield-instruction"]')!
-          .findError(),
-      ).toBeTruthy();
     });
+    expect(
+      wrapper
+        .findFormField('[data-testid="formfield-description"]')!
+        .findError(),
+    ).toBeTruthy();
+    expect(
+      wrapper.findFormField('[data-testid="formfield-sdlc"]')!.findError(),
+    ).toBeTruthy();
+    expect(
+      wrapper.findFormField('[data-testid="formfield-category"]')!.findError(),
+    ).toBeTruthy();
+    expect(
+      wrapper
+        .findFormField('[data-testid="formfield-instruction"]')!
+        .findError(),
+    ).toBeTruthy();
   });
 
   it("displays validation error when name is too short", async () => {
@@ -189,10 +187,10 @@ describe("PromptForm component", () => {
 
     await waitFor(() => {
       wrapper.findButton('[data-testid="button-save"]')!.click();
-      expect(
-        wrapper.findFormField('[data-testid="formfield-name"]')!.findError(),
-      ).toBeTruthy();
     });
+    expect(
+      wrapper.findFormField('[data-testid="formfield-name"]')!.findError(),
+    ).toBeTruthy();
   });
 
   it("displays validation error when description is too short", async () => {
@@ -209,12 +207,12 @@ describe("PromptForm component", () => {
 
     await waitFor(() => {
       wrapper.findButton('[data-testid="button-save"]')!.click();
-      expect(
-        wrapper
-          .findFormField('[data-testid="formfield-description"]')!
-          .findError(),
-      ).toBeTruthy();
     });
+    expect(
+      wrapper
+        .findFormField('[data-testid="formfield-description"]')!
+        .findError(),
+    ).toBeTruthy();
   });
 
   it("displays validation error when instruction is too short", async () => {
@@ -231,12 +229,12 @@ describe("PromptForm component", () => {
 
     await waitFor(() => {
       wrapper.findButton('[data-testid="button-save"]')!.click();
-      expect(
-        wrapper
-          .findFormField('[data-testid="formfield-instruction"]')!
-          .findError(),
-      ).toBeTruthy();
     });
+    expect(
+      wrapper
+        .findFormField('[data-testid="formfield-instruction"]')!
+        .findError(),
+    ).toBeTruthy();
   });
 
   it("calls on submit handler when form is valid", async () => {
