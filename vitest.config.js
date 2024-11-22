@@ -13,6 +13,14 @@ export default defineConfig({
         "amplify/**",
         ...coverageConfigDefaults.exclude,
       ],
+      coverage: {
+        thresholds: {
+          lines: 45,
+          branches: 80,
+          functions: 60,
+          statements: 45,
+        },
+      },
     },
     environment: "jsdom",
     setupFiles: ["./vitest.setup.js"],
