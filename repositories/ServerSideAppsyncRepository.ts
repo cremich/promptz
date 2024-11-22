@@ -1,6 +1,5 @@
 import { PromptViewModel } from "@/models/PromptViewModel";
 import { PromptViewModelCollection } from "@/models/PromptViewModelCollection";
-import { UserViewModel } from "@/models/UserViewModel";
 import { cookiesClient } from "@/utils/amplify-utils";
 
 import { PromptRepository, Facets } from "./PromptRepository";
@@ -33,10 +32,7 @@ export class ServerSideAppsyncRepository implements PromptRepository {
     return PromptViewModel.fromSchema(createdPrompt!);
   }
 
-  async createPrompt(
-    prompt: PromptViewModel,
-    owner: UserViewModel,
-  ): Promise<PromptViewModel> {
+  async createPrompt(prompt: PromptViewModel): Promise<PromptViewModel> {
     const { data: createdPrompt, errors } =
       await this.client.models.prompt.create(
         {
@@ -45,7 +41,7 @@ export class ServerSideAppsyncRepository implements PromptRepository {
           sdlc_phase: prompt.sdlcPhase,
           category: prompt.category,
           instruction: prompt.instruction,
-          owner_username: owner.userName,
+          owner_username: prompt.ownerUsername,
         },
         {
           authMode: "userPool",

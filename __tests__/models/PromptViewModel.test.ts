@@ -117,6 +117,34 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.isDraft()).toBeFalsy();
   });
 
+  it("should publish prompt", async () => {
+    const promptViewModel = new PromptViewModel();
+    const user = new UserViewModel("user456", "testuser", "preferred");
+
+    vi.mocked(createPromptMock).mockResolvedValue(
+      PromptViewModel.fromSchema(schemaPrompt),
+    );
+
+    const promptFormInputs: PromptFormInputs = {
+      name: "Test Prompt",
+      description: "A test prompt",
+      sdlc: "Design",
+      category: "Chat",
+      instruction: "Test instruction",
+    };
+
+    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    expect(createPromptMock).toHaveBeenCalled();
+    expect(promptViewModel.id).toBe(schemaPrompt.id);
+    expect(promptViewModel.name).toBe(promptFormInputs.name);
+    expect(promptViewModel.description).toBe(promptFormInputs.description);
+    expect(promptViewModel.sdlcPhase).toBe(SdlcPhase.DESIGN);
+    expect(promptViewModel.category).toBe(PromptCategory.CHAT);
+    expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
+    expect(promptViewModel.ownerUsername).toBe(user.preferredUsername);
+    expect(promptViewModel.isDraft()).toBeFalsy();
+  });
+
   it("should update an existing prompt", async () => {
     const promptViewModel = PromptViewModel.fromSchema(schemaPrompt);
     const user = new UserViewModel("user456", "testuser");

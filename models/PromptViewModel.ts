@@ -148,9 +148,10 @@ export class PromptViewModel {
     this._category = promptData.category as PromptCategory;
     this._instruction = promptData.instruction;
     this._howto = promptData.howto || "";
+    this._ownerUsername = owner.preferredUsername;
 
     if (this.id.startsWith("draft")) {
-      const publishedPrompt = await repository.createPrompt(this, owner);
+      const publishedPrompt = await repository.createPrompt(this);
       this._id = publishedPrompt.id;
     } else {
       await repository.updatePrompt(this);

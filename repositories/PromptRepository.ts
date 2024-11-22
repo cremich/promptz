@@ -1,7 +1,6 @@
 import { PromptViewModel } from "@/models/PromptViewModel";
 import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../amplify/data/resource";
-import { UserViewModel } from "@/models/UserViewModel";
 import { PromptViewModelCollection } from "@/models/PromptViewModelCollection";
 
 export type FacetType = "OWNER" | "CATEGORY" | "SDLC_PHASE" | "SEARCH";
@@ -17,10 +16,7 @@ export interface PromptRepository {
     limit?: number,
     facets?: Array<Facets>,
   ): Promise<PromptViewModelCollection>;
-  createPrompt(
-    prompt: PromptViewModel,
-    owner: UserViewModel,
-  ): Promise<PromptViewModel>;
+  createPrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
   updatePrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
   deletePrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
 }
@@ -63,7 +59,7 @@ export class PromptGraphQLRepository implements PromptRepository {
           category: prompt.category,
           instruction: prompt.instruction,
           howto: prompt.howto,
-          owner_username: prompt.owner,
+          owner_username: prompt.ownerUsername,
         },
         {
           authMode: "userPool",
