@@ -35,17 +35,35 @@ git clone https://github.com/cremich/promptz.git
 cd promptz
 ```
 
-### 2. Deploy the app in your AWS account
+### 2. Install dependencies
 
-Now that the repository has been created, deploy it with Amplify in your own AWS account.
+Install all required dependencies via `npm i`.
 
-[![amplifybutton](https://img.shields.io/badge/Amplify-Deploy_To_AWS-232F3E?style=for-the-badge)](https://console.aws.amazon.com/amplify/create/repo-branch)
+### 3. Setup local AWS credentials
 
-Select **Start with an existing app > GitHub.** After you give Amplify access to your GitHub account via the popup window, pick the repository and `main` branch to deploy. Make no other changes and click through the flow to Save and deploy.
+To deploy the app and make backend updates, Amplify requires AWS credentials to deploy backend updates from your local machine. Follow the official Amplify documentation to [configure AWS for local development](https://docs.amplify.aws/nextjs/start/account-setup/).
 
-### 3. View deployed app
+### 4. Deploy the app as sandbox in your AWS account
 
-While you are waiting for your app to deploy (~5 mins).Learn about the project structure
+Now that the repository has been setup, deploy the Amplify App in your own AWS account by running
+
+```
+npm run sandbox
+```
+
+This command will create a sandbox environment that provides an isolated development space to rapidly build, test, and iterate on. The sandbox environment is fully functional. However the sandbox configuration is slightly different from the production configuration:
+
+- The sandbox environment does not configure social idPs for Amazon Cognito.
+- Amazon Cognito is configured to send verification e-mails instead of using Amazon SES with the official noreply@promptz.dev email adress.
+- DynamoDB Tables and Amazon Cognito Userpools have turned off deletion protection to not cause stale resources in your AWS accont once you delete the sandbox environment.
+- DynamoDB Tables have no point-in-time-recovery enabled.
+- AWS Appsync is configured without X-Ray and logging to Amazon Cloudwatch.
+
+> ⚠️ **Your deployment will fail if you if you create your sandbox environment with the amplify default approach** calling `npx ampx sandbox`.
+>
+> `npm run sandbox` will set an environment variable `PROMPTZ_ENV` that is evaluated when provisioning the backend resources. Only if this variable is set to `sandbox`, certain configurations like Amazon SES, Social Provicer idPs are deactivated.
+
+While you are waiting for your app to deploy (~5 mins). Learn about the project structure
 
 - `amplify/` Contains Amplify backend configuration
 - `/app`: Next.js app router pages and layouts
@@ -58,31 +76,11 @@ While you are waiting for your app to deploy (~5 mins).Learn about the project s
 
 When the build completes, visit the newly deployed branch by selecting "View deployed URL".
 
-### 4. Set up local environment
+### 5. Start a local development server
 
-Click on your deployed branch and you will land on the Deployments page which shows you your build history and a list of deployed backend resources.
-
-![Download amplify_outputs.json](./docs/readme/setup-local-env.png)
-
-Now move the `amplify_outputs.json` file you downloaded above to the root of your project.
-
-Install all required dependencies via `npm install`.
-
-### 6. Start a local development server
-
-Run `npm rund dev` to start a local development server using the amplify configuration downloaded in step 4.
+Run `npm run dev` to start a local development server using the amplify configuration downloaded in step 4.
 
 After starting the development server, open your browser and navigate to `http://localhost:3000`.
-
-### 6. Setup local AWS credentials
-
-To make backend updates, Amplify requires AWS credentials to deploy backend updates from your local machine. Follow the official Amplify documentation to [configure AWS for local development](https://docs.amplify.aws/nextjs/start/account-setup/).
-
-### 7. Deploy cloud sandbox
-
-To update your backend without affecting the production branch, use Amplify's cloud sandbox. This feature provides a separate backend environment for each developer on a team, ideal for local development and testing.
-
-Follow the official Amplify documentation to [setup sandbox environments](https://docs.amplify.aws/nextjs/deploy-and-host/sandbox-environments/.setup/)
 
 ## Contributing
 

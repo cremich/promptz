@@ -18,7 +18,8 @@
     "test": "vitest run",
     "coverage": "vitest run --coverage",
     "pr": "npm run lint && npm run coverage",
-    "prepare": "husky"
+    "prepare": "husky",
+    "sandbox": "PROMPTZ_ENV=sandbox npx ampx sandbox"
   },
   "dependencies": {
     "@aws-amplify/adapter-nextjs": "1.2.23",
