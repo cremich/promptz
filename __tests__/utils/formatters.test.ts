@@ -1,4 +1,11 @@
-import { createSelectOptions } from "@/utils/formatters";
+import {
+  createSelectOptions,
+  switchCategories,
+  IDEPromptCategory,
+  CLIPromptCategory,
+  ConsolePromptCateogry,
+} from "@/utils/formatters";
+import { QInterface, PromptCategory } from "@/models/PromptViewModel";
 import { describe, it, expect } from "vitest";
 
 enum TestPhases {
@@ -10,6 +17,40 @@ enum TestPhases {
   Deploy = "Deploy",
   Maintain = "Maintain",
 }
+
+describe("switchCategories", () => {
+  it("should return IDE categories when interface is IDE", () => {
+    const options = switchCategories(QInterface.IDE);
+    expect(options).toEqual(createSelectOptions(IDEPromptCategory));
+    expect(options.map((o) => o.value)).toEqual(
+      Object.values(IDEPromptCategory),
+    );
+  });
+
+  it("should return CLI categories when interface is CLI", () => {
+    const options = switchCategories(QInterface.CLI);
+    expect(options).toEqual(createSelectOptions(CLIPromptCategory));
+    expect(options.map((o) => o.value)).toEqual(
+      Object.values(CLIPromptCategory),
+    );
+  });
+
+  it("should return Console categories when interface is CONSOLE", () => {
+    const options = switchCategories(QInterface.CONSOLE);
+    expect(options).toEqual(createSelectOptions(ConsolePromptCateogry));
+    expect(options.map((o) => o.value)).toEqual(
+      Object.values(ConsolePromptCateogry),
+    );
+  });
+
+  it("should return filtered PromptCategory options for unknown interface", () => {
+    const options = switchCategories("unknown" as QInterface);
+    expect(options).toEqual(
+      createSelectOptions(PromptCategory, [PromptCategory.UNKNOWN]),
+    );
+    expect(options.map((o) => o.value)).not.toContain(PromptCategory.UNKNOWN);
+  });
+});
 
 describe("createSelectOptions", () => {
   it("should create select options from enum", () => {

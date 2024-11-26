@@ -13,17 +13,20 @@ import {
   Select,
   Tiles,
 } from "@cloudscape-design/components";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import {
-  PromptCategory,
   PromptViewModel,
   QInterface,
   SdlcPhase,
 } from "@/models/PromptViewModel";
-import { createSelectOptions, createTilesItems } from "@/utils/formatters";
+import {
+  createSelectOptions,
+  createTilesItems,
+  switchCategories,
+} from "@/utils/formatters";
 import { useRouter } from "next/navigation";
 
 interface PromptFormProps {
@@ -60,15 +63,13 @@ const schema = yup
     category: yup
       .string()
       .required()
-      .matches(/^Chat|Dev Agent|Inline$/),
+      .matches(/^Chat|Dev Agent|Inline|Translate$/),
   })
   .required();
 
-const categoryOptions = createSelectOptions(PromptCategory, [
-  PromptCategory.UNKNOWN,
-]);
 const sdlcOptions = createSelectOptions(SdlcPhase, [SdlcPhase.UNKNOWN]);
 const interfaceTiles = createTilesItems(QInterface, [QInterface.UNKNOWN]);
+
 export default function PromptForm(props: PromptFormProps) {
   const {
     control,
@@ -89,6 +90,9 @@ export default function PromptForm(props: PromptFormProps) {
     },
   });
   const router = useRouter();
+
+  const qInterface = useWatch({ control, name: "interface" });
+  const categoryOptions = switchCategories(qInterface as QInterface);
 
   return (
     <form onSubmit={handleSubmit(props.onSubmit)} id="prompt-form">

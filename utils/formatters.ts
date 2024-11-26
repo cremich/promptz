@@ -1,4 +1,20 @@
+import { QInterface, PromptCategory } from "@/models/PromptViewModel";
 import { SelectProps, TilesProps } from "@cloudscape-design/components";
+
+export enum IDEPromptCategory {
+  CHAT = "Chat",
+  DEV_AGENT = "Dev Agent",
+  INLINE = "Inline",
+}
+
+export enum CLIPromptCategory {
+  CHAT = "Chat",
+  TRANSLATE = "Translate",
+}
+
+export enum ConsolePromptCateogry {
+  CHAT = "Chat",
+}
 
 export const createSelectOptions = <T extends string>(
   enumObject: { [key: string]: T },
@@ -30,6 +46,19 @@ export const createTilesItems = <T extends string>(
     }));
 
   return options;
+};
+
+export const switchCategories = (interfaceValue: QInterface) => {
+  switch (interfaceValue) {
+    case QInterface.IDE:
+      return createSelectOptions(IDEPromptCategory);
+    case QInterface.CLI:
+      return createSelectOptions(CLIPromptCategory);
+    case QInterface.CONSOLE:
+      return createSelectOptions(ConsolePromptCateogry);
+    default:
+      return createSelectOptions(PromptCategory, [PromptCategory.UNKNOWN]);
+  }
 };
 
 function getDescription(value: string): string {
