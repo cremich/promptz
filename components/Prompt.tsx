@@ -108,6 +108,7 @@ export default function Prompt(props: PromptProps) {
           </div>
           <SpaceBetween alignItems="start" direction="horizontal" size="xs">
             <Badge color="blue">{promptViewModel.sdlcPhase}</Badge>
+            <Badge color="green">{promptViewModel.interface}</Badge>
             <Badge color="grey">{promptViewModel.category}</Badge>
           </SpaceBetween>
         </SpaceBetween>

@@ -108,6 +108,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
             <SpaceBetween size="xs">
               <SpaceBetween size="xs" direction="horizontal">
                 <Badge color="blue">{item.sdlcPhase}</Badge>
+                <Badge color="green">{item.interface}</Badge>
                 <Badge color="grey">{item.category}</Badge>
               </SpaceBetween>
               <Link href={`/prompt/${item.id}`} fontSize="heading-s">
