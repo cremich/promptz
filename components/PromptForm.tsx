@@ -195,37 +195,6 @@ export default function PromptForm(props: PromptFormProps) {
               />
             </FormField>
             <FormField
-              data-testid="formfield-sdlc"
-              label={
-                <span>
-                  Software Development Lifecycle (SDLC) Activity{" "}
-                  <i>- optional</i>
-                </span>
-              }
-              description="Which activity of the SDLC does this prompt relate to?"
-              stretch
-              errorText={errors.sdlc?.message}
-            >
-              <Controller
-                name="sdlc"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    data-testid="select-sdlc"
-                    filteringType="auto"
-                    selectedOption={
-                      sdlcOptions.find((opt) => opt.value === field.value)!
-                    }
-                    onChange={({ detail }) =>
-                      field.onChange(detail.selectedOption?.value)
-                    }
-                    options={sdlcOptions}
-                  />
-                )}
-              />
-            </FormField>
-            <FormField
               data-testid="formfield-interface"
               label="Amazon Q Developer Interface"
               description="Is the prompt related to Amazon Q Developer in your IDE, your CLI or the AWS Management Console?"
@@ -275,6 +244,27 @@ export default function PromptForm(props: PromptFormProps) {
               />
             </FormField>
             <FormField
+              data-testid="formfield-instruction"
+              label="Instruction"
+              description="The specific task you want Amazon Q Developer to perform."
+              stretch
+              errorText={errors.instruction?.message}
+            >
+              <Controller
+                name="instruction"
+                control={control}
+                render={({ field }) => (
+                  <Textarea
+                    {...field}
+                    data-testid="textarea-instruction"
+                    rows={10}
+                    value={field.value}
+                    onChange={({ detail }) => field.onChange(detail.value)}
+                  />
+                )}
+              />
+            </FormField>
+            <FormField
               data-testid="formfield-howto"
               label={
                 <span>
@@ -300,22 +290,32 @@ export default function PromptForm(props: PromptFormProps) {
               />
             </FormField>
             <FormField
-              data-testid="formfield-instruction"
-              label="Instruction"
-              description="The specific task you want Amazon Q Developer to perform."
+              data-testid="formfield-sdlc"
+              label={
+                <span>
+                  Software Development Lifecycle (SDLC) Activity{" "}
+                  <i>- optional</i>
+                </span>
+              }
+              description="Which activity of the SDLC does this prompt relate to?"
               stretch
-              errorText={errors.instruction?.message}
+              errorText={errors.sdlc?.message}
             >
               <Controller
-                name="instruction"
+                name="sdlc"
                 control={control}
                 render={({ field }) => (
-                  <Textarea
+                  <Select
                     {...field}
-                    data-testid="textarea-instruction"
-                    rows={10}
-                    value={field.value}
-                    onChange={({ detail }) => field.onChange(detail.value)}
+                    data-testid="select-sdlc"
+                    filteringType="auto"
+                    selectedOption={
+                      sdlcOptions.find((opt) => opt.value === field.value)!
+                    }
+                    onChange={({ detail }) =>
+                      field.onChange(detail.selectedOption?.value)
+                    }
+                    options={sdlcOptions}
                   />
                 )}
               />
