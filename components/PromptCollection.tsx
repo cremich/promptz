@@ -107,7 +107,9 @@ export default function PromptCollection(props: PromptCollectionProps) {
           header: (item) => (
             <SpaceBetween size="xs">
               <SpaceBetween size="xs" direction="horizontal">
-                <Badge color="blue">{item.sdlcPhase}</Badge>
+                {item.hasSDLCPhaseAssigned() && (
+                  <Badge color="blue">{item.sdlcPhase}</Badge>
+                )}
                 <Badge color="green">{item.interface}</Badge>
                 <Badge color="grey">{item.category}</Badge>
               </SpaceBetween>

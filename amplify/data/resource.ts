@@ -5,7 +5,7 @@ const schema = a
       id: a.id().required(),
       name: a.string().required(),
       description: a.string().required(),
-      sdlc_phase: a.string().required(),
+      sdlc_phase: a.string(),
       interface: a.string(),
       category: a.string().required(),
       instruction: a.string().required(),

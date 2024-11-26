@@ -202,4 +202,8 @@ export class PromptViewModel {
   public isDraft() {
     return this._draft;
   }
+
+  public hasSDLCPhaseAssigned() {
+    return this._sdlcPhase !== SdlcPhase.UNKNOWN;
+  }
 }

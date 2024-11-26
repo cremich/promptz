@@ -41,8 +41,8 @@ export interface PromptFormInputs {
   description: string;
   interface?: string;
   instruction: string;
-  sdlc: string;
-  category: string;
+  sdlc?: string;
+  category?: string;
   howto?: string;
 }
 
@@ -58,8 +58,9 @@ const schema = yup
       .matches(/^IDE|CLI|Management Console$/),
     sdlc: yup
       .string()
-      .required()
-      .matches(/^Plan|Requirements|Design|Implement|Test|Deploy|Maintain$/),
+      .matches(
+        /^Plan|Requirements|Design|Implement|Test|Deploy|Maintain|Unknown$/,
+      ),
     category: yup
       .string()
       .required()
@@ -195,8 +196,13 @@ export default function PromptForm(props: PromptFormProps) {
             </FormField>
             <FormField
               data-testid="formfield-sdlc"
-              label="Software Development Lifecycle (SDLC) Phase"
-              description="Which phase of the SDLC does this prompt relate to?"
+              label={
+                <span>
+                  Software Development Lifecycle (SDLC) Activity{" "}
+                  <i>- optional</i>
+                </span>
+              }
+              description="Which activity of the SDLC does this prompt relate to?"
               stretch
               errorText={errors.sdlc?.message}
             >

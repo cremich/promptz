@@ -107,7 +107,9 @@ export default function Prompt(props: PromptProps) {
             <pre className="wrap">{promptViewModel.instruction}</pre>
           </div>
           <SpaceBetween alignItems="start" direction="horizontal" size="xs">
-            <Badge color="blue">{promptViewModel.sdlcPhase}</Badge>
+            {promptViewModel.hasSDLCPhaseAssigned() && (
+              <Badge color="blue">{promptViewModel.sdlcPhase}</Badge>
+            )}
             <Badge color="green">{promptViewModel.interface}</Badge>
             <Badge color="grey">{promptViewModel.category}</Badge>
           </SpaceBetween>

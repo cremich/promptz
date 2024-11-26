@@ -169,9 +169,6 @@ describe("PromptForm component", () => {
         .findError(),
     ).toBeTruthy();
     expect(
-      wrapper.findFormField('[data-testid="formfield-sdlc"]')!.findError(),
-    ).toBeTruthy();
-    expect(
       wrapper.findFormField('[data-testid="formfield-category"]')!.findError(),
     ).toBeTruthy();
     expect(
@@ -292,5 +289,64 @@ describe("PromptForm component", () => {
       wrapper.findButton('[data-testid="button-cancel"]')!.click(),
     );
     expect(vi.mocked(backMock)).toHaveBeenCalled();
+  });
+
+  it("submits prompt with empty sdlc activity", async () => {
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
+    const wrapper = createWrapper(container);
+
+    wrapper
+      .findInput('[data-testid="input-name"]')!
+      .setInputValue("This is the name");
+    wrapper
+      .findInput('[data-testid="input-description"]')!
+      .setInputValue("This is the description");
+
+    wrapper
+      .findTextarea('[data-testid="textarea-instruction"]')!
+      .setTextareaValue(
+        "This is the prompt that will solve all my developer issues.",
+      );
+
+    const interfaceTiles = wrapper.findTiles(
+      '[data-testid="tiles-interface"]',
+    )!;
+    interfaceTiles.findItemByValue("IDE")?.click();
+
+    const categorySelect = wrapper.findSelect(
+      '[data-testid="select-category"]',
+    )!;
+    categorySelect.openDropdown();
+    categorySelect.selectOptionByValue("Chat");
+
+    await waitFor(() =>
+      wrapper.findButton('[data-testid="button-save"]')!.click(),
+    );
+    expect(vi.mocked(onSubmitMock)).toHaveBeenCalled();
+  });
+
+  it("not renders validation errors sdlc is empty", async () => {
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
+    const wrapper = createWrapper(container);
+
+    await waitFor(() => {
+      wrapper.findButton('[data-testid="button-save"]')!.click();
+    });
+
+    expect(
+      wrapper.findFormField('[data-testid="formfield-sdlc"]')!.findError(),
+    ).toBeFalsy();
   });
 });
