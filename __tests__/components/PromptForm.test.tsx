@@ -223,6 +223,11 @@ describe("PromptForm component", () => {
       .setTextareaValue(
         "This is the prompt that will solve all my developer issues.",
       );
+
+    const interfaceTiles = wrapper.findTiles(
+      '[data-testid="tiles-interface"]',
+    )!;
+    interfaceTiles.findItemByValue("IDE")?.click();
     await waitFor(() =>
       wrapper.findButton('[data-testid="button-save"]')!.click(),
     );

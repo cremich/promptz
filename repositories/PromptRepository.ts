@@ -34,6 +34,7 @@ export class PromptGraphQLRepository implements PromptRepository {
           id: prompt.id,
           name: prompt.name,
           description: prompt.description,
+          interface: prompt.interface,
           sdlc_phase: prompt.sdlcPhase,
           category: prompt.category,
           instruction: prompt.instruction,
@@ -55,6 +56,7 @@ export class PromptGraphQLRepository implements PromptRepository {
         {
           name: prompt.name,
           description: prompt.description,
+          interface: prompt.interface,
           sdlc_phase: prompt.sdlcPhase,
           category: prompt.category,
           instruction: prompt.instruction,
