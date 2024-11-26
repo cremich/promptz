@@ -8,14 +8,22 @@ import {
 } from "@/repositories/PromptRepository";
 import { DraftRepository } from "@/repositories/DraftRepository";
 
-export enum SdlcPhase {
-  PLAN = "Plan",
-  REQ = "Requirements",
-  DESIGN = "Design",
-  IMPLEMENT = "Implement",
-  TEST = "Test",
+export enum SdlcActivity {
+  DEBUG = "Debugging",
   DEPLOY = "Deploy",
-  MAINTAIN = "Maintain",
+  DESIGN = "Design",
+  DOCUMENT = "Documentation",
+  ENHANCE = "Enhance",
+  IMPLEMENT = "Implement",
+  OPERATE = "Operate",
+  OPTIMIZE = "Optimize",
+  PATCH = "Patch Management",
+  PLAN = "Plan",
+  REFACTOR = "Refactoring",
+  REQ = "Requirements",
+  SECURITY = "Security",
+  SUPPORT = "Support",
+  TEST = "Test",
   UNKNOWN = "Unknown",
 }
 
@@ -46,7 +54,7 @@ export class PromptViewModel {
   private _name: string;
   private _description: string;
   private _interface: QInterface;
-  private _sdlcPhase: SdlcPhase;
+  private _sdlcPhase: SdlcActivity;
   private _category: PromptCategory;
   private _instruction: string;
   private _howto: string;
@@ -59,7 +67,7 @@ export class PromptViewModel {
     this._name = "Unnamed [DRAFT]";
     this._description = "";
     this._interface = QInterface.UNKNOWN;
-    this._sdlcPhase = SdlcPhase.UNKNOWN;
+    this._sdlcPhase = SdlcActivity.UNKNOWN;
     this._category = PromptCategory.UNKNOWN;
     this._instruction = "";
     this._howto = "";
@@ -76,7 +84,7 @@ export class PromptViewModel {
     pvm._name = prompt.name;
     pvm._description = prompt.description;
     pvm._interface = (prompt.interface as QInterface) || QInterface.UNKNOWN;
-    pvm._sdlcPhase = prompt.sdlc_phase as SdlcPhase;
+    pvm._sdlcPhase = prompt.sdlc_phase as SdlcActivity;
     pvm._category = prompt.category as PromptCategory;
     pvm._instruction = prompt.instruction;
     pvm._owner = prompt.owner;
@@ -111,10 +119,10 @@ export class PromptViewModel {
     this._interface = value;
   }
 
-  public get sdlcPhase(): SdlcPhase {
+  public get sdlcPhase(): SdlcActivity {
     return this._sdlcPhase;
   }
-  public set sdlcPhase(value: SdlcPhase) {
+  public set sdlcPhase(value: SdlcActivity) {
     this._sdlcPhase = value;
   }
 
@@ -163,7 +171,7 @@ export class PromptViewModel {
     this._name = promptData.name;
     this._description = promptData.description;
     this._interface = promptData.interface as QInterface;
-    this._sdlcPhase = promptData.sdlc as SdlcPhase;
+    this._sdlcPhase = promptData.sdlc as SdlcActivity;
     this._category = promptData.category as PromptCategory;
     this._instruction = promptData.instruction;
     this._howto = promptData.howto || "";
@@ -191,7 +199,7 @@ export class PromptViewModel {
     this._name = promptData.name;
     this._description = promptData.description;
     this._interface = promptData.interface as QInterface;
-    this._sdlcPhase = promptData.sdlc as SdlcPhase;
+    this._sdlcPhase = promptData.sdlc as SdlcActivity;
     this._category = promptData.category as PromptCategory;
     this._instruction = promptData.instruction;
     this._howto = promptData.howto || "";
@@ -204,6 +212,6 @@ export class PromptViewModel {
   }
 
   public hasSDLCPhaseAssigned() {
-    return this._sdlcPhase !== SdlcPhase.UNKNOWN;
+    return this._sdlcPhase !== SdlcActivity.UNKNOWN;
   }
 }

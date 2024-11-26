@@ -69,12 +69,30 @@ function getDescription(value: string): string {
     Design:
       "Create the software architecture, user interface, and system design based on the requirements.",
     Implement:
-      "Write, refactor, fix and review the actual code for the software according to design specifications.",
-    Test: "Conduct various types of testing to identify and fix bugs, ensuring the software meets quality standards and requirements.",
+      "Write and review code according to design specifications and coding standards.",
+    Test: "Conduct various types of testing to identify and fix bugs, ensuring software meets quality standards.",
     Deploy:
-      "Release the software to the production environment, including installation, configuration, and user training.",
-    Maintain:
-      "Monitor, update, and support the software post-deployment and addressing operational issues.",
+      "Release software to production, including installation, configuration, and user training.",
+    Operate:
+      "Manage day-to-day running of systems, including monitoring, maintenance, and incident response.",
+    Optimize:
+      "Improve system performance, efficiency, and cost-effectiveness through analysis and tuning.",
+    Support:
+      "Provide technical assistance, troubleshoot issues, and resolve user inquiries.",
+    Enhance:
+      "Add new features or improve existing functionality based on user feedback and business needs.",
+    Documentation:
+      "Create and maintain technical, user, and process documentation for the software system.",
+    Refactoring:
+      "Restructure and improve existing code without changing its external behavior.",
+    Debugging:
+      "Identify, analyze, and fix software defects and issues in the codebase.",
+    Security:
+      "Implement security measures, conduct assessments, and address vulnerabilities.",
+    "Patch Management":
+      "Plan, test, and deploy software updates, security fixes, and system patches across your infrastructure and applications.",
+
+    Unknown: "",
     IDE: "In IDEs, Amazon Q Developer includes capabilities to provide guidance and support across various aspects of software development, such as answering questions about building on AWS, generating and updating code, security scanning, and optimizing and refactoring code.",
     CLI: "In the CLI, you can let Amazon Q Developer generate CLI commands, and automate tasks using natural language queries.",
     "Management Console":

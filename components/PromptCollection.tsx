@@ -20,7 +20,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { usePromptCollection } from "../hooks/usePromptCollection";
 import { Facets } from "@/repositories/PromptRepository";
 import { useState } from "react";
-import { PromptCategory, SdlcPhase } from "@/models/PromptViewModel";
+import { PromptCategory, SdlcActivity } from "@/models/PromptViewModel";
 import { createSelectOptions } from "@/utils/formatters";
 
 interface PromptCollectionProps {
@@ -58,7 +58,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
   };
 
   const getSDLCFilter = () => {
-    return createSelectOptions(SdlcPhase, [SdlcPhase.UNKNOWN]);
+    return createSelectOptions(SdlcActivity, [SdlcActivity.UNKNOWN]);
   };
 
   const handleCategoryFilterChange = (option: SelectProps.Option) => {

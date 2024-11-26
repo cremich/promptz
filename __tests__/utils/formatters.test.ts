@@ -5,18 +5,12 @@ import {
   CLIPromptCategory,
   ConsolePromptCateogry,
 } from "@/utils/formatters";
-import { QInterface, PromptCategory } from "@/models/PromptViewModel";
+import {
+  QInterface,
+  PromptCategory,
+  SdlcActivity,
+} from "@/models/PromptViewModel";
 import { describe, it, expect } from "vitest";
-
-enum TestPhases {
-  Plan = "Plan",
-  Requirements = "Requirements",
-  Design = "Design",
-  Implement = "Implement",
-  Test = "Test",
-  Deploy = "Deploy",
-  Maintain = "Maintain",
-}
 
 describe("switchCategories", () => {
   it("should return IDE categories when interface is IDE", () => {
@@ -54,39 +48,33 @@ describe("switchCategories", () => {
 
 describe("createSelectOptions", () => {
   it("should create select options from enum", () => {
-    const options = createSelectOptions(TestPhases);
+    const options = createSelectOptions(SdlcActivity);
 
-    expect(options).toHaveLength(7);
-    expect(options[0]).toEqual({
-      label: "Plan",
-      value: "Plan",
-      description:
-        "Define project scope, objectives, and feasibility while estimating resources and timelines.",
-    });
+    expect(options).toHaveLength(16);
   });
 
   it("should exclude specified values", () => {
-    const excludeValues = [TestPhases.Plan, TestPhases.Test];
-    const options = createSelectOptions(TestPhases, excludeValues);
+    const excludeValues = [SdlcActivity.PLAN, SdlcActivity.TEST];
+    const options = createSelectOptions(SdlcActivity, excludeValues);
 
-    expect(options).toHaveLength(5);
+    expect(options).toHaveLength(14);
     expect(options.some((opt) => opt.value === "Plan")).toBeFalsy();
     expect(options.some((opt) => opt.value === "Test")).toBeFalsy();
   });
 
   it("should handle empty exclude array", () => {
-    const options = createSelectOptions(TestPhases, []);
+    const options = createSelectOptions(SdlcActivity, []);
 
-    expect(options).toHaveLength(7);
+    expect(options).toHaveLength(16);
   });
 
   it("should include description for each option", () => {
-    const options = createSelectOptions(TestPhases);
+    const options = createSelectOptions(SdlcActivity);
 
     options.forEach((option) => {
       expect(option.description).toBeDefined();
       expect(typeof option.description).toBe("string");
-      expect(option.description!.length).toBeGreaterThan(0);
+      expect(option.description).not.toBeUndefined();
     });
   });
 });

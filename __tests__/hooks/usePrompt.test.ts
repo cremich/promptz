@@ -4,7 +4,7 @@ import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
 import {
   PromptCategory,
   PromptViewModel,
-  SdlcPhase,
+  SdlcActivity,
 } from "@/models/PromptViewModel";
 import { usePrompt } from "@/hooks/usePrompt";
 

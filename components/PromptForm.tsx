@@ -20,7 +20,7 @@ import * as yup from "yup";
 import {
   PromptViewModel,
   QInterface,
-  SdlcPhase,
+  SdlcActivity,
 } from "@/models/PromptViewModel";
 import {
   createSelectOptions,
@@ -68,7 +68,7 @@ const schema = yup
   })
   .required();
 
-const sdlcOptions = createSelectOptions(SdlcPhase, [SdlcPhase.UNKNOWN]);
+const sdlcOptions = createSelectOptions(SdlcActivity, [SdlcActivity.UNKNOWN]);
 const interfaceTiles = createTilesItems(QInterface, [QInterface.UNKNOWN]);
 
 export default function PromptForm(props: PromptFormProps) {

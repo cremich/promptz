@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   PromptViewModel,
-  SdlcPhase,
+  SdlcActivity,
   PromptCategory,
   QInterface,
 } from "../../models/PromptViewModel";
@@ -54,7 +54,7 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.id).toBe(schemaPrompt.id);
     expect(promptViewModel.name).toBe(schemaPrompt.name);
     expect(promptViewModel.description).toBe(schemaPrompt.description);
-    expect(promptViewModel.sdlcPhase).toBe(SdlcPhase.DESIGN);
+    expect(promptViewModel.sdlcPhase).toBe(SdlcActivity.DESIGN);
     expect(promptViewModel.category).toBe(PromptCategory.CHAT);
     expect(promptViewModel.interface).toBe(QInterface.IDE);
     expect(promptViewModel.instruction).toBe(schemaPrompt.instruction);
@@ -144,7 +144,7 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.name).toBe(promptFormInputs.name);
     expect(promptViewModel.description).toBe(promptFormInputs.description);
     expect(promptViewModel.interface).toBe(QInterface.IDE);
-    expect(promptViewModel.sdlcPhase).toBe(SdlcPhase.DESIGN);
+    expect(promptViewModel.sdlcPhase).toBe(SdlcActivity.DESIGN);
     expect(promptViewModel.category).toBe(PromptCategory.CHAT);
     expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
     expect(promptViewModel.ownerUsername).toBe(user.preferredUsername);
@@ -171,7 +171,7 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.name).toBe(promptFormInputs.name);
     expect(promptViewModel.description).toBe(promptFormInputs.description);
     expect(promptViewModel.interface).toBe(QInterface.IDE);
-    expect(promptViewModel.sdlcPhase).toBe(SdlcPhase.PLAN);
+    expect(promptViewModel.sdlcPhase).toBe(SdlcActivity.PLAN);
     expect(promptViewModel.category).toBe(PromptCategory.INLINE);
     expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
     expect(promptViewModel.howto).toBe(promptFormInputs.howto);
@@ -198,7 +198,7 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.name).toBe(promptFormInputs.name);
     expect(promptViewModel.description).toBe(promptFormInputs.description);
     expect(promptViewModel.interface).toBe(QInterface.CLI);
-    expect(promptViewModel.sdlcPhase).toBe(SdlcPhase.PLAN);
+    expect(promptViewModel.sdlcPhase).toBe(SdlcActivity.PLAN);
     expect(promptViewModel.category).toBe(PromptCategory.INLINE);
     expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
     expect(promptViewModel.howto).toBe(promptFormInputs.howto);
