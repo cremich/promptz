@@ -161,6 +161,7 @@ export class PromptViewModel {
   ) {
     this._name = promptData.name;
     this._description = promptData.description;
+    this._interface = promptData.interface as QInterface;
     this._sdlcPhase = promptData.sdlc as SdlcPhase;
     this._category = promptData.category as PromptCategory;
     this._instruction = promptData.instruction;
@@ -188,6 +189,7 @@ export class PromptViewModel {
   saveDraft(promptData: PromptFormInputs, repository: DraftRepository) {
     this._name = promptData.name;
     this._description = promptData.description;
+    this._interface = promptData.interface as QInterface;
     this._sdlcPhase = promptData.sdlc as SdlcPhase;
     this._category = promptData.category as PromptCategory;
     this._instruction = promptData.instruction;

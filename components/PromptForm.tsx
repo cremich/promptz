@@ -34,6 +34,7 @@ interface PromptFormProps {
 export interface PromptFormInputs {
   name: string;
   description: string;
+  interface?: string;
   instruction: string;
   sdlc: string;
   category: string;
@@ -74,6 +75,7 @@ export default function PromptForm(props: PromptFormProps) {
     defaultValues: {
       name: props.prompt.name,
       description: props.prompt.description,
+      interface: props.prompt.interface,
       instruction: props.prompt.instruction,
       sdlc: props.prompt.sdlcPhase,
       category: props.prompt.category,
