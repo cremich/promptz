@@ -6,6 +6,7 @@ const schema = a
       name: a.string().required(),
       description: a.string().required(),
       sdlc_phase: a.string().required(),
+      interface: a.string(),
       category: a.string().required(),
       instruction: a.string().required(),
       howto: a.string(),
