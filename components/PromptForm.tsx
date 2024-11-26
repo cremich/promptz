@@ -213,6 +213,7 @@ export default function PromptForm(props: PromptFormProps) {
                   <Select
                     {...field}
                     data-testid="select-sdlc"
+                    filteringType="auto"
                     selectedOption={
                       sdlcOptions.find((opt) => opt.value === field.value)!
                     }
