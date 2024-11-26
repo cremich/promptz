@@ -59,7 +59,7 @@ const schema = yup
     sdlc: yup
       .string()
       .matches(
-        /^Plan|Requirements|Design|Implement|Test|Deploy|Maintain|Unknown$/,
+        /^Debugging|Deploy|Design|Documentation|Enhance|Implement|Operate|Optimize|Patch Management|Plan|Refactoring|Requirements|Security|Support|Test|Unknown$/,
       ),
     category: yup
       .string()
