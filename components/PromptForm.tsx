@@ -245,8 +245,8 @@ export default function PromptForm(props: PromptFormProps) {
             </FormField>
             <FormField
               data-testid="formfield-instruction"
-              label="Instruction"
-              description="The specific task you want Amazon Q Developer to perform."
+              label="Prompt"
+              description="What is the prompt? What is the specific task you want Amazon Q Developer to perform?"
               stretch
               errorText={errors.instruction?.message}
             >
