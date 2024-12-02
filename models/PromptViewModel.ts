@@ -61,6 +61,7 @@ export class PromptViewModel {
   private _owner?: string;
   private _ownerUsername?: string;
   private _draft: boolean;
+  private _updatedAt: string;
 
   constructor() {
     this._id = `draft_${uuidv4()}`;
@@ -72,6 +73,7 @@ export class PromptViewModel {
     this._instruction = "";
     this._howto = "";
     this._draft = true;
+    this._updatedAt = new Date().toISOString();
   }
 
   public static fromSchema(prompt: Schema["prompt"]["type"]): PromptViewModel {
@@ -91,6 +93,7 @@ export class PromptViewModel {
     pvm._ownerUsername = prompt.owner_username;
     pvm._howto = prompt.howto || "";
     pvm._draft = false;
+    pvm._updatedAt = prompt.updatedAt;
     return pvm;
   }
 
@@ -153,6 +156,10 @@ export class PromptViewModel {
 
   public get owner(): string {
     return this._owner || "unknown";
+  }
+
+  public get updatedAt(): string {
+    return this._updatedAt;
   }
 
   public isOwnedBy(user: UserViewModel) {
