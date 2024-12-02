@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Create dummy amplify outputs
+        run: echo '{}' > amplify_outputs.json
+
       - name: Run pull-request checks
         run: |
           npm run pr
