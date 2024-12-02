@@ -18,6 +18,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePrompt } from "@/hooks/usePrompt";
+import Markdown from "markdown-to-jsx";
 
 interface PromptProps {
   promptId: string;
@@ -96,16 +97,17 @@ export default function Prompt(props: PromptProps) {
         }
       >
         <SpaceBetween alignItems="start" direction="vertical" size="xs">
+          <div>
+            <Box variant="awsui-key-label">Prompt:</Box>
+            <Markdown>{promptViewModel.instruction}</Markdown>
+          </div>
           {promptViewModel.howto && promptViewModel.howto.length > 0 && (
             <div>
               <Box variant="awsui-key-label">How to use this prompt:</Box>
-              <Box data-testid="box-howto">{promptViewModel.howto}</Box>
+              <Markdown>{promptViewModel.howto}</Markdown>
             </div>
           )}
-          <div>
-            <Box variant="awsui-key-label">Instruction:</Box>
-            <pre className="wrap">{promptViewModel.instruction}</pre>
-          </div>
+
           <SpaceBetween alignItems="start" direction="horizontal" size="xs">
             {promptViewModel.hasSDLCPhaseAssigned() && (
               <Badge color="blue">{promptViewModel.sdlcPhase}</Badge>

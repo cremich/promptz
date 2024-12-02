@@ -1,9 +1,19 @@
-pre {
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -pre-wrap;
-  white-space: -o-pre-wrap;
+pre,
+code {
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
+  white-space: -moz-pre-wrap !important;
+  white-space: -pre-wrap !important;
+  white-space: -o-pre-wrap !important;
   margin: 0;
   padding: 0;
+}
+
+code {
+  background-color: #f3f3f7;
+}
+
+pre > code {
+  display: inline-block;
+  padding: 1em;
 }
