@@ -203,4 +203,91 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
     expect(promptViewModel.howto).toBe(promptFormInputs.howto);
   });
+
+  it("should prepend quick action for dev agent when saving prompt as draft", async () => {
+    const promptViewModel = new PromptViewModel();
+
+    vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
+
+    const promptFormInputs: PromptFormInputs = {
+      name: "Draft",
+      description: "Draft",
+      interface: "IDE",
+      sdlc: "Plan",
+      category: "Dev Agent",
+      instruction: "Draft",
+      howto: "Draft",
+    };
+
+    await promptViewModel.saveDraft(promptFormInputs, mockDraftRepository);
+    expect(promptViewModel.instruction).toBe(
+      `/dev ${promptFormInputs.instruction}`,
+    );
+  });
+
+  it("should prepend quick action for transform agent when saving prompt as draft", async () => {
+    const promptViewModel = new PromptViewModel();
+
+    vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
+
+    const promptFormInputs: PromptFormInputs = {
+      name: "Draft",
+      description: "Draft",
+      interface: "IDE",
+      sdlc: "Plan",
+      category: "Transform Agent",
+      instruction: "Draft",
+      howto: "Draft",
+    };
+
+    await promptViewModel.saveDraft(promptFormInputs, mockDraftRepository);
+
+    expect(promptViewModel.instruction).toBe(
+      `/transform ${promptFormInputs.instruction}`,
+    );
+  });
+
+  it("should prepend quick action for dev agent when publishing prompt", async () => {
+    const promptViewModel = new PromptViewModel();
+    const user = new UserViewModel("user456", "testuser", "preferred");
+
+    vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
+
+    const promptFormInputs: PromptFormInputs = {
+      name: "Draft",
+      description: "Draft",
+      interface: "IDE",
+      sdlc: "Plan",
+      category: "Dev Agent",
+      instruction: "Draft",
+      howto: "Draft",
+    };
+
+    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    expect(promptViewModel.instruction).toBe(
+      `/dev ${promptFormInputs.instruction}`,
+    );
+  });
+
+  it("should prepend quick action for transform agent when saving prompt as draft", async () => {
+    const promptViewModel = new PromptViewModel();
+    const user = new UserViewModel("user456", "testuser", "preferred");
+
+    vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
+
+    const promptFormInputs: PromptFormInputs = {
+      name: "Draft",
+      description: "Draft",
+      interface: "IDE",
+      sdlc: "Plan",
+      category: "Transform Agent",
+      instruction: "Draft",
+      howto: "Draft",
+    };
+
+    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    expect(promptViewModel.instruction).toBe(
+      `/transform ${promptFormInputs.instruction}`,
+    );
+  });
 });

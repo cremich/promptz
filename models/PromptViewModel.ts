@@ -185,6 +185,8 @@ export class PromptViewModel {
     this._howto = promptData.howto || "";
     this._ownerUsername = owner.preferredUsername;
 
+    this.prependQuickAction();
+
     if (this.id.startsWith("draft")) {
       const publishedPrompt = await repository.createPrompt(this);
       this._id = publishedPrompt.id;
@@ -212,6 +214,7 @@ export class PromptViewModel {
     this._instruction = promptData.instruction;
     this._howto = promptData.howto || "";
     this._draft = true;
+    this.prependQuickAction();
     repository.saveDraft(this);
   }
 
@@ -221,5 +224,20 @@ export class PromptViewModel {
 
   public hasSDLCPhaseAssigned() {
     return this._sdlcPhase !== SdlcActivity.UNKNOWN;
+  }
+
+  private prependQuickAction() {
+    switch (this._category) {
+      case PromptCategory.DEV_AGENT:
+        if (!this.instruction.startsWith("/dev")) {
+          this._instruction = `/dev ${this._instruction}`;
+        }
+        return;
+      case PromptCategory.TRANSFORM:
+        if (!this.instruction.startsWith("/transform")) {
+          this._instruction = `/transform ${this._instruction}`;
+        }
+        return;
+    }
   }
 }
