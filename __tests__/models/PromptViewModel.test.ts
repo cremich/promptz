@@ -290,4 +290,70 @@ describe("PromptViewModel", () => {
       `/transform ${promptFormInputs.instruction}`,
     );
   });
+
+  it("should prepend quick action for doc agent when saving prompt as draft", async () => {
+    const promptViewModel = new PromptViewModel();
+    const user = new UserViewModel("user456", "testuser", "preferred");
+
+    vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
+
+    const promptFormInputs: PromptFormInputs = {
+      name: "Draft",
+      description: "Draft",
+      interface: "IDE",
+      sdlc: "Plan",
+      category: "Doc Agent",
+      instruction: "Draft",
+      howto: "Draft",
+    };
+
+    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    expect(promptViewModel.instruction).toBe(
+      `/doc ${promptFormInputs.instruction}`,
+    );
+  });
+
+  it("should prepend quick action for review agent when saving prompt as draft", async () => {
+    const promptViewModel = new PromptViewModel();
+    const user = new UserViewModel("user456", "testuser", "preferred");
+
+    vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
+
+    const promptFormInputs: PromptFormInputs = {
+      name: "Draft",
+      description: "Draft",
+      interface: "IDE",
+      sdlc: "Plan",
+      category: "Review Agent",
+      instruction: "Draft",
+      howto: "Draft",
+    };
+
+    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    expect(promptViewModel.instruction).toBe(
+      `/review ${promptFormInputs.instruction}`,
+    );
+  });
+
+  it("should prepend quick action for test agent when saving prompt as draft", async () => {
+    const promptViewModel = new PromptViewModel();
+    const user = new UserViewModel("user456", "testuser", "preferred");
+
+    vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
+
+    const promptFormInputs: PromptFormInputs = {
+      name: "Draft",
+      description: "Draft",
+      interface: "IDE",
+      sdlc: "Plan",
+      category: "Test Agent",
+      instruction: "Draft",
+      howto: "Draft",
+    };
+
+    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    expect(promptViewModel.instruction).toBe(
+      `/test ${promptFormInputs.instruction}`,
+    );
+  });
 });

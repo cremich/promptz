@@ -4,8 +4,11 @@ import { SelectProps, TilesProps } from "@cloudscape-design/components";
 export enum IDEPromptCategory {
   CHAT = "Chat",
   DEV_AGENT = "Dev Agent",
+  DOC_AGENT = "Doc Agent",
   INLINE = "Inline",
+  REVIEW_AGENT = "Review Agent",
   TRANSFORM = "Transform Agent",
+  TEST_AGENT = "Test Agent",
 }
 
 export enum CLIPromptCategory {

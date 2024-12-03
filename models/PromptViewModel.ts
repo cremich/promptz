@@ -30,7 +30,10 @@ export enum SdlcActivity {
 export enum PromptCategory {
   CHAT = "Chat",
   DEV_AGENT = "Dev Agent",
+  DOC_AGENT = "Doc Agent",
   INLINE = "Inline",
+  REVIEW_AGENT = "Review Agent",
+  TEST_AGENT = "Test Agent",
   TRANSFORM = "Transform Agent",
   TRANSLATE = "Translate",
   UNKNOWN = "Unknown",
@@ -236,6 +239,21 @@ export class PromptViewModel {
       case PromptCategory.TRANSFORM:
         if (!this.instruction.startsWith("/transform")) {
           this._instruction = `/transform ${this._instruction}`;
+        }
+        return;
+      case PromptCategory.DOC_AGENT:
+        if (!this.instruction.startsWith("/doc")) {
+          this._instruction = `/doc ${this._instruction}`;
+        }
+        return;
+      case PromptCategory.TEST_AGENT:
+        if (!this.instruction.startsWith("/test")) {
+          this._instruction = `/test ${this._instruction}`;
+        }
+        return;
+      case PromptCategory.REVIEW_AGENT:
+        if (!this.instruction.startsWith("/review")) {
+          this._instruction = `/review ${this._instruction}`;
         }
         return;
     }

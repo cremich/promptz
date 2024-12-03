@@ -75,7 +75,9 @@ const schema = yup
     category: yup
       .string()
       .required()
-      .matches(/^Chat|Dev Agent|Inline|Translate|Transform Agent$/),
+      .matches(
+        /^Chat|Dev Agent|Inline|Translate|Transform Agent|Test Agent|Doc Agent|Review Agent$/,
+      ),
   })
   .required();
 
