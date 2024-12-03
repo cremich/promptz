@@ -341,8 +341,14 @@ export default function PromptForm(props: PromptFormProps) {
                   />
                 </FormField>
                 <Box margin={{ top: "m" }}>
-                  <Box variant="strong">Context Modifier</Box>
-                  <Box variant="small" color="text-body-secondary">
+                  <Box variant="strong" display="block">
+                    Context Modifier
+                  </Box>
+                  <Box
+                    variant="small"
+                    color="text-body-secondary"
+                    display="inline"
+                  >
                     Use the supported context modifier shortcut buttons to add
                     them to your prompt.
                   </Box>
