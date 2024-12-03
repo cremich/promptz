@@ -60,7 +60,7 @@ export default function EditPrompt({ params }: { params: { id: string } }) {
     <ContentLayout
       defaultPadding
       headerVariant="high-contrast"
-      maxContentWidth={1024}
+      maxContentWidth={2048}
       breadcrumbs={
         <BreadcrumbGroup
           items={[

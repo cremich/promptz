@@ -12,6 +12,7 @@ import {
   Textarea,
   Select,
   Tiles,
+  Grid,
 } from "@cloudscape-design/components";
 import { Controller, SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,6 +29,7 @@ import {
   switchCategories,
 } from "@/utils/formatters";
 import { useRouter } from "next/navigation";
+import form from "@cloudscape-design/components/form";
 
 interface PromptFormProps {
   prompt: PromptViewModel;
@@ -149,179 +151,194 @@ export default function PromptForm(props: PromptFormProps) {
           )
         }
       >
-        <Container>
-          <SpaceBetween direction="vertical" size="l">
-            <FormField
-              data-testid="formfield-name"
-              stretch
-              description="A catchy name for your prompt."
-              label="Name"
-              errorText={errors.name?.message}
-            >
-              <Controller
-                name="name"
-                control={control}
-                rules={{ required: true, minLength: 3, maxLength: 100 }}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    data-testid="input-name"
-                    value={field.value}
-                    spellcheck={false}
-                    autoComplete="off"
-                    onChange={({ detail }) => field.onChange(detail.value)}
+        <Grid gridDefinition={[{ colspan: 4 }, { colspan: 8 }]}>
+          <div>
+            <Container>
+              <SpaceBetween direction="vertical" size="l">
+                <FormField
+                  data-testid="formfield-name"
+                  stretch
+                  description="A catchy name for your prompt."
+                  label="Name"
+                  errorText={errors.name?.message}
+                >
+                  <Controller
+                    name="name"
+                    control={control}
+                    rules={{ required: true, minLength: 3, maxLength: 100 }}
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        data-testid="input-name"
+                        value={field.value}
+                        spellcheck={false}
+                        autoComplete="off"
+                        onChange={({ detail }) => field.onChange(detail.value)}
+                      />
+                    )}
                   />
-                )}
-              />
-            </FormField>
-            <FormField
-              data-testid="formfield-description"
-              stretch
-              description="What is this prompt doing? What is the goal?"
-              label="Description"
-              errorText={errors.description?.message}
-            >
-              <Controller
-                name="description"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    data-testid="input-description"
-                    value={field.value}
-                    onChange={({ detail }) => field.onChange(detail.value)}
+                </FormField>
+                <FormField
+                  data-testid="formfield-description"
+                  stretch
+                  description="What is this prompt doing? What is the goal?"
+                  label="Description"
+                  errorText={errors.description?.message}
+                >
+                  <Controller
+                    name="description"
+                    control={control}
+                    render={({ field }) => (
+                      <Input
+                        {...field}
+                        data-testid="input-description"
+                        value={field.value}
+                        onChange={({ detail }) => field.onChange(detail.value)}
+                      />
+                    )}
                   />
-                )}
-              />
-            </FormField>
-            <FormField
-              data-testid="formfield-interface"
-              label="Amazon Q Developer Interface"
-              description="Is the prompt related to Amazon Q Developer in your IDE, your CLI or the AWS Management Console?"
-              stretch
-              errorText={errors.interface?.message}
-            >
-              <Controller
-                name="interface"
-                control={control}
-                render={({ field }) => (
-                  <Tiles
-                    {...field}
-                    data-testid="tiles-interface"
-                    value={
-                      interfaceTiles.find((opt) => opt.value === field.value)
-                        ?.value || ""
-                    }
-                    onChange={({ detail }) => field.onChange(detail.value)}
-                    items={interfaceTiles}
+                </FormField>
+                <FormField
+                  data-testid="formfield-interface"
+                  label="Amazon Q Developer Interface"
+                  description="Is the prompt related to Amazon Q Developer in your IDE, your CLI or the AWS Management Console?"
+                  stretch
+                  errorText={errors.interface?.message}
+                >
+                  <Controller
+                    name="interface"
+                    control={control}
+                    render={({ field }) => (
+                      <Tiles
+                        {...field}
+                        data-testid="tiles-interface"
+                        value={
+                          interfaceTiles.find(
+                            (opt) => opt.value === field.value,
+                          )?.value || ""
+                        }
+                        onChange={({ detail }) => field.onChange(detail.value)}
+                        items={interfaceTiles}
+                      />
+                    )}
                   />
-                )}
-              />
-            </FormField>
-            <FormField
-              data-testid="formfield-category"
-              label="Prompt Category"
-              description="Is this prompt related to Amazon Q Developer Chat, Dev Agent, or inline code completion?"
-              stretch
-              errorText={errors.category?.message}
-            >
-              <Controller
-                name="category"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    data-testid="select-category"
-                    selectedOption={
-                      categoryOptions.find((opt) => opt.value === field.value)!
-                    }
-                    onChange={({ detail }) =>
-                      field.onChange(detail.selectedOption?.value)
-                    }
-                    options={categoryOptions}
+                </FormField>
+                <FormField
+                  data-testid="formfield-category"
+                  label="Prompt Category"
+                  description="Is this prompt related to Amazon Q Developer Chat, Dev Agent, or inline code completion?"
+                  stretch
+                  errorText={errors.category?.message}
+                >
+                  <Controller
+                    name="category"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        data-testid="select-category"
+                        selectedOption={
+                          categoryOptions.find(
+                            (opt) => opt.value === field.value,
+                          )!
+                        }
+                        onChange={({ detail }) =>
+                          field.onChange(detail.selectedOption?.value)
+                        }
+                        options={categoryOptions}
+                      />
+                    )}
                   />
-                )}
-              />
-            </FormField>
-            <FormField
-              data-testid="formfield-instruction"
-              label="Prompt"
-              description="What is the prompt? What is the specific task you want Amazon Q Developer to perform?"
-              stretch
-              errorText={errors.instruction?.message}
-            >
-              <Controller
-                name="instruction"
-                control={control}
-                render={({ field }) => (
-                  <Textarea
-                    {...field}
-                    data-testid="textarea-instruction"
-                    rows={10}
-                    value={field.value}
-                    onChange={({ detail }) => field.onChange(detail.value)}
+                </FormField>
+                <FormField
+                  data-testid="formfield-sdlc"
+                  label={
+                    <span>
+                      Software Development Lifecycle (SDLC) Activity{" "}
+                      <i>- optional</i>
+                    </span>
+                  }
+                  description="Which activity of the SDLC does this prompt relate to?"
+                  stretch
+                  errorText={errors.sdlc?.message}
+                >
+                  <Controller
+                    name="sdlc"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        data-testid="select-sdlc"
+                        filteringType="auto"
+                        selectedOption={
+                          sdlcOptions.find((opt) => opt.value === field.value)!
+                        }
+                        onChange={({ detail }) =>
+                          field.onChange(detail.selectedOption?.value)
+                        }
+                        options={sdlcOptions}
+                      />
+                    )}
                   />
-                )}
-              />
-            </FormField>
-            <FormField
-              data-testid="formfield-howto"
-              label={
-                <span>
-                  How-To <i>- optional</i>
-                </span>
-              }
-              description="Document relevant prerequisities or explanation that help others to better understand on how to use this prompt."
-              stretch
-              errorText={errors.howto?.message}
-            >
-              <Controller
-                name="howto"
-                control={control}
-                render={({ field }) => (
-                  <Textarea
-                    {...field}
-                    data-testid="textarea-howto"
-                    rows={3}
-                    value={field.value || ""}
-                    onChange={({ detail }) => field.onChange(detail.value)}
+                </FormField>
+              </SpaceBetween>
+            </Container>
+          </div>
+          <div>
+            <SpaceBetween direction="vertical" size="l">
+              <Container>
+                <FormField
+                  data-testid="formfield-instruction"
+                  label="Prompt"
+                  description="What is the prompt? What is the specific task you want Amazon Q Developer to perform?"
+                  stretch
+                  errorText={errors.instruction?.message}
+                >
+                  <Controller
+                    name="instruction"
+                    control={control}
+                    render={({ field }) => (
+                      <Textarea
+                        {...field}
+                        data-testid="textarea-instruction"
+                        rows={15}
+                        value={field.value}
+                        onChange={({ detail }) => field.onChange(detail.value)}
+                      />
+                    )}
                   />
-                )}
-              />
-            </FormField>
-            <FormField
-              data-testid="formfield-sdlc"
-              label={
-                <span>
-                  Software Development Lifecycle (SDLC) Activity{" "}
-                  <i>- optional</i>
-                </span>
-              }
-              description="Which activity of the SDLC does this prompt relate to?"
-              stretch
-              errorText={errors.sdlc?.message}
-            >
-              <Controller
-                name="sdlc"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    data-testid="select-sdlc"
-                    filteringType="auto"
-                    selectedOption={
-                      sdlcOptions.find((opt) => opt.value === field.value)!
-                    }
-                    onChange={({ detail }) =>
-                      field.onChange(detail.selectedOption?.value)
-                    }
-                    options={sdlcOptions}
+                </FormField>
+              </Container>
+              <Container>
+                <FormField
+                  data-testid="formfield-howto"
+                  label={
+                    <span>
+                      How-To <i>- optional</i>
+                    </span>
+                  }
+                  description="Document relevant prerequisities or explanation that help others to better understand on how to use this prompt."
+                  stretch
+                  errorText={errors.howto?.message}
+                >
+                  <Controller
+                    name="howto"
+                    control={control}
+                    render={({ field }) => (
+                      <Textarea
+                        {...field}
+                        data-testid="textarea-howto"
+                        rows={3}
+                        value={field.value || ""}
+                        onChange={({ detail }) => field.onChange(detail.value)}
+                      />
+                    )}
                   />
-                )}
-              />
-            </FormField>
-          </SpaceBetween>
-        </Container>
+                </FormField>
+              </Container>
+            </SpaceBetween>
+          </div>
+        </Grid>
       </Form>
     </form>
   );

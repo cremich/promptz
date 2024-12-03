@@ -37,7 +37,7 @@ export default function CreatePrompt() {
     <ContentLayout
       defaultPadding
       headerVariant="high-contrast"
-      maxContentWidth={1024}
+      maxContentWidth={2048}
       breadcrumbs={
         <BreadcrumbGroup
           items={[
