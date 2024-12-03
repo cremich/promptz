@@ -31,6 +31,7 @@ export enum PromptCategory {
   CHAT = "Chat",
   DEV_AGENT = "Dev Agent",
   INLINE = "Inline",
+  TRANSFORM = "Transform Agent",
   TRANSLATE = "Translate",
   UNKNOWN = "Unknown",
 }

@@ -5,6 +5,7 @@ export enum IDEPromptCategory {
   CHAT = "Chat",
   DEV_AGENT = "Dev Agent",
   INLINE = "Inline",
+  TRANSFORM = "Transform Agent",
 }
 
 export enum CLIPromptCategory {
