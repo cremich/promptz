@@ -48,10 +48,13 @@ export interface PromptFormInputs {
   howto?: string;
 }
 
+type Interface = "IDE" | "CLI" | "Management Console";
+
 type ContextModifier = {
   id: string;
   label: string;
   value: string;
+  applicableInterfaces: Interface[];
 };
 
 const schema = yup
@@ -80,10 +83,20 @@ const sdlcOptions = createSelectOptions(SdlcActivity, [SdlcActivity.UNKNOWN]);
 const interfaceTiles = createTilesItems(QInterface, [QInterface.UNKNOWN]);
 
 const contextModifiers: ContextModifier[] = [
-  { id: "workspace", label: "@workspace", value: "@workspace" },
-  { id: "git", label: "@git", value: "@git" },
-  { id: "env", label: "@env", value: "@env" },
-  { id: "history", label: "@history", value: "@history" },
+  {
+    id: "workspace",
+    label: "@workspace",
+    value: "@workspace",
+    applicableInterfaces: ["IDE"],
+  },
+  { id: "git", label: "@git", value: "@git", applicableInterfaces: ["CLI"] },
+  { id: "env", label: "@env", value: "@env", applicableInterfaces: ["CLI"] },
+  {
+    id: "history",
+    label: "@history",
+    value: "@history",
+    applicableInterfaces: ["CLI"],
+  },
 ];
 
 export default function PromptForm(props: PromptFormProps) {
@@ -335,17 +348,24 @@ export default function PromptForm(props: PromptFormProps) {
                   </Box>
                   <Box margin={{ top: "m" }}>
                     <SpaceBetween direction="horizontal" size="xs">
-                      {contextModifiers.map(({ id, label, value }) => (
-                        <Button
-                          key={id}
-                          formAction="none"
-                          variant="normal"
-                          data-testid={`button-ctxmod-${id}`}
-                          onClick={() => handleContextModifierClick(value)}
-                        >
-                          {label}
-                        </Button>
-                      ))}
+                      {contextModifiers.map(
+                        ({ id, label, value, applicableInterfaces }) => (
+                          <Button
+                            key={id}
+                            formAction="none"
+                            variant="normal"
+                            data-testid={`button-ctxmod-${id}`}
+                            disabled={
+                              !applicableInterfaces.includes(
+                                qInterface as Interface,
+                              )
+                            }
+                            onClick={() => handleContextModifierClick(value)}
+                          >
+                            {label}
+                          </Button>
+                        ),
+                      )}
                     </SpaceBetween>
                   </Box>
                 </Box>
