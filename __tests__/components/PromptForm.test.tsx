@@ -349,4 +349,30 @@ describe("PromptForm component", () => {
       wrapper.findFormField('[data-testid="formfield-sdlc"]')!.findError(),
     ).toBeFalsy();
   });
+
+  it("adds context modifier to prompt", async () => {
+    const initPrompt =
+      "This is the prompt that will solve all my developer issues.";
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
+    const wrapper = createWrapper(container);
+
+    wrapper
+      .findTextarea('[data-testid="textarea-instruction"]')!
+      .setTextareaValue(initPrompt);
+
+    await waitFor(() =>
+      wrapper.findButton('[data-testid="button-ctxmod-workspace"]')!.click(),
+    );
+    const nativeInputInstruction = wrapper
+      .findTextarea('[data-testid="textarea-instruction"]')!
+      .findNativeTextarea()
+      .getElement();
+    expect(nativeInputInstruction.value).toBe(initPrompt + " @workspace");
+  });
 });

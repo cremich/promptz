@@ -13,6 +13,7 @@ import {
   Select,
   Tiles,
   Grid,
+  Box,
 } from "@cloudscape-design/components";
 import { Controller, SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -29,7 +30,6 @@ import {
   switchCategories,
 } from "@/utils/formatters";
 import { useRouter } from "next/navigation";
-import form from "@cloudscape-design/components/form";
 
 interface PromptFormProps {
   prompt: PromptViewModel;
@@ -47,6 +47,12 @@ export interface PromptFormInputs {
   category?: string;
   howto?: string;
 }
+
+type ContextModifier = {
+  id: string;
+  label: string;
+  value: string;
+};
 
 const schema = yup
   .object({
@@ -73,11 +79,19 @@ const schema = yup
 const sdlcOptions = createSelectOptions(SdlcActivity, [SdlcActivity.UNKNOWN]);
 const interfaceTiles = createTilesItems(QInterface, [QInterface.UNKNOWN]);
 
+const contextModifiers: ContextModifier[] = [
+  { id: "workspace", label: "@workspace", value: "@workspace" },
+  { id: "git", label: "@git", value: "@git" },
+  { id: "env", label: "@env", value: "@env" },
+  { id: "history", label: "@history", value: "@history" },
+];
+
 export default function PromptForm(props: PromptFormProps) {
   const {
     control,
     handleSubmit,
     getValues,
+    setValue,
     reset,
     formState: { errors, isDirty, isSubmitting },
   } = useForm({
@@ -96,6 +110,11 @@ export default function PromptForm(props: PromptFormProps) {
 
   const qInterface = useWatch({ control, name: "interface" });
   const categoryOptions = switchCategories(qInterface as QInterface);
+
+  const handleContextModifierClick = (value: string) => {
+    const currentValue = getValues("instruction") || "";
+    setValue("instruction", currentValue + ` ${value}`);
+  };
 
   return (
     <form onSubmit={handleSubmit(props.onSubmit)} id="prompt-form">
@@ -308,6 +327,28 @@ export default function PromptForm(props: PromptFormProps) {
                     )}
                   />
                 </FormField>
+                <Box margin={{ top: "m" }}>
+                  <Box variant="strong">Context Modifier</Box>
+                  <Box variant="small" color="text-body-secondary">
+                    Use the supported context modifier shortcut buttons to add
+                    them to your prompt.
+                  </Box>
+                  <Box margin={{ top: "m" }}>
+                    <SpaceBetween direction="horizontal" size="xs">
+                      {contextModifiers.map(({ id, label, value }) => (
+                        <Button
+                          key={id}
+                          formAction="none"
+                          variant="normal"
+                          data-testid={`button-ctxmod-${id}`}
+                          onClick={() => handleContextModifierClick(value)}
+                        >
+                          {label}
+                        </Button>
+                      ))}
+                    </SpaceBetween>
+                  </Box>
+                </Box>
               </Container>
               <Container>
                 <FormField
