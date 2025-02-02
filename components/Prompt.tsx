@@ -67,7 +67,7 @@ export default function Prompt(props: PromptProps) {
                   copySuccessText=" Prompt copied. Now, go build!"
                   textToCopy={promptViewModel.instruction}
                 />
-                {user && !user.guest && promptViewModel.isOwnedBy(user) ? (
+                {user && !user.isGuest && promptViewModel.isOwnedBy(user) ? (
                   <Button
                     data-testid="button-edit"
                     variant="primary"
