@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, act, RenderResult } from "@testing-library/react";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { getCurrentUser, signOut } from "aws-amplify/auth";
+import { fetchUserAttributes, getCurrentUser, signOut } from "aws-amplify/auth";
 import { UserGraphQLRepository } from "@/repositories/UserRepository";
 import { UserViewModel } from "@/models/UserViewModel";
 
@@ -54,8 +54,12 @@ describe("AuthContext", () => {
   });
 
   it("should fallback to guest user", async () => {
+    vi.mocked(fetchUserAttributes).mockResolvedValue({
+      sub: "1",
+      preferred_username: "Test Fallback",
+    });
     vi.mocked(UserGraphQLRepository.prototype.getUser).mockRejectedValue(
-      UserViewModel.createGuest(),
+      Error(),
     );
     const TestComponent = () => {
       const { user } = useAuth();
@@ -71,7 +75,7 @@ describe("AuthContext", () => {
       );
     });
 
-    expect(renderResult!.getByText("Guest")).toBeTruthy();
+    expect(renderResult!.getByText("Test Fallback")).toBeTruthy();
   });
 
   it("should logout user", async () => {

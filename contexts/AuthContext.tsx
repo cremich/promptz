@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { UserViewModel } from "@/models/UserViewModel";
-import { signOut, getCurrentUser } from "aws-amplify/auth";
+import { signOut, getCurrentUser, fetchUserAttributes } from "aws-amplify/auth";
 import { UserGraphQLRepository } from "@/repositories/UserRepository";
 
 interface AuthContextType {
@@ -25,8 +25,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   async function fetchUser() {
     try {
       const currentUser = await getCurrentUser();
-      const user = await userRepository.getUser(currentUser.userId);
-      setUser(user);
+      try {
+        const user = await userRepository.getUser(currentUser.userId);
+        setUser(user);
+      } catch {
+        const attributes = await fetchUserAttributes();
+        const user = new UserViewModel(
+          currentUser.userId,
+          currentUser.username,
+          attributes.email!,
+          attributes.preferred_username!,
+          currentUser.userId,
+          false,
+        );
+        setUser(user);
+      }
     } catch {
       setUser(UserViewModel.createGuest());
     }

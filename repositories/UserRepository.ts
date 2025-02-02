@@ -23,7 +23,7 @@ export class UserGraphQLRepository implements UserRepository {
       },
     );
     if (errors && errors.length > 0) {
-      return UserViewModel.createGuest();
+      throw new Error(errors[0].message);
     }
 
     return UserViewModel.fromSchema(userData!);

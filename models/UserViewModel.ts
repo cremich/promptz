@@ -8,7 +8,7 @@ export class UserViewModel {
   private _owner: string;
   private _guest: boolean;
 
-  private constructor(
+  constructor(
     id: string,
     username: string,
     email: string,
