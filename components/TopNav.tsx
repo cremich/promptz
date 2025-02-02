@@ -22,7 +22,7 @@ export default function TopNav() {
       },
     ];
 
-    if (user && !user.guest) {
+    if (user && !user.isGuest) {
       utilities.push({
         type: "button",
         text: "My Prompts",
@@ -42,7 +42,7 @@ export default function TopNav() {
       href: "https://github.com/cremich/promptz/issues",
     });
 
-    if (user && !user.guest) {
+    if (user && !user.isGuest) {
       utilities.push({
         type: "button",
         text: "Sign Out",

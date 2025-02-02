@@ -9,6 +9,33 @@ import createWrapper from "@cloudscape-design/components/test-utils/dom";
 import { PromptViewModel } from "@/models/PromptViewModel";
 import { UserViewModel } from "@/models/UserViewModel";
 
+const mockUserDataPrimary = {
+  id: "4304d832-1021-707b-211b-2be14c145d75",
+  username: "4304d832-1021-707b-211b-2be14c145d75",
+  email: "test@example.com",
+  displayName: "Test User Primary",
+  owner:
+    "4304d832-1021-707b-211b-2be14c145d75::4304d832-1021-707b-211b-2be14c145d75",
+  createdAt: "",
+  updatedAt: "",
+};
+
+const primaryUserModel = UserViewModel.fromSchema(mockUserDataPrimary);
+
+const promptViewModel = PromptViewModel.fromSchema({
+  id: "test-id",
+  name: "Test Prompt",
+  instruction: "Test instruction",
+  sdlc_phase: "DEPLOY",
+  category: "CHAT",
+  owner_username: mockUserDataPrimary.displayName,
+  owner: mockUserDataPrimary.owner,
+  description: "description",
+  howto: "howto",
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+});
+
 // Mock the hooks
 vi.mock("@/hooks/usePrompt");
 vi.mock("@/contexts/AuthContext");
@@ -20,18 +47,10 @@ vi.mock("next/navigation", () => ({
   }),
 }));
 
-const promptViewModel = PromptViewModel.fromSchema({
-  id: "test-id",
-  name: "Test Prompt",
-  instruction: "Test instruction",
-  sdlc_phase: "DEPLOY",
-  category: "CHAT",
-  owner_username: "Test User",
-  owner: "user123",
-  description: "description",
-  howto: "howto",
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
+vi.mocked(useAuth).mockReturnValue({
+  user: primaryUserModel,
+  logout: vi.fn(),
+  fetchUser: vi.fn(),
 });
 
 describe("Prompt component", () => {
@@ -41,14 +60,8 @@ describe("Prompt component", () => {
       error: null,
       promptViewModel: null,
     });
-    vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("userId", "username", "preferred_username", true),
-      logout: vi.fn(),
-      fetchUser: vi.fn(),
-    });
 
     const { container } = render(<Prompt promptId="test-id" />);
-
     const wrapper = createWrapper(container);
     expect(
       wrapper.findContainer('[data-testid="container-loading"]'),
@@ -61,13 +74,8 @@ describe("Prompt component", () => {
       error: new Error("Test error"),
       promptViewModel: null,
     });
-    vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("userId", "username", "preferred_username", true),
-      logout: vi.fn(),
-      fetchUser: vi.fn(),
-    });
-    const { container } = render(<Prompt promptId="test-id" />);
 
+    const { container } = render(<Prompt promptId="test-id" />);
     const wrapper = createWrapper(container).findAlert(
       '[data-testid="alert-error"]',
     )!;
@@ -82,11 +90,7 @@ describe("Prompt component", () => {
       error: null,
       promptViewModel: promptViewModel,
     });
-    vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("userId", "username", "preferred_username", true),
-      logout: vi.fn(),
-      fetchUser: vi.fn(),
-    });
+
     render(<Prompt promptId="test-id" />);
     expect(screen.getByText(promptViewModel.name)).toBeInTheDocument();
     expect(screen.getByText(promptViewModel.instruction)).toBeInTheDocument();
@@ -115,11 +119,6 @@ describe("Prompt component", () => {
       error: null,
       promptViewModel: promptViewModel,
     });
-    vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("userId", "username", "preferred_username", true),
-      logout: vi.fn(),
-      fetchUser: vi.fn(),
-    });
 
     const { container } = render(<Prompt promptId="test-id" />);
     const wrapper = createWrapper(container);
@@ -133,16 +132,6 @@ describe("Prompt component", () => {
       error: null,
       promptViewModel: promptViewModel,
     });
-    vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel(
-        "user123",
-        "username",
-        "preferred_username",
-        false,
-      ),
-      logout: vi.fn(),
-      fetchUser: vi.fn(),
-    });
 
     const { container } = render(<Prompt promptId="test-id" />);
 
@@ -150,60 +139,14 @@ describe("Prompt component", () => {
     expect(wrapper.findButton('[data-testid="button-edit"]')).toBeTruthy();
   });
 
-  it("renders edit button for owner signed up with google account", () => {
+  it("does not render edit button for user that is owning the prompt", () => {
     vi.mocked(usePrompt).mockReturnValue({
       loading: false,
       error: null,
       promptViewModel: promptViewModel,
     });
     vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel(
-        "google_userId",
-        "user123",
-        "preferred_username",
-        false,
-      ),
-      logout: vi.fn(),
-      fetchUser: vi.fn(),
-    });
-
-    const { container } = render(<Prompt promptId="test-id" />);
-
-    const wrapper = createWrapper(container);
-    expect(wrapper.findButton('[data-testid="button-edit"]')).toBeTruthy();
-  });
-
-  it("does not render edit button for non-owner", () => {
-    vi.mocked(usePrompt).mockReturnValue({
-      loading: false,
-      error: null,
-      promptViewModel: promptViewModel,
-    });
-    vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel(
-        "userId",
-        "username",
-        "preferred_username",
-        false,
-      ),
-      logout: vi.fn(),
-      fetchUser: vi.fn(),
-    });
-
-    const { container } = render(<Prompt promptId="test-id" />);
-
-    const wrapper = createWrapper(container);
-    expect(wrapper.findButton('[data-testid="button-edit"]')).toBeFalsy();
-  });
-
-  it("does not render edit button for guest user", () => {
-    vi.mocked(usePrompt).mockReturnValue({
-      loading: false,
-      error: null,
-      promptViewModel: promptViewModel,
-    });
-    vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("userId", "username", "preferred_username", true),
+      user: UserViewModel.createGuest(),
       logout: vi.fn(),
       fetchUser: vi.fn(),
     });
@@ -219,11 +162,6 @@ describe("Prompt component", () => {
       loading: false,
       error: null,
       promptViewModel: promptViewModel,
-    });
-    vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("userId", "username", "preferred_username", true),
-      logout: vi.fn(),
-      fetchUser: vi.fn(),
     });
 
     const { container } = render(<Prompt promptId="test-id" />);

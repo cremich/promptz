@@ -30,6 +30,28 @@ const mockDraftRepository: DraftRepository = {
   hasDraft: vi.fn(),
 };
 
+const mockUserDataPrimary = {
+  id: "4304d832-1021-707b-211b-2be14c145d75",
+  username: "4304d832-1021-707b-211b-2be14c145d75",
+  email: "test@example.com",
+  displayName: "Test User Primary",
+  owner:
+    "4304d832-1021-707b-211b-2be14c145d75::4304d832-1021-707b-211b-2be14c145d75",
+  createdAt: "",
+  updatedAt: "",
+};
+
+const mockUserDataSecondary = {
+  id: "1073fb35-3671-4ea0-8859-e75be2c5eb7b",
+  username: "1073fb35-3671-4ea0-8859-e75be2c5eb7b",
+  email: "test2@example.com",
+  displayName: "Test User Secondary",
+  owner:
+    "1073fb35-3671-4ea0-8859-e75be2c5eb7b::1073fb35-3671-4ea0-8859-e75be2c5eb7b",
+  createdAt: "",
+  updatedAt: "",
+};
+
 const schemaPrompt = {
   id: "1",
   name: "Test Prompt",
@@ -38,14 +60,14 @@ const schemaPrompt = {
   sdlc_phase: "Design",
   category: "Chat",
   instruction: "Test instruction",
-  owner_username: "testuser",
-  owner: "user123",
+  owner_username: mockUserDataPrimary.displayName,
+  owner: mockUserDataPrimary.owner,
   createdAt: "",
   updatedAt: "",
 };
 
-const user1 = new UserViewModel("user123", "testuser", "preferred");
-const user2 = new UserViewModel("user456", "testuser2", "preferred2");
+const primaryUser = UserViewModel.fromSchema(mockUserDataPrimary);
+const secondaryUser = UserViewModel.fromSchema(mockUserDataSecondary);
 
 describe("PromptViewModel", () => {
   it("should create a PromptViewModel instance from a schema object", () => {
@@ -80,7 +102,7 @@ describe("PromptViewModel", () => {
 
   it("should return true if the user is the owner of the prompt", () => {
     const promptViewModel = PromptViewModel.fromSchema(schemaPrompt);
-    expect(promptViewModel.isOwnedBy(user1)).toBe(true);
+    expect(promptViewModel.isOwnedBy(primaryUser)).toBe(true);
   });
 
   it("should not mark prompt as draft when created from schema", () => {
@@ -91,7 +113,7 @@ describe("PromptViewModel", () => {
   it("should return false if the user is not the owner of the prompt", () => {
     const promptViewModel = PromptViewModel.fromSchema(schemaPrompt);
 
-    expect(promptViewModel.isOwnedBy(user2)).toBe(false);
+    expect(promptViewModel.isOwnedBy(secondaryUser)).toBe(false);
   });
 
   it("should name a new prompt as draft", () => {
@@ -116,14 +138,17 @@ describe("PromptViewModel", () => {
       instruction: "Test instruction",
     };
 
-    await promptViewModel.publish(promptFormInputs, user2, mockRepository);
+    await promptViewModel.publish(
+      promptFormInputs,
+      secondaryUser,
+      mockRepository,
+    );
     expect(createPromptMock).toHaveBeenCalled();
     expect(promptViewModel.isDraft()).toBeFalsy();
   });
 
   it("should publish prompt", async () => {
     const promptViewModel = new PromptViewModel();
-    const user = new UserViewModel("user456", "testuser", "preferred");
 
     vi.mocked(createPromptMock).mockResolvedValue(
       PromptViewModel.fromSchema(schemaPrompt),
@@ -138,7 +163,11 @@ describe("PromptViewModel", () => {
       instruction: "Test instruction",
     };
 
-    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    await promptViewModel.publish(
+      promptFormInputs,
+      primaryUser,
+      mockRepository,
+    );
     expect(createPromptMock).toHaveBeenCalled();
     expect(promptViewModel.id).toBe(schemaPrompt.id);
     expect(promptViewModel.name).toBe(promptFormInputs.name);
@@ -147,7 +176,7 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.sdlcPhase).toBe(SdlcActivity.DESIGN);
     expect(promptViewModel.category).toBe(PromptCategory.CHAT);
     expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
-    expect(promptViewModel.ownerUsername).toBe(user.preferredUsername);
+    expect(promptViewModel.ownerUsername).toBe(primaryUser.displayName);
     expect(promptViewModel.isDraft()).toBeFalsy();
   });
 
@@ -165,7 +194,11 @@ describe("PromptViewModel", () => {
       howto: "Updated",
     };
 
-    await promptViewModel.publish(promptFormInputs, user2, mockRepository);
+    await promptViewModel.publish(
+      promptFormInputs,
+      primaryUser,
+      mockRepository,
+    );
     expect(updatePromptMock).toHaveBeenCalled();
     expect(promptViewModel.id).toBe(schemaPrompt.id);
     expect(promptViewModel.name).toBe(promptFormInputs.name);
@@ -175,6 +208,7 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.category).toBe(PromptCategory.INLINE);
     expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
     expect(promptViewModel.howto).toBe(promptFormInputs.howto);
+    expect(promptViewModel.ownerUsername).toBe(primaryUser.displayName);
   });
 
   it("should save a prompt as draft", async () => {
@@ -249,7 +283,6 @@ describe("PromptViewModel", () => {
 
   it("should prepend quick action for dev agent when publishing prompt", async () => {
     const promptViewModel = new PromptViewModel();
-    const user = new UserViewModel("user456", "testuser", "preferred");
 
     vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
 
@@ -263,7 +296,11 @@ describe("PromptViewModel", () => {
       howto: "Draft",
     };
 
-    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    await promptViewModel.publish(
+      promptFormInputs,
+      primaryUser,
+      mockRepository,
+    );
     expect(promptViewModel.instruction).toBe(
       `/dev ${promptFormInputs.instruction}`,
     );
@@ -271,7 +308,6 @@ describe("PromptViewModel", () => {
 
   it("should prepend quick action for transform agent when saving prompt as draft", async () => {
     const promptViewModel = new PromptViewModel();
-    const user = new UserViewModel("user456", "testuser", "preferred");
 
     vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
 
@@ -285,7 +321,11 @@ describe("PromptViewModel", () => {
       howto: "Draft",
     };
 
-    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    await promptViewModel.publish(
+      promptFormInputs,
+      primaryUser,
+      mockRepository,
+    );
     expect(promptViewModel.instruction).toBe(
       `/transform ${promptFormInputs.instruction}`,
     );
@@ -293,7 +333,6 @@ describe("PromptViewModel", () => {
 
   it("should prepend quick action for doc agent when saving prompt as draft", async () => {
     const promptViewModel = new PromptViewModel();
-    const user = new UserViewModel("user456", "testuser", "preferred");
 
     vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
 
@@ -307,7 +346,11 @@ describe("PromptViewModel", () => {
       howto: "Draft",
     };
 
-    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    await promptViewModel.publish(
+      promptFormInputs,
+      primaryUser,
+      mockRepository,
+    );
     expect(promptViewModel.instruction).toBe(
       `/doc ${promptFormInputs.instruction}`,
     );
@@ -315,7 +358,6 @@ describe("PromptViewModel", () => {
 
   it("should prepend quick action for review agent when saving prompt as draft", async () => {
     const promptViewModel = new PromptViewModel();
-    const user = new UserViewModel("user456", "testuser", "preferred");
 
     vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
 
@@ -329,7 +371,11 @@ describe("PromptViewModel", () => {
       howto: "Draft",
     };
 
-    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    await promptViewModel.publish(
+      promptFormInputs,
+      primaryUser,
+      mockRepository,
+    );
     expect(promptViewModel.instruction).toBe(
       `/review ${promptFormInputs.instruction}`,
     );
@@ -337,7 +383,6 @@ describe("PromptViewModel", () => {
 
   it("should prepend quick action for test agent when saving prompt as draft", async () => {
     const promptViewModel = new PromptViewModel();
-    const user = new UserViewModel("user456", "testuser", "preferred");
 
     vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
 
@@ -351,7 +396,11 @@ describe("PromptViewModel", () => {
       howto: "Draft",
     };
 
-    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    await promptViewModel.publish(
+      promptFormInputs,
+      primaryUser,
+      mockRepository,
+    );
     expect(promptViewModel.instruction).toBe(
       `/test ${promptFormInputs.instruction}`,
     );

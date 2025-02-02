@@ -167,7 +167,7 @@ export class PromptViewModel {
   }
 
   public isOwnedBy(user: UserViewModel) {
-    return this._owner === user.userId || this._owner === user.userName;
+    return this._owner === user.owner;
   }
 
   public createdBy() {
@@ -186,7 +186,7 @@ export class PromptViewModel {
     this._category = promptData.category as PromptCategory;
     this._instruction = promptData.instruction;
     this._howto = promptData.howto || "";
-    this._ownerUsername = owner.preferredUsername;
+    this._ownerUsername = owner.displayName;
 
     this.prependQuickAction();
 

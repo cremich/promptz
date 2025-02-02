@@ -1,7 +1,8 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { UserViewModel } from "@/models/UserViewModel";
-import { fetchUserAttributes, signOut, getCurrentUser } from "aws-amplify/auth";
+import { signOut, getCurrentUser } from "aws-amplify/auth";
+import { UserGraphQLRepository } from "@/repositories/UserRepository";
 
 interface AuthContextType {
   user: UserViewModel | null;
@@ -9,6 +10,7 @@ interface AuthContextType {
   fetchUser: () => Promise<void>;
 }
 
+const userRepository = new UserGraphQLRepository();
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -23,18 +25,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   async function fetchUser() {
     try {
       const currentUser = await getCurrentUser();
-      const attributes = await fetchUserAttributes();
-      setUser(
-        new UserViewModel(
-          currentUser.userId,
-          currentUser.username!,
-          attributes.preferred_username || "unknown",
-          false,
-        ),
-      );
-    } catch (err) {
-      console.error("Error fetching user:", err);
-      setUser(new UserViewModel("guest", "guest", "guest", true));
+      const user = await userRepository.getUser(currentUser.userId);
+      setUser(user);
+    } catch {
+      setUser(UserViewModel.createGuest());
     }
   }
 
@@ -44,7 +38,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch (error) {
       console.error("Error signing out:", error);
     } finally {
-      setUser(new UserViewModel("guest", "guest", "guest", true));
+      setUser(UserViewModel.createGuest());
     }
   }
 
