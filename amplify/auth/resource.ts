@@ -1,5 +1,6 @@
 import { defineAuth, secret } from "@aws-amplify/backend";
 import { verificationEmailTemplate } from "./email-templates";
+import { postAuthenticationFunction } from "./post-authentication/resource";
 
 const getSenders = () => {
   return process.env["PROMPTZ_ENV"] === "sandbox"
@@ -52,5 +53,8 @@ export const auth = defineAuth({
     preferredUsername: {
       required: true,
     },
+  },
+  triggers: {
+    postAuthentication: postAuthenticationFunction,
   },
 });
