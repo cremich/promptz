@@ -16,6 +16,7 @@ import {
   Alert,
 } from "@cloudscape-design/components";
 import { useRouter } from "next/navigation";
+import StarPrompt from "./StarPrompt";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePrompt } from "@/hooks/usePrompt";
 import Markdown from "markdown-to-jsx";
@@ -60,13 +61,16 @@ export default function Prompt(props: PromptProps) {
             description={promptViewModel.description}
             actions={
               <SpaceBetween direction="horizontal" size="xs">
-                <CopyToClipboard
-                  data-testid="button-copy"
-                  copyButtonText="Copy"
-                  copyErrorText="Prompt failed to copy"
-                  copySuccessText=" Prompt copied. Now, go build!"
-                  textToCopy={promptViewModel.instruction}
-                />
+                <SpaceBetween direction="horizontal" size="xs">
+                  <StarPrompt prompt={promptViewModel} user={user!} />
+                  <CopyToClipboard
+                    data-testid="button-copy"
+                    copyButtonText="Copy"
+                    copyErrorText="Prompt failed to copy"
+                    copySuccessText=" Prompt copied. Now, go build!"
+                    textToCopy={promptViewModel.instruction}
+                  />
+                </SpaceBetween>
                 {user && !user.isGuest && promptViewModel.isOwnedBy(user) ? (
                   <Button
                     data-testid="button-edit"

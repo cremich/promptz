@@ -66,6 +66,7 @@ export class PromptViewModel {
   private _ownerUsername?: string;
   private _draft: boolean;
   private _updatedAt: string;
+  private _starred: boolean;
 
   constructor() {
     this._id = `draft_${uuidv4()}`;
@@ -78,6 +79,7 @@ export class PromptViewModel {
     this._howto = "";
     this._draft = true;
     this._updatedAt = new Date().toISOString();
+    this._starred = false;
   }
 
   public static fromSchema(prompt: Schema["prompt"]["type"]): PromptViewModel {
@@ -164,6 +166,18 @@ export class PromptViewModel {
 
   public get updatedAt(): string {
     return this._updatedAt;
+  }
+
+  public get isStarred(): boolean {
+    return this._starred;
+  }
+
+  public async star(): Promise<void> {
+    this._starred = true;
+  }
+
+  public async unstar(): Promise<void> {
+    this._starred = false;
   }
 
   public isOwnedBy(user: UserViewModel) {

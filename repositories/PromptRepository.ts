@@ -2,8 +2,14 @@ import { PromptViewModel } from "@/models/PromptViewModel";
 import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../amplify/data/resource";
 import { PromptViewModelCollection } from "@/models/PromptViewModelCollection";
+import { UserViewModel } from "@/models/UserViewModel";
 
-export type FacetType = "OWNER" | "CATEGORY" | "SDLC_PHASE" | "SEARCH";
+export type FacetType =
+  | "OWNER"
+  | "CATEGORY"
+  | "SDLC_PHASE"
+  | "SEARCH"
+  | "STARRED";
 
 export type Facets = {
   facet: FacetType;
@@ -19,6 +25,8 @@ export interface PromptRepository {
   createPrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
   updatePrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
   deletePrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
+  starPrompt(prompt: PromptViewModel, user: UserViewModel): void;
+  unstarPrompt(prompt: PromptViewModel, user: UserViewModel): void;
 }
 
 export class PromptGraphQLRepository implements PromptRepository {
@@ -86,6 +94,54 @@ export class PromptGraphQLRepository implements PromptRepository {
     } else {
       throw new Error("Prompt not found");
     }
+  }
+
+  async starPrompt(prompt: PromptViewModel, user: UserViewModel) {
+    try {
+      await this.client.models.stars.create(
+        {
+          userId: user.id,
+          promptId: prompt.id,
+        },
+        {
+          authMode: "userPool",
+        },
+      );
+    } catch (error) {
+      console.error("Error starring prompt", error);
+      throw error;
+    }
+  }
+
+  async unstarPrompt(prompt: PromptViewModel, user: UserViewModel) {
+    try {
+      await this.client.models.stars.delete(
+        {
+          userId: user.id,
+          promptId: prompt.id,
+        },
+        {
+          authMode: "userPool",
+        },
+      );
+    } catch (error) {
+      console.error("Error unstarring prompt", error);
+      throw error;
+    }
+  }
+
+  async starredByUser(prompt: PromptViewModel, user: UserViewModel) {
+    const { data } = await this.client.models.stars.get(
+      {
+        userId: user.id,
+        promptId: prompt.id,
+      },
+      {
+        authMode: "userPool",
+      },
+    );
+
+    return data?.promptId === prompt.id && data?.userId === user.id;
   }
 
   async deletePrompt(prompt: PromptViewModel): Promise<PromptViewModel> {

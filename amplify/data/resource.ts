@@ -9,25 +9,39 @@ const schema = a
         email: a.string().required(),
         displayName: a.string().required(),
         owner: a.string().required(),
+        stars: a.hasMany("stars", "userId"),
       })
       .authorization((allow) => [allow.owner().to(["read"])]),
-    prompt: a.model({
-      id: a.id().required(),
-      name: a.string().required(),
-      description: a.string().required(),
-      sdlc_phase: a.string(),
-      interface: a.string(),
-      category: a.string().required(),
-      instruction: a.string().required(),
-      howto: a.string(),
-      owner_username: a.string().required(),
-    }),
+    prompt: a
+      .model({
+        id: a.id().required(),
+        name: a.string().required(),
+        description: a.string().required(),
+        sdlc_phase: a.string(),
+        interface: a.string(),
+        category: a.string().required(),
+        instruction: a.string().required(),
+        howto: a.string(),
+        owner_username: a.string().required(),
+        stars: a.hasMany("stars", "promptId"),
+      })
+      .authorization((allow) => [
+        allow.publicApiKey(),
+        allow.owner().to(["create", "update", "delete"]),
+      ]),
+    stars: a
+      .model({
+        userId: a.string().required(),
+        promptId: a.string().required(),
+        user: a.belongsTo("user", "userId"),
+        prompt: a.belongsTo("prompt", "promptId"),
+      })
+      .identifier(["userId", "promptId"])
+      .authorization((allow) => [
+        allow.owner().to(["create", "delete", "read"]),
+      ]),
   })
-  .authorization((allow) => [
-    allow.publicApiKey(),
-    allow.owner().to(["create", "update", "delete"]),
-    allow.resource(postAuthenticationFunction),
-  ]);
+  .authorization((allow) => [allow.resource(postAuthenticationFunction)]);
 
 export type Schema = ClientSchema<typeof schema>;
 
