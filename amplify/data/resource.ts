@@ -27,6 +27,7 @@ const schema = a
       })
       .authorization((allow) => [
         allow.publicApiKey(),
+        allow.authenticated().to(["read"]),
         allow.owner().to(["create", "update", "delete"]),
       ]),
     stars: a

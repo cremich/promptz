@@ -14,6 +14,7 @@ const mockUserDataPrimary = {
     "4304d832-1021-707b-211b-2be14c145d75::4304d832-1021-707b-211b-2be14c145d75",
   createdAt: "",
   updatedAt: "",
+  stars: vi.fn(),
 };
 
 const primaryUserModel = UserViewModel.fromSchema(mockUserDataPrimary);
@@ -104,6 +105,19 @@ describe("TopNav component", () => {
     expect(screen.getByRole("link", { name: "My Drafts" })).toHaveAttribute(
       "href",
       "/prompt/drafts",
+    );
+  });
+
+  it("renders My Favorites button for logged-in users", () => {
+    vi.mocked(useAuth).mockReturnValue({
+      user: primaryUserModel,
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
+    });
+    render(<TopNav />);
+    expect(screen.getByRole("link", { name: "My Favorites" })).toHaveAttribute(
+      "href",
+      "/browse/favorites",
     );
   });
 });

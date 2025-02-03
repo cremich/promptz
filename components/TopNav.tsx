@@ -25,6 +25,11 @@ export default function TopNav() {
     if (user && !user.isGuest) {
       utilities.push({
         type: "button",
+        text: "My Favorites",
+        href: "/browse/favorites",
+      });
+      utilities.push({
+        type: "button",
         text: "My Prompts",
         href: "/browse/my",
       });
