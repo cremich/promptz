@@ -17,7 +17,7 @@
     "lint": "next lint",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
-    "pr": "npm run lint && npm run coverage",
+    "pr": "npm run lint && npm run coverage && npm run build",
     "prepare": "husky",
     "sandbox": "PROMPTZ_ENV=sandbox npx ampx sandbox"
   },
