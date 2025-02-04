@@ -4,18 +4,11 @@ import { cookiesClient } from "@/utils/amplify-utils";
 
 import { PromptRepository, Facets } from "./PromptRepository";
 import type { Schema } from "../amplify/data/resource";
-import { UserViewModel } from "@/models/UserViewModel";
 
 export class ServerSideAppsyncRepository implements PromptRepository {
   client;
   constructor() {
     this.client = cookiesClient;
-  }
-  starPrompt(prompt: PromptViewModel, user: UserViewModel): void {
-    throw new Error("Method not implemented.");
-  }
-  unstarPrompt(prompt: PromptViewModel, user: UserViewModel): void {
-    throw new Error("Method not implemented.");
   }
 
   async updatePrompt(prompt: PromptViewModel): Promise<PromptViewModel> {
