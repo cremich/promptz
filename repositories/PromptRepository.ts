@@ -25,8 +25,6 @@ export interface PromptRepository {
   createPrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
   updatePrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
   deletePrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
-  starPrompt(prompt: PromptViewModel, user: UserViewModel): void;
-  unstarPrompt(prompt: PromptViewModel, user: UserViewModel): void;
 }
 
 export class PromptGraphQLRepository implements PromptRepository {
@@ -93,40 +91,6 @@ export class PromptGraphQLRepository implements PromptRepository {
       return PromptViewModel.fromSchema(prompt);
     } else {
       throw new Error("Prompt not found");
-    }
-  }
-
-  async starPrompt(prompt: PromptViewModel, user: UserViewModel) {
-    try {
-      await this.client.models.stars.create(
-        {
-          userId: user.id,
-          promptId: prompt.id,
-        },
-        {
-          authMode: "userPool",
-        },
-      );
-    } catch (error) {
-      console.error("Error starring prompt", error);
-      throw error;
-    }
-  }
-
-  async unstarPrompt(prompt: PromptViewModel, user: UserViewModel) {
-    try {
-      await this.client.models.stars.delete(
-        {
-          userId: user.id,
-          promptId: prompt.id,
-        },
-        {
-          authMode: "userPool",
-        },
-      );
-    } catch (error) {
-      console.error("Error unstarring prompt", error);
-      throw error;
     }
   }
 
