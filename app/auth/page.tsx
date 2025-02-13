@@ -3,9 +3,5 @@
 import Login from "@/components/Login";
 
 export default function AuthPage() {
-  return (
-    <div>
-      <Login />
-    </div>
-  );
+  return <div>{/* <Login /> */}</div>;
 }

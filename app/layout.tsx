@@ -1,11 +1,9 @@
 import ConfigureAmplifyClientSide from "@/components/ConfigureAmplify";
 import type { Metadata, Viewport } from "next";
-import "@cloudscape-design/global-styles/index.css";
-import "./globals.css";
-import TopNav from "@/components/TopNav";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { Suspense } from "react";
-import Footer from "@/components/Footer";
+import { geistMono, geistSans } from "@/app/ui/fonts";
+import "@/app/globals.css";
+import TopNav from "@/app/ui/navigation/topnav";
+import { ThemeProvider } from "@/app/ui/navigation/theme-provider";
 
 export const metadata: Metadata = {
   title: "PROMPTZ - Discover, Create, and Share Prompts for Amazon Q Developer",
@@ -42,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link
           rel="icon"
@@ -59,13 +57,23 @@ export default function RootLayout({
         />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body>
-        <ConfigureAmplifyClientSide />
-        <AuthProvider>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
+        >
+          <ConfigureAmplifyClientSide />
+          <TopNav />
+          {children}
+        </ThemeProvider>
+        {/* <AuthProvider>
           <TopNav />
           <Suspense>{children}</Suspense>
           <Footer />
-        </AuthProvider>
+        </AuthProvider> */}
       </body>
     </html>
   );

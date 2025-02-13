@@ -1,6 +1,6 @@
 import { PromptViewModel } from "@/models/PromptViewModel";
 import { PromptViewModelCollection } from "@/models/PromptViewModelCollection";
-import { cookiesClient } from "@/utils/amplify-utils";
+import { cookiesClient } from "@/app/lib/auth-server";
 
 import { PromptRepository, Facets } from "./PromptRepository";
 import type { Schema } from "../amplify/data/resource";

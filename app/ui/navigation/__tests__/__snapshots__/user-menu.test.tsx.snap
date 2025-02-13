@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User Menu Button renders user menu unchanged 1`] = `<div />`;

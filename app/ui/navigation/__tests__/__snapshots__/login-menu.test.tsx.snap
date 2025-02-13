@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Menu  renders login menu unchanged 1`] = `
+<div>
+  <div
+    class="space-x-4"
+  >
+    <a
+      class="hover:bg-neutral-700 px-3 py-2 rounded-md text-sm font-semibold"
+      href="/auth"
+    >
+      Log In
+    </a>
+    <a
+      class="hover:bg-neutral-700 px-3 py-2 rounded-md text-sm font-semibold border"
+      href="/auth"
+    >
+      Create Account
+    </a>
+  </div>
+</div>
+`;

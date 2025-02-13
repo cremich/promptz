@@ -1,0 +1,58 @@
+import Link from "next/link";
+import Image from "next/image";
+import MobileMenu from "./mobile-menu";
+import { links } from "@/app/ui/navigation/navigation";
+import UserMenu from "@/app/ui/navigation/user-menu";
+import { fetchCurrentAuthUser } from "@/app/lib/auth-server";
+import LoginMenu from "@/app/ui/navigation/login-menu";
+
+export default async function TopNavigation() {
+  const currentUser = await fetchCurrentAuthUser();
+
+  return (
+    <nav className="border-b">
+      {/* Main navigation container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo section */}
+          <div className="flex-shrink-0">
+            <Link href="/">
+              <Image
+                className="h-8 w-auto"
+                src="/images/promptz_logo.png"
+                width={500}
+                height={500}
+                alt="Promptz Logo"
+              />
+            </Link>
+          </div>
+
+          {/* Desktop navigation links */}
+          <div className="hidden md:flex items-center space-x-4">
+            {links.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="hover:bg-neutral-700 px-3 py-2 rounded-md text-sm font-semibold"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* User menu dropdown */}
+          <div className="hidden md:flex items-center">
+            {!currentUser.guest ? (
+              <UserMenu displayName={currentUser.displayName} />
+            ) : (
+              <LoginMenu />
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <MobileMenu />
+        </div>
+      </div>
+    </nav>
+  );
+}
