@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, test, jest } from "@jest/globals";
 import "@testing-library/jest-dom";
 import {
   handleConfirmSignUp,
+  handleRequestPassword,
   handleSignIn,
   handleSignUp,
 } from "@/app/lib/actions/cognito";
@@ -92,6 +93,20 @@ describe("Cognito Server Actions ", () => {
     // amazonq-ignore-next-line
     formData.append("password", "thisIsaTest8$");
     const result = await handleSignIn({}, formData);
+    expect(result).toBeUndefined();
+  });
+
+  test("rejects password request if email address is not valid", async () => {
+    const formData = new FormData();
+    formData.append("email", "invalid");
+    const result = await handleRequestPassword({}, formData);
+    expect(result.errors?.email).toBeTruthy();
+  });
+
+  test("passes password request if all fields are valid", async () => {
+    const formData = new FormData();
+    formData.append("email", "me@promptz.dev");
+    const result = await handleRequestPassword({}, formData);
     expect(result).toBeUndefined();
   });
 });

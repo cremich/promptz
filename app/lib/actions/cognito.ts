@@ -6,6 +6,7 @@ import {
   fetchUserAttributes,
   signIn,
   resendSignUpCode,
+  resetPassword,
 } from "@aws-amplify/auth";
 import { redirect } from "next/navigation";
 import { User } from "@/app/lib/definitions";
@@ -45,6 +46,12 @@ const LoginFormSchema = z.object({
   password: z.string(),
 });
 
+const RequestPasswordFormSchema = z.object({
+  email: z.string().email({
+    message: "Invalid email address",
+  }),
+});
+
 export type SignUpState = {
   errors?: {
     email?: string[];
@@ -62,6 +69,13 @@ export type ConfirmSignUpState = {
 };
 
 export type LoginState = {
+  errors?: {
+    email?: string[];
+  };
+  message?: string | null;
+};
+
+export type RequestPasswordState = {
   errors?: {
     email?: string[];
   };
@@ -187,6 +201,34 @@ export async function handleSignIn(
       });
       redirectLink = "/signup/confirm";
     }
+  } catch (error) {
+    return {
+      message: "Failed to create user.",
+    };
+  }
+
+  redirect(redirectLink);
+}
+
+export async function handleRequestPassword(
+  prevState: SignUpState,
+  formData: FormData,
+): Promise<LoginState> {
+  const validatedFields = RequestPasswordFormSchema.safeParse({
+    email: formData.get("email"),
+  });
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+  const { email } = validatedFields.data;
+  let redirectLink = "/reset-password/confirm";
+
+  try {
+    await resetPassword({
+      username: email,
+    });
   } catch (error) {
     return {
       message: "Failed to create user.",

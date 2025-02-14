@@ -18,3 +18,4 @@ export const confirmSignUp = jest.fn().mockImplementation(() => {
   });
 });
 export const autoSignIn = jest.fn();
+export const resetPassword = jest.fn();
