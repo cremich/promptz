@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -7,14 +6,13 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { User, ChevronDown } from "lucide-react";
-import { fetchCurrentAuthUser } from "@/app/lib/auth-server";
 import LogoutButton from "@/app/ui/navigation/logout-button";
 
 export type UserMenuProps = {
   displayName: string;
 };
 
-export default async function UserMenu(props: UserMenuProps) {
+export default function UserMenu(props: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

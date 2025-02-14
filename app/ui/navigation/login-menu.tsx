@@ -5,14 +5,14 @@ export default function LoginMenu() {
     <div className="space-x-4">
       <Link
         key="log-in"
-        href="/auth"
+        href="/login"
         className="hover:bg-neutral-700 px-3 py-2 rounded-md text-sm font-semibold"
       >
         Log In
       </Link>
       <Link
         key="create-account"
-        href="/auth"
+        href="/signup"
         className="hover:bg-neutral-700 px-3 py-2 rounded-md text-sm font-semibold border"
       >
         Create Account

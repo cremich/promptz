@@ -1,18 +1,8 @@
 // middleware.ts
-import { NextRequest, NextResponse } from "next/server";
-import { checkUserIsAuthenticated } from "@/app/lib/auth-server";
+import { authConfig } from "@/auth.config";
+import NextAuth from "next-auth";
 
-export async function middleware(request: NextRequest) {
-  const response = NextResponse.next();
-
-  const authenticated = await checkUserIsAuthenticated(request, response);
-  console.log(authenticated);
-  if (authenticated) {
-    return response;
-  }
-
-  return NextResponse.redirect(new URL("/auth", request.url));
-}
+export default NextAuth(authConfig).auth;
 
 export const config = {
   matcher: [
