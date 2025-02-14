@@ -1,8 +1,37 @@
-import { describe, expect, test } from "@jest/globals";
+import { beforeEach, describe, expect, test, jest } from "@jest/globals";
 import "@testing-library/jest-dom";
-import { handleSignUp } from "@/app/lib/actions/cognito";
+import { handleConfirmSignUp, handleSignUp } from "@/app/lib/actions/cognito";
 
 describe("Cognito Server Actions ", () => {
+  // Create a mock storage implementation
+  const mockSessionStorage = (() => {
+    let store: Record<string, string> = {};
+
+    return {
+      getItem: jest.fn((key: string) => store[key] || null),
+      setItem: jest.fn((key: string, value: string) => {
+        store[key] = value;
+      }),
+      removeItem: jest.fn((key: string) => {
+        delete store[key];
+      }),
+      clear: jest.fn(() => {
+        store = {};
+      }),
+    };
+  })();
+
+  beforeEach(() => {
+    // Set up the mock before each test
+    Object.defineProperty(window, "sessionStorage", {
+      value: mockSessionStorage,
+    });
+
+    // Clear the storage and reset all mocks
+    mockSessionStorage.clear();
+    jest.clearAllMocks();
+  });
+
   test("rejects signup if email address is not valid", async () => {
     const formData = new FormData();
     formData.append("email", "invalid");
@@ -35,9 +64,14 @@ describe("Cognito Server Actions ", () => {
     // amazonq-ignore-next-line
     formData.append("password", "thisIsaTest8$");
     const result = await handleSignUp({}, formData);
-    expect(result.errors?.password).toBeFalsy();
-    expect(result.errors?.email).toBeFalsy();
-    expect(result.errors?.username).toBeFalsy();
-    expect(result.errors?.password).toBeFalsy();
+    expect(result).toBeUndefined();
+  });
+
+  test("passes confirm signup if confirmation code is valid", async () => {
+    mockSessionStorage.setItem("signupEmail", "me@promptz.dev");
+    const formData = new FormData();
+    formData.append("code", "123456");
+    const result = await handleConfirmSignUp({}, formData);
+    expect(result).toBeUndefined();
   });
 });

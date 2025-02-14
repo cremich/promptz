@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { signUp } from "@aws-amplify/auth";
+import { signUp, confirmSignUp, autoSignIn } from "@aws-amplify/auth";
 import { redirect } from "next/navigation";
 
 const SignUpFormSchema = z.object({
@@ -26,7 +26,11 @@ const SignUpFormSchema = z.object({
     ),
 });
 
-export type State = {
+const ConfirmSignUpSchema = z.object({
+  code: z.string().length(6, "Confirmation code must be 6 digits"),
+});
+
+export type SignUpState = {
   errors?: {
     email?: string[];
     password?: string[];
@@ -35,10 +39,17 @@ export type State = {
   message?: string | null;
 };
 
+export type ConfirmSignUpState = {
+  errors?: {
+    code?: string[];
+  };
+  message?: string | null;
+};
+
 export async function handleSignUp(
-  prevState: State,
+  prevState: SignUpState,
   formData: FormData,
-): Promise<State> {
+): Promise<SignUpState> {
   const validatedFields = SignUpFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -64,6 +75,7 @@ export async function handleSignUp(
         autoSignIn: true,
       },
     });
+    sessionStorage.setItem("signupEmail", email);
   } catch (error) {
     return {
       message: "Failed to create user.",
@@ -71,4 +83,48 @@ export async function handleSignUp(
   }
 
   redirect("/signup/confirm");
+}
+
+export async function handleConfirmSignUp(
+  prevState: ConfirmSignUpState,
+  formData: FormData,
+): Promise<ConfirmSignUpState> {
+  const validatedFields = ConfirmSignUpSchema.safeParse({
+    code: formData.get("code"),
+  });
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  try {
+    // Get email from sessionStorage
+    const email = sessionStorage.getItem("signupEmail");
+
+    if (!email) {
+      return {
+        message: "Session not found. Please try signing up again.",
+      };
+    }
+
+    const { nextStep: confirmSignUpNextStep } = await confirmSignUp({
+      username: email,
+      confirmationCode: validatedFields.data.code,
+    });
+
+    if (confirmSignUpNextStep.signUpStep === "COMPLETE_AUTO_SIGN_IN") {
+      // Call `autoSignIn` API to complete the flow
+      await autoSignIn();
+    }
+
+    sessionStorage.removeItem("signupEmail");
+  } catch (error: any) {
+    console.log(error);
+    return {
+      message: error.message || "An error occurred during confirmation",
+    };
+  }
+
+  redirect("/");
 }

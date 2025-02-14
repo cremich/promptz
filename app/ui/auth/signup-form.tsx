@@ -10,12 +10,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useActionState, useState } from "react";
-import { handleSignUp, State } from "@/app/lib/actions/cognito";
+import { handleSignUp, SignUpState } from "@/app/lib/actions/cognito";
 import Link from "next/link";
 import { ErrorMessage } from "@/app/ui/error-message";
 
 export function SignUpForm() {
-  const initialState: State = {
+  const initialState: SignUpState = {
     message: null,
     errors: {},
   };

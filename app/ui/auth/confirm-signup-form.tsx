@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,8 +10,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail } from "lucide-react";
+import {
+  ConfirmSignUpState,
+  handleConfirmSignUp,
+} from "@/app/lib/actions/cognito";
+import { ErrorMessage } from "@/app/ui/error-message";
+import { useActionState } from "react";
 
 export function ConfirmSignUpForm() {
+  const initialState: ConfirmSignUpState = {
+    message: null,
+    errors: {},
+  };
+  const [state, formAction] = useActionState(handleConfirmSignUp, initialState);
+
   return (
     <div className="flex flex-col gap-6">
       <Card>
@@ -25,19 +38,27 @@ export function ConfirmSignUpForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form action={formAction}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="code">Confirmation Code</Label>
                 </div>
-                <Input id="code" type="text" required placeholder="123456" />
+                <Input
+                  id="code"
+                  name="code"
+                  type="text"
+                  required
+                  placeholder="123456"
+                  maxLength={6}
+                />
+                {state.errors?.code && (
+                  <ErrorMessage description={state.errors.code.join(" ")} />
+                )}
               </div>
-              <Button variant={"default"} className="w-full">
+              {state.message && <ErrorMessage description={state.message} />}
+              <Button type="submit" variant="default" className="w-full">
                 Confirm
-              </Button>
-              <Button variant={"secondary"} className="w-full">
-                Resend Code
               </Button>
             </div>
           </form>

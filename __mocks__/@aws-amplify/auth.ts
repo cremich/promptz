@@ -1,3 +1,13 @@
 import { jest } from "@jest/globals";
 
 export const signOut = jest.fn();
+export const signUp = jest.fn();
+export const confirmSignUp = jest.fn().mockImplementation(() => {
+  return Promise.resolve({
+    isSignedIn: true,
+    nextStep: {
+      signUpStep: "COMPLETE_AUTO_SIGN_IN",
+    },
+  });
+});
+export const autoSignIn = jest.fn();
