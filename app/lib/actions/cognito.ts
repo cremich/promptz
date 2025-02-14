@@ -1,6 +1,12 @@
 import { z } from "zod";
-import { signUp, confirmSignUp, autoSignIn } from "@aws-amplify/auth";
+import {
+  signUp,
+  confirmSignUp,
+  autoSignIn,
+  fetchUserAttributes,
+} from "@aws-amplify/auth";
 import { redirect } from "next/navigation";
+import { User } from "@/app/lib/definitions";
 
 const SignUpFormSchema = z.object({
   email: z.string().email({
@@ -127,4 +133,13 @@ export async function handleConfirmSignUp(
   }
 
   redirect("/");
+}
+
+export async function fetchCurrentUser(): Promise<User> {
+  try {
+    const currentUser = await fetchUserAttributes();
+    return { displayName: currentUser.preferred_username!, guest: false };
+  } catch (error) {
+    return { displayName: "", guest: true };
+  }
 }

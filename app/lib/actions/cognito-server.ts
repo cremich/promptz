@@ -1,7 +1,7 @@
+"use server";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
 import { createServerRunner } from "@aws-amplify/adapter-nextjs";
-import { fetchAuthSession, fetchUserAttributes } from "aws-amplify/auth/server";
+import { fetchUserAttributes } from "aws-amplify/auth/server";
 
 import outputs from "@/amplify_outputs.json";
 import { User } from "@/app/lib/definitions";
@@ -20,22 +20,4 @@ export async function fetchCurrentAuthUser(): Promise<User> {
   } catch (error) {
     return { displayName: "", guest: true };
   }
-}
-
-export async function checkUserIsAuthenticated(
-  request: NextRequest,
-  response: NextResponse,
-) {
-  const authenticated = await runWithAmplifyServerContext({
-    nextServerContext: { request, response },
-    operation: async (contextSpec) => {
-      try {
-        const session = await fetchAuthSession(contextSpec, {});
-        return session.tokens !== undefined;
-      } catch {
-        return false;
-      }
-    },
-  });
-  return authenticated;
 }

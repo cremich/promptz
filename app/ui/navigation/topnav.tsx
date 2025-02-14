@@ -3,12 +3,8 @@ import Image from "next/image";
 import MobileMenu from "./mobile-menu";
 import { links } from "@/app/ui/navigation/navigation";
 import UserMenu from "@/app/ui/navigation/user-menu";
-import { fetchCurrentAuthUser } from "@/app/lib/auth-server";
-import LoginMenu from "@/app/ui/navigation/login-menu";
 
 export default async function TopNavigation() {
-  const currentUser = await fetchCurrentAuthUser();
-
   return (
     <nav className="border-b">
       {/* Main navigation container */}
@@ -42,11 +38,7 @@ export default async function TopNavigation() {
 
           {/* User menu dropdown */}
           <div className="hidden md:flex items-center">
-            {!currentUser.guest ? (
-              <UserMenu displayName={currentUser.displayName} />
-            ) : (
-              <LoginMenu />
-            )}
+            <UserMenu />
           </div>
 
           {/* Mobile menu button */}

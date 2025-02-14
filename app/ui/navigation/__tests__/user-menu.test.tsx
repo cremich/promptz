@@ -5,7 +5,7 @@ import { render } from "@testing-library/react";
 
 describe("User Menu Button", () => {
   test("renders user menu unchanged", () => {
-    const { container } = render(<UserMenu username="test-user" />);
+    const { container } = render(<UserMenu />);
     expect(container).toMatchSnapshot();
   });
 });
