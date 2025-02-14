@@ -1,6 +1,10 @@
 import { beforeEach, describe, expect, test, jest } from "@jest/globals";
 import "@testing-library/jest-dom";
-import { handleConfirmSignUp, handleSignUp } from "@/app/lib/actions/cognito";
+import {
+  handleConfirmSignUp,
+  handleSignIn,
+  handleSignUp,
+} from "@/app/lib/actions/cognito";
 
 describe("Cognito Server Actions ", () => {
   // Create a mock storage implementation
@@ -72,6 +76,22 @@ describe("Cognito Server Actions ", () => {
     const formData = new FormData();
     formData.append("code", "123456");
     const result = await handleConfirmSignUp({}, formData);
+    expect(result).toBeUndefined();
+  });
+
+  test("rejects login if email address is not valid", async () => {
+    const formData = new FormData();
+    formData.append("email", "invalid");
+    const result = await handleSignIn({}, formData);
+    expect(result.errors?.email).toBeTruthy();
+  });
+
+  test("passes login if all fields are valid", async () => {
+    const formData = new FormData();
+    formData.append("email", "me@promptz.dev");
+    // amazonq-ignore-next-line
+    formData.append("password", "thisIsaTest8$");
+    const result = await handleSignIn({}, formData);
     expect(result).toBeUndefined();
   });
 });

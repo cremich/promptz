@@ -4,6 +4,8 @@ import {
   confirmSignUp,
   autoSignIn,
   fetchUserAttributes,
+  signIn,
+  resendSignUpCode,
 } from "@aws-amplify/auth";
 import { redirect } from "next/navigation";
 import { User } from "@/app/lib/definitions";
@@ -36,6 +38,13 @@ const ConfirmSignUpSchema = z.object({
   code: z.string().length(6, "Confirmation code must be 6 digits"),
 });
 
+const LoginFormSchema = z.object({
+  email: z.string().email({
+    message: "Invalid email address",
+  }),
+  password: z.string(),
+});
+
 export type SignUpState = {
   errors?: {
     email?: string[];
@@ -48,6 +57,13 @@ export type SignUpState = {
 export type ConfirmSignUpState = {
   errors?: {
     code?: string[];
+  };
+  message?: string | null;
+};
+
+export type LoginState = {
+  errors?: {
+    email?: string[];
   };
   message?: string | null;
 };
@@ -142,4 +158,40 @@ export async function fetchCurrentUser(): Promise<User> {
   } catch (error) {
     return { displayName: "", guest: true };
   }
+}
+
+export async function handleSignIn(
+  prevState: SignUpState,
+  formData: FormData,
+): Promise<LoginState> {
+  const validatedFields = LoginFormSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+  const { email, password } = validatedFields.data;
+  let redirectLink = "/";
+
+  try {
+    const { nextStep } = await signIn({
+      username: email,
+      password: password,
+    });
+    if (nextStep.signInStep === "CONFIRM_SIGN_UP") {
+      await resendSignUpCode({
+        username: email,
+      });
+      redirectLink = "/signup/confirm";
+    }
+  } catch (error) {
+    return {
+      message: "Failed to create user.",
+    };
+  }
+
+  redirect(redirectLink);
 }

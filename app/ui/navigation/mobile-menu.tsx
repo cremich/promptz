@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react"; // For hamburger and close icons
 import { useState } from "react";
 import { links } from "@/app/ui/navigation/navigation";
+import UserMenu from "@/app/ui/navigation/user-menu";
 export default function MobileMenu() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -37,7 +38,7 @@ export default function MobileMenu() {
               </Link>
             ))}
             <div className="pt-4 border-t border-gray-200">
-              {/* <UserMenu /> */}
+              <UserMenu />
             </div>
           </div>
         </div>
