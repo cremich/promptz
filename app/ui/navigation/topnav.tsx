@@ -11,7 +11,7 @@ export default async function TopNavigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo section */}
-          <div className="flex-shrink-0">
+          <div className="flex items-center">
             <Link href="/">
               <Image
                 className="h-8 w-auto"
@@ -21,20 +21,22 @@ export default async function TopNavigation() {
                 alt="Promptz Logo"
               />
             </Link>
+            <div className="hidden md:ml-10 md:block">
+              <div className="hidden md:flex items-center space-x-4">
+                {links.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="hover:bg-neutral-700 px-3 py-2 rounded-md text-sm font-semibold"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Desktop navigation links */}
-          <div className="hidden md:flex items-center space-x-4">
-            {links.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="hover:bg-neutral-700 px-3 py-2 rounded-md text-sm font-semibold"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
 
           {/* User menu dropdown */}
           <div className="hidden md:flex items-center">
