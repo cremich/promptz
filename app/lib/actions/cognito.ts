@@ -7,6 +7,7 @@ import {
   signIn,
   resendSignUpCode,
   resetPassword,
+  confirmResetPassword,
 } from "@aws-amplify/auth";
 import { redirect } from "next/navigation";
 import { User } from "@/app/lib/definitions";
@@ -52,6 +53,20 @@ const RequestPasswordFormSchema = z.object({
   }),
 });
 
+const ConfirmPasswordResetFormSchema = z.object({
+  code: z.string().length(6, "Confirmation code must be 6 digits"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(
+      /[^A-Za-z0-9]/,
+      "Password must contain at least one special character",
+    ),
+});
+
 export type SignUpState = {
   errors?: {
     email?: string[];
@@ -78,6 +93,14 @@ export type LoginState = {
 export type RequestPasswordState = {
   errors?: {
     email?: string[];
+  };
+  message?: string | null;
+};
+
+export type ConfirmPasswordResetState = {
+  errors?: {
+    code?: string[];
+    password?: string[];
   };
   message?: string | null;
 };
@@ -213,7 +236,7 @@ export async function handleSignIn(
 export async function handleRequestPassword(
   prevState: SignUpState,
   formData: FormData,
-): Promise<LoginState> {
+): Promise<RequestPasswordState> {
   const validatedFields = RequestPasswordFormSchema.safeParse({
     email: formData.get("email"),
   });
@@ -229,6 +252,7 @@ export async function handleRequestPassword(
     await resetPassword({
       username: email,
     });
+    sessionStorage.setItem("resetPasswordEmail", email);
   } catch (error) {
     return {
       message: "Failed to create user.",
@@ -236,4 +260,45 @@ export async function handleRequestPassword(
   }
 
   redirect(redirectLink);
+}
+
+export async function handlePasswordReset(
+  prevState: SignUpState,
+  formData: FormData,
+): Promise<ConfirmPasswordResetState> {
+  const validatedFields = ConfirmPasswordResetFormSchema.safeParse({
+    code: formData.get("code"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  // Get email from sessionStorage
+  const email = sessionStorage.getItem("resetPasswordEmail");
+
+  if (!email) {
+    return {
+      message: "Session not found. Please try gain.",
+    };
+  }
+
+  const { code, password } = validatedFields.data;
+  try {
+    await confirmResetPassword({
+      username: email,
+      confirmationCode: code,
+      newPassword: password,
+    });
+    sessionStorage.removeItem("resetPasswordEmail");
+  } catch (error) {
+    return {
+      message: "Failed to create user.",
+    };
+  }
+
+  redirect("/login");
 }

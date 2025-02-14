@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, test, jest } from "@jest/globals";
 import "@testing-library/jest-dom";
 import {
   handleConfirmSignUp,
+  handlePasswordReset,
   handleRequestPassword,
   handleSignIn,
   handleSignUp,
@@ -108,5 +109,43 @@ describe("Cognito Server Actions ", () => {
     formData.append("email", "me@promptz.dev");
     const result = await handleRequestPassword({}, formData);
     expect(result).toBeUndefined();
+  });
+
+  test("passes confirm password reset if all fields are valid", async () => {
+    mockSessionStorage.setItem("resetPasswordEmail", "me@promptz.dev");
+    const formData = new FormData();
+    formData.append("code", "123456");
+    formData.append("password", "thisIsaTest8$");
+    const result = await handlePasswordReset({}, formData);
+    expect(result).toBeUndefined();
+  });
+
+  test("rejects confirm password reset if code is invalid", async () => {
+    mockSessionStorage.setItem("resetPasswordEmail", "me@promptz.dev");
+    const formData = new FormData();
+    formData.append("code", "1");
+    // amazonq-ignore-next-line
+    formData.append("password", "thisIsaTest8$");
+    const result = await handlePasswordReset({}, formData);
+    expect(result.errors?.code).toBeTruthy();
+  });
+
+  test("rejects confirm password reset if password is invalid", async () => {
+    mockSessionStorage.setItem("resetPasswordEmail", "me@promptz.dev");
+    const formData = new FormData();
+    formData.append("code", "123456");
+    // amazonq-ignore-next-line
+    formData.append("password", "...");
+    const result = await handlePasswordReset({}, formData);
+    expect(result.errors?.password).toBeTruthy();
+  });
+
+  test("rejects confirm password reset if email is invalid", async () => {
+    const formData = new FormData();
+    formData.append("code", "123456");
+    // amazonq-ignore-next-line
+    formData.append("password", "thisIsaTest8$");
+    const result = await handlePasswordReset({}, formData);
+    expect(result.message).toBeTruthy();
   });
 });
