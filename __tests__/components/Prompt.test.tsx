@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { usePrompt } from "@/hooks/usePrompt";
-import Prompt from "@/components/Prompt";
+import Prompt from "@/app/ui/prompts/prompt";
 import { useAuth } from "@/contexts/AuthContext";
 import "@testing-library/jest-dom/vitest";
 import createWrapper from "@cloudscape-design/components/test-utils/dom";

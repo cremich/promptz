@@ -1,25 +1,9 @@
-"use client";
-import Prompt from "@/components/Prompt";
-import { BreadcrumbGroup, ContentLayout } from "@cloudscape-design/components";
+import Prompt from "@/app/ui/prompts/prompt";
 
-export default function ViewPrompt({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   return (
-    <ContentLayout
-      defaultPadding
-      headerVariant="high-contrast"
-      maxContentWidth={1024}
-      breadcrumbs={
-        <BreadcrumbGroup
-          items={[
-            { text: "Promptz", href: "/" },
-            { text: "Prompts & Prompt Templates", href: "/browse" },
-            { text: `${params.id.substring(0, 7)}...`, href: `/${params.id}` },
-          ]}
-          ariaLabel="Breadcrumbs"
-        />
-      }
-    >
+    <main className="py-8">
       <Prompt promptId={params.id} />
-    </ContentLayout>
+    </main>
   );
 }

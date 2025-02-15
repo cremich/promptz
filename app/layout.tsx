@@ -67,9 +67,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ConfigureAmplifyClientSide />
-          <TopNav />
+          <div className="max-w-7xl mx-auto px-4">
+            <TopNav />
+          </div>
           <div className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black overflow-hidden">
-            <div className="max-w-7xl mx-auto ">{children}</div>
+            <div className="max-w-7xl mx-auto px-4">{children}</div>
           </div>
           <Footer />
         </ThemeProvider>

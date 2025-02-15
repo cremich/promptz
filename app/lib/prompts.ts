@@ -46,3 +46,35 @@ export async function fetchFeaturedPrompts(): Promise<Prompt[]> {
   });
   return promptList;
 }
+
+export async function fetchPrompt(id: string) {
+  const { data: prompt, errors } = await appsync.models.prompt.get({
+    id,
+  });
+
+  if (errors && errors.length > 0) {
+    throw new Error(errors[0].message);
+  }
+
+  if (!prompt) {
+    throw new Error("Prompt not found");
+  }
+
+  const tags = Object.entries({
+    category: prompt.category,
+    sdlc_phase: prompt.sdlc_phase,
+    interface: prompt.interface,
+  })
+    .map(([_, value]) => value)
+    .filter(Boolean);
+
+  return {
+    id: prompt.id,
+    title: prompt.name,
+    description: prompt.description,
+    tags: tags,
+    author: prompt.owner_username,
+    instruction: prompt.instruction,
+    howto: prompt.howto,
+  } as Prompt;
+}

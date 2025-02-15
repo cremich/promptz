@@ -1,5 +1,5 @@
 import PromptCard from "@/app/ui/prompts/prompt-card";
-import { describe, expect, it, test } from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 
@@ -24,7 +24,7 @@ describe("PromptCard", () => {
     ).toBeInTheDocument();
 
     // Check if author is rendered
-    expect(screen.getByText("John Doe")).toBeInTheDocument();
+    expect(screen.getByText("@John Doe")).toBeInTheDocument();
     expect(screen.getByText("Author")).toBeInTheDocument();
 
     // Check if tags are rendered
@@ -45,6 +45,6 @@ describe("PromptCard", () => {
     expect(
       screen.getByText("This is a test prompt description"),
     ).toBeInTheDocument();
-    expect(screen.getByText("John Doe")).toBeInTheDocument();
+    expect(screen.getByText("@John Doe")).toBeInTheDocument();
   });
 });
