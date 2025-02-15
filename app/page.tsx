@@ -1,3 +1,4 @@
+import BenefitsGrid from "@/app/ui/landing-page/benefits";
 import PromptSpotlight from "@/app/ui/prompts/spotlight";
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
         </h1>
       </div>
       <PromptSpotlight />
+      <BenefitsGrid />
     </div>
   );
 }

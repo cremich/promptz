@@ -68,7 +68,7 @@ export default function RootLayout({
           <ConfigureAmplifyClientSide />
           <TopNav />
           <div className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black overflow-hidden">
-            {children}
+            <div className="max-w-7xl mx-auto ">{children}</div>
           </div>
         </ThemeProvider>
         {/* <AuthProvider>
