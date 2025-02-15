@@ -5,6 +5,7 @@ import "@/app/globals.css";
 import TopNav from "@/app/ui/navigation/topnav";
 import { ThemeProvider } from "@/app/ui/navigation/theme-provider";
 import Footer from "@/app/ui/footer/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "PROMPTZ - Discover, Create, and Share Prompts for Amazon Q Developer",
@@ -73,6 +74,8 @@ export default function RootLayout({
           <div className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black overflow-hidden">
             <div className="max-w-7xl mx-auto px-4">{children}</div>
           </div>
+          <Toaster />
+
           <Footer />
         </ThemeProvider>
         {/* <AuthProvider>

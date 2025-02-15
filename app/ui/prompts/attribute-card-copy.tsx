@@ -1,0 +1,31 @@
+import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { Copy, LucideIcon } from "lucide-react";
+
+interface AttributeCardCopyProps {
+  title: string;
+  text: string;
+  icon: LucideIcon;
+}
+
+export default function AttributeCardCopy({
+  title,
+  text,
+  icon: Icon,
+}: AttributeCardCopyProps) {
+  return (
+    <Card className="mb-8">
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Icon className="h-6 w-6 text-violet-400" />
+          <h2 className="text-xl font-semibold">{title}</h2>
+        </div>
+        <CopyClipBoardButton text={text} />
+      </CardHeader>
+      <CardContent>
+        <pre className="text-gray-400">{text}</pre>
+      </CardContent>
+    </Card>
+  );
+}

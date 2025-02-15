@@ -3,6 +3,7 @@ import Author from "@/app/ui/prompts/author";
 import Tags from "@/app/ui/prompts/tags";
 import { FileText, HelpCircle, Terminal } from "lucide-react";
 import AttributeCard from "@/app/ui/prompts/attribute-card";
+import AttributeCardCopy from "@/app/ui/prompts/attribute-card-copy";
 
 interface PromptProps {
   promptId: string;
@@ -61,7 +62,7 @@ export default async function Prompt(props: PromptProps) {
       )}
 
       {prompt.instruction && (
-        <AttributeCard
+        <AttributeCardCopy
           title="Prompt"
           icon={Terminal}
           text={prompt.instruction}
