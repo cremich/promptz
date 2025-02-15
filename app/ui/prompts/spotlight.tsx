@@ -1,7 +1,5 @@
 import { fetchFeaturedPrompts } from "@/app/lib/prompts";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardFooter, CardHeader } from "@/components/ui/card";
-import { CircleUserRound } from "lucide-react";
+import PromptCard from "@/app/ui/prompts/prompt-card";
 
 export default async function PromptSpotlight() {
   const featuredPrompts = await fetchFeaturedPrompts();
@@ -21,34 +19,7 @@ export default async function PromptSpotlight() {
         </div>
         <div className="grid gap-6 mt-12 md:grid-cols-2 lg:grid-cols-3">
           {featuredPrompts.map((prompt) => (
-            <Card key={prompt.id} className="flex flex-col">
-              <CardHeader className="flex-1">
-                <div className="space-y-4">
-                  <div className="space-x-2">
-                    {prompt.tags?.map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant="secondary"
-                        className="bg-primary/10 text-primary hover:bg-primary/20"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  <h3 className="font-semibold text-xl">{prompt.title}</h3>
-                  <p className="text-muted-foreground">{prompt.description}</p>
-                </div>
-              </CardHeader>
-              <CardFooter>
-                <div className="flex items-center space-x-4">
-                  <CircleUserRound />
-                  <div className="text-sm">
-                    <p className="font-medium">{prompt.author}</p>
-                    <p className="text-muted-foreground">Author</p>
-                  </div>
-                </div>
-              </CardFooter>
-            </Card>
+            <PromptCard prompt={prompt} />
           ))}
         </div>
       </div>
