@@ -1,19 +1,25 @@
 import { fetchPrompt } from "@/app/lib/prompts";
 import Author from "@/app/ui/prompts/author";
 import Tags from "@/app/ui/prompts/tags";
-import { FileText, HelpCircle, Terminal } from "lucide-react";
+import { FileText, Heart, HelpCircle, Terminal } from "lucide-react";
 import AttributeCard from "@/app/ui/prompts/attribute-card";
 import AttributeCardCopy from "@/app/ui/prompts/attribute-card-copy";
+import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";
+import EditPromptButton from "@/app/ui/prompts/edit-prompt-button";
+import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 
 interface PromptProps {
   promptId: string;
 }
 
 export default async function Prompt(props: PromptProps) {
-  const prompt = await fetchPrompt(props.promptId);
+  const promisePrompt = await fetchPrompt(props.promptId);
+  const promiseUser = await fetchCurrentAuthUser();
+  const [prompt, user] = await Promise.all([promisePrompt, promiseUser]);
+
   return (
     <div>
-      <div className="mb-8">
+      <div className="mb-8 flex items-start justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{prompt.title}</h1>
           <div className="mt-4 flex items-center gap-4">
@@ -21,30 +27,14 @@ export default async function Prompt(props: PromptProps) {
             {prompt.tags && <Tags tags={prompt.tags} />}
           </div>
         </div>
-        {/* <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-10 w-10 border-gray-800 bg-transparent text-gray-400 hover:bg-purple-900/30 hover:text-purple-300"
-            onClick={toggleFavorite}
-          >
-            <Heart
-              className={`h-5 w-5 ${isFavorited ? "fill-current text-purple-500" : ""}`}
-            />
-            <span className="sr-only">
-              {isFavorited ? "Remove from favorites" : "Add to favorites"}
-            </span>
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-10 w-10 border-gray-800 bg-transparent text-gray-400 hover:bg-purple-900/30 hover:text-purple-300"
-            onClick={copyToClipboard}
-          >
-            <Copy className="h-5 w-5" />
-            <span className="sr-only">Copy prompt</span>
-          </Button>
-        </div> */}
+        <div className="flex gap-2">
+          {prompt.id && prompt.author === user.id && (
+            <EditPromptButton id={prompt.id} />
+          )}
+          {prompt.instruction && (
+            <CopyClipBoardButton text={prompt.instruction} />
+          )}
+        </div>
       </div>
       {prompt.description && (
         <AttributeCard

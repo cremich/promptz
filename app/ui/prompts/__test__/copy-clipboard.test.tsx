@@ -21,11 +21,11 @@ describe("CopyClipBoardButton", () => {
   });
 
   test("renders the button with correct text and icon", () => {
-    render(<CopyClipBoardButton text="test text" />);
+    render(<CopyClipBoardButton text="test text" showButtonText={true} />);
 
     const button = screen.getByRole("button");
     expect(button).toBeInTheDocument();
-    expect(button).toHaveTextContent("Copy");
+    expect(button).toHaveTextContent("Copy Prompt");
     expect(button.querySelector("svg")).toBeInTheDocument();
   });
 

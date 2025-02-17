@@ -21,7 +21,7 @@ export default function AttributeCardCopy({
           <Icon className="h-6 w-6 text-violet-400" />
           <h2 className="text-xl font-semibold">{title}</h2>
         </div>
-        <CopyClipBoardButton text={text} />
+        <CopyClipBoardButton text={text} showButtonText={true} />
       </CardHeader>
       <CardContent>
         <pre className="text-gray-400">{text}</pre>

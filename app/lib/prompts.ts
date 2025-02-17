@@ -74,6 +74,7 @@ export async function fetchPrompt(id: string) {
     description: prompt.description,
     tags: tags,
     author: prompt.owner_username,
+    authorId: prompt.owner,
     instruction: prompt.instruction,
     howto: prompt.howto,
   } as Prompt;

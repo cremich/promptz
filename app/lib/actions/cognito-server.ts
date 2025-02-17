@@ -16,8 +16,12 @@ export async function fetchCurrentAuthUser(): Promise<User> {
       nextServerContext: { cookies },
       operation: (contextSpec) => fetchUserAttributes(contextSpec),
     });
-    return { displayName: currentUser.preferred_username!, guest: false };
+    return {
+      id: currentUser.sub!,
+      displayName: currentUser.preferred_username!,
+      guest: false,
+    };
   } catch (error) {
-    return { displayName: "", guest: true };
+    return { id: "", displayName: "", guest: true };
   }
 }
