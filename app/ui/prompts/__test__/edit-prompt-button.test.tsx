@@ -9,7 +9,7 @@ describe("EditPromptButton", () => {
   test("renders a link with correct href", () => {
     render(<EditPromptButton id={testId} />);
     const link = screen.getByRole("link");
-    expect(link).toHaveAttribute("href", `/prompts/${testId}/edit`);
+    expect(link).toHaveAttribute("href", `/prompt/${testId}/edit`);
   });
 
   test("renders with edit icon", () => {

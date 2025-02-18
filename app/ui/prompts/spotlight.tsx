@@ -1,4 +1,4 @@
-import { fetchFeaturedPrompts } from "@/app/lib/prompts";
+import { fetchFeaturedPrompts } from "@/app/lib/actions/prompts";
 import PromptCard from "@/app/ui/prompts/prompt-card";
 
 export default async function PromptSpotlight() {

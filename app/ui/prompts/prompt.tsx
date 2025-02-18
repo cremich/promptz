@@ -1,4 +1,4 @@
-import { fetchPrompt } from "@/app/lib/prompts";
+import { fetchPrompt } from "@/app/lib/actions/prompts";
 import Author from "@/app/ui/prompts/author";
 import Tags from "@/app/ui/prompts/tags";
 import { FileText, Heart, HelpCircle, Terminal } from "lucide-react";
@@ -28,7 +28,7 @@ export default async function Prompt(props: PromptProps) {
           </div>
         </div>
         <div className="flex gap-2">
-          {prompt.id && prompt.author === user.id && (
+          {prompt.id && prompt.authorId === user.id && (
             <EditPromptButton id={prompt.id} />
           )}
           {prompt.instruction && (

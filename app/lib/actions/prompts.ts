@@ -1,24 +1,27 @@
-// utils/amplify-utils.ts
+"use server";
 import { cookies } from "next/headers";
-
-import { createServerRunner } from "@aws-amplify/adapter-nextjs";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
-import { Prompt } from "@/app/lib/definitions";
+import { Prompt, promptFormSchema } from "@/app/lib/definitions";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
-export const { runWithAmplifyServerContext } = createServerRunner({
-  config: outputs,
-});
+export type PromptFormState = {
+  errors?: {
+    id?: string[];
+    tit?: string[];
+  };
+  message?: string | null;
+};
 
-export const appsync = generateServerClientUsingCookies<Schema>({
+const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
   cookies,
 });
 
 export async function fetchFeaturedPrompts(): Promise<Prompt[]> {
-  console.log("fetched from server");
   const { data: prompts, errors } = await appsync.models.prompt.list({
     limit: 3,
   });
@@ -78,4 +81,24 @@ export async function fetchPrompt(id: string) {
     instruction: prompt.instruction,
     howto: prompt.howto,
   } as Prompt;
+}
+
+export async function updatePrompt(
+  prevState: PromptFormState,
+  data: FormData,
+): Promise<PromptFormState> {
+  const formData = Object.fromEntries(data);
+  const parsed = promptFormSchema.safeParse(formData);
+  if (!parsed.success) {
+    return {
+      errors: parsed.error.flatten().fieldErrors,
+      message: "Invalid form data",
+    };
+  }
+
+  const prompt = parsed.data;
+  appsync.models.prompt.update({ id: prompt.id, name: prompt.title });
+
+  revalidatePath(`/prompt/${parsed.data.id}`);
+  redirect(`/prompt/${parsed.data.id}`);
 }
