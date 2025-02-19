@@ -23,4 +23,16 @@ export const promptFormSchema = z.object({
     .string()
     .max(100, "Title must be less than 100 characters")
     .min(3, "Title must be more than 3 characters"),
+  description: z
+    .string()
+    .min(10, "Description must be more than 10 characters")
+    .max(500, "Description must be less than 500 characters"),
+  howto: z
+    .string()
+    .max(4000, "How to must be less than 4000 characters")
+    .optional(),
+  instruction: z
+    .string()
+    .min(10, "Prompt must be more than 10 characters")
+    .max(4000, "Prompt must be less than 4000 characters"),
 });

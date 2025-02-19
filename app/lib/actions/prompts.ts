@@ -97,7 +97,13 @@ export async function updatePrompt(
   }
 
   const prompt = parsed.data;
-  appsync.models.prompt.update({ id: prompt.id, name: prompt.title });
+  appsync.models.prompt.update({
+    id: prompt.id,
+    name: prompt.title,
+    description: prompt.description,
+    howto: prompt.howto,
+    instruction: prompt.instruction,
+  });
 
   revalidatePath(`/prompt/${parsed.data.id}`);
   redirect(`/prompt/${parsed.data.id}`);
