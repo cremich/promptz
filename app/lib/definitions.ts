@@ -1,5 +1,40 @@
 import { z } from "zod";
 
+export enum SdlcActivity {
+  DEBUG = "Debugging",
+  DEPLOY = "Deploy",
+  DESIGN = "Design",
+  DOCUMENT = "Documentation",
+  ENHANCE = "Enhance",
+  IMPLEMENT = "Implement",
+  OPERATE = "Operate",
+  OPTIMIZE = "Optimize",
+  PATCH = "Patch Management",
+  PLAN = "Plan",
+  REFACTOR = "Refactoring",
+  REQ = "Requirements",
+  SECURITY = "Security",
+  SUPPORT = "Support",
+  TEST = "Test",
+}
+
+export enum PromptCategory {
+  CHAT = "Chat",
+  DEV_AGENT = "Dev Agent",
+  DOC_AGENT = "Doc Agent",
+  INLINE = "Inline",
+  REVIEW_AGENT = "Review Agent",
+  TEST_AGENT = "Test Agent",
+  TRANSFORM = "Transform Agent",
+  TRANSLATE = "Translate",
+}
+
+export enum QInterface {
+  IDE = "IDE",
+  CLI = "CLI",
+  CONSOLE = "Management Console",
+}
+
 export type User = {
   id: string;
   displayName: string;
@@ -35,4 +70,5 @@ export const promptFormSchema = z.object({
     .string()
     .min(10, "Prompt must be more than 10 characters")
     .max(4000, "Prompt must be less than 4000 characters"),
+  tags: z.array(z.string()),
 });

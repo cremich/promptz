@@ -3,21 +3,16 @@ import { Prompt, promptFormSchema } from "@/app/lib/definitions";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import {
-  Book,
-  Code2,
   FileText,
   HelpCircle,
-  Layers,
   Save,
   Send,
-  Tag,
   Terminal,
   Trash2,
 } from "lucide-react";
@@ -27,7 +22,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import router from "next/router";
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import { updatePrompt } from "@/app/lib/actions/prompts";
 import { ErrorMessage } from "@/app/ui/error-message";
 import { Textarea } from "@/components/ui/textarea";
@@ -38,12 +33,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  getCategoryTags,
+  getQInterfaceTags,
+  getSdlcTags,
+} from "@/app/lib/data";
+import Tags from "@/app/ui/prompts/tags";
+import { Badge } from "@/components/ui/badge";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
+import SelectableTags from "@/app/ui/prompts/selectable-tag";
 
 interface PromptFormProps {
   prompt?: Prompt;
 }
 
-type FormSchema = z.infer<typeof promptFormSchema>;
+type FormSchema = z.output<typeof promptFormSchema>;
 
 export default function PromptForm({ prompt }: PromptFormProps) {
   const [state, formAction] = useActionState(updatePrompt, {
@@ -52,9 +63,13 @@ export default function PromptForm({ prompt }: PromptFormProps) {
   });
 
   const form = useForm<FormSchema>({
-    resolver: zodResolver(promptFormSchema),
-    defaultValues: prompt || {
-      title: "",
+    resolver: zodResolver(promptFormSchema, undefined, { raw: true }),
+    defaultValues: {
+      title: prompt?.title || "",
+      description: prompt?.description || "",
+      instruction: prompt?.instruction || "",
+      tags: prompt?.tags || [],
+      howto: prompt?.howto || "",
     },
   });
 
@@ -63,24 +78,38 @@ export default function PromptForm({ prompt }: PromptFormProps) {
       return;
   }
 
+  function selectTag(tag: string) {
+    const tags = form.getValues("tags");
+    if (tags.includes(tag)) {
+      form.setValue(
+        "tags",
+        tags.filter((t) => t !== tag),
+      );
+    } else {
+      form.setValue("tags", [...tags, tag]);
+    }
+  }
+
+  const formRef = useRef<HTMLFormElement>(null);
+
   return (
     <Form {...form}>
-      <form className="space-y-8" action={formAction}>
+      <form ref={formRef} className="space-y-8" action={formAction}>
         <input
           type="hidden"
           {...form.register("id", { value: prompt?.id || "" })}
           defaultValue={prompt?.id || ""}
         />
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8">
-          <div className="space-y-8">
-            <Card>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-4">
+          <div>
+            <Card className="h-full">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="w-4 h-4" />
                   Basic Information
                 </CardTitle>
                 <CardDescription>
-                  Provide the core details of your prompt.
+                  What is this prompt doing? What is the goal?
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -113,21 +142,119 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                       </FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="What is this prompt doing? What is the goal?
-"
+                          placeholder="What is this prompt doing? What is the goal?"
                           {...field}
-                          className="min-h-[300px] text-white placeholder-white placeholder-opacity-50"
+                          className="min-h-[140px] text-white placeholder-white placeholder-opacity-50"
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name="tags"
+                  render={(field) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2">
+                        Tags
+                      </FormLabel>
+                      <FormControl>
+                        <div className="flex flex-wrap gap-2">
+                          {field.field.value.map((tag, index) => (
+                            <input
+                              key={index}
+                              type="hidden"
+                              name={`tags`}
+                              value={tag}
+                            />
+                          ))}
+                          <Tags tags={field.field.value || []}></Tags>
+                          <Sheet>
+                            <SheetTrigger>
+                              <Badge
+                                key="add-tag"
+                                variant="secondary"
+                                className="bg-neutral-600 border-dashed border-white hover:bg-neutral-600 cursor-pointer"
+                              >
+                                Edit Tags
+                              </Badge>
+                            </SheetTrigger>
+                            <SheetContent>
+                              <SheetHeader>
+                                <SheetTitle>Prompt Tags</SheetTitle>
+                                <SheetDescription>
+                                  <div>
+                                    Select the relevant tags below to improve
+                                    the discoverability of your prompt.
+                                  </div>
+                                  <div className="my-2">
+                                    Consider things like the{" "}
+                                    <span className="text-violet-500 font-semibold">
+                                      Amazon Q Developer interface
+                                    </span>{" "}
+                                    (e.g. IDE, CLI),{" "}
+                                    <span className="text-violet-500 font-semibold">
+                                      the prompt category
+                                    </span>{" "}
+                                    (e.g. chat, agent) or the{" "}
+                                    <span className="text-violet-500 font-semibold">
+                                      SDLC activity
+                                    </span>{" "}
+                                    (e.g. Design, Implementation) the prompt
+                                    relates to.
+                                  </div>
+                                </SheetDescription>
+                              </SheetHeader>
+                              <div className="my-4">
+                                <p>Amazon Q Developer Interface:</p>
+                                <p className="text-sm text-muted-foreground">
+                                  Is the prompt related to Amazon Q Developer in
+                                  your IDE, your CLI or the AWS Management
+                                  Console?
+                                </p>
+                              </div>
+                              <SelectableTags
+                                tags={getQInterfaceTags()}
+                                selectedTags={field.field.value}
+                                onTagSelect={selectTag}
+                              />
+                              <div className="my-4">
+                                <p>Prompt Category:</p>
+                                <p className="text-sm text-muted-foreground">
+                                  Is this prompt related to Amazon Q Developer
+                                  Chat, an Agent, or inline code completion?
+                                </p>
+                              </div>
+                              <SelectableTags
+                                tags={getCategoryTags()}
+                                selectedTags={field.field.value}
+                                onTagSelect={selectTag}
+                              />
+                              <div className="my-4">
+                                <p>SDLC Activity:</p>
+                                <p className="text-sm text-muted-foreground">
+                                  Which activity of the SDLC does this prompt
+                                  relate to?
+                                </p>
+                              </div>
+                              <SelectableTags
+                                tags={getSdlcTags()}
+                                selectedTags={field.field.value}
+                                onTagSelect={selectTag}
+                              />
+                            </SheetContent>
+                          </Sheet>
+                        </div>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </CardContent>
             </Card>
           </div>
-          <div className="space-y-8">
-            <Card>
+          <div>
+            <Card className="h-full">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Terminal className="w-4 h-4" />
@@ -146,7 +273,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                     <FormItem>
                       <FormControl>
                         <Textarea
-                          className="min-h-[400px] text-white placeholder-white placeholder-opacity-50"
+                          className="min-h-[450px] text-white placeholder-white placeholder-opacity-50"
                           {...field}
                         />
                       </FormControl>
@@ -187,26 +314,6 @@ export default function PromptForm({ prompt }: PromptFormProps) {
             />
           </CardContent>
         </Card>
-        {/* <FormField
-                  control={form.control}
-                  name="howto"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-2">
-                        <HelpCircle className="w-4 h-4" />
-                        How To Use (Optional)
-                      </FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Enter instructions on how to use this prompt"
-                          className="text-white placeholder-white placeholder-opacity-50"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                /> */}
 
         <div className="flex items-center gap-4">
           <Button type="submit">

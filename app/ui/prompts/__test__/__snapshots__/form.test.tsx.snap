@@ -12,13 +12,11 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
       value="12345"
     />
     <div
-      class="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8"
+      class="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-4"
     >
-      <div
-        class="space-y-8"
-      >
+      <div>
         <div
-          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-sm"
+          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-sm h-full"
         >
           <div
             class="flex flex-col space-y-1.5 p-6"
@@ -59,7 +57,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
             <div
               class="text-sm text-muted-foreground"
             >
-              Provide the core details of your prompt.
+              What is this prompt doing? What is the goal?
             </div>
           </div>
           <div
@@ -96,20 +94,51 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
               <textarea
                 aria-describedby=":r1:-form-item-description"
                 aria-invalid="false"
-                class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[300px] text-white placeholder-opacity-50"
+                class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[140px] text-white placeholder-opacity-50"
                 id=":r1:-form-item"
                 name="description"
-                placeholder="What is this prompt doing? What is the goal? "
+                placeholder="What is this prompt doing? What is the goal?"
               />
+            </div>
+            <div
+              class="space-y-2"
+            >
+              <label
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
+                for=":r2:-form-item"
+              >
+                Tags
+              </label>
+              <div
+                aria-describedby=":r2:-form-item-description"
+                aria-invalid="false"
+                class="flex flex-wrap gap-2"
+                id=":r2:-form-item"
+              >
+                <div
+                  class="flex flex-wrap gap-2"
+                />
+                <button
+                  aria-controls="radix-:r3:"
+                  aria-expanded="false"
+                  aria-haspopup="dialog"
+                  data-state="closed"
+                  type="button"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-secondary-foreground bg-neutral-600 border-dashed border-white hover:bg-neutral-600 cursor-pointer"
+                  >
+                    Edit Tags
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div
-        class="space-y-8"
-      >
+      <div>
         <div
-          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-sm"
+          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-sm h-full"
         >
           <div
             class="flex flex-col space-y-1.5 p-6"
@@ -154,10 +183,10 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
               class="space-y-2"
             >
               <textarea
-                aria-describedby=":r2:-form-item-description"
+                aria-describedby=":r6:-form-item-description"
                 aria-invalid="false"
-                class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[400px] text-white placeholder-opacity-50"
-                id=":r2:-form-item"
+                class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[450px] text-white placeholder-opacity-50"
+                id=":r6:-form-item"
                 name="instruction"
               />
             </div>
@@ -213,10 +242,10 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
           class="space-y-2"
         >
           <textarea
-            aria-describedby=":r3:-form-item-description"
+            aria-describedby=":r7:-form-item-description"
             aria-invalid="false"
             class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[200px] text-white placeholder-opacity-50"
-            id=":r3:-form-item"
+            id=":r7:-form-item"
             name="howto"
           />
         </div>

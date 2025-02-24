@@ -20,6 +20,7 @@ const schema = a
         sdlc_phase: a.string(),
         interface: a.string(),
         category: a.string().required(),
+        tags: a.string().array(),
         instruction: a.string().required(),
         howto: a.string(),
         owner_username: a.string().required(),

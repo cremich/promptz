@@ -6,9 +6,13 @@ interface TagProps {
 
 export default function Tags(props: TagProps) {
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-wrap gap-2">
       {props.tags.map((tag) => (
-        <Badge key={tag} variant="secondary" className="bg-violet-500">
+        <Badge
+          key={tag}
+          variant="secondary"
+          className="bg-violet-500 hover:bg-violet-500"
+        >
           {tag}
         </Badge>
       ))}
