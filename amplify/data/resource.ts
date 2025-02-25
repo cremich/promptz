@@ -25,11 +25,27 @@ const schema = a
         howto: a.string(),
         owner_username: a.string().required(),
         stars: a.hasMany("stars", "promptId"),
+        draft: a.hasOne("draft", "promptId"),
       })
       .authorization((allow) => [
         allow.publicApiKey(),
         allow.authenticated().to(["read"]),
         allow.owner().to(["create", "update", "delete"]),
+      ]),
+    draft: a
+      .model({
+        id: a.id().required(),
+        promptId: a.string().required(),
+        name: a.string().required(),
+        description: a.string().required(),
+        tags: a.string().array(),
+        instruction: a.string().required(),
+        howto: a.string(),
+        owner_username: a.string().required(),
+        prompt: a.belongsTo("prompt", "promptId"),
+      })
+      .authorization((allow) => [
+        allow.owner().to(["read", "create", "update", "delete"]),
       ]),
     stars: a
       .model({
