@@ -1,4 +1,4 @@
-import ConfigureAmplifyClientSide from "@/components/configure-amplify";
+import ConfigureAmplifyClientSide from "@/app/configure-amplify";
 import type { Metadata, Viewport } from "next";
 import { geistMono, geistSans } from "@/app/ui/fonts";
 import "@/app/globals.css";
