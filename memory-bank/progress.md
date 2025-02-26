@@ -37,14 +37,15 @@
 - ✅ Prompt detail view
 - ✅ Prompt editing interface
 - ✅ Copy to clipboard functionality
+- ✅ Draft system for work-in-progress prompts
+- ✅ Prompt deletion with confirmation
+- ✅ Tagging and categorization system
 
 ## In Progress Features
 
 ### Prompt Management
 
 - 🔄 Advanced prompt creation form with enhanced validation
-- 🔄 Improved prompt editing experience
-- 🔄 Tagging and categorization system
 - 🔄 Search and filtering capabilities
 - 🔄 Prompt versioning
 
@@ -105,6 +106,7 @@
 - 🔧 Increase test coverage (currently focused on critical components)
 - 🔧 Refactor form validation logic for consistency
 - 🔧 Improve error handling patterns
+- 🔧 Migrate legacy code to use new component structure and server actions
 
 ### Infrastructure
 

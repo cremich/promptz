@@ -5,14 +5,17 @@
 The project is currently in the initial development phase with a strong focus on enhancing the prompt management functionality. The primary focus areas are:
 
 1. **Prompt Management**: Refining CRUD operations and improving the user experience for prompt creation, editing, and sharing
-2. **UI Components**: Enhancing prompt-related UI components for better usability
-3. **Core Platform Setup**: Continuing to establish the Next.js application with AWS Amplify backend
-4. **Authentication System**: Refining user authentication with Amazon Cognito
+2. **Draft System**: Implementing and refining the draft system for prompts
+3. **UI Components**: Enhancing prompt-related UI components for better usability
+4. **Core Platform Setup**: Continuing to establish the Next.js application with AWS Amplify backend
+5. **Authentication System**: Refining user authentication with Amazon Cognito
 
 ## Recent Developments
 
 - Enhanced prompt management functionality with improved form components
-- Implemented copy-to-clipboard functionality for prompts
+- Implemented draft system for saving work-in-progress prompts
+- Added prompt deletion functionality with confirmation dialog
+- Implemented tagging system with categorization by SDLC activity, interface, and category
 - Refined prompt editing interface and workflows
 - Continued development of prompt display and management components
 - Improved data models and server actions for prompt operations
@@ -21,9 +24,10 @@ The project is currently in the initial development phase with a strong focus on
 
 1. **Prompt Management UX**: Creating an intuitive and efficient interface for prompt creation and editing
 2. **Data Modeling**: Continuing to refine the prompt data model to support all required use cases
-3. **Performance Optimization**: Ensuring efficient data fetching and rendering for prompt operations
-4. **Testing Coverage**: Expanding test coverage for prompt-related components
-5. **Authentication Flow**: Addressing edge cases in authentication experience with proper error handling
+3. **Code Migration**: Updating legacy code to use the new component structure and server actions
+4. **Performance Optimization**: Ensuring efficient data fetching and rendering for prompt operations
+5. **Testing Coverage**: Expanding test coverage for prompt-related components
+6. **Authentication Flow**: Addressing edge cases in authentication experience with proper error handling
 
 ## Decision Points
 

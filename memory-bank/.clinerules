@@ -117,12 +117,25 @@
 - Revalidation strategies
 - Optimistic updates
 
+### Code Migration
+
+- Some files like app/prompt/create/page.tsx still reference old component structure
+- References to @cloudscape-design/components need to be updated to use the new UI components
+- Old repository pattern needs to be migrated to use server actions
+
 ### Form Handling
 
 - Form validation using React Hook Form with Zod schemas
 - Complex validation with custom error messages
-- Draft saving functionality for work-in-progress forms
 - Form state management with useActionState hook
+
+### Draft System
+
+- Drafts are stored separately from published prompts
+- Draft names are suffixed with "[DRAFT]" for easy identification
+- Drafts share the same ID as their corresponding prompts
+- When updating a prompt, any associated draft is deleted
+- Draft saving is non-blocking and provides toast notifications
 
 ## Future Considerations
 

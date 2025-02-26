@@ -95,6 +95,24 @@ type Prompt = {
 };
 ```
 
+### Draft Model
+
+The system also supports drafts for work-in-progress prompts:
+
+```typescript
+type Draft = {
+  id: string; // Same as the prompt ID it's a draft for
+  name: string;
+  description: string;
+  instruction: string;
+  howto?: string;
+  tags?: string[];
+  owner: string;
+  createdAt: string;
+  updatedAt: string;
+};
+```
+
 ### User Model
 
 User information is primarily managed by Cognito with additional attributes:
@@ -115,12 +133,27 @@ The application uses GraphQL via AWS AppSync with the following core operations:
 
 - `getPrompt(id: ID!): Prompt`
 - `listPrompts(filter: PromptFilterInput, limit: Int): [Prompt]`
+- `getDraft(id: ID!): Draft`
 
 ### Mutations
 
 - `createPrompt(input: CreatePromptInput!): Prompt`
 - `updatePrompt(input: UpdatePromptInput!): Prompt`
 - `deletePrompt(id: ID!): Prompt`
+- `createDraft(input: CreateDraftInput!): Draft`
+- `updateDraft(input: UpdateDraftInput!): Draft`
+- `deleteDraft(id: ID!): Draft`
+
+### Server Actions
+
+The application implements the following server actions for data operations:
+
+- `fetchFeaturedPrompts()`: Retrieves a list of featured prompts for the landing page
+- `fetchPrompt(id)`: Retrieves a single prompt by ID
+- `fetchPromptForEdit(id)`: Retrieves a prompt for editing, checking for drafts first
+- `updatePrompt(prevState, data)`: Updates an existing prompt and deletes any associated draft
+- `saveDraft(draft)`: Creates or updates a draft version of a prompt
+- `deletePrompt(id)`: Deletes a prompt and any associated draft
 
 ## Error Handling Strategy
 
