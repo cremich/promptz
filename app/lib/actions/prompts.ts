@@ -2,13 +2,11 @@
 import { cookies } from "next/headers";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 
-import { data, type Schema } from "@/amplify/data/resource";
+import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
-import { Draft, Prompt, promptFormSchema } from "@/app/lib/definitions";
+import { Prompt, promptFormSchema } from "@/app/lib/definitions";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { error } from "console";
-import prompt from "@/app/ui/prompts/prompt";
 
 export type PromptFormState = {
   errors?: {
@@ -157,14 +155,21 @@ export async function updatePrompt(
   }
 
   const prompt = parsed.data;
-  appsync.models.prompt.update({
+  await appsync.models.prompt.update({
     id: prompt.id,
-    name: prompt.title,
+    name: prompt.title.replace("[DRAFT]", ""),
     description: prompt.description,
     howto: prompt.howto,
     instruction: prompt.instruction,
     tags: prompt.tags,
   });
+
+  await appsync.models.draft.delete(
+    { id: prompt.id },
+    {
+      authMode: "userPool",
+    },
+  );
 
   revalidatePath(`/prompt/${parsed.data.id}`);
   redirect(`/prompt/${parsed.data.id}`);

@@ -34,7 +34,6 @@ const schema = a
     draft: a
       .model({
         id: a.id().required(),
-        promptId: a.string().required(),
         name: a.string().required(),
         description: a.string().required(),
         tags: a.string().array(),

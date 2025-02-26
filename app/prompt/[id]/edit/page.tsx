@@ -10,7 +10,6 @@ export default async function EditPrompt({
 }) {
   const user = await fetchCurrentAuthUser();
   const prompt = await fetchPromptForEdit(params.id);
-  console.log(prompt);
 
   if (!prompt) {
     notFound();
