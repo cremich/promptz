@@ -36,21 +36,23 @@
 - ✅ Prompt spotlight feature for landing page
 - ✅ Prompt detail view
 - ✅ Prompt editing interface
+- ✅ Copy to clipboard functionality
 
 ## In Progress Features
+
+### Prompt Management
+
+- 🔄 Advanced prompt creation form with enhanced validation
+- 🔄 Improved prompt editing experience
+- 🔄 Tagging and categorization system
+- 🔄 Search and filtering capabilities
+- 🔄 Prompt versioning
 
 ### Authentication Enhancements
 
 - 🔄 Error handling improvements
 - 🔄 Social login integration
 - 🔄 User profile management
-
-### Prompt Management
-
-- 🔄 Advanced prompt creation form
-- 🔄 Tagging and categorization system
-- 🔄 Search and filtering capabilities
-- 🔄 Prompt versioning
 
 ### Community Features
 

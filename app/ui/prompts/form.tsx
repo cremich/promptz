@@ -74,10 +74,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
     },
   });
 
-  async function onDelete() {
-    if (!prompt?.id || !confirm("Are you sure you want to delete this prompt?"))
-      return;
-  }
+  async function onDeletePrompt() {}
 
   function selectTag(tag: string) {
     const tags = form.getValues("tags");
@@ -344,7 +341,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
             <Button
               type="button"
               variant="destructive"
-              onClick={onDelete}
+              onClick={onDeletePrompt}
               className="ml-auto"
             >
               <Trash2 className="w-4 h-4 mr-2" />

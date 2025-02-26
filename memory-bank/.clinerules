@@ -69,6 +69,8 @@
 - Tags categorize prompts by SDLC activity, interface, and category
 - Editing is restricted to prompt owners
 - Copy to clipboard functionality for prompt instructions
+- Draft system allows saving work-in-progress prompts
+- Form validation using Zod schema ensures data quality
 
 ### Navigation
 
@@ -117,9 +119,10 @@
 
 ### Form Handling
 
-- Complex validation scenarios
-- File uploads
-- Form state management
+- Form validation using React Hook Form with Zod schemas
+- Complex validation with custom error messages
+- Draft saving functionality for work-in-progress forms
+- Form state management with useActionState hook
 
 ## Future Considerations
 
