@@ -8,6 +8,7 @@ import { Draft, Prompt, promptFormSchema } from "@/app/lib/definitions";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { error } from "console";
+import prompt from "@/app/ui/prompts/prompt";
 
 export type PromptFormState = {
   errors?: {
@@ -84,6 +85,56 @@ export async function fetchPrompt(id: string) {
   } as Prompt;
 }
 
+export async function fetchPromptForEdit(id: string) {
+  let prompt = (
+    await appsync.models.draft.get(
+      { id },
+      {
+        authMode: "userPool",
+      },
+    )
+  ).data;
+
+  if (!prompt) {
+    const { data, errors } = await appsync.models.prompt.get(
+      { id },
+      {
+        authMode: "userPool",
+      },
+    );
+
+    if (errors && errors.length > 0) {
+      throw new Error(errors[0].message);
+    }
+
+    if (!data) {
+      throw new Error("Prompt not found");
+    }
+
+    // map previous
+    const mappedTags = Object.entries({
+      category: data.category,
+      sdlc_phase: data.sdlc_phase,
+      interface: data.interface,
+    })
+      .map(([_, value]) => value)
+      .filter(Boolean);
+
+    prompt = data;
+    prompt.tags = prompt.tags || mappedTags;
+  }
+
+  return {
+    id: prompt.id,
+    title: prompt.name,
+    description: prompt.description,
+    tags: prompt.tags,
+    instruction: prompt.instruction,
+    howto: prompt.howto,
+    authorId: prompt.owner,
+  } as Prompt;
+}
+
 export async function updatePrompt(
   prevState: PromptFormState,
   data: FormData,
@@ -138,7 +189,6 @@ export async function saveDraft(draft: Prompt): Promise<PromptFormState> {
     howto: prompt.howto,
     instruction: prompt.instruction,
     tags: prompt.tags,
-    promptId: prompt.id,
   };
 
   let response;

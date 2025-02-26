@@ -1,5 +1,5 @@
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
-import { fetchPrompt } from "@/app/lib/actions/prompts";
+import { fetchPrompt, fetchPromptForEdit } from "@/app/lib/actions/prompts";
 import PromptForm from "@/app/ui/prompts/form";
 import { redirect, notFound } from "next/navigation";
 
@@ -9,7 +9,9 @@ export default async function EditPrompt({
   params: { id: string };
 }) {
   const user = await fetchCurrentAuthUser();
-  const prompt = await fetchPrompt(params.id);
+  const prompt = await fetchPromptForEdit(params.id);
+  console.log(prompt);
+
   if (!prompt) {
     notFound();
   }
