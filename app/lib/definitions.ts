@@ -52,6 +52,15 @@ export type Prompt = {
   authorId?: string;
 };
 
+export type Draft = {
+  id?: string;
+  title?: string;
+  description?: string;
+  tags?: string[];
+  instruction?: string;
+  howto?: string;
+};
+
 export const promptFormSchema = z.object({
   id: z.string().uuid("id is not a valid uuid"),
   title: z

@@ -2,11 +2,12 @@
 import { cookies } from "next/headers";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 
-import { type Schema } from "@/amplify/data/resource";
+import { data, type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
-import { Prompt, promptFormSchema } from "@/app/lib/definitions";
+import { Draft, Prompt, promptFormSchema } from "@/app/lib/definitions";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { error } from "console";
 
 export type PromptFormState = {
   errors?: {
@@ -116,4 +117,68 @@ export async function updatePrompt(
 
   revalidatePath(`/prompt/${parsed.data.id}`);
   redirect(`/prompt/${parsed.data.id}`);
+}
+
+export async function saveDraft(draft: Prompt): Promise<PromptFormState> {
+  const parsed = promptFormSchema.safeParse(draft);
+  if (!parsed.success) {
+    return {
+      errors: parsed.error.flatten().fieldErrors,
+      message: "Invalid form data",
+    };
+  }
+  const prompt = parsed.data;
+
+  const draftData = {
+    id: prompt.id,
+    name: prompt.title.endsWith("[DRAFT]")
+      ? prompt.title
+      : prompt.title + " [DRAFT]",
+    description: prompt.description,
+    howto: prompt.howto,
+    instruction: prompt.instruction,
+    tags: prompt.tags,
+    promptId: prompt.id,
+  };
+
+  let response;
+  try {
+    if (await hasDraft(prompt.id)) {
+      response = await appsync.models.draft.update(
+        { ...draftData },
+        {
+          authMode: "userPool",
+        },
+      );
+    } else {
+      response = await appsync.models.draft.create(
+        { ...draftData },
+        {
+          authMode: "userPool",
+        },
+      );
+    }
+    return {
+      message: response.errors ? response.errors[0].message : "Draft saved",
+    };
+  } catch (err) {
+    return {
+      message: `Error saving draft: ${err}`,
+    };
+  }
+}
+
+async function hasDraft(id: string): Promise<boolean> {
+  const { data: draft, errors } = await appsync.models.draft.get(
+    {
+      id,
+    },
+    {
+      authMode: "userPool",
+    },
+  );
+
+  console.log(draft, errors);
+
+  return draft !== null && errors === undefined;
 }

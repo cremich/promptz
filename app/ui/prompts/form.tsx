@@ -23,7 +23,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import router from "next/router";
 import { useActionState, useRef } from "react";
-import { updatePrompt } from "@/app/lib/actions/prompts";
+import { saveDraft, updatePrompt } from "@/app/lib/actions/prompts";
 import { ErrorMessage } from "@/app/ui/error-message";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -49,6 +49,7 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import SelectableTags from "@/app/ui/prompts/selectable-tag";
+import { toast } from "sonner";
 
 interface PromptFormProps {
   prompt?: Prompt;
@@ -91,6 +92,11 @@ export default function PromptForm({ prompt }: PromptFormProps) {
   }
 
   const formRef = useRef<HTMLFormElement>(null);
+
+  async function onSaveDraft() {
+    const response = await saveDraft(form.getValues());
+    toast(response.message);
+  }
 
   return (
     <Form {...form}>
@@ -324,7 +330,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
           <Button
             type="button"
             variant="secondary"
-            onClick={() => console.log("save as draft")}
+            onClick={() => onSaveDraft()}
           >
             <Save className="w-4 h-4 mr-2" />
             Save as Draft

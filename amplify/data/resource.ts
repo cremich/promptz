@@ -25,7 +25,6 @@ const schema = a
         howto: a.string(),
         owner_username: a.string().required(),
         stars: a.hasMany("stars", "promptId"),
-        draft: a.hasOne("draft", "promptId"),
       })
       .authorization((allow) => [
         allow.publicApiKey(),
@@ -41,8 +40,6 @@ const schema = a
         tags: a.string().array(),
         instruction: a.string().required(),
         howto: a.string(),
-        owner_username: a.string().required(),
-        prompt: a.belongsTo("prompt", "promptId"),
       })
       .authorization((allow) => [
         allow.owner().to(["read", "create", "update", "delete"]),
