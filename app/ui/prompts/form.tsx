@@ -21,9 +21,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import router from "next/router";
 import { useActionState, useRef } from "react";
-import { saveDraft, updatePrompt } from "@/app/lib/actions/prompts";
+import {
+  saveDraft,
+  updatePrompt,
+  deletePrompt,
+} from "@/app/lib/actions/prompts";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogCancel,
+  AlertDialogAction,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { ErrorMessage } from "@/app/ui/error-message";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -50,6 +64,8 @@ import {
 } from "@/components/ui/sheet";
 import SelectableTags from "@/app/ui/prompts/selectable-tag";
 import { toast } from "sonner";
+import router from "next/router";
+import { redirect } from "next/navigation";
 
 interface PromptFormProps {
   prompt?: Prompt;
@@ -74,7 +90,14 @@ export default function PromptForm({ prompt }: PromptFormProps) {
     },
   });
 
-  async function onDeletePrompt() {}
+  async function onDeletePrompt() {
+    const response = await deletePrompt(prompt?.id as string);
+    if (response.success === true) {
+      redirect(`/`);
+    } else {
+      toast.error(response.message);
+    }
+  }
 
   function selectTag(tag: string) {
     const tags = form.getValues("tags");
@@ -338,15 +361,39 @@ export default function PromptForm({ prompt }: PromptFormProps) {
           </Button>
 
           {prompt && prompt.id && (
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={onDeletePrompt}
-              className="ml-auto"
-            >
-              <Trash2 className="w-4 h-4 mr-2" />
-              Delete Prompt
-            </Button>
+            <AlertDialog>
+              <Button
+                type="button"
+                variant="destructive"
+                className="ml-auto"
+                asChild
+              >
+                <AlertDialogTrigger>
+                  <div className="flex items-center">
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Delete Prompt
+                  </div>
+                </AlertDialogTrigger>
+              </Button>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Delete Prompt?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure you want to delete this prompt? This action
+                    cannot be undone and will also remove any associated drafts.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={onDeletePrompt}
+                    className="bg-destructive hover:bg-destructive/90 text-white"
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           )}
         </div>
         <div>

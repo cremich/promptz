@@ -7,6 +7,7 @@ import outputs from "@/amplify_outputs.json";
 import { Prompt, promptFormSchema } from "@/app/lib/definitions";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { error } from "console";
 
 export type PromptFormState = {
   errors?: {
@@ -233,7 +234,37 @@ async function hasDraft(id: string): Promise<boolean> {
     },
   );
 
-  console.log(draft, errors);
-
   return draft !== null && errors === undefined;
+}
+
+export async function deletePrompt(
+  id: string,
+): Promise<{ success: boolean; message: string }> {
+  try {
+    // Delete the draft if it exists
+    if (await hasDraft(id)) {
+      await appsync.models.draft.delete(
+        { id },
+        {
+          authMode: "userPool",
+        },
+      );
+    }
+    // Delete the prompt
+    await appsync.models.prompt.delete(
+      { id },
+      {
+        authMode: "userPool",
+      },
+    );
+    return {
+      success: true,
+      message: `Prompt deleted`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Error deleting prompt: ${error}`,
+    };
+  }
 }
