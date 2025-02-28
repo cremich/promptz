@@ -1,3 +1,4 @@
+"use client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -11,12 +12,43 @@ import {
   QInterface,
   SdlcActivity,
 } from "@/app/lib/definitions";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
-export function FilterSidebar() {
+interface FilterSidebarProps {
+  selectedInterface?: string[];
+}
+
+export function FilterSidebar({ selectedInterface }: FilterSidebarProps) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
   const interfaceOptions = Object.values(QInterface);
   const categoryOptions = Object.values(PromptCategory);
   const sdlcOptions = Object.values(SdlcActivity);
 
+  function handleSelectedInterfaceChange(interfaceValue: string) {
+    const params = new URLSearchParams(searchParams);
+
+    // Remove all existing interface values
+    params.delete("interface[]");
+    const selectedInterfaces = searchParams.getAll("interface[]");
+
+    if (selectedInterfaces.includes(interfaceValue)) {
+      // Add back all values except the one that was unchecked
+      selectedInterfaces
+        .filter((value) => value !== interfaceValue)
+        .forEach((value) => params.append("interface[]", value));
+    } else {
+      // Add back all existing values plus the new one
+      [...selectedInterfaces, interfaceValue].forEach((value) =>
+        params.append("interface[]", value),
+      );
+    }
+
+    // Update the URL with new parameters
+    replace(`${pathname}?${params.toString()}`);
+  }
   return (
     <div className="space-y-6">
       <div>
@@ -24,7 +56,11 @@ export function FilterSidebar() {
         <div className="space-y-2">
           {interfaceOptions.map((option) => (
             <div key={option} className="flex items-center space-x-2">
-              <Checkbox id={`type-${option.toLowerCase()}`} />
+              <Checkbox
+                id={`type-${option.toLowerCase()}`}
+                checked={selectedInterface?.includes(option)}
+                onCheckedChange={() => handleSelectedInterfaceChange(option)}
+              />
               <label
                 htmlFor={`type-${option.toLowerCase()}`}
                 className="text-sm cursor-pointer"

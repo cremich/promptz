@@ -1,4 +1,5 @@
 import { fetchPrompts } from "@/app/lib/actions/prompts";
+import { FilterSidebar } from "@/app/ui/browse/filter-sidebar";
 import SearchBox from "@/app/ui/browse/search";
 import PromptCard from "@/app/ui/prompts/prompt-card";
 
@@ -7,16 +8,18 @@ import { Suspense } from "react";
 interface BrowsePageProps {
   searchParams: {
     query?: string;
+    "interface[]": string[];
   };
 }
 
 export default async function Browse({ searchParams }: BrowsePageProps) {
   const { prompts, nextToken } = await fetchPrompts({
     query: searchParams.query,
+    interface: searchParams["interface[]"],
   });
 
   return (
-    <div className="container mx-auto py-8 px-4 md:px-6">
+    <main className="py-8">
       <div className="flex flex-col space-y-6">
         <div className="flex flex-col space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">Browse Prompts</h1>
@@ -27,17 +30,21 @@ export default async function Browse({ searchParams }: BrowsePageProps) {
         </div>
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Filters sidebar - hidden on mobile */}
-          {/* <div className="hidden lg:block w-64 flex-shrink-0">
-            <FilterSidebar />
-          </div> */}
+          <div className="hidden lg:block w-64 flex-shrink-0">
+            <FilterSidebar
+              selectedInterface={
+                Array.isArray(searchParams["interface[]"])
+                  ? searchParams["interface[]"]
+                  : [searchParams["interface[]"]]
+              }
+            />
+          </div>
 
           <div className="flex-1 space-y-6">
             {/* Search and filter bar */}
             <div className="flex flex-col sm:flex-row gap-4">
               <SearchBox placeholder="Search prompts..." />
-              {/* <Button variant="outline" className="lg:hidden">
-                Filters
-              </Button>
+              {/*
               <div className="hidden sm:flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Sort by:</span>
                 <select className="bg-background border border-input rounded-md px-3 py-1 text-sm">
@@ -58,6 +65,6 @@ export default async function Browse({ searchParams }: BrowsePageProps) {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

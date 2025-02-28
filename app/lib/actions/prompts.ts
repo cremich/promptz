@@ -75,6 +75,20 @@ export async function fetchPrompts(
       ];
     }
 
+    if (params.interface) {
+      const interfaces = Array.isArray(params.interface)
+        ? params.interface
+        : [params.interface];
+
+      filter.and = interfaces.map((i) => {
+        return {
+          tags: {
+            contains: i,
+          },
+        };
+      });
+    }
+
     const {
       data: prompts,
       errors,
