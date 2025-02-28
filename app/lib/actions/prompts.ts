@@ -49,7 +49,7 @@ interface FetchPromptsResult {
   nextToken?: string | null;
 }
 
-export async function fetchPrompts(
+export async function searchPrompts(
   params: SearchParams,
 ): Promise<FetchPromptsResult> {
   try {
@@ -81,6 +81,31 @@ export async function fetchPrompts(
         : [params.interface];
 
       filter.and = interfaces.map((i) => {
+        return {
+          tags: {
+            contains: i,
+          },
+        };
+      });
+    }
+
+    if (params.category) {
+      const categories = Array.isArray(params.category)
+        ? params.category
+        : [params.category];
+
+      filter.and = categories.map((i) => {
+        return {
+          tags: {
+            contains: i,
+          },
+        };
+      });
+    }
+
+    if (params.sdlc) {
+      const sdlc = Array.isArray(params.sdlc) ? params.sdlc : [params.sdlc];
+      filter.and = sdlc.map((i) => {
         return {
           tags: {
             contains: i,

@@ -1,4 +1,4 @@
-import { fetchPrompts } from "@/app/lib/actions/prompts";
+import { searchPrompts } from "@/app/lib/actions/prompts";
 import { FilterSidebar } from "@/app/ui/browse/filter-sidebar";
 import SearchBox from "@/app/ui/browse/search";
 import PromptCard from "@/app/ui/prompts/prompt-card";
@@ -9,13 +9,17 @@ interface BrowsePageProps {
   searchParams: {
     query?: string;
     "interface[]": string[];
+    "category[]": string[];
+    "sdlc[]": string[];
   };
 }
 
 export default async function Browse({ searchParams }: BrowsePageProps) {
-  const { prompts, nextToken } = await fetchPrompts({
+  const { prompts, nextToken } = await searchPrompts({
     query: searchParams.query,
     interface: searchParams["interface[]"],
+    category: searchParams["category[]"],
+    sdlc: searchParams["sdlc[]"],
   });
 
   return (
