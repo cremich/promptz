@@ -4,10 +4,8 @@ import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/ap
 
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
-import { Prompt, promptFormSchema } from "@/app/lib/definitions";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { error } from "console";
+import { Prompt, searchParamsSchema } from "@/app/lib/definitions";
+import { SearchParams } from "next/dist/server/request/search-params";
 
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
@@ -27,24 +25,7 @@ export async function fetchFeaturedPrompts(): Promise<Prompt[]> {
     throw new Error(errors[0].message);
   }
 
-  const promptList = prompts.map((p) => {
-    const mappedTags = Object.entries({
-      category: p.category,
-      sdlc_phase: p.sdlc_phase,
-      interface: p.interface,
-    })
-      .map(([_, value]) => value)
-      .filter(Boolean);
-
-    return {
-      id: p.id,
-      title: p.name,
-      description: p.description,
-      tags: p.tags || mappedTags,
-      author: p.owner_username,
-    } as Prompt;
-  });
-  return promptList;
+  return mapToPrompts(prompts);
 }
 
 export async function fetchPrompt(id: string) {
@@ -60,23 +41,92 @@ export async function fetchPrompt(id: string) {
     throw new Error("Prompt not found");
   }
 
-  const mappedTags = Object.entries({
-    category: prompt.category,
-    sdlc_phase: prompt.sdlc_phase,
-    interface: prompt.interface,
-  })
-    .map(([_, value]) => value)
-    .filter(Boolean);
+  return mapToPrompt(prompt);
+}
+
+interface FetchPromptsResult {
+  prompts: Prompt[];
+  nextToken?: string | null;
+}
+
+export async function fetchPrompts(
+  params: SearchParams,
+): Promise<FetchPromptsResult> {
+  try {
+    // Validate search params
+    const validatedParams = searchParamsSchema.parse(params);
+
+    // Build filter based on search params
+    const filter: Record<string, any> = {
+      public: { eq: true },
+    };
+
+    if (validatedParams.query) {
+      const sentenceCase =
+        validatedParams.query.charAt(0).toUpperCase() +
+        validatedParams.query.slice(1).toLowerCase();
+      filter.or = [
+        { name: { contains: validatedParams.query.toLowerCase() } },
+        { name: { contains: validatedParams.query.toUpperCase() } },
+        { name: { contains: sentenceCase } },
+        { description: { contains: validatedParams.query.toLowerCase() } },
+        { description: { contains: validatedParams.query.toUpperCase() } },
+        { description: { contains: sentenceCase } },
+      ];
+    }
+
+    const {
+      data: prompts,
+      errors,
+      nextToken,
+    } = await appsync.models.prompt.list({
+      filter,
+      limit: 12,
+    });
+
+    if (errors && errors.length > 0) {
+      throw new Error(errors[0].message);
+    }
+
+    // Map the prompts to our frontend model
+    const promptList = mapToPrompts(prompts);
+
+    return {
+      prompts: promptList,
+      nextToken,
+    };
+  } catch (error) {
+    console.error("Error fetching prompts:", error);
+    throw error;
+  }
+}
+
+function mapToPrompt(prompt: Schema["prompt"]["type"]): Prompt {
+  // Create an array of potential tags
+  const mappedTags: (string | null | undefined)[] = [
+    prompt.category,
+    prompt.sdlc_phase,
+    prompt.interface,
+  ];
+
+  // Use the provided tags if they exist, otherwise use the mapped tags
+  const finalTags: string[] = (prompt.tags || mappedTags).filter(
+    (tag): tag is NonNullable<typeof tag> => tag != null,
+  );
 
   return {
     id: prompt.id,
     title: prompt.name,
     description: prompt.description,
-    tags: prompt.tags || mappedTags,
+    tags: finalTags,
     author: prompt.owner_username,
-    authorId: prompt.owner,
+    authorId: prompt.owner || "",
     instruction: prompt.instruction,
-    howto: prompt.howto,
-    public: prompt.public,
-  } as Prompt;
+    howto: prompt.howto || "",
+    public: prompt.public || false,
+  };
+}
+
+function mapToPrompts(prompts: Schema["prompt"]["type"][]): Prompt[] {
+  return prompts.map(mapToPrompt);
 }

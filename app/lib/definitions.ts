@@ -78,3 +78,8 @@ export const promptFormSchema = z.object({
   tags: z.array(z.string()).optional(),
   public: z.boolean(),
 });
+
+// Validation schema for search and filter params
+export const searchParamsSchema = z.object({
+  query: z.string().optional(),
+});
