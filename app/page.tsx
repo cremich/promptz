@@ -1,4 +1,5 @@
 import BenefitsGrid from "@/app/ui/landing-page/benefits";
+import { SearchForm } from "@/app/ui/landing-page/search-form";
 import PromptSpotlight from "@/app/ui/prompts/spotlight";
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
           <br />
           for <span className="text-violet-600">Amazon Q Developer</span>
         </h1>
+        <SearchForm />
       </div>
       <PromptSpotlight />
       <BenefitsGrid />
