@@ -3,6 +3,7 @@ import { Prompt, promptFormSchema } from "@/app/lib/definitions";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -10,7 +11,9 @@ import {
 } from "@/components/ui/form";
 import {
   FileText,
+  Globe,
   HelpCircle,
+  Loader2,
   Save,
   Send,
   Terminal,
@@ -21,12 +24,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { useActionState, useRef } from "react";
+import { useActionState, useEffect } from "react";
 import {
-  saveDraft,
-  updatePrompt,
   deletePrompt,
-} from "@/app/lib/actions/prompts";
+  onSubmitAction,
+  FormState,
+} from "@/app/lib/actions/prompt-form";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -38,7 +41,6 @@ import {
   AlertDialogAction,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { ErrorMessage } from "@/app/ui/error-message";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
@@ -64,8 +66,8 @@ import {
 } from "@/components/ui/sheet";
 import SelectableTags from "@/app/ui/prompts/selectable-tag";
 import { toast } from "sonner";
-import router from "next/router";
 import { redirect } from "next/navigation";
+import { Switch } from "@/components/ui/switch";
 
 interface PromptFormProps {
   prompt?: Prompt;
@@ -74,19 +76,32 @@ interface PromptFormProps {
 type FormSchema = z.output<typeof promptFormSchema>;
 
 export default function PromptForm({ prompt }: PromptFormProps) {
-  const [state, formAction] = useActionState(updatePrompt, {
-    errors: {},
-    message: null,
+  const [state, formAction, isPending] = useActionState(onSubmitAction, {
+    message: "",
+    success: true,
   });
 
+  useEffect(() => {
+    if (state.success && state.message) {
+      toast.success(state.message, { richColors: true });
+    } else if (!state.success && state.message) {
+      toast.error(state.message, {
+        description: combineErrors(state),
+        richColors: true,
+      });
+    }
+  }, [state]);
+
   const form = useForm<FormSchema>({
-    resolver: zodResolver(promptFormSchema, undefined, { raw: true }),
+    resolver: zodResolver(promptFormSchema),
     defaultValues: {
+      id: prompt?.id || "",
       title: prompt?.title || "",
       description: prompt?.description || "",
       instruction: prompt?.instruction || "",
       tags: prompt?.tags || [],
       howto: prompt?.howto || "",
+      public: prompt?.public || false,
     },
   });
 
@@ -100,7 +115,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
   }
 
   function selectTag(tag: string) {
-    const tags = form.getValues("tags");
+    const tags = form.getValues("tags") || [];
     if (tags.includes(tag)) {
       form.setValue(
         "tags",
@@ -111,20 +126,19 @@ export default function PromptForm({ prompt }: PromptFormProps) {
     }
   }
 
-  const formRef = useRef<HTMLFormElement>(null);
-
-  async function onSaveDraft() {
-    const response = await saveDraft(form.getValues());
-    toast(response.message);
+  function combineErrors(formState: FormState): string {
+    return !formState.errors
+      ? ""
+      : Object.values(formState.errors).flat().filter(Boolean).join(". ");
   }
 
   return (
     <Form {...form}>
-      <form ref={formRef} className="space-y-8" action={formAction}>
-        <input
-          type="hidden"
-          {...form.register("id", { value: prompt?.id || "" })}
-          defaultValue={prompt?.id || ""}
+      <form className="space-y-8" action={formAction}>
+        <FormField
+          control={form.control}
+          name="id"
+          render={({ field }) => <input type="hidden" {...field} />}
         />
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-4">
           <div>
@@ -154,7 +168,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                           className="text-white placeholder-white placeholder-opacity-50"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage>{state.errors?.title}</FormMessage>
                     </FormItem>
                   )}
                 />
@@ -173,7 +187,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                           className="min-h-[140px] text-white placeholder-white placeholder-opacity-50"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage>{state.errors?.description}</FormMessage>
                     </FormItem>
                   )}
                 />
@@ -187,7 +201,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                       </FormLabel>
                       <FormControl>
                         <div className="flex flex-wrap gap-2">
-                          {field.field.value.map((tag, index) => (
+                          {field.field.value?.map((tag, index) => (
                             <input
                               key={index}
                               type="hidden"
@@ -276,6 +290,37 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name="public"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-between">
+                      <div className="space-y-0.5">
+                        <FormLabel>Visibility</FormLabel>
+                        <FormDescription className="pr-10">
+                          Keep your prompt private as a draft or just for you. A
+                          private prompt can still be shared via URL but will
+                          not be listed on promptz.dev. Make your prompt public
+                          to share it with the community.
+                        </FormDescription>
+                      </div>
+                      <FormControl>
+                        <div>
+                          <Switch
+                            className="border-neutral-400"
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                          <input
+                            type="hidden"
+                            name="public"
+                            value={`${field.value}`}
+                          />
+                        </div>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </CardContent>
             </Card>
           </div>
@@ -303,7 +348,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage>{state.errors?.instruction}</FormMessage>
                     </FormItem>
                   )}
                 />
@@ -334,7 +379,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage>{state.errors?.howto}</FormMessage>
                 </FormItem>
               )}
             />
@@ -343,21 +388,12 @@ export default function PromptForm({ prompt }: PromptFormProps) {
 
         <div className="flex items-center gap-4">
           <Button type="submit">
-            <Send className="w-4 h-4 mr-2" />
-            {prompt && prompt.id ? "Update Prompt" : "Create Prompt"}
-          </Button>
-
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={() => onSaveDraft()}
-          >
-            <Save className="w-4 h-4 mr-2" />
-            Save as Draft
-          </Button>
-
-          <Button type="button" variant="outline" onClick={() => router.back()}>
-            Cancel
+            {isPending ? (
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            ) : (
+              <Save className="w-4 h-4 mr-2" />
+            )}
+            Save Prompt
           </Button>
 
           {prompt && prompt.id && (
@@ -397,7 +433,12 @@ export default function PromptForm({ prompt }: PromptFormProps) {
           )}
         </div>
         <div>
-          {state.message && <ErrorMessage description={state.message} />}
+          {/* {state.errors && (
+            <ErrorMessage
+              title={state.message}
+              description={combineErrors(state)}
+            />
+          )} */}
         </div>
       </form>
     </Form>

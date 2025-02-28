@@ -1,21 +1,26 @@
 // middleware.ts
-import { authConfig } from "@/auth.config";
-import NextAuth from "next-auth";
+import { fetchCurrentAuthUserFromRequestContext } from "@/app/lib/actions/cognito-server";
+import { type NextRequest, NextResponse } from "next/server";
 
-export default NextAuth(authConfig).auth;
+export async function middleware(request: NextRequest) {
+  const response = NextResponse.next();
+  const user = await fetchCurrentAuthUserFromRequestContext({
+    request,
+    response,
+  });
+
+  if (user) {
+    return response;
+  }
+
+  return NextResponse.redirect(new URL("/login", request.url));
+}
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - auth
-     */
-    "/((?!api|_next/static|_next/image|images|favicon.ico|auth|browse(?!my)|prompt/(?!create)|$).*)",
     "/prompt/create",
-    "/browse/my",
+    "/prompt/favorites",
+    "/prompt/my",
+    "/prompt/(.*)/edit",
   ],
 };

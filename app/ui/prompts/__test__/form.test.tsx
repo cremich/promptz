@@ -8,6 +8,13 @@ describe("Prompt Form", () => {
   const prompt: Prompt = {
     id: "12345",
     title: "Test Prompt",
+    description: "This is a test prompt",
+    instruction: "What is the meaning of life?",
+    howto: "this is cool",
+    tags: ["IDE"],
+    author: "cremich",
+    authorId: "12345",
+    public: true,
   };
 
   test("renders the prompt form component unchanged", () => {

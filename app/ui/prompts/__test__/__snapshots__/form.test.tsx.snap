@@ -98,7 +98,9 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
                 id=":r1:-form-item"
                 name="description"
                 placeholder="What is this prompt doing? What is the goal?"
-              />
+              >
+                This is a test prompt
+              </textarea>
             </div>
             <div
               class="space-y-2"
@@ -115,9 +117,20 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
                 class="flex flex-wrap gap-2"
                 id=":r2:-form-item"
               >
+                <input
+                  name="tags"
+                  type="hidden"
+                  value="IDE"
+                />
                 <div
                   class="flex flex-wrap gap-2"
-                />
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent text-secondary-foreground bg-violet-500 hover:bg-violet-500"
+                  >
+                    IDE
+                  </div>
+                </div>
                 <button
                   aria-controls="radix-:r3:"
                   aria-expanded="false"
@@ -131,6 +144,58 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
                     Edit Tags
                   </div>
                 </button>
+              </div>
+            </div>
+            <div
+              class="space-y-2 flex flex-row items-center justify-between"
+            >
+              <div
+                class="space-y-0.5"
+              >
+                <label
+                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  for=":r6:-form-item"
+                >
+                  Visibility
+                </label>
+                <p
+                  class="text-sm text-muted-foreground pr-10"
+                  id=":r6:-form-item-description"
+                >
+                  Keep your prompt private as a draft or just for you. A private prompt can still be shared via URL but will not be listed on promptz.dev. Make your prompt public to share it with the community.
+                </p>
+              </div>
+              <div
+                aria-describedby=":r6:-form-item-description"
+                aria-invalid="false"
+                id=":r6:-form-item"
+              >
+                <button
+                  aria-checked="true"
+                  class="peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input border-neutral-400"
+                  data-state="checked"
+                  role="switch"
+                  type="button"
+                  value="on"
+                >
+                  <span
+                    class="pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0"
+                    data-state="checked"
+                  />
+                </button>
+                <input
+                  aria-hidden="true"
+                  checked=""
+                  style="transform: translateX(-100%); position: absolute; pointer-events: none; opacity: 0; margin: 0px; width: 0px; height: 0px;"
+                  tabindex="-1"
+                  type="checkbox"
+                  value="on"
+                />
+                <input
+                  name="public"
+                  type="hidden"
+                  value="true"
+                />
               </div>
             </div>
           </div>
@@ -183,12 +248,14 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
               class="space-y-2"
             >
               <textarea
-                aria-describedby=":r6:-form-item-description"
+                aria-describedby=":r7:-form-item-description"
                 aria-invalid="false"
                 class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[450px] text-white placeholder-opacity-50"
-                id=":r6:-form-item"
+                id=":r7:-form-item"
                 name="instruction"
-              />
+              >
+                What is the meaning of life?
+              </textarea>
             </div>
           </div>
         </div>
@@ -242,12 +309,14 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
           class="space-y-2"
         >
           <textarea
-            aria-describedby=":r7:-form-item-description"
+            aria-describedby=":r8:-form-item-description"
             aria-invalid="false"
             class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[200px] text-white placeholder-opacity-50"
-            id=":r7:-form-item"
+            id=":r8:-form-item"
             name="howto"
-          />
+          >
+            this is cool
+          </textarea>
         </div>
       </div>
     </div>
@@ -255,33 +324,8 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
       class="flex items-center gap-4"
     >
       <button
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
         type="submit"
-      >
-        <svg
-          class="lucide lucide-send w-4 h-4 mr-2"
-          fill="none"
-          height="24"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"
-          />
-          <path
-            d="m21.854 2.147-10.94 10.939"
-          />
-        </svg>
-        Update Prompt
-      </button>
-      <button
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2"
-        type="button"
       >
         <svg
           class="lucide lucide-save w-4 h-4 mr-2"
@@ -305,53 +349,55 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
             d="M7 3v4a1 1 0 0 0 1 1h7"
           />
         </svg>
-        Save as Draft
+        Save Prompt
       </button>
       <button
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+        aria-controls="radix-:r9:"
+        aria-expanded="false"
+        aria-haspopup="dialog"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 h-9 px-4 py-2 ml-auto"
+        data-state="closed"
         type="button"
       >
-        Cancel
-      </button>
-      <button
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2 ml-auto"
-        type="button"
-      >
-        <svg
-          class="lucide lucide-trash2 w-4 h-4 mr-2"
-          fill="none"
-          height="24"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="24"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="flex items-center"
         >
-          <path
-            d="M3 6h18"
-          />
-          <path
-            d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"
-          />
-          <path
-            d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"
-          />
-          <line
-            x1="10"
-            x2="10"
-            y1="11"
-            y2="17"
-          />
-          <line
-            x1="14"
-            x2="14"
-            y1="11"
-            y2="17"
-          />
-        </svg>
-        Delete Prompt
+          <svg
+            class="lucide lucide-trash2 w-4 h-4 mr-2"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 6h18"
+            />
+            <path
+              d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"
+            />
+            <path
+              d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"
+            />
+            <line
+              x1="10"
+              x2="10"
+              y1="11"
+              y2="17"
+            />
+            <line
+              x1="14"
+              x2="14"
+              y1="11"
+              y2="17"
+            />
+          </svg>
+          Delete Prompt
+        </div>
       </button>
     </div>
     <div />
