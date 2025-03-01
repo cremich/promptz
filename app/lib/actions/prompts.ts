@@ -51,6 +51,7 @@ interface FetchPromptsResult {
 
 export async function searchPrompts(
   params: SearchParams,
+  nt?: string,
 ): Promise<FetchPromptsResult> {
   try {
     // Validate search params
@@ -79,14 +80,14 @@ export async function searchPrompts(
       const interfaces = Array.isArray(params.interface)
         ? params.interface
         : [params.interface];
-
-      filter.and = interfaces.map((i) => {
-        return {
-          tags: {
-            contains: i,
-          },
-        };
-      });
+      interfaces.length > 0 &&
+        (filter.and = interfaces.map((i) => {
+          return {
+            tags: {
+              contains: i,
+            },
+          };
+        }));
     }
 
     if (params.category) {
@@ -94,24 +95,26 @@ export async function searchPrompts(
         ? params.category
         : [params.category];
 
-      filter.and = categories.map((i) => {
-        return {
-          tags: {
-            contains: i,
-          },
-        };
-      });
+      categories.length > 0 &&
+        (filter.and = categories.map((i) => {
+          return {
+            tags: {
+              contains: i,
+            },
+          };
+        }));
     }
 
     if (params.sdlc) {
       const sdlc = Array.isArray(params.sdlc) ? params.sdlc : [params.sdlc];
-      filter.and = sdlc.map((i) => {
-        return {
-          tags: {
-            contains: i,
-          },
-        };
-      });
+      sdlc.length > 0 &&
+        (filter.and = sdlc.map((i) => {
+          return {
+            tags: {
+              contains: i,
+            },
+          };
+        }));
     }
 
     const {
@@ -120,7 +123,8 @@ export async function searchPrompts(
       nextToken,
     } = await appsync.models.prompt.list({
       filter,
-      limit: 12,
+      nextToken: nt,
+      limit: 1000,
     });
 
     if (errors && errors.length > 0) {
@@ -129,7 +133,7 @@ export async function searchPrompts(
 
     // Map the prompts to our frontend model
     const promptList = mapToPrompts(prompts);
-
+    console.log(promptList);
     return {
       prompts: promptList,
       nextToken,

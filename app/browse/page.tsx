@@ -1,8 +1,7 @@
 import { searchPrompts } from "@/app/lib/actions/prompts";
 import { FilterSidebar } from "@/app/ui/browse/filter-sidebar";
 import SearchBox from "@/app/ui/browse/search";
-import PromptCard from "@/app/ui/prompts/prompt-card";
-
+import SearchResults from "@/app/ui/browse/search-result";
 import { Suspense } from "react";
 
 interface BrowsePageProps {
@@ -35,13 +34,7 @@ export default async function Browse({ searchParams }: BrowsePageProps) {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Filters sidebar - hidden on mobile */}
           <div className="hidden lg:block w-64 flex-shrink-0">
-            <FilterSidebar
-              selectedInterface={
-                Array.isArray(searchParams["interface[]"])
-                  ? searchParams["interface[]"]
-                  : [searchParams["interface[]"]]
-              }
-            />
+            <FilterSidebar />
           </div>
 
           <div className="flex-1 space-y-6">
@@ -58,13 +51,8 @@ export default async function Browse({ searchParams }: BrowsePageProps) {
                 </select>
               </div> */}
             </div>
-
             <Suspense fallback={<div>Loading...</div>}>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {prompts.map((prompt) => (
-                  <PromptCard prompt={prompt} />
-                ))}
-              </div>
+              <SearchResults initialPrompts={prompts} />
             </Suspense>
           </div>
         </div>

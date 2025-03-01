@@ -7,19 +7,7 @@ import {
 } from "@/app/lib/definitions";
 import { FilterSection } from "@/app/ui/browse/filter-section";
 
-interface FilterSidebarProps {
-  selectedInterface?: string[];
-}
-
-export function FilterSidebar({ selectedInterface }: FilterSidebarProps) {
-  // const searchParams = useSearchParams();
-  // const pathname = usePathname();
-  // const { replace } = useRouter();
-
-  // const interfaceOptions = Object.values(QInterface);
-  // const categoryOptions = Object.values(PromptCategory);
-  // const sdlcOptions = Object.values(SdlcActivity);
-
+export function FilterSidebar() {
   return (
     <div className="space-y-6">
       <FilterSection
