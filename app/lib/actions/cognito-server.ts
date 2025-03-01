@@ -16,17 +16,23 @@ const { runWithAmplifyServerContext } = createServerRunner({
 
 export async function fetchCurrentAuthUser(): Promise<User> {
   try {
-    const currentUser = await runWithAmplifyServerContext({
+    const user = await runWithAmplifyServerContext({
       nextServerContext: { cookies },
-      operation: (contextSpec) => fetchUserAttributes(contextSpec),
+      operation: (contextSpec) => {
+        return Promise.all([
+          fetchUserAttributes(contextSpec),
+          getCurrentUser(contextSpec),
+        ]);
+      },
     });
     return {
-      id: currentUser.sub!,
-      displayName: currentUser.preferred_username!,
+      id: user[0].sub!,
+      username: user[1].username,
+      displayName: user[0].preferred_username!,
       guest: false,
     };
   } catch (error) {
-    return { id: "", displayName: "", guest: true };
+    return { id: "", displayName: "", username: "", guest: true };
   }
 }
 

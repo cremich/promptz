@@ -37,6 +37,7 @@ export enum QInterface {
 
 export type User = {
   id: string;
+  username: string;
   displayName: string;
   guest: boolean;
 };
@@ -85,4 +86,5 @@ export const promptFormSchema = z.object({
 export const searchParamsSchema = z.object({
   query: z.string().optional(),
   sort: z.string().optional(),
+  my: z.string().optional(),
 });

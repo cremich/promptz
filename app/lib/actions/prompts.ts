@@ -7,6 +7,7 @@ import outputs from "@/amplify_outputs.json";
 import { Prompt, searchParamsSchema } from "@/app/lib/definitions";
 import { SearchParams } from "next/dist/server/request/search-params";
 import console from "console";
+import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
@@ -60,6 +61,9 @@ export async function searchPrompts(
       public: { eq: true },
     };
 
+    // Initialize conditions array for AND clause
+    const facets: Record<string, any>[] = [];
+
     if (validatedParams.query) {
       const sentenceCase =
         validatedParams.query.charAt(0).toUpperCase() +
@@ -79,13 +83,15 @@ export async function searchPrompts(
         ? params.interface
         : [params.interface];
       interfaces.length > 0 &&
-        (filter.and = interfaces.map((i) => {
-          return {
-            tags: {
-              contains: i,
-            },
-          };
-        }));
+        facets.push(
+          ...interfaces.map((i) => {
+            return {
+              tags: {
+                contains: i,
+              },
+            };
+          }),
+        );
     }
 
     if (params.category) {
@@ -94,25 +100,39 @@ export async function searchPrompts(
         : [params.category];
 
       categories.length > 0 &&
-        (filter.and = categories.map((i) => {
-          return {
-            tags: {
-              contains: i,
-            },
-          };
-        }));
+        facets.push(
+          ...categories.map((i) => {
+            return {
+              tags: {
+                contains: i,
+              },
+            };
+          }),
+        );
     }
 
     if (params.sdlc) {
       const sdlc = Array.isArray(params.sdlc) ? params.sdlc : [params.sdlc];
       sdlc.length > 0 &&
-        (filter.and = sdlc.map((i) => {
-          return {
-            tags: {
-              contains: i,
-            },
-          };
-        }));
+        facets.push(
+          ...sdlc.map((i) => {
+            return {
+              tags: {
+                contains: i,
+              },
+            };
+          }),
+        );
+    }
+
+    if (validatedParams.my) {
+      const user = await fetchCurrentAuthUser();
+      facets.push({ owner: { eq: `${user.id}::${user.username}` } });
+    }
+
+    // Add AND conditions to filter if there are any
+    if (facets.length > 0) {
+      filter.and = facets;
     }
 
     const {
