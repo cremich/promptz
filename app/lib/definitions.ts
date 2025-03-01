@@ -51,6 +51,8 @@ export type Prompt = {
   author?: string;
   authorId?: string;
   public?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export const promptFormSchema = z.object({
@@ -82,4 +84,5 @@ export const promptFormSchema = z.object({
 // Validation schema for search and filter params
 export const searchParamsSchema = z.object({
   query: z.string().optional(),
+  sort: z.string().optional(),
 });

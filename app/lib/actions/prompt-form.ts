@@ -60,9 +60,9 @@ export async function onSubmitAction(
     howto: parsed.data.howto,
     instruction: parsed.data.instruction,
     tags: parsed.data.tags,
-    public: parsed.data.public,
+    visibility: parsed.data.public === true ? "public" : "private",
   };
-  console.log(payload);
+
   let response;
   if (mode === "create") {
     const user = await fetchCurrentAuthUser();

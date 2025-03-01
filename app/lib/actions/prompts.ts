@@ -6,6 +6,7 @@ import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
 import { Prompt, searchParamsSchema } from "@/app/lib/definitions";
 import { SearchParams } from "next/dist/server/request/search-params";
+import console from "console";
 
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
@@ -13,7 +14,6 @@ const appsync = generateServerClientUsingCookies<Schema>({
 });
 
 export async function fetchFeaturedPrompts(): Promise<Prompt[]> {
-  console.log(appsync.models.prompt);
   const { data: prompts, errors } = await appsync.models.prompt.list({
     limit: 3,
     filter: {
@@ -51,12 +51,10 @@ interface FetchPromptsResult {
 
 export async function searchPrompts(
   params: SearchParams,
-  nt?: string,
 ): Promise<FetchPromptsResult> {
   try {
     // Validate search params
     const validatedParams = searchParamsSchema.parse(params);
-
     // Build filter based on search params
     const filter: Record<string, any> = {
       public: { eq: true },
@@ -123,7 +121,6 @@ export async function searchPrompts(
       nextToken,
     } = await appsync.models.prompt.list({
       filter,
-      nextToken: nt,
       limit: 1000,
     });
 
@@ -132,8 +129,20 @@ export async function searchPrompts(
     }
 
     // Map the prompts to our frontend model
-    const promptList = mapToPrompts(prompts);
-    console.log(promptList);
+    let promptList = mapToPrompts(prompts);
+
+    const sortParam = validatedParams.sort || "created_at:desc";
+    const [sortField, sortDirection] = sortParam.split(":");
+    console.log("sortField", sortParam);
+    // Sort the results in-memory
+    if (sortField === "created_at") {
+      promptList = promptList.sort((a, b) => {
+        const aDate = new Date(a.createdAt || "").getTime();
+        const bDate = new Date(b.createdAt || "").getTime();
+        return sortDirection === "asc" ? aDate - bDate : bDate - aDate;
+      });
+    }
+
     return {
       prompts: promptList,
       nextToken,
@@ -167,6 +176,8 @@ function mapToPrompt(prompt: Schema["prompt"]["type"]): Prompt {
     instruction: prompt.instruction,
     howto: prompt.howto || "",
     public: prompt.public || false,
+    createdAt: prompt.createdAt || "",
+    updatedAt: prompt.updatedAt || "",
   };
 }
 

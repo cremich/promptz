@@ -2,11 +2,13 @@ import { searchPrompts } from "@/app/lib/actions/prompts";
 import { FilterSidebar } from "@/app/ui/browse/filter-sidebar";
 import SearchBox from "@/app/ui/browse/search";
 import SearchResults from "@/app/ui/browse/search-result";
+import { SortSelector } from "@/app/ui/browse/sorting";
 import { Suspense } from "react";
 
 interface BrowsePageProps {
   searchParams: {
     query?: string;
+    sort?: string;
     "interface[]": string[];
     "category[]": string[];
     "sdlc[]": string[];
@@ -14,8 +16,9 @@ interface BrowsePageProps {
 }
 
 export default async function Browse({ searchParams }: BrowsePageProps) {
-  const { prompts, nextToken } = await searchPrompts({
+  const { prompts } = await searchPrompts({
     query: searchParams.query,
+    sort: searchParams.sort,
     interface: searchParams["interface[]"],
     category: searchParams["category[]"],
     sdlc: searchParams["sdlc[]"],
@@ -41,15 +44,8 @@ export default async function Browse({ searchParams }: BrowsePageProps) {
             {/* Search and filter bar */}
             <div className="flex flex-col sm:flex-row gap-4">
               <SearchBox placeholder="Search prompts..." />
-              {/*
-              <div className="hidden sm:flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Sort by:</span>
-                <select className="bg-background border border-input rounded-md px-3 py-1 text-sm">
-                  <option>Most Popular</option>
-                  <option>Newest</option>
-                  <option>Oldest</option>
-                </select>
-              </div> */}
+
+              <SortSelector />
             </div>
             <Suspense fallback={<div>Loading...</div>}>
               <SearchResults initialPrompts={prompts} />
