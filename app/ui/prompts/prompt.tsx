@@ -8,15 +8,19 @@ import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";
 import EditPromptButton from "@/app/ui/prompts/edit-prompt-button";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { Badge } from "@/components/ui/badge";
+import StarPromptButton from "@/app/ui/prompts/star-prompt";
+import { isStarredByUser } from "@/app/lib/actions/stars";
 
 interface PromptProps {
   promptId: string;
 }
 
 export default async function Prompt(props: PromptProps) {
-  const promisePrompt = await fetchPrompt(props.promptId);
-  const promiseUser = await fetchCurrentAuthUser();
+  const promisePrompt = fetchPrompt(props.promptId);
+  const promiseUser = fetchCurrentAuthUser();
   const [prompt, user] = await Promise.all([promisePrompt, promiseUser]);
+
+  const starredByUser = await isStarredByUser(props.promptId, user.id);
 
   return (
     <div>
@@ -25,6 +29,13 @@ export default async function Prompt(props: PromptProps) {
           <h1 className="text-3xl font-bold tracking-tight">{prompt.title}</h1>
         </div>
         <div className="flex gap-2">
+          {prompt.id && (
+            <StarPromptButton
+              prompt={prompt}
+              user={user}
+              starred={starredByUser}
+            />
+          )}
           {prompt.id && prompt.authorId === user.id && (
             <EditPromptButton id={prompt.id} />
           )}
