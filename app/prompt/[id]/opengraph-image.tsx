@@ -1,8 +1,9 @@
 import { fetchPrompt } from "@/app/lib/actions/prompts";
 import { ImageResponse } from "next/og";
 
-export const alt =
-  "An image describing a prompt of the PROMPTZ prompt library for Amazon Q Developer";
+export const runtime = "edge";
+
+export const alt = "PROMPTZ - The Ultimate Prompt Hub for Amazon Q Developer";
 export const size = {
   width: 1200,
   height: 630,
@@ -20,66 +21,117 @@ export default async function Image({ params }: { params: { id: string } }) {
           width: "100%",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "linear-gradient(to bottom, #6d6de5, #630d78)",
-          padding: "40px 60px",
+          alignItems: "flex-start",
+          justifyContent: "flex-start",
+          backgroundColor: "#121212",
+          padding: 50,
+          position: "relative",
+          overflow: "hidden",
         }}
       >
+        {/* Logo */}
         <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-          }}
+          style={{ display: "flex", alignItems: "center", marginBottom: 40 }}
         >
-          <h1
+          <img
+            style={{ marginRight: "20px" }}
+            src="https://promptz.dev/images/promptz_logo.png"
+            width="40"
+            alt="Amazon Q Developer Logo"
+          ></img>
+          <div style={{ color: "white", fontSize: 24, fontWeight: "bold" }}>
+            PROMPTZ
+          </div>
+        </div>
+
+        {/* Content */}
+        <div
+          style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
+          {/* Title */}
+          <div
             style={{
-              fontSize: "3em",
-              fontWeight: 600,
+              fontSize: 48,
+              fontWeight: "bold",
               color: "white",
-              width: "75%",
+              marginBottom: 16,
+              width: "100%",
+              textWrap: "balance",
               lineHeight: 1.2,
             }}
           >
             {prompt.title?.toUpperCase()}
-          </h1>
-          <h2
-            style={{
-              fontSize: "2em",
-              color: "white",
-              width: "100%",
+          </div>
 
+          {/* Description */}
+          <div
+            style={{
+              fontSize: 24,
+              color: "#a1a1aa",
+              marginBottom: 32,
+              width: "100%",
+              maxWidth: 900,
               lineHeight: 1.4,
             }}
           >
             {prompt.description}
-          </h2>
+          </div>
+
+          {/* Author and Tags */}
           <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              marginBottom: "20px",
-            }}
+            style={{ display: "flex", alignItems: "center", marginTop: "auto" }}
           >
-            <p
+            <div
               style={{
-                fontSize: "1.5em",
-                color: "#c6c6cd",
-                width: "75%",
-                lineHeight: 1.4,
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                backgroundColor: "#27272a",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginRight: 12,
               }}
             >
-              Author: @{prompt.author}
-            </p>
-            <img
-              style={{ marginLeft: "100px" }}
-              src="https://promptz.dev/images/promptz_logo.png"
-              width="120"
-              alt="Amazon Q Developer Logo"
-            ></img>
+              <div style={{ color: "white", fontSize: 16 }}>@</div>
+            </div>
+            <div style={{ color: "white", fontSize: 20 }}>{prompt.author}</div>
+          </div>
+
+          {/* Tags */}
+          <div style={{ display: "flex", marginTop: 16, gap: 8 }}>
+            {prompt.tags?.map((tag, index) => (
+              <div
+                key={index}
+                style={{
+                  backgroundColor: "#8b5cf6",
+                  color: "white",
+                  padding: "6px 12px",
+                  borderRadius: 16,
+                  fontSize: 16,
+                }}
+              >
+                {tag}
+              </div>
+            ))}
           </div>
         </div>
+
+        {/* Decorative elements */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: -100,
+            right: -100,
+            width: 1200,
+            height: 630,
+            borderRadius: "50%",
+            background:
+              "linear-gradient(to right, rgba(139, 92, 246, 0.2), rgba(109, 40, 217, 0.1))",
+            filter: "blur(60px)",
+            zIndex: 0,
+          }}
+        />
       </div>
     ),
     {

@@ -13,6 +13,7 @@ import Link from "next/link";
 import { handleSignIn, LoginState } from "@/app/lib/actions/cognito";
 import { useState, useActionState } from "react";
 import { ErrorMessage } from "@/app/ui/error-message";
+import { signInWithRedirect } from "aws-amplify/auth";
 
 export function LoginForm() {
   const initialState: LoginState = {
@@ -21,6 +22,11 @@ export function LoginForm() {
   };
   const [email, setEmail] = useState("");
   const [state, formAction] = useActionState(handleSignIn, initialState);
+
+  function handleSignInWithGoogle() {
+    signInWithRedirect({ provider: "Google" });
+  }
+
   return (
     <div className={"flex flex-col gap-6"}>
       <Card>
@@ -65,8 +71,16 @@ export function LoginForm() {
               <Button type="submit" className="w-full">
                 Login
               </Button>
-              <hr></hr>
-              <Button variant="outline" className="w-full">
+              <div className="relative flex  items-center">
+                <div className="flex-grow border-t border-gray-400"></div>
+                <span className="flex-shrink mx-4 text-gray-400">or</span>
+                <div className="flex-grow border-t border-gray-400"></div>
+              </div>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={handleSignInWithGoogle}
+              >
                 Login with Google
               </Button>
             </div>
