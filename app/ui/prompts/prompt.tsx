@@ -30,6 +30,7 @@ export default async function Prompt(props: PromptProps) {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{prompt.title}</h1>
+          <p className="text-muted-foreground">{prompt.description}</p>
         </div>
         <div className="flex gap-2">
           {prompt.id && (
@@ -62,13 +63,13 @@ export default async function Prompt(props: PromptProps) {
           </Badge>
         </div>
       </div>
-      {prompt.description && (
+      {/* {prompt.description && (
         <AttributeCard
           title="Description"
           icon={FileText}
           text={prompt.description}
         />
-      )}
+      )} */}
       {prompt.howto && (
         <AttributeCard
           title="How to Use"
