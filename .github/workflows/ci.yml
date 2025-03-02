@@ -33,9 +33,8 @@ jobs:
         run: |
           npm run pr
 
-      - name: "Report Coverage"
-        if: always()
-        uses: davelosert/vitest-coverage-report-action@v2
+      - name: Jest Coverage Comment
+        uses: MishaKav/jest-coverage-comment@main
 
     # Add timeout to prevent hanging jobs
     timeout-minutes: 10
