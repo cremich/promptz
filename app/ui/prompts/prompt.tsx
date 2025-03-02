@@ -20,7 +20,10 @@ export default async function Prompt(props: PromptProps) {
   const promiseUser = fetchCurrentAuthUser();
   const [prompt, user] = await Promise.all([promisePrompt, promiseUser]);
 
-  const starredByUser = await isStarredByUser(props.promptId, user.id);
+  const starredByUser =
+    user.guest === false
+      ? await isStarredByUser(props.promptId, user.id)
+      : false;
 
   return (
     <div>

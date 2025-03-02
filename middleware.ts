@@ -17,10 +17,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/prompt/create",
-    "/prompt/favorites",
-    "/prompt/my",
-    "/prompt/(.*)/edit",
-  ],
+  matcher: ["/prompt/create", "/favorites", "/my", "/prompt/(.*)/edit"],
 };

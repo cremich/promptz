@@ -6,6 +6,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { generateClient } from "aws-amplify/api";
 import { Schema } from "@/amplify/data/resource";
+import { redirect, useRouter } from "next/navigation";
 
 const appsync = generateClient<Schema>();
 
@@ -19,9 +20,11 @@ export default function StarPromptButton({
   starred: boolean;
 }) {
   const [isStarred, setIsStarred] = useState(starred);
-
+  const router = useRouter();
   async function handleClick() {
-    if (isStarred) {
+    if (user.guest) {
+      router.push("/login");
+    } else if (isStarred) {
       await appsync.models.stars.delete(
         {
           userId: user.id,
@@ -31,6 +34,8 @@ export default function StarPromptButton({
           authMode: "userPool",
         },
       );
+      setIsStarred(isStarred ? false : true);
+      toast("Prompt removed from your favorites");
     } else {
       await appsync.models.stars.create(
         {
@@ -41,14 +46,9 @@ export default function StarPromptButton({
           authMode: "userPool",
         },
       );
+      setIsStarred(isStarred ? false : true);
+      toast("Prompt added to your favorites");
     }
-
-    setIsStarred(isStarred ? false : true);
-    toast(
-      isStarred
-        ? "Prompt removed from your favorites"
-        : "Prompt added to your favorites",
-    );
   }
 
   return (
