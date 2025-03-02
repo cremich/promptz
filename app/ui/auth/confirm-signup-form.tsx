@@ -10,15 +10,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail } from "lucide-react";
-import {
-  ConfirmSignUpState,
-  handleConfirmSignUp,
-} from "@/app/lib/actions/cognito";
+import { ConfirmState, handleConfirmSignUp } from "@/app/lib/actions/cognito";
 import { ErrorMessage } from "@/app/ui/error-message";
 import { useActionState } from "react";
 
 export function ConfirmSignUpForm() {
-  const initialState: ConfirmSignUpState = {
+  const initialState: ConfirmState = {
     message: null,
     errors: {},
   };
@@ -33,8 +30,8 @@ export function ConfirmSignUpForm() {
             You've got mail
           </CardTitle>
           <CardDescription>
-            Your code is on the way. To log in, enter the code we emailed you.
-            It may take a minute to arrive.
+            Your confirmation code is on the way. Enter the code we emailed you
+            to confirm your account creation. It may take a minute to arrive.
           </CardDescription>
         </CardHeader>
         <CardContent>

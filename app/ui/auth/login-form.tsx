@@ -56,32 +56,8 @@ export function LoginForm() {
                 state.errors.email.map((error: string) => (
                   <ErrorMessage description={error} />
                 ))}
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <Link
-                    href="/reset-password"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </Link>
-                </div>
-                <Input id="password" type="password" name="password" required />
-              </div>
               <Button type="submit" className="w-full">
-                Login
-              </Button>
-              <div className="relative flex  items-center">
-                <div className="flex-grow border-t border-gray-400"></div>
-                <span className="flex-shrink mx-4 text-gray-400">or</span>
-                <div className="flex-grow border-t border-gray-400"></div>
-              </div>
-              <Button
-                variant="outline"
-                className="w-full"
-                onClick={handleSignInWithGoogle}
-              >
-                Login with Google
+                Send One-Time Password
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">

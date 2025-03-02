@@ -53,15 +53,6 @@ export function SignUpForm() {
                 ))}
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                </div>
-                <Input id="password" type="password" name="password" required />
-              </div>
-              {state.errors?.password && (
-                <ErrorMessage description={state.errors.password.join(".")} />
-              )}
-              <div className="grid gap-2">
-                <div className="flex items-center">
                   <Label htmlFor="username">Username</Label>
                 </div>
                 <Input id="username" type="text" name="username" required />

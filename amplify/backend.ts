@@ -9,8 +9,20 @@ const backend = defineBackend({
   data,
 });
 
+const { cfnResources } = backend.auth.resources;
+const { cfnUserPool, cfnUserPoolClient } = cfnResources;
+
+cfnUserPool.addPropertyOverride(
+  "Policies.SignInPolicy.AllowedFirstAuthFactors",
+  ["PASSWORD", "EMAIL_OTP"],
+);
+
+cfnUserPoolClient.explicitAuthFlows = [
+  "ALLOW_REFRESH_TOKEN_AUTH",
+  "ALLOW_USER_AUTH",
+];
+
 if (process.env["PROMPTZ_ENV"] !== "sandbox") {
-  const { cfnUserPool } = backend.auth.resources.cfnResources;
   cfnUserPool.deletionProtection = "ACTIVE";
 
   const { cfnResources } = backend.data.resources;

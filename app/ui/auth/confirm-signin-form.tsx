@@ -10,19 +10,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail } from "lucide-react";
-import {
-  ConfirmPasswordResetState,
-  handlePasswordReset,
-} from "@/app/lib/actions/cognito";
+import { ConfirmState, handleConfirmSignIn } from "@/app/lib/actions/cognito";
 import { ErrorMessage } from "@/app/ui/error-message";
 import { useActionState } from "react";
 
-export function ConfirmPasswordResetForm() {
-  const initialState: ConfirmPasswordResetState = {
+export function ConfirmSignInForm() {
+  const initialState: ConfirmState = {
     message: null,
     errors: {},
   };
-  const [state, formAction] = useActionState(handlePasswordReset, initialState);
+  const [state, formAction] = useActionState(handleConfirmSignIn, initialState);
 
   return (
     <div className="flex flex-col gap-6">
@@ -33,9 +30,8 @@ export function ConfirmPasswordResetForm() {
             You've got mail
           </CardTitle>
           <CardDescription>
-            Your code is on the way. To reset your password, enter the code we
-            emailed you, and set a new password. The mail may take a minute to
-            arrive.
+            Your one-time password is on the way. To log in, enter the code we
+            emailed you. It may take a minute to arrive.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -43,32 +39,23 @@ export function ConfirmPasswordResetForm() {
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="code">Confirmation Code</Label>
+                  <Label htmlFor="code">One-Time Password</Label>
                 </div>
                 <Input
                   id="code"
                   name="code"
                   type="text"
                   required
-                  placeholder="123456"
-                  maxLength={6}
+                  placeholder="12345678"
+                  maxLength={8}
                 />
                 {state.errors?.code && (
                   <ErrorMessage description={state.errors.code.join(" ")} />
                 )}
               </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                </div>
-                <Input id="password" type="password" name="password" required />
-              </div>
-              {state.errors?.password && (
-                <ErrorMessage description={state.errors.password.join(".")} />
-              )}
               {state.message && <ErrorMessage description={state.message} />}
               <Button type="submit" variant="default" className="w-full">
-                Reset Password
+                Confirm
               </Button>
             </div>
           </form>
