@@ -28,7 +28,7 @@ export function SignUpForm() {
         <CardHeader>
           <CardTitle className="text-2xl">Create Your Account</CardTitle>
           <CardDescription>
-            Enter your email, password and username below to create a new
+            Enter your email, and preferred username below to create a new
             account for Promptz.
           </CardDescription>
         </CardHeader>

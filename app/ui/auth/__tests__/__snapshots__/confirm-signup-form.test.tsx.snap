@@ -42,7 +42,7 @@ exports[`Confirm Signup Form renders confirm signup form unchanged 1`] = `
         <div
           class="text-sm text-muted-foreground"
         >
-          Your code is on the way. To log in, enter the code we emailed you. It may take a minute to arrive.
+          Your confirmation code is on the way. Enter the code we emailed you to confirm your account creation. It may take a minute to arrive.
         </div>
       </div>
       <div

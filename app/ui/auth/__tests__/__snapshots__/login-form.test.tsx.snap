@@ -19,7 +19,7 @@ exports[`Login  Form renders login  form unchanged 1`] = `
         <div
           class="text-sm text-muted-foreground"
         >
-          Enter your email below to login to your account or login with your Google account.
+          Enter your email below to request a one-time password to login to your account.
         </div>
       </div>
       <div
@@ -50,44 +50,11 @@ exports[`Login  Form renders login  form unchanged 1`] = `
                 value=""
               />
             </div>
-            <div
-              class="grid gap-2"
-            >
-              <div
-                class="flex items-center"
-              >
-                <label
-                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  for="password"
-                >
-                  Password
-                </label>
-                <a
-                  class="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  href="/reset-password"
-                >
-                  Forgot your password?
-                </a>
-              </div>
-              <input
-                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                id="password"
-                name="password"
-                required=""
-                type="password"
-              />
-            </div>
             <button
               class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full"
               type="submit"
             >
-              Login
-            </button>
-            <hr />
-            <button
-              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 w-full"
-            >
-              Login with Google
+              Send One-Time Password
             </button>
           </div>
           <div

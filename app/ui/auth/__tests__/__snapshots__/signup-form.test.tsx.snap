@@ -19,7 +19,7 @@ exports[`Signup Form renders signup form unchanged 1`] = `
         <div
           class="text-sm text-muted-foreground"
         >
-          Enter your email, password and username below to create a new account for Promptz.
+          Enter your email, and preferred username below to create a new account for Promptz.
         </div>
       </div>
       <div
@@ -49,27 +49,6 @@ exports[`Signup Form renders signup form unchanged 1`] = `
                 required=""
                 type="email"
                 value=""
-              />
-            </div>
-            <div
-              class="grid gap-2"
-            >
-              <div
-                class="flex items-center"
-              >
-                <label
-                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  for="password"
-                >
-                  Password
-                </label>
-              </div>
-              <input
-                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                id="password"
-                name="password"
-                required=""
-                type="password"
               />
             </div>
             <div

@@ -33,8 +33,8 @@ export function LoginForm() {
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account or login with your
-            Google account.
+            Enter your email below to request a one-time password to login to
+            your account.
           </CardDescription>
         </CardHeader>
         <CardContent>
