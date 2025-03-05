@@ -41,7 +41,7 @@ export async function onSubmitAction(
     public: data.get("public") === "true" ? true : false,
   };
 
-  let mode = formData.id ? "update" : "create";
+  const mode = formData.id ? "update" : "create";
   formData.id = formData.id || uuidv4();
 
   const parsed = promptFormSchema.safeParse(formData);
@@ -66,7 +66,7 @@ export async function onSubmitAction(
   let response;
   if (mode === "create") {
     const user = await fetchCurrentAuthUser();
-    let createPayload = { ...payload, owner_username: user.displayName };
+    const createPayload = { ...payload, owner_username: user.displayName };
     response = await appsync.models.prompt.create(createPayload, {
       authMode: "userPool",
     });

@@ -29,7 +29,7 @@ export async function fetchFavoritePrompts(userId: string): Promise<Prompt[]> {
     return [];
   }
 
-  //@ts-ignore
+  // @ts-expect-error - type of tags inferred incorrectly by typescript
   return prompts?.stars
     .filter((p) => p.prompt != null)
     .map((p) => {

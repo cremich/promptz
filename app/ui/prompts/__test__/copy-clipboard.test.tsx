@@ -1,5 +1,5 @@
 import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";
-import { beforeEach, describe, expect, it, test, jest } from "@jest/globals";
+import { beforeEach, describe, expect, test, jest } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { toast } from "sonner";

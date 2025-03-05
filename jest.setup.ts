@@ -9,4 +9,9 @@ class ResizeObserver {
   disconnect() {}
 }
 
-Object.assign(global, { TextDecoder, TextEncoder, ResizeObserver });
+Object.assign(global, {
+  TextDecoder,
+  TextEncoder,
+  ResizeObserver,
+  structuredClone: (obj: any) => JSON.parse(JSON.stringify(obj)),
+});

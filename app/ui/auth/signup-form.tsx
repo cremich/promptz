@@ -48,8 +48,8 @@ export function SignUpForm() {
                 />
               </div>
               {state.errors?.email &&
-                state.errors.email.map((error: string) => (
-                  <ErrorMessage description={error} />
+                state.errors.email.map((error: string, index: number) => (
+                  <ErrorMessage description={error} key={index} />
                 ))}
               <div className="grid gap-2">
                 <div className="flex items-center">
@@ -58,8 +58,8 @@ export function SignUpForm() {
                 <Input id="username" type="text" name="username" required />
               </div>
               {state.errors?.username &&
-                state.errors.username.map((error: string) => (
-                  <ErrorMessage description={error} />
+                state.errors.username.map((error: string, index: number) => (
+                  <ErrorMessage description={error} key={index} />
                 ))}
               <Button type="submit" className="w-full">
                 Create Account

@@ -1,6 +1,5 @@
 import BenefitCard from "@/app/ui/landing-page/benefits-card";
 import { BookOpen, Code, Github, Users } from "lucide-react";
-import Link from "next/link";
 
 export default function BenefitsGrid() {
   return (

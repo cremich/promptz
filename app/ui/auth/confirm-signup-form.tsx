@@ -27,7 +27,7 @@ export function ConfirmSignUpForm() {
         <CardHeader>
           <CardTitle className="text-2xl flex items-center">
             <Mail className="mr-2" />
-            You've got mail
+            You&apos;ve got mail
           </CardTitle>
           <CardDescription>
             Your confirmation code is on the way. Enter the code we emailed you

@@ -17,7 +17,7 @@ export default function CopyClipBoardButton({
         description:
           "Now, go build. And paste the prompt into your Amazon Q Developer client.",
       });
-    } catch (err) {
+    } catch {
       toast("Failed to copy", {
         description: "Please try again",
       });

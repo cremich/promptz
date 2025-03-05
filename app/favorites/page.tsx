@@ -1,5 +1,4 @@
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
-import { searchPrompts } from "@/app/lib/actions/prompts";
 import { fetchFavoritePrompts } from "@/app/lib/actions/user";
 import SearchBox from "@/app/ui/browse/search";
 import SearchResults from "@/app/ui/browse/search-result";

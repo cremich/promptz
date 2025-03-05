@@ -11,11 +11,9 @@ import {
 } from "@/components/ui/form";
 import {
   FileText,
-  Globe,
   HelpCircle,
   Loader2,
   Save,
-  Send,
   Terminal,
   Trash2,
 } from "lucide-react";
@@ -53,7 +51,7 @@ import {
   getCategoryTags,
   getQInterfaceTags,
   getSdlcTags,
-} from "@/app/lib/data";
+} from "@/app/lib/tags";
 import Tags from "@/app/ui/prompts/tags";
 import { Badge } from "@/components/ui/badge";
 import {

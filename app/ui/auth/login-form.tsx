@@ -13,7 +13,6 @@ import Link from "next/link";
 import { handleSignIn, LoginState } from "@/app/lib/actions/cognito";
 import { useState, useActionState } from "react";
 import { ErrorMessage } from "@/app/ui/error-message";
-import { signInWithRedirect } from "aws-amplify/auth";
 
 export function LoginForm() {
   const initialState: LoginState = {
@@ -22,10 +21,6 @@ export function LoginForm() {
   };
   const [email, setEmail] = useState("");
   const [state, formAction] = useActionState(handleSignIn, initialState);
-
-  function handleSignInWithGoogle() {
-    signInWithRedirect({ provider: "Google" });
-  }
 
   return (
     <div className={"flex flex-col gap-6"}>
@@ -53,8 +48,8 @@ export function LoginForm() {
                 />
               </div>
               {state.errors?.email &&
-                state.errors.email.map((error: string) => (
-                  <ErrorMessage description={error} />
+                state.errors.email.map((error: string, index: number) => (
+                  <ErrorMessage description={error} key={index} />
                 ))}
               <Button type="submit" className="w-full">
                 Send One-Time Password

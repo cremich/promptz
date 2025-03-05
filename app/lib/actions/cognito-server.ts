@@ -31,7 +31,7 @@ export async function fetchCurrentAuthUser(): Promise<User> {
       displayName: user[0].preferred_username!,
       guest: false,
     };
-  } catch (error) {
+  } catch {
     return { id: "", displayName: "", username: "", guest: true };
   }
 }
@@ -52,7 +52,7 @@ export async function fetchCurrentAuthUserFromRequestContext(
           isAdmin: false,
         };
         const groups = session.tokens.accessToken.payload["cognito:groups"];
-        // @ts-ignore
+        // @ts-expect-error - groups array may be undefined from cognito token payload
         user.isAdmin = Boolean(groups && groups.includes("Admins"));
 
         return user;

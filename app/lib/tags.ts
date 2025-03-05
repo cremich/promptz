@@ -5,16 +5,7 @@ import {
 } from "@/app/lib/definitions";
 
 function convertEnumToTags(enumObj: Record<string, string>): string[] {
-  return Object.entries(enumObj)
-    .filter(([key]) => isNaN(Number(key)))
-    .map(([_, value]) => value);
-}
-
-export function getAllTags(): string[] {
-  const sdlcTags = convertEnumToTags(SdlcActivity);
-  const categoryTags = convertEnumToTags(PromptCategory);
-  const interfaceTags = convertEnumToTags(QInterface);
-  return [...sdlcTags, ...categoryTags, ...interfaceTags];
+  return Object.values(enumObj).filter((value) => typeof value === "string");
 }
 
 export function getQInterfaceTags(): string[] {

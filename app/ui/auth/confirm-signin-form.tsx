@@ -27,7 +27,7 @@ export function ConfirmSignInForm() {
         <CardHeader>
           <CardTitle className="text-2xl flex items-center">
             <Mail className="mr-2" />
-            You've got mail
+            You&apos;ve got mail
           </CardTitle>
           <CardDescription>
             Your one-time password is on the way. To log in, enter the code we

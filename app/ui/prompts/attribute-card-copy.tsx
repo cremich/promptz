@@ -1,7 +1,6 @@
 import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";
-import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Copy, LucideIcon } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 interface AttributeCardCopyProps {
   title: string;

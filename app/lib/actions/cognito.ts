@@ -126,9 +126,10 @@ export async function handleConfirmSignUp(
     });
 
     sessionStorage.removeItem("signupEmail");
-  } catch (error: any) {
+  } catch (error) {
+    console.log(error);
     return {
-      message: error.message || "An error occurred during confirmation",
+      message: "An error occurred during confirmation",
     };
   }
 
@@ -146,6 +147,7 @@ export async function fetchCurrentUser(): Promise<User> {
       guest: false,
     };
   } catch (error) {
+    console.log(error);
     return { displayName: "", username: "", id: "", guest: true };
   }
 }
@@ -177,6 +179,7 @@ export async function handleSignIn(
       redirectLink = "/login/confirm";
     }
   } catch (error) {
+    console.log(error);
     return {
       message: "Failed to create user.",
     };
@@ -202,9 +205,10 @@ export async function handleConfirmSignIn(
     await confirmSignIn({
       challengeResponse: validatedFields.data.code,
     });
-  } catch (error: any) {
+  } catch (error) {
+    console.log(error);
     return {
-      message: error.message || "An error occurred during confirmation",
+      message: "An error occurred during confirmation",
     };
   }
 

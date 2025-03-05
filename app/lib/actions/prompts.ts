@@ -8,6 +8,11 @@ import { Prompt, searchParamsSchema } from "@/app/lib/definitions";
 import { SearchParams } from "next/dist/server/request/search-params";
 import console from "console";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
+import {
+  FilterCondition,
+  buildTextSearchFilter,
+  buildTagFilter,
+} from "@/app/lib/filters";
 
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
@@ -56,81 +61,37 @@ export async function searchPrompts(
   try {
     // Validate search params
     const validatedParams = searchParamsSchema.parse(params);
-    // Build filter based on search params
-    const filter: Record<string, any> = {
+
+    // Base filter
+    const filter: FilterCondition = {
       public: { eq: true },
     };
 
-    // Initialize conditions array for AND clause
-    const facets: Record<string, any>[] = [];
+    const facets: FilterCondition[] = [];
 
+    // Build query filter
     if (validatedParams.query) {
-      const sentenceCase =
-        validatedParams.query.charAt(0).toUpperCase() +
-        validatedParams.query.slice(1).toLowerCase();
-      filter.or = [
-        { name: { contains: validatedParams.query.toLowerCase() } },
-        { name: { contains: validatedParams.query.toUpperCase() } },
-        { name: { contains: sentenceCase } },
-        { description: { contains: validatedParams.query.toLowerCase() } },
-        { description: { contains: validatedParams.query.toUpperCase() } },
-        { description: { contains: sentenceCase } },
-      ];
+      filter.or = buildTextSearchFilter(validatedParams.query).or;
     }
 
+    // Handle all tag-based filters
     if (params.interface) {
-      const interfaces = Array.isArray(params.interface)
-        ? params.interface
-        : [params.interface];
-      interfaces.length > 0 &&
-        facets.push(
-          ...interfaces.map((i) => {
-            return {
-              tags: {
-                contains: i,
-              },
-            };
-          }),
-        );
+      facets.push(...buildTagFilter(params.interface));
     }
-
     if (params.category) {
-      const categories = Array.isArray(params.category)
-        ? params.category
-        : [params.category];
-
-      categories.length > 0 &&
-        facets.push(
-          ...categories.map((i) => {
-            return {
-              tags: {
-                contains: i,
-              },
-            };
-          }),
-        );
+      facets.push(...buildTagFilter(params.category));
     }
-
     if (params.sdlc) {
-      const sdlc = Array.isArray(params.sdlc) ? params.sdlc : [params.sdlc];
-      sdlc.length > 0 &&
-        facets.push(
-          ...sdlc.map((i) => {
-            return {
-              tags: {
-                contains: i,
-              },
-            };
-          }),
-        );
+      facets.push(...buildTagFilter(params.sdlc));
     }
 
+    // Handle user-specific filter
     if (validatedParams.my) {
       const user = await fetchCurrentAuthUser();
       facets.push({ owner: { eq: `${user.id}::${user.username}` } });
     }
 
-    // Add AND conditions to filter if there are any
+    // Add facets to filter
     if (facets.length > 0) {
       filter.and = facets;
     }
@@ -153,8 +114,7 @@ export async function searchPrompts(
 
     const sortParam = validatedParams.sort || "created_at:desc";
     const [sortField, sortDirection] = sortParam.split(":");
-    console.log("sortField", sortParam);
-    // Sort the results in-memory
+
     if (sortField === "created_at") {
       promptList = promptList.sort((a, b) => {
         const aDate = new Date(a.createdAt || "").getTime();

@@ -19,7 +19,7 @@ export default async function PromptSpotlight() {
         </div>
         <div className="grid gap-6 mt-12 md:grid-cols-2 lg:grid-cols-3">
           {featuredPrompts.map((prompt) => (
-            <PromptCard prompt={prompt} />
+            <PromptCard prompt={prompt} key={prompt.id} />
           ))}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import AttributeCard from "@/app/ui/prompts/attribute-card";
-import { describe, expect, it, test } from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { Mail } from "lucide-react";

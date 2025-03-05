@@ -1,7 +1,7 @@
 import { fetchPrompt } from "@/app/lib/actions/prompts";
 import Author from "@/app/ui/prompts/author";
 import Tags from "@/app/ui/prompts/tags";
-import { FileText, HelpCircle, Terminal } from "lucide-react";
+import { HelpCircle, Terminal } from "lucide-react";
 import AttributeCard from "@/app/ui/prompts/attribute-card";
 import AttributeCardCopy from "@/app/ui/prompts/attribute-card-copy";
 import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";

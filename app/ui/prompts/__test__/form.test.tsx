@@ -1,6 +1,6 @@
 import { Prompt } from "@/app/lib/definitions";
 import PromptForm from "@/app/ui/prompts/form";
-import { describe, expect, test, jest } from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 

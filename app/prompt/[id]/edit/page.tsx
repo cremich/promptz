@@ -23,7 +23,8 @@ export default async function EditPrompt({
   return (
     <main className="py-8">
       <h1 className="text-3xl font-bold mb-6">
-        Edit Prompt <span className="text-violet-600">"{prompt.title}"</span>
+        Edit Prompt{" "}
+        <span className="text-violet-600">&apos;{prompt.title}&apos;</span>
       </h1>
       <PromptForm prompt={prompt} />
     </main>

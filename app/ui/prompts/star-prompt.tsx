@@ -6,7 +6,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { generateClient } from "aws-amplify/api";
 import { Schema } from "@/amplify/data/resource";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const appsync = generateClient<Schema>();
 
