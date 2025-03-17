@@ -19,10 +19,8 @@ interface BrowsePageProps {
   }>;
 }
 
-export default async function Browse(props: BrowsePageProps) {
+export default async function PromptsPage(props: BrowsePageProps) {
   const searchParams = await props.searchParams;
-
-  console.log(searchParams);
 
   const { prompts } = await searchPrompts({
     query: searchParams?.query,

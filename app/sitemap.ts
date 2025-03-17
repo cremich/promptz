@@ -33,15 +33,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   } while (hasMorePages);
 
   // Generate sitemap entries for static pages
-  const routes = ["", "/browse"].map((route) => ({
+  const routes = ["", "/prompts"].map((route) => ({
     url: `${baseUrl}${route}`,
-    changeFrequency: "monthly" as const,
+    changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 
   // Add entries for each prompt
   const promptRoutes = prompts.map((prompt) => ({
-    url: `${baseUrl}/prompt/${prompt.id}`,
+    url: `${baseUrl}/prompt/${prompt.slug}`,
     lastModified: prompt.updatedAt,
     changeFrequency: "monthly" as const,
     priority: 1,
