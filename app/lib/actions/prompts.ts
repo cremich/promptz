@@ -103,7 +103,7 @@ export async function fetchPromptBySlug(slug: string) {
   const prompt = response.data.listBySlug.items[0];
 
   if (!prompt) {
-    throw new Error("Prompt not found");
+    return;
   }
 
   return mapToPrompt(prompt);
