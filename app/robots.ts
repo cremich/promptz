@@ -5,7 +5,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/browse/my", "/prompt/drafts", "/auth"],
     },
     sitemap: "https://promptz.dev/sitemap.xml",
   };
