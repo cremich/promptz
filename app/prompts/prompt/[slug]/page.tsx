@@ -17,10 +17,10 @@ export async function generateMetadata(props: {
     };
   } else {
     return {
-      title: prompt.title,
+      title: `${prompt.title} prompt for Amazon Q Developer`,
       description: prompt.description,
       openGraph: {
-        title: prompt.title,
+        title: `${prompt.title} prompt for Amazon Q Developer`,
         description: prompt.description,
       },
     };
