@@ -8,6 +8,16 @@ const nextConfig = {
         destination: "/prompts",
         permanent: true, // triggers 308
       },
+      {
+        source: "/favorites",
+        destination: "/prompts/favorites",
+        permanent: true, // triggers 308
+      },
+      {
+        source: "/my",
+        destination: "/prompts/my",
+        permanent: true, // triggers 308
+      },
     ];
   },
 };
