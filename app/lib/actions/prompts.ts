@@ -51,7 +51,7 @@ export async function fetchPrompt(id: string) {
   }
 
   if (!prompt) {
-    throw new Error("Prompt not found");
+    return;
   }
 
   return mapToPrompt(prompt);
