@@ -3,9 +3,7 @@ import { FilterSidebar } from "@/app/ui/browse/filter-sidebar";
 import SearchBox from "@/app/ui/browse/search";
 import SearchResults from "@/app/ui/browse/search-result";
 import { SortSelector } from "@/app/ui/browse/sorting";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import Link from "next/link";
+import CreatePromptButton from "@/app/ui/prompts/create-prompt-button";
 import { Suspense } from "react";
 
 interface BrowsePageProps {
@@ -39,12 +37,7 @@ export default async function PromptsPage(props: BrowsePageProps) {
             <h1 className="text-3xl font-bold tracking-tight">
               Browse Prompts
             </h1>
-            <Button asChild className="bg-violet-500 hover:bg-violet-600">
-              <Link href="/prompt/create" className="flex items-center gap-2">
-                <Plus className="h-4 w-4" />
-                Create Prompt
-              </Link>
-            </Button>
+            <CreatePromptButton />
           </div>
           <p className="text-muted-foreground">
             Discover and explore prompts created by the community to enhance

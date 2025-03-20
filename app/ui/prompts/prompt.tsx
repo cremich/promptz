@@ -1,4 +1,3 @@
-import { fetchPrompt } from "@/app/lib/actions/prompts";
 import Author from "@/app/ui/prompts/author";
 import Tags from "@/app/ui/prompts/tags";
 import { HelpCircle, Terminal } from "lucide-react";
@@ -11,48 +10,49 @@ import { Badge } from "@/components/ui/badge";
 import StarPromptButton from "@/app/ui/prompts/star-prompt";
 import { isStarredByUser } from "@/app/lib/actions/stars";
 import { PromptSource } from "@/app/ui/prompts/prompt-source";
+import { Prompt } from "@/app/lib/definitions";
 
 interface PromptProps {
-  promptId: string;
+  prompt: Prompt;
 }
 
-export default async function Prompt(props: PromptProps) {
-  const promisePrompt = fetchPrompt(props.promptId);
-  const promiseUser = fetchCurrentAuthUser();
-  const [prompt, user] = await Promise.all([promisePrompt, promiseUser]);
+export default async function PromptDetail(props: PromptProps) {
+  const user = await fetchCurrentAuthUser();
 
   const starredByUser =
     user.guest === false
-      ? await isStarredByUser(props.promptId, user.id)
+      ? await isStarredByUser(props.prompt.id!, user.id)
       : false;
 
   return (
     <div>
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">{prompt.title}</h1>
-          <p className="text-muted-foreground">{prompt.description}</p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {props.prompt.title}
+          </h1>
+          <p className="text-muted-foreground">{props.prompt.description}</p>
         </div>
         <div className="flex gap-2">
-          {prompt.id && (
+          {props.prompt.id && (
             <StarPromptButton
-              prompt={prompt}
+              prompt={props.prompt}
               user={user}
               starred={starredByUser}
             />
           )}
-          {prompt.id && prompt.authorId === user.id && (
-            <EditPromptButton id={prompt.id} />
+          {props.prompt.slug && props.prompt.authorId === user.id && (
+            <EditPromptButton slug={props.prompt.slug} />
           )}
-          {prompt.instruction && (
-            <CopyClipBoardButton text={prompt.instruction} />
+          {props.prompt.instruction && (
+            <CopyClipBoardButton text={props.prompt.instruction} />
           )}
         </div>
       </div>
       <div className="flex items-start justify-between mb-8">
         <div className="mt-4 flex items-center gap-4">
-          {prompt.author && <Author name={prompt.author} />}
-          {prompt.tags && <Tags tags={prompt.tags} />}
+          {props.prompt.author && <Author name={props.prompt.author} />}
+          {props.prompt.tags && <Tags tags={props.prompt.tags} />}
         </div>
         <div className="mt-4">
           <Badge
@@ -60,27 +60,27 @@ export default async function Prompt(props: PromptProps) {
             variant="secondary"
             className=" border-dashed border-violet-500 hover:bg-neutral-600"
           >
-            {prompt.public === true ? "Public" : "Private"}
+            {props.prompt.public === true ? "Public" : "Private"}
           </Badge>
         </div>
       </div>
-      {prompt.howto && (
+      {props.prompt.howto && (
         <AttributeCard
           title="How to Use"
           icon={HelpCircle}
-          text={prompt.howto}
+          text={props.prompt.howto}
         />
       )}
 
-      {prompt.instruction && (
+      {props.prompt.instruction && (
         <AttributeCardCopy
           title="Prompt"
           icon={Terminal}
-          text={prompt.instruction}
+          text={props.prompt.instruction}
         />
       )}
 
-      {prompt.sourceURL && <PromptSource url={prompt.sourceURL} />}
+      {props.prompt.sourceURL && <PromptSource url={props.prompt.sourceURL} />}
     </div>
   );
 }

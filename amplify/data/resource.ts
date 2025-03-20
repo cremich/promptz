@@ -26,6 +26,9 @@ const schema = a
         owner_username: a.string().required(),
         stars: a.hasMany("stars", "promptId"),
       })
+      .secondaryIndexes((index) => [
+        index("slug").queryField("listBySlug").name("slugIndex"),
+      ])
       .authorization((allow) => [
         allow.publicApiKey(), //TODO: verify if public user can do more than reading
         allow.authenticated().to(["read"]),

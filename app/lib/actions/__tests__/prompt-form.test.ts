@@ -57,7 +57,7 @@ describe("onSubmitAction", () => {
       {
         id: id,
         name: "Updated Prompt",
-        slug: "updated-prompt",
+        slug: `updated-prompt-${id.split("-")[0]}`,
         description: "Updated Description",
         howto: "Updated How To",
         instruction: "Updated Instruction",
@@ -69,8 +69,12 @@ describe("onSubmitAction", () => {
     );
 
     // Verify redirect and revalidation
-    expect(revalidatePath).toHaveBeenCalledWith(`/prompt/${id}`);
-    expect(redirect).toHaveBeenCalledWith(`/prompt/${id}`);
+    expect(revalidatePath).toHaveBeenCalledWith(
+      `/prompts/prompt/updated-prompt-${id.split("-")[0]}`,
+    );
+    expect(redirect).toHaveBeenCalledWith(
+      `/prompts/prompt/updated-prompt-${id.split("-")[0]}`,
+    );
   });
 
   test("should return validation errors for invalid form data", async () => {

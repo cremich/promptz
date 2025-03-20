@@ -2,9 +2,7 @@ import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { fetchFavoritePrompts } from "@/app/lib/actions/user";
 import SearchBox from "@/app/ui/browse/search";
 import SearchResults from "@/app/ui/browse/search-result";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import Link from "next/link";
+import CreatePromptButton from "@/app/ui/prompts/create-prompt-button";
 import { Suspense } from "react";
 
 export default async function FavoritePrompts() {
@@ -19,12 +17,7 @@ export default async function FavoritePrompts() {
             <h1 className="text-3xl font-bold tracking-tight">
               Favorite Prompts
             </h1>
-            <Button asChild className="bg-violet-500 hover:bg-violet-600">
-              <Link href="/prompt/create" className="flex items-center gap-2">
-                <Plus className="h-4 w-4" />
-                Create Prompt
-              </Link>
-            </Button>
+            <CreatePromptButton />
           </div>
           <p className="text-muted-foreground">
             Your collection of prompts that you have starred.

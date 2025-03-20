@@ -52,6 +52,7 @@ export type Prompt = {
   author?: string;
   authorId?: string;
   public?: boolean;
+  slug?: string;
   sourceURL?: string;
   createdAt?: string;
   updatedAt?: string;

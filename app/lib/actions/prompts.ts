@@ -12,6 +12,7 @@ import {
   buildTagFilter,
 } from "@/app/lib/filters";
 import { z } from "zod";
+import { GraphQLResult } from "aws-amplify/api";
 
 interface FetchPromptsResult {
   prompts: Prompt[];
@@ -48,6 +49,58 @@ export async function fetchPrompt(id: string) {
   if (errors && errors.length > 0) {
     throw new Error(errors[0].message);
   }
+
+  if (!prompt) {
+    throw new Error("Prompt not found");
+  }
+
+  return mapToPrompt(prompt);
+}
+
+interface PromptBySlugResponse {
+  listBySlug: {
+    items: Schema["prompt"]["type"][];
+    nextToken?: string;
+  };
+}
+
+export async function fetchPromptBySlug(slug: string) {
+  const GET_PROMPT_BY_SLUG = `
+  query ListPrompts($slug: String!) {
+    listBySlug(slug: $slug) {
+      items {
+        id
+        name
+        slug
+        description
+        tags
+        instruction
+        sourceURL
+        howto
+        public
+        owner_username
+        owner
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
+  // we have to use the raw graphql client as the type generation for
+  // queries with secondary indexes is buggy and results in an error of invalid
+  // type matching of filters.
+  const response = (await appsync.graphql<PromptBySlugResponse>({
+    query: GET_PROMPT_BY_SLUG,
+    variables: { slug: slug },
+  })) as GraphQLResult<PromptBySlugResponse>;
+
+  // Check if data exists
+  if (!response.data) {
+    throw new Error("No data returned from query");
+  }
+
+  const prompt = response.data.listBySlug.items[0];
 
   if (!prompt) {
     throw new Error("Prompt not found");
@@ -105,7 +158,6 @@ export async function searchPrompts(
     if (facets.length > 0) {
       filter.and = facets;
     }
-
     console.log(filter);
     const {
       data: prompts,
@@ -159,6 +211,7 @@ function mapToPrompt(prompt: Schema["prompt"]["type"]): Prompt {
     instruction: prompt.instruction,
     howto: prompt.howto || "",
     public: prompt.public || false,
+    slug: prompt.slug || "",
     sourceURL: prompt.sourceURL || "",
     createdAt: prompt.createdAt || "",
     updatedAt: prompt.updatedAt || "",

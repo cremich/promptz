@@ -17,7 +17,7 @@ export default function PromptCard({ prompt }: PromptCardProps) {
 
           <h3 className="font-semibold text-xl">
             <Link
-              href={`/prompt/${prompt.id}`}
+              href={`/prompts/prompt/${prompt.slug}`}
               className="hover:text-violet-500"
             >
               {prompt.title}

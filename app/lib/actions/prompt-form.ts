@@ -59,7 +59,7 @@ export async function onSubmitAction(
   const payload = {
     id: parsed.data.id!,
     name: parsed.data.title,
-    slug: slugify(parsed.data.title),
+    slug: `${slugify(parsed.data.title)}-${parsed.data.id!.split("-")[0]}`,
     description: parsed.data.description,
     howto: parsed.data.howto,
     instruction: parsed.data.instruction,
@@ -91,8 +91,8 @@ export async function onSubmitAction(
     };
   }
 
-  revalidatePath(`/prompt/${payload.id}`);
-  redirect(`/prompt/${payload.id}`);
+  revalidatePath(`/prompts/prompt/${payload.slug}`);
+  redirect(`/prompts/prompt/${payload.slug}`);
 }
 
 export async function deletePrompt(

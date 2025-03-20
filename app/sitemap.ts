@@ -41,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Add entries for each prompt
   const promptRoutes = prompts.map((prompt) => ({
-    url: `${baseUrl}/prompt/${prompt.slug}`,
+    url: `${baseUrl}/prompts/prompt/${prompt.slug}`,
     lastModified: prompt.updatedAt,
     changeFrequency: "monthly" as const,
     priority: 1,

@@ -1,15 +1,15 @@
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
-import { fetchPrompt } from "@/app/lib/actions/prompts";
+import { fetchPromptBySlug } from "@/app/lib/actions/prompts";
 import PromptForm from "@/app/ui/prompts/form";
 import { redirect, notFound } from "next/navigation";
 
 export default async function EditPrompt(props: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
 
   const user = await fetchCurrentAuthUser();
-  const prompt = await fetchPrompt(params.id);
+  const prompt = await fetchPromptBySlug(params.slug);
 
   if (!prompt) {
     notFound();
@@ -17,7 +17,7 @@ export default async function EditPrompt(props: {
 
   // Check if current user is the author
   if (prompt.authorId !== user.id) {
-    redirect(`/prompt/${params.id}`);
+    redirect(`/prompts/prompt/${params.slug}`);
   }
 
   return (
