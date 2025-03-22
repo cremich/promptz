@@ -46,6 +46,27 @@ const schema = a
       .authorization((allow) => [
         allow.owner().to(["create", "delete", "read"]),
       ]),
+    projectRule: a
+      .model({
+        id: a.id().required(),
+        title: a.string().required(),
+        slug: a.string().required(),
+        description: a.string(),
+        content: a.string().required(),
+        tags: a.string().array(),
+        public: a.boolean(),
+        sourceURL: a.string(),
+        owner_username: a.string().required(),
+      })
+      .secondaryIndexes((index) => [
+        index("slug").queryField("listRuleBySlug").name("slugIndex"),
+        index("title").queryField("listRuleByTitle").name("titleIndex"),
+      ])
+      .authorization((allow) => [
+        allow.publicApiKey().to(["read"]),
+        allow.authenticated().to(["read"]),
+        allow.owner().to(["create", "update", "delete"]),
+      ]),
   })
   .authorization((allow) => [allow.resource(postAuthenticationFunction)]);
 
