@@ -1,79 +1,68 @@
-# Product Context: Promptz
+# Product Context
 
-## Problem Statement
+## Purpose
 
-As Amazon Q Developer gains adoption, users face several challenges:
+Promptz exists to solve the challenge of creating, discovering, and sharing effective AI prompts. As AI systems become more prevalent, the quality of prompts used to interact with them significantly impacts the results. Promptz provides a centralized platform where users can:
 
-1. **Prompt Discovery**: Developers struggle to find effective prompts for specific tasks in the software development lifecycle.
-2. **Prompt Quality**: Creating high-quality prompts that produce consistent, useful results requires expertise and iteration.
-3. **Knowledge Sharing**: Teams lack a centralized way to share and standardize their best prompting practices.
-4. **Context Switching**: Developers waste time reformulating similar prompts across different projects and tasks.
+1. Find high-quality, tested prompts for various AI applications
+2. Share their own effective prompts with the community
+3. Learn prompt engineering techniques through examples
+4. Save favorite prompts for future use
 
-## Solution
+## Problems Solved
 
-Promptz addresses these challenges by providing:
+### For AI Users
 
-1. **Centralized Repository**: A searchable collection of prompts categorized by SDLC activity, prompt type, and interface.
-2. **Community Platform**: A space for developers to share, discover, and improve prompts together.
-3. **Standardization**: Templates and best practices to ensure consistent, high-quality interactions with Amazon Q.
-4. **Efficiency**: Ready-to-use prompts that save time and improve developer productivity.
+- **Discovery Problem**: Finding effective prompts is often a trial-and-error process
+- **Quality Problem**: Not all prompts produce good results
+- **Organization Problem**: Keeping track of useful prompts across different AI tools
+
+### For Prompt Engineers
+
+- **Sharing Problem**: No centralized platform to share their expertise
+- **Feedback Problem**: Limited ways to get feedback on prompt effectiveness
+- **Recognition Problem**: Difficulty in establishing reputation in the field
+
+### For the AI Community
+
+- **Standardization Problem**: Lack of common patterns and best practices
+- **Education Problem**: Limited resources for learning prompt engineering
+- **Evolution Problem**: No easy way to track how prompts evolve and improve
 
 ## User Experience Goals
 
-### For Prompt Consumers
+### Intuitive Browsing
 
-- **Effortless Discovery**: Quickly find relevant prompts through intuitive search and filtering.
-- **Confidence**: Trust that community-vetted prompts will produce reliable results.
-- **Productivity**: Spend less time crafting prompts and more time on development tasks.
-- **Learning**: Improve prompting skills by studying effective examples.
+- Simple, powerful search functionality
+- Effective filtering by tags, use cases, and popularity
+- Clear categorization of prompts
 
-### For Prompt Contributors
+### Seamless Creation
 
-- **Recognition**: Gain visibility and reputation for creating valuable prompts.
-- **Feedback**: Receive community input to refine and improve contributions.
-- **Impact**: Help shape best practices for interacting with AI coding assistants.
-- **Community**: Connect with other developers interested in optimizing AI workflows.
+- User-friendly prompt creation interface
+- Support for formatting and structuring prompts
+- Preview capabilities
 
-## Value Proposition
+### Community Engagement
 
-Promptz transforms how developers work with Amazon Q by:
+- Easy sharing of prompts
+- Ability to star/favorite useful prompts
+- Author attribution and profile visibility
 
-1. **Accelerating Adoption**: Lowering the barrier to effective use of AI coding assistants.
-2. **Improving Outcomes**: Ensuring more consistent, high-quality results from AI interactions.
-3. **Building Community**: Creating a collaborative ecosystem around Amazon Q best practices.
-4. **Saving Time**: Reducing the effort needed to formulate effective prompts.
+### Accessibility
 
-## Market Positioning
+- Mobile-responsive design
+- Fast loading times
+- Inclusive design principles
 
-Promptz positions itself as:
+## Success Indicators
 
-- The **definitive hub** for Amazon Q Developer prompting expertise
-- A **community-driven platform** that evolves with user needs and Amazon Q capabilities
-- An **essential tool** for organizations seeking to standardize their AI assistant workflows
-- A **bridge** between individual developer expertise and team-wide best practices
+- **User Growth**: Increasing number of registered users
+- **Content Growth**: Growing library of high-quality prompts
+- **Engagement**: Active favoriting, sharing, and usage of prompts
+- **Retention**: Users returning to find and create new prompts
+- **Quality**: Positive feedback on prompt effectiveness
 
-## User Personas
+## Future Vision
 
-### Alex - The Efficiency Seeker
-
-- Mid-level developer looking to streamline routine tasks
-- Values ready-to-use solutions that save time
-- Wants to quickly find prompts for specific development challenges
-
-### Taylor - The Prompt Craftsperson
-
-- Senior developer with expertise in AI interactions
-- Creates and refines prompts to optimize results
-- Enjoys sharing knowledge and helping others
-
-### Jordan - The Team Lead
-
-- Engineering manager responsible for team productivity
-- Seeks to standardize best practices across projects
-- Wants to track and measure the impact of AI tools on development
-
-### Casey - The AI Novice
-
-- Junior developer new to AI coding assistants
-- Needs guidance on effective prompting techniques
-- Learns by example and through community feedback
+Promptz aims to become the definitive platform for AI prompt engineering, fostering a community of practice that advances the field. As AI capabilities evolve, Promptz will adapt to support new models, use cases, and prompt engineering techniques.

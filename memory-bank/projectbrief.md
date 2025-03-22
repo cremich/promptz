@@ -2,53 +2,48 @@
 
 ## Overview
 
-Promptz is the ultimate prompting hub for Amazon Q Developer, designed to help users discover, create, and perfect their prompts for every step of the software development lifecycle. It serves as a central repository and community platform for sharing and improving prompts that enhance developer productivity with Amazon Q.
+Promptz is a platform for creating, sharing, and discovering AI prompts. It allows users to browse, create, and manage prompts for various AI applications. The platform includes user authentication, prompt management, and social features like favoriting prompts.
 
-## Core Objectives
+## Core Requirements
 
-1. **Discover** - Enable users to find high-quality prompts for specific development tasks
-2. **Create** - Provide tools for users to craft effective prompts for Amazon Q Developer
-3. **Perfect** - Allow community feedback and iteration to improve prompt effectiveness
-4. **Share** - Build a community of developers sharing their best prompting practices
+### User Authentication
+
+- User signup and login functionality
+- Email confirmation
+- User profile management
+
+### Prompt Management
+
+- Create, edit, and delete prompts
+- Browse and search for prompts
+- Filter prompts by tags and other criteria
+- Copy prompts to clipboard
+
+### Social Features
+
+- Star/favorite prompts
+- View favorite prompts
+- Author attribution
+
+### MCP Integration
+
+- Model Context Protocol integration for enhanced AI capabilities
+
+## Technical Goals
+
+- Build a responsive, accessible web application
+- Implement secure authentication
+- Create an intuitive user interface
+- Ensure good performance and SEO
 
 ## Target Audience
 
-- Software developers using Amazon Q Developer
-- DevOps engineers working with AWS services
-- Technical teams looking to optimize their AI assistant workflows
-- Organizations seeking to standardize their prompting strategies
-
-## Key Features
-
-- Prompt repository with search and filtering capabilities
-- User authentication and profile management
-- Prompt creation and editing tools
-- Categorization by SDLC activity, prompt category, and Q interface
-- Community features (sharing, feedback)
+- AI enthusiasts
+- Prompt engineers
+- General users looking for effective prompts
 
 ## Success Metrics
 
-- Number of active users
-- Quantity and quality of prompts in the repository
-- User engagement with prompts (views, copies, ratings)
-- Community growth and contribution rates
-
-## Project Constraints
-
-- Must integrate seamlessly with AWS services
-- Should follow AWS design patterns and best practices
-- Must be secure and scalable
-- Should provide excellent user experience on various devices
-
-## Timeline
-
-- Initial development and MVP launch
-- Feature expansion based on user feedback
-- Continuous improvement and community building
-
-## Stakeholders
-
-- Development team
-- Amazon Q Developer users
-- AWS ecosystem partners
-- Open-source contributors
+- User engagement (signups, prompt creation)
+- Prompt usage and sharing
+- Platform growth and retention

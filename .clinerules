@@ -1,0 +1,99 @@
+# Cline Rules for Promptz Project
+
+## Project Patterns
+
+### File Organization
+
+- Next.js App Router structure with app/ directory
+- UI components in app/ui/ organized by feature
+- Server actions in app/lib/actions/
+- Type definitions in app/lib/definitions.ts
+- Reusable utility functions in lib/utils.ts and app/lib/
+- Shadcn UI components in components/ui/
+
+### Naming Conventions
+
+- React components use PascalCase
+- Files for React components use kebab-case
+- Utility functions use camelCase
+- Server actions use kebab-case for files and camelCase for functions
+- Test files follow the pattern `[filename].test.tsx`
+
+### Code Style
+
+- TypeScript for type safety
+- Functional components with React hooks
+- Server Components by default, with "use client" directive when needed
+- Tailwind CSS for styling
+- Form handling with React Hook Form
+- Error handling with try/catch blocks
+- Async/await for asynchronous operations
+
+## Implementation Paths
+
+### Authentication Flow
+
+1. User registration/login via app/ui/auth components
+2. AWS Cognito authentication via app/lib/actions/cognito.ts
+3. Post-authentication processing via Amplify functions
+4. User state management and protected routes
+
+### Prompt Creation Flow
+
+1. User navigates to create page
+2. Form rendered from app/ui/prompts/form.tsx
+3. Form submission handled by app/lib/actions/prompt-form.ts
+4. Data saved via Amplify/DynamoDB
+5. Redirect to prompt detail page
+
+### Prompt Discovery Flow
+
+1. User navigates to prompts page or uses search
+2. Filtering via app/ui/browse components
+3. Results fetched via app/lib/actions/prompts.ts
+4. Rendered as prompt cards
+
+## Testing Strategy
+
+- Jest for unit and component tests
+- React Testing Library for component testing
+- Snapshot tests for UI components
+- Mock AWS services for testing
+
+## Deployment Process
+
+- Code pushed to repository
+- CI/CD pipeline via GitHub Actions
+- Deployment to AWS Amplify
+- Environment-specific configurations
+
+## User Preferences
+
+- Clean, minimal UI design
+- Dark mode support
+- Responsive design for all devices
+- Fast loading times
+- Intuitive navigation
+
+## Known Challenges
+
+- AWS Amplify configuration complexity
+- Authentication state management across pages
+- Server/client component boundaries
+- TypeScript type definitions for complex data structures
+
+## Tool Usage
+
+- VS Code as primary editor
+- ESLint and Prettier for code formatting
+- Husky for git hooks
+- Jest for testing
+- Next.js development server
+- AWS Amplify CLI for backend management
+
+## Documentation Standards
+
+- Clear component props interfaces
+- JSDoc comments for functions
+- README updates for new features
+- Test coverage for critical paths
