@@ -49,7 +49,7 @@ const schema = a
     projectRule: a
       .model({
         id: a.id().required(),
-        title: a.string().required(),
+        name: a.string().required(),
         slug: a.string().required(),
         description: a.string(),
         content: a.string().required(),
@@ -60,7 +60,7 @@ const schema = a
       })
       .secondaryIndexes((index) => [
         index("slug").queryField("listRuleBySlug").name("slugIndex"),
-        index("title").queryField("listRuleByTitle").name("titleIndex"),
+        index("name").queryField("listRuleByName").name("nameIndex"),
       ])
       .authorization((allow) => [
         allow.publicApiKey().to(["read"]),

@@ -58,6 +58,21 @@ export type Prompt = {
   updatedAt?: string;
 };
 
+export type ProjectRule = {
+  id?: string;
+  title?: string;
+  description?: string;
+  tags?: string[];
+  content?: string;
+  author?: string;
+  authorId?: string;
+  public?: boolean;
+  slug?: string;
+  sourceURL?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 const ALLOWED_DOMAINS = [
   "github.com",
   "dev.to",
@@ -77,35 +92,45 @@ const ALLOWED_DOMAINS = [
   "gitbook.io",
 ];
 
+const idSchema = z.string().uuid().optional();
+const sourceURLSchema = z
+  .string()
+  .max(2048, "URL must not exceed 2048 characters")
+  .url()
+  .regex(/^https:\/\/.+/, "Only HTTPS URLs are allowed")
+  .refine((url) => {
+    try {
+      const domain = new URL(url).hostname;
+      return ALLOWED_DOMAINS.some(
+        (allowed) => domain === allowed || domain.endsWith(`.${allowed}`),
+      );
+    } catch {
+      return false;
+    }
+  }, "Domain not allowed. Please use a supported content platform.")
+  .optional()
+  .or(z.literal(""));
+
+const titleSchema = z
+  .string()
+  .trim()
+  .max(100, "Title must be less than 100 characters")
+  .min(3, "Title must be more than 3 characters");
+
+const descriptionSchema = z
+  .string()
+  .trim()
+  .min(10, "Description must be more than 10 characters")
+  .max(500, "Description must be less than 500 characters");
+
+const tagSchema = z.array(z.string()).optional();
+const publicSchema = z.boolean();
+
 export const promptFormSchema = z.object({
-  id: z.string().uuid().optional(),
-  sourceURL: z
-    .string()
-    .max(2048, "URL must not exceed 2048 characters")
-    .url()
-    .regex(/^https:\/\/.+/, "Only HTTPS URLs are allowed")
-    .refine((url) => {
-      try {
-        const domain = new URL(url).hostname;
-        return ALLOWED_DOMAINS.some(
-          (allowed) => domain === allowed || domain.endsWith(`.${allowed}`),
-        );
-      } catch {
-        return false;
-      }
-    }, "Domain not allowed. Please use a supported content platform.")
-    .optional()
-    .or(z.literal("")),
-  title: z
-    .string()
-    .trim()
-    .max(100, "Title must be less than 100 characters")
-    .min(3, "Title must be more than 3 characters"),
-  description: z
-    .string()
-    .trim()
-    .min(10, "Description must be more than 10 characters")
-    .max(500, "Description must be less than 500 characters"),
+  id: idSchema,
+  sourceURL: sourceURLSchema,
+  title: titleSchema,
+  description: descriptionSchema,
   howto: z
     .string()
     .trim()
@@ -116,8 +141,22 @@ export const promptFormSchema = z.object({
     .trim()
     .min(10, "Prompt must be more than 10 characters")
     .max(4000, "Prompt must be less than 4000 characters"),
-  tags: z.array(z.string()).optional(),
-  public: z.boolean(),
+  tags: tagSchema,
+  public: publicSchema,
+});
+
+export const projectRuleFormSchema = z.object({
+  id: z.string().uuid().optional(),
+  sourceURL: sourceURLSchema,
+  title: titleSchema,
+  description: descriptionSchema,
+  content: z
+    .string()
+    .trim()
+    .min(10, "Content must be more than 10 characters")
+    .max(10000, "Content must be less than 10000 characters"),
+  tags: tagSchema,
+  public: publicSchema,
 });
 
 // Validation schema for search and filter params
@@ -128,4 +167,12 @@ export const searchParamsSchema = z.object({
   interface: z.union([z.string(), z.array(z.string())]).optional(),
   category: z.union([z.string(), z.array(z.string())]).optional(),
   sdlc: z.union([z.string(), z.array(z.string())]).optional(),
+});
+
+// Validation schema for project rule search and filter params
+export const projectRuleSearchParamsSchema = z.object({
+  query: z.string().optional(),
+  sort: z.string().optional(),
+  my: z.string().optional(),
+  tags: z.union([z.string(), z.array(z.string())]).optional(),
 });
