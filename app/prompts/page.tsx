@@ -1,6 +1,6 @@
 import { searchPrompts } from "@/app/lib/actions/prompts";
 import { FilterSidebar } from "@/app/ui/browse/filter-sidebar";
-import SearchBox from "@/app/ui/browse/search";
+import SearchBox from "@/app/ui/common/search";
 import SearchResults from "@/app/ui/browse/search-result";
 import { SortSelector } from "@/app/ui/browse/sorting";
 import CreatePromptButton from "@/app/ui/prompts/create-prompt-button";
