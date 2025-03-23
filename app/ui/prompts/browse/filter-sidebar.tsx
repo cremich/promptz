@@ -5,7 +5,7 @@ import {
   QInterface,
   SdlcActivity,
 } from "@/app/lib/definitions";
-import { FilterSection } from "@/app/ui/browse/filter-section";
+import { FilterSection } from "@/app/ui/common/filter-section";
 
 export function FilterSidebar() {
   return (

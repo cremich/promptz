@@ -1,7 +1,7 @@
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { fetchFavoritePrompts } from "@/app/lib/actions/user";
 import SearchBox from "@/app/ui/common/search";
-import SearchResults from "@/app/ui/browse/search-result";
+import SearchResults from "@/app/ui/prompts/browse/search-result";
 import CreatePromptButton from "@/app/ui/prompts/create-prompt-button";
 import { Suspense } from "react";
 
