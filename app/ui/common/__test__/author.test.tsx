@@ -1,4 +1,4 @@
-import Author from "@/app/ui/prompts/author";
+import Author from "@/app/ui/common/author";
 import { describe, expect, test } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";

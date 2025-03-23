@@ -1,5 +1,5 @@
-import Author from "@/app/ui/prompts/author";
-import Tags from "@/app/ui/prompts/tags";
+import Author from "@/app/ui/common/author";
+import Tags from "@/app/ui/common/tags";
 import { HelpCircle, Terminal } from "lucide-react";
 import PromptInstruction from "@/app/ui/prompts/prompt-instruction";
 import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";

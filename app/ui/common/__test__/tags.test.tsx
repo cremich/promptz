@@ -1,4 +1,4 @@
-import Tags from "@/app/ui/prompts/tags";
+import Tags from "@/app/ui/common/tags";
 import { describe, expect, test } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";

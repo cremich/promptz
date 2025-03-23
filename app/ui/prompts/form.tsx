@@ -52,7 +52,7 @@ import {
   getQInterfaceTags,
   getSdlcTags,
 } from "@/app/lib/tags";
-import Tags from "@/app/ui/prompts/tags";
+import Tags from "@/app/ui/common/tags";
 import { Badge } from "@/components/ui/badge";
 import {
   Sheet,

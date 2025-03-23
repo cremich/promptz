@@ -1,6 +1,6 @@
 import { Prompt } from "@/app/lib/definitions";
-import Author from "@/app/ui/prompts/author";
-import Tags from "@/app/ui/prompts/tags";
+import Author from "@/app/ui/common/author";
+import Tags from "@/app/ui/common/tags";
 import { Card, CardHeader, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
 
