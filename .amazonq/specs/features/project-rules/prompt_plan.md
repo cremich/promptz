@@ -48,15 +48,17 @@ Create server actions for CRUD operations on project rules. To fulfill the task,
 - validate that the implementation works by running unit tests
 - fix errors related to the requested change until all tests pass.
 
-Please help me create the following actions in a new file at app/lib/actions/project-rules.ts:
+Your goal is to ensure that the requested changes are implemented, tested and ready for me to review.
+
+Create following server actions:
 
 1. createProjectRule: Create a new project rule
 2. updateProjectRule: Update an existing project rule
 3. deleteProjectRule: Delete a project rule
-4. getProjectRule: Get a single project rule by ID
+4. getProjectRule: Get a single project rule by slug
 5. listProjectRules: List project rules with optional filtering
 
-Each function should handle authentication checks and proper error handling. The implementation should follow our existing patterns for server actions.
+The implementation must follow our existing patterns for server actions.
 ```
 
 ### Step 3: Create Project Rules List Page
