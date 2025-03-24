@@ -71,7 +71,7 @@ export async function fetchProjectRuleBySlug(slug: string) {
     listRuleBySlug(slug: $slug) {
       items {
         id
-        title
+        name
         slug
         description
         tags
