@@ -38,16 +38,24 @@ export enum QInterface {
 export enum ProjectRuleTag {
   NEXTJS = "NextJS",
   REACT = "React",
+  VUE = "Vue.js",
+  SWIFT = "Swift",
+  KOTLIN = "Kotlin",
   TYPESCRIPT = "TypeScript",
   JAVASCRIPT = "JavaScript",
+  PYTHON = "Python",
+  JAVA = "Java",
+  RUST = "Rust",
+  GO = "Go",
   AWS = "AWS",
   AMPLIFY = "Amplify",
-  AUTHENTICATION = "Authentication",
-  DATABASE = "Database",
-  API = "API",
+  CDK = "CDK",
+  SAM = "SAM",
+  CLOUDFORMATION = "Cloudformation",
   SECURITY = "Security",
   PERFORMANCE = "Performance",
   ACCESSIBILITY = "Accessibility",
+  SEO = "SEO",
 }
 
 export type User = {
