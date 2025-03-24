@@ -1,3 +1,4 @@
+"use client";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Collapsible,
@@ -7,7 +8,7 @@ import {
 import { ChevronDown } from "lucide-react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
-type FilterKey = "interface" | "category" | "sdlc";
+type FilterKey = "interface" | "category" | "sdlc" | "tags";
 
 interface FilterSectionProps {
   title: string;

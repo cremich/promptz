@@ -35,6 +35,21 @@ export enum QInterface {
   CONSOLE = "Management Console",
 }
 
+export enum ProjectRuleTag {
+  NEXTJS = "NextJS",
+  REACT = "React",
+  TYPESCRIPT = "TypeScript",
+  JAVASCRIPT = "JavaScript",
+  AWS = "AWS",
+  AMPLIFY = "Amplify",
+  AUTHENTICATION = "Authentication",
+  DATABASE = "Database",
+  API = "API",
+  SECURITY = "Security",
+  PERFORMANCE = "Performance",
+  ACCESSIBILITY = "Accessibility",
+}
+
 export type User = {
   id: string;
   username: string;
