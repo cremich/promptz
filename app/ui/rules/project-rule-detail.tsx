@@ -6,6 +6,7 @@ import Tags from "@/app/ui/common/tags";
 import Author from "@/app/ui/common/author";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import EditRuleButton from "@/app/ui/rules/edit-rules-button";
+import { SourceURL } from "@/app/ui/common/source-url";
 
 // Define the props for the component
 interface ProjectRuleDetailProps {
@@ -24,7 +25,9 @@ export default function ProjectRuleDetail({
 }: ProjectRuleDetailProps) {
   // Format the creation date
   const formattedDate = projectRule.createdAt
-    ? new Date(projectRule.createdAt).toLocaleDateString("en-US", {
+    ? new Date(
+        projectRule.updatedAt || projectRule.createdAt,
+      ).toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -45,21 +48,6 @@ export default function ProjectRuleDetail({
             {isOwner && projectRule.slug && (
               <EditRuleButton slug={projectRule.slug} />
             )}
-
-            {/* External source link if available */}
-            {projectRule.sourceURL && (
-              <Button asChild variant="ghost">
-                <a
-                  href={projectRule.sourceURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="View source"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  Source
-                </a>
-              </Button>
-            )}
           </div>
         </div>
 
@@ -77,7 +65,7 @@ export default function ProjectRuleDetail({
             {projectRule.author && <Author name={projectRule.author} />}
           </div>
           <div className="text-sm text-muted-foreground">
-            Created on {formattedDate}
+            Submitted on {formattedDate}
           </div>
         </div>
       </div>
@@ -92,6 +80,7 @@ export default function ProjectRuleDetail({
           </ScrollArea>
         </div>
       </div>
+      {projectRule.sourceURL && <SourceURL url={projectRule.sourceURL} />}
     </div>
   );
 }

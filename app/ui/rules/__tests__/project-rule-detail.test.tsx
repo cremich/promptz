@@ -10,6 +10,7 @@ describe("ProjectRuleDetail", () => {
     content: "# Test content",
     tags: ["TypeScript", "React"],
     author: "testuser",
+    sourceURL: "https://github.com/example/repo",
     authorId: "user123::testuser",
     createdAt: "2025-03-20T12:00:00Z",
     public: true,
@@ -28,14 +29,14 @@ describe("ProjectRuleDetail", () => {
     expect(screen.getByText("@testuser")).toBeInTheDocument();
 
     // Edit button should not be visible for non-owners
-    expect(screen.queryByText("Edit")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("edit-button")).not.toBeInTheDocument();
   });
 
   test("shows edit button for owner", () => {
     render(<ProjectRuleDetail projectRule={mockProjectRule} isOwner={true} />);
 
     // Edit button should be visible for owners
-    expect(screen.getByText("Edit")).toBeInTheDocument();
+    expect(screen.getByTestId("edit-button")).toBeInTheDocument();
   });
 
   test("renders source link when sourceURL is provided", () => {
@@ -49,19 +50,14 @@ describe("ProjectRuleDetail", () => {
     );
 
     // Source button should be visible
-    const sourceLink = screen.getByText("Source");
-    expect(sourceLink).toBeInTheDocument();
-    expect(sourceLink.closest("a")).toHaveAttribute(
-      "href",
-      "https://github.com/example/repo",
-    );
+    expect(screen.getByText(mockProjectRule.sourceURL!)).toBeInTheDocument();
   });
 
   test("formats date correctly", () => {
     render(<ProjectRuleDetail projectRule={mockProjectRule} isOwner={false} />);
 
     // Check that the date is formatted correctly
-    expect(screen.getByText("Created on March 20, 2025")).toBeInTheDocument();
+    expect(screen.getByText("Submitted on March 20, 2025")).toBeInTheDocument();
   });
 
   test("handles missing date gracefully", () => {
@@ -78,6 +74,6 @@ describe("ProjectRuleDetail", () => {
     );
 
     // Check that the date fallback is shown
-    expect(screen.getByText("Created on Unknown date")).toBeInTheDocument();
+    expect(screen.getByText("Submitted on Unknown date")).toBeInTheDocument();
   });
 });

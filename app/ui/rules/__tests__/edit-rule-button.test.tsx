@@ -27,6 +27,6 @@ describe("EditRuleButton", () => {
 
   test("shows button text when showButtonText is true", () => {
     render(<EditRuleButton slug={testSlug} showButtonText={true} />);
-    expect(screen.getByText("Edit prompt")).toBeInTheDocument();
+    expect(screen.getByText("Edit Rule")).toBeInTheDocument();
   });
 });

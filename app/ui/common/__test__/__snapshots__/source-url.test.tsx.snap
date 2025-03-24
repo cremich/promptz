@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PromptSource renders the prompt form component unchanged 1`] = `
+exports[`SourceURL renders the prompt form component unchanged 1`] = `
 <div>
   <div
     class="flex items-center gap-2"
@@ -11,6 +11,7 @@ exports[`PromptSource renders the prompt form component unchanged 1`] = `
       Source:
     </label>
     <a
+      aria-label="View source"
       class="flex items-center gap-1.5 text-sm text-violet-400 hover:text-violet-300 transition-colors"
       href="https://promptz.dev"
       rel="noopener noreferrer"
