@@ -42,7 +42,7 @@ describe("CreateProjectRulePage", () => {
     });
 
     // Render the component
-    const { container } = render(await CreateProjectRulePage());
+    render(await CreateProjectRulePage());
 
     // Check if the page title is rendered
     expect(screen.getByText("Create Project Rule")).toBeInTheDocument();

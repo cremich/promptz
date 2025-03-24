@@ -13,14 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  FileText,
-  HelpCircle,
-  Loader2,
-  Save,
-  Terminal,
-  Trash2,
-} from "lucide-react";
+import { FileText, Loader2, Save, Terminal, Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

@@ -13,7 +13,7 @@ interface EditProjectRulePageProps {
  * This component handles authentication checks, data fetching, and renders the project rule form
  */
 export default async function EditProjectRulePage(props: {
-  params: EditProjectRulePageProps;
+  params: Promise<EditProjectRulePageProps>;
 }) {
   const params = await props.params;
 

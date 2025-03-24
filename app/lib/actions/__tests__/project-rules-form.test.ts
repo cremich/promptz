@@ -45,7 +45,7 @@ describe("Project Rules Form Actions", () => {
     formData.append("public", "true");
     formData.append("sourceURL", "https://github.com/test/repo-updated");
 
-    const result = await onSubmitAction({}, formData);
+    await onSubmitAction({}, formData);
 
     expect(updateProjectRuleMock).toHaveBeenCalled();
 
