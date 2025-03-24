@@ -73,6 +73,15 @@ export default function UserMenu() {
                 <span>My Prompts</span>
               </Link>
             </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link
+                href="/rules/my"
+                className="flex items-center w-full cursor-pointer"
+              >
+                <FileText className="mr-2 h-4 w-4" />
+                <span>My Rules</span>
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <LogoutButton />

@@ -256,7 +256,7 @@ The implementation must use the same image generation approach we use for prompt
 ### Step 12: Implement User Profile Integration
 
 ```
-Create a user profile page to show the user's project rules. This should allow users to manage all their content in one place. To fulfill the task, you must
+Create a new page to show project rules submitted by the logged in user. This should allow users to manage all their rules in one place. To fulfill the task, you must
 - adhere to coding guidelines described in the ./.amazonq/rules folder. This is mandatory.
 - read relevant documentation in the ./memory-bank folder. This is mandatory.
 - read relevant documentation about the feature in the ./.amazonq/specs/features/project-rules/spec.md file. This is mandatory.
@@ -267,10 +267,8 @@ Create a user profile page to show the user's project rules. This should allow u
 Your goal is to ensure that the requested changes are implemented, tested and ready for me to review.
 
 Please help me:
-1. Create a user profile page to include tabs to list submitted rules
-2. Create a component to list a user's project rules
-3. Include edit and delete actions for each rule
-4. Ensure proper authorization checks
+1. Create a new page similar to the `MyPrompts`page.
+2. Ensure proper authorization checks
 
 ```
 
