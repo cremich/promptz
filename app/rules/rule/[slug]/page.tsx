@@ -2,10 +2,35 @@ import { fetchProjectRuleBySlug } from "@/app/lib/actions/project-rules";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { notFound } from "next/navigation";
 import ProjectRuleDetail from "@/app/ui/rules/project-rule-detail";
+import { Metadata } from "next";
 
 // Define the props for the page component
 interface ProjectRulePageProps {
   slug: string;
+}
+
+export async function generateMetadata(props: {
+  params: Promise<ProjectRulePageProps>;
+}): Promise<Metadata> {
+  // Get project rule slug from params
+  const params = await props.params;
+
+  // Fetch project rule data
+  const projectRule = await fetchProjectRuleBySlug(params.slug);
+  if (!projectRule) {
+    return {
+      title: "Project Rule Not Found",
+    };
+  } else {
+    return {
+      title: `${projectRule.title} - Project Rule for Amazon Q Developer`,
+      description: projectRule.description,
+      openGraph: {
+        title: `${projectRule.title} - Project Rule for Amazon Q Developer`,
+        description: projectRule.description,
+      },
+    };
+  }
 }
 
 /**

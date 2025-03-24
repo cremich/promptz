@@ -236,7 +236,7 @@ The navigation must be consistent with our existing UI patterns and be responsiv
 ### Step 11: Implement OpenGraph Image Generation
 
 ```
-Iplement dynamic OpenGraph image generation for project rules to improve social sharing. This must be similar to how we handle it for prompts. To fulfill the task, you must
+Implement dynamic OpenGraph image generation for project rules to improve social sharing. This must be similar to how we handle it for prompts. To fulfill the task, you must
 - adhere to coding guidelines described in the ./.amazonq/rules folder. This is mandatory.
 - read relevant documentation in the ./memory-bank folder. This is mandatory.
 - read relevant documentation about the feature in the ./.amazonq/specs/features/project-rules/spec.md file. This is mandatory.
@@ -247,7 +247,7 @@ Iplement dynamic OpenGraph image generation for project rules to improve social 
 Your goal is to ensure that the requested changes are implemented, tested and ready for me to review.
 
 Please help me create:
-1. An opengraph-image route segment at app/rules/rule/[slug]/opengraph-image.tsx that generates an image
+1. An opengraph-image route segment at app/rules/rule/[slug]/opengraph-image.tsx that generates an image similar to how opengraph-images for prompts are created.
 2. A template for the OpenGraph image that includes the rule title, description, author, tags and branding
 
 The implementation must use the same image generation approach we use for prompts.
