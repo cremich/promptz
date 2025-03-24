@@ -48,14 +48,14 @@
 
 ### Step 5: Create Project Rule Detail Page
 
-- [ ] Create app/project-rules/[id]/page.tsx
-- [ ] Implement fetching of single project rule
-- [ ] Create markdown content renderer
-- [ ] Add metadata display (author, date, tags)
-- [ ] Add edit/delete buttons for owners
+- [x] Create app/rules/rule/[slug]/page.tsx
+- [x] Implement fetching of single project rule
+- [x] Create markdown content renderer
+- [x] Add metadata display (author, date, tags)
+- [x] Add edit buttons for owners
 - [ ] Add download button
-- [ ] Implement not found handling
-- [ ] Implement unauthorized handling
+- [x] Implement not found handling
+- [x] Implement unauthorized handling
 - [ ] Test page with various scenarios
 
 ### Step 6: Create Project Rule Form Component
