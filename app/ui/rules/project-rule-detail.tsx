@@ -5,6 +5,7 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import EditRuleButton from "@/app/ui/rules/edit-rules-button";
 import { SourceURL } from "@/app/ui/common/source-url";
 import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
+import { DownloadButton } from "@/app/ui/common/download-button";
 
 // Define the props for the component
 interface ProjectRuleDetailProps {
@@ -47,7 +48,14 @@ export default function ProjectRuleDetail({
               <EditRuleButton slug={projectRule.slug} />
             )}
             {projectRule.content && (
-              <CopyClipBoardButton text={projectRule.content} />
+              <>
+                <CopyClipBoardButton text={projectRule.content} />
+                <DownloadButton
+                  content={projectRule.content}
+                  filename={`promptz-rule-${projectRule.slug}.md`}
+                  label="Download"
+                />
+              </>
             )}
           </div>
         </div>

@@ -95,13 +95,12 @@
 
 ### Step 9: Implement Project Rule Download Functionality
 
-- [ ] Add download function to project-rules.ts
-- [ ] Create app/ui/project-rules/download-button.tsx component
-- [ ] Implement markdown file generation
-- [ ] Add frontmatter metadata to downloaded files
-- [ ] Integrate download button in detail page
-- [ ] Test download functionality
-- [ ] Verify downloaded file format
+- [x] Add download function to project-rules.ts
+- [x] Create app/ui/common/download-button.tsx component
+- [x] Implement markdown file generation
+- [x] Integrate download button in detail page
+- [x] Test download functionality
+- [x] Verify downloaded file format
 
 ### Step 10: Add Navigation and Layout Updates
 

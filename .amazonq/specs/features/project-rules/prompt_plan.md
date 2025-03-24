@@ -208,9 +208,8 @@ Implement functionality to download project rules as markdown files. This must b
 Your goal is to ensure that the requested changes are implemented, tested and ready for me to review.
 
 Create:
-1. A server action in app/lib/actions/project-rules.ts to generate a downloadable markdown file
-2. A client component at app/ui/project-rules/download-button.tsx that triggers the download
-3. Integration of this button in the project rule detail page
+1. A client component at app/ui/common/download-button.tsx that triggers the download
+2. Integration of this button in the project rule detail page
 
 The download must include only the rule content formatted as markdown.
 ```
