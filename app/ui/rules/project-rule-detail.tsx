@@ -5,6 +5,7 @@ import Link from "next/link";
 import Tags from "@/app/ui/common/tags";
 import Author from "@/app/ui/common/author";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+import EditRuleButton from "@/app/ui/rules/edit-rules-button";
 
 // Define the props for the component
 interface ProjectRuleDetailProps {
@@ -41,13 +42,8 @@ export default function ProjectRuleDetail({
 
           <div className="flex items-center gap-2">
             {/* Show edit button only if the user is the owner */}
-            {isOwner && (
-              <Button asChild variant="outline">
-                <Link href={`/rules/edit/${projectRule.id}`}>
-                  <Edit className="h-4 w-4" />
-                  Edit
-                </Link>
-              </Button>
+            {isOwner && projectRule.slug && (
+              <EditRuleButton slug={projectRule.slug} />
             )}
 
             {/* External source link if available */}
