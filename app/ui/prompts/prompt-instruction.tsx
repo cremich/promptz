@@ -1,4 +1,4 @@
-import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";
+import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
 

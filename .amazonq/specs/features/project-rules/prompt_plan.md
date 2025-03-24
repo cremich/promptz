@@ -108,10 +108,9 @@ The component should be responsive and follow our accessibility standards.
 ### Step 5: Create Project Rule Detail Page
 
 ```
-Create a detail page for viewing a single project rule. This must display the full content of a project rule and provide actions like edit (for owners) and download. To fulfill the task, you must
-- adhere to coding guidelines described in the ./.amazonq/rules folder. This is mandatory.
-- read relevant documentation in the ./memory-bank folder. This is mandatory.
-- read relevant documentation about the feature in the ./.amazonq/specs/features/project-rules/spec.md file. This is mandatory.
+Create a detail page for viewing a single project rule. This must display the full content of a project rule and provide actions like edit (for owners). To fulfill the task, you must
+- adhere to coding guidelines described in the ./.amazonq/rules folder. You must read all coding guidelines before starting with the task. This is mandatory.
+- you must read about the feature in the ./.amazonq/specs/features/project-rules/spec.md file. This is mandatory.
 - implement the requested changes.
 - validate that the implementation works by running unit tests
 - fix errors related to the requested change until all tests pass.
@@ -120,11 +119,10 @@ Your goal is to ensure that the requested changes are implemented, tested and re
 
 Create a new page at app/rules/rule/[slug]/page.tsx that:
 1. Fetches and displays a single project rule by slug
-2. Renders the content
+2. Renders the content as preformatted text
 3. Shows metadata like author, creation date, tags
-4. Includes edit and delete buttons for owners
-5. Includes a download button for the rule as markdown
-6. Handles not found and unauthorized cases appropriately
+4. Includes edit button for owner
+5. Handles not found and unauthorized cases appropriately
 
 The page must use server components where appropriate and follow our existing UI patterns.
 ```
@@ -187,8 +185,8 @@ Create a page for editing existing project rules. This must use the form compone
 
 Your goal is to ensure that the requested changes are implemented, tested and ready for me to review.
 
-Create a new page at app/rules/rule/[slug]/edit/page.tsx that:
-1. Fetches the existing project rule data
+Create a new page that:
+1. Fetches the existing project rule data via slug
 2. Renders the project rule form component with initial values
 3. Handles authentication and authorization checks
 5. Handles not found and unauthorized cases appropriately

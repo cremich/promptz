@@ -43,6 +43,7 @@ Follow these rules when you write code:
 ### React components
 
 - Favor react server components and minimize the use of client components
+- Data fetching is implemented in pages.
 - Write declarative JSX with clear and readable structure.
 - Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
 - Use interfaces to define component properties.
@@ -78,9 +79,8 @@ Follow these rules when you write code:
 - Write unit tests using Jest and React Testing Library
 - Use snapshot tests to validate the rendering output of a component
 - Use fine-grained assertions to test component behaviour and state management.
-- Do not unit test pages.
 - When testing components, test the actual component behavior rather than mocking child components.
-- Use the existing `/__mocks__` folder to mock AWS Amplify and next.js libraries.
+- Use the existing `./__mocks__` folder to mock AWS Amplify and next.js libraries.
 - Always import jest globals `import { describe, expect, test } from "@jest/globals";`
 - Use `test()` instead of `it()`
 - Add tests into `__tests__` folder in the same folder where the unit to test is located.

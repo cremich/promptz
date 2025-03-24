@@ -1,4 +1,4 @@
-import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";
+import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
 import { beforeEach, describe, expect, test, jest } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
@@ -38,9 +38,8 @@ describe("CopyClipBoardButton", () => {
     await fireEvent.click(button);
 
     expect(mockClipboard.writeText).toHaveBeenCalledWith(testText);
-    expect(toast).toHaveBeenCalledWith("Prompt copied.", {
-      description:
-        "Now, go build. And paste the prompt into your Amazon Q Developer client.",
+    expect(toast).toHaveBeenCalledWith("Copied.", {
+      description: "Now, go build.",
     });
   });
 

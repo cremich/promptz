@@ -13,9 +13,8 @@ export default function CopyClipBoardButton({
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(text);
-      toast("Prompt copied.", {
-        description:
-          "Now, go build. And paste the prompt into your Amazon Q Developer client.",
+      toast("Copied.", {
+        description: "Now, go build.",
       });
     } catch {
       toast("Failed to copy", {

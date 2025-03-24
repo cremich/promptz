@@ -2,7 +2,7 @@ import Author from "@/app/ui/common/author";
 import Tags from "@/app/ui/common/tags";
 import { HelpCircle, Terminal } from "lucide-react";
 import PromptInstruction from "@/app/ui/prompts/prompt-instruction";
-import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";
+import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
 import EditPromptButton from "@/app/ui/prompts/edit-prompt-button";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { Badge } from "@/components/ui/badge";

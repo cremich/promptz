@@ -1,12 +1,10 @@
 import { ProjectRule } from "@/app/lib/definitions";
-import { Button } from "@/components/ui/button";
-import { Edit, ExternalLink } from "lucide-react";
-import Link from "next/link";
 import Tags from "@/app/ui/common/tags";
 import Author from "@/app/ui/common/author";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import EditRuleButton from "@/app/ui/rules/edit-rules-button";
 import { SourceURL } from "@/app/ui/common/source-url";
+import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
 
 // Define the props for the component
 interface ProjectRuleDetailProps {
@@ -47,6 +45,9 @@ export default function ProjectRuleDetail({
             {/* Show edit button only if the user is the owner */}
             {isOwner && projectRule.slug && (
               <EditRuleButton slug={projectRule.slug} />
+            )}
+            {projectRule.content && (
+              <CopyClipBoardButton text={projectRule.content} />
             )}
           </div>
         </div>
