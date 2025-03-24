@@ -5,19 +5,18 @@ import ProjectRuleDetail from "@/app/ui/rules/project-rule-detail";
 
 // Define the props for the page component
 interface ProjectRulePageProps {
-  params: {
-    slug: string;
-  };
+  slug: string;
 }
 
 /**
  * Page component for displaying a single project rule
  * This component handles data fetching and passes the data to the ProjectRuleDetail component
  */
-export default async function ProjectRulePage({
-  params,
-}: ProjectRulePageProps) {
+export default async function ProjectRulePage(props: {
+  params: Promise<ProjectRulePageProps>;
+}) {
   // Fetch the project rule by slug
+  const params = await props.params;
   const projectRule = await fetchProjectRuleBySlug(params.slug);
 
   // If the project rule doesn't exist, return a 404 page

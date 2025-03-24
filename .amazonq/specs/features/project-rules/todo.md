@@ -60,29 +60,29 @@
 
 ### Step 6: Create Project Rule Form Component
 
-- [ ] Create app/ui/project-rules/project-rule-form.tsx
-- [ ] Set up React Hook Form
-- [ ] Add all form fields (title, description, content, etc.)
-- [ ] Implement form validation
+- [x] Create app/ui/rules/project-rule-form.tsx
+- [x] Set up React Hook Form
+- [x] Add all form fields (title, description, content, etc.)
+- [x] Implement form validation
 - [ ] Add markdown preview functionality
-- [ ] Create loading states
-- [ ] Create error states
-- [ ] Test form submission
-- [ ] Test validation
+- [x] Create loading states
+- [x] Create error states
+- [x] Test form submission
+- [x] Test validation
 
 ### Step 7: Create Project Rule Creation Page
 
-- [ ] Create app/project-rules/create/page.tsx
-- [ ] Add authentication check
-- [ ] Integrate project rule form component
-- [ ] Add instructions for users
-- [ ] Implement redirect after successful creation
-- [ ] Test page functionality
-- [ ] Test with unauthenticated users
+- [x] Create app/rules/create/page.tsx
+- [x] Add authentication check
+- [x] Integrate project rule form component
+- [x] Add instructions for users
+- [x] Implement redirect after successful creation
+- [x] Test page functionality
+- [x] Test with unauthenticated users
 
 ### Step 8: Create Project Rule Edit Page
 
-- [ ] Create app/project-rules/[id]/edit/page.tsx
+- [ ] Create app/rules/rule/[slug]/edit/page.tsx
 - [ ] Implement fetching of existing rule data
 - [ ] Integrate project rule form with initial values
 - [ ] Add authentication and authorization checks

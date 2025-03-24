@@ -4,6 +4,7 @@ import { Edit, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import Tags from "@/app/ui/common/tags";
 import Author from "@/app/ui/common/author";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 // Define the props for the component
 interface ProjectRuleDetailProps {
@@ -30,7 +31,7 @@ export default function ProjectRuleDetail({
     : "Unknown date";
 
   return (
-    <div className="flex flex-col space-y-6 max-w-4xl mx-auto">
+    <div className="flex flex-col space-y-6  mx-auto">
       {/* Header section with title, description, and actions */}
       <div className="flex flex-col space-y-4">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -88,9 +89,11 @@ export default function ProjectRuleDetail({
       {/* Rule content */}
       <div className="mt-6">
         <div className="bg-muted rounded-md p-4 overflow-auto">
-          <pre className="whitespace-pre-wrap text-sm">
-            {projectRule.content}
-          </pre>
+          <ScrollArea className="h-96">
+            <pre className="whitespace-pre-wrap text-sm">
+              {projectRule.content}
+            </pre>
+          </ScrollArea>
         </div>
       </div>
     </div>
