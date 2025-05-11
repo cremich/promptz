@@ -1,23 +1,12 @@
-import { searchPrompts } from "@/app/lib/actions/prompts";
-import SearchBox from "@/app/ui/common/search";
+import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
+import { fetchMyPrompts } from "@/app/lib/actions/user";
 import SearchResults from "@/app/ui/prompts/browse/search-result";
 import CreatePromptButton from "@/app/ui/prompts/create-prompt-button";
 import { Suspense } from "react";
 
-interface BrowsePageProps {
-  searchParams?: Promise<{
-    query?: string;
-    my?: string;
-  }>;
-}
-
-export default async function MyPrompts(props: BrowsePageProps) {
-  const searchParams = await props.searchParams;
-
-  const { prompts } = await searchPrompts({
-    query: searchParams?.query,
-    my: "true",
-  });
+export default async function MyPrompts() {
+  const user = await fetchCurrentAuthUser();
+  const prompts = await fetchMyPrompts(user.id);
 
   return (
     <main className="py-8">
@@ -33,10 +22,6 @@ export default async function MyPrompts(props: BrowsePageProps) {
         </div>
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1 space-y-6">
-            {/* Search and filter bar */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <SearchBox placeholder="Search prompts..." />
-            </div>
             <Suspense fallback={<div>Loading...</div>}>
               <SearchResults initialPrompts={prompts} />
             </Suspense>

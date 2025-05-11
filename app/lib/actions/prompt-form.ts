@@ -71,7 +71,11 @@ export async function onSubmitAction(
   let response;
   if (mode === "create") {
     const user = await fetchCurrentAuthUser();
-    const createPayload = { ...payload, owner_username: user.displayName };
+    const createPayload = {
+      ...payload,
+      owner_username: user.displayName,
+      owner: user.username,
+    };
     response = await appsync.models.prompt.create(createPayload, {
       authMode: "userPool",
     });

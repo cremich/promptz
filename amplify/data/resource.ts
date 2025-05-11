@@ -10,6 +10,7 @@ const schema = a
         displayName: a.string().required(),
         owner: a.string().required(),
         stars: a.hasMany("stars", "userId"),
+        prompts: a.hasMany("prompt", "owner"),
       })
       .disableOperations(["subscriptions", "list", "delete", "update"])
       .authorization((allow) => [allow.owner().to(["read"])]),
@@ -24,6 +25,8 @@ const schema = a
         sourceURL: a.string(),
         howto: a.string(),
         public: a.boolean(),
+        owner: a.string().required(),
+        author: a.belongsTo("user", "owner"),
         owner_username: a.string().required(),
         stars: a.hasMany("stars", "promptId"),
         copyCount: a.integer().default(0),
@@ -34,7 +37,7 @@ const schema = a
         index("name").queryField("listByName").name("nameIndex"),
       ])
       .authorization((allow) => [
-        allow.publicApiKey(), //TODO: verify if public user can do more than reading
+        allow.publicApiKey(),
         allow.authenticated().to(["read"]),
         allow.owner().to(["create", "update", "delete"]),
       ]),

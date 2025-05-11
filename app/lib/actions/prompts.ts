@@ -6,7 +6,6 @@ import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
 import { promptSearchParamsSchema } from "../prompt-model";
 import { Prompt } from "../prompt-model";
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import {
   FilterCondition,
   buildTextSearchFilter,
@@ -120,13 +119,7 @@ export async function searchPrompts(
     const filter: FilterCondition = {};
     const facets: FilterCondition[] = [];
 
-    // Handle user-specific filter
-    if (validatedParams.my) {
-      const user = await fetchCurrentAuthUser();
-      facets.push({ owner: { eq: `${user.id}::${user.username}` } });
-    } else {
-      filter.public = { eq: true };
-    }
+    filter.public = { eq: true };
 
     // Build query filter
     if (validatedParams.query) {
@@ -159,7 +152,6 @@ export async function searchPrompts(
     if (facets.length > 0) {
       filter.and = facets;
     }
-    console.log(filter);
     const {
       data: prompts,
       errors,

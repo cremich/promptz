@@ -11,6 +11,44 @@ const appsync = generateServerClientUsingCookies<Schema>({
   cookies,
 });
 
+export async function fetchMyPrompts(userId: string): Promise<Prompt[]> {
+  const { data: data, errors } = await appsync.models.user.get(
+    {
+      id: userId,
+    },
+    {
+      selectionSet: ["prompts.*"],
+      authMode: "userPool",
+    },
+  );
+
+  if (errors && errors.length > 0) {
+    throw new Error(errors[0].message);
+  }
+
+  if (!data) {
+    return [];
+  }
+
+  // @ts-expect-error - type of tags inferred incorrectly by typescript
+  return data?.prompts.map((p) => {
+    return {
+      id: p.id,
+      title: p.name,
+      description: p.description,
+      author: p.owner_username,
+      authorId: p.owner || "",
+      tags: p.tags || [],
+      slug: p.slug || "",
+      instruction: p.instruction,
+      howto: p.howto || "",
+      public: p.public || false,
+      createdAt: p.createdAt || "",
+      updatedAt: p.updatedAt || "",
+    };
+  });
+}
+
 export async function fetchFavoritePrompts(userId: string): Promise<Prompt[]> {
   const { data: prompts, errors } = await appsync.models.user.get(
     {
