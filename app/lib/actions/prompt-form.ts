@@ -69,34 +69,44 @@ export async function onSubmitAction(
   };
 
   let response;
-  if (mode === "create") {
-    const user = await fetchCurrentAuthUser();
-    const createPayload = {
-      ...payload,
-      owner_username: user.displayName,
-      owner: user.username,
-    };
-    response = await appsync.models.prompt.create(createPayload, {
-      authMode: "userPool",
-    });
-  } else {
-    response = await appsync.models.prompt.update(payload, {
-      authMode: "userPool",
-    });
-  }
+  try {
+    if (mode === "create") {
+      const user = await fetchCurrentAuthUser();
+      const createPayload = {
+        ...payload,
+        owner_username: user.displayName,
+        owner: user.username,
+      };
+      response = await appsync.models.prompt.create(createPayload, {
+        authMode: "userPool",
+      });
+    } else {
+      response = await appsync.models.prompt.update(payload, {
+        authMode: "userPool",
+      });
+    }
 
-  if (response.errors) {
+    if (response.errors) {
+      return {
+        errors: {
+          api: response.errors.map((e) => e.message),
+        },
+        message: "Error saving prompt.",
+        success: false,
+      };
+    }
+
+    revalidatePath(`/prompts/prompt/${payload.slug}`);
+    redirect(`/prompts/prompt/${payload.slug}`);
+  } catch (error) {
     return {
       errors: {
-        api: response.errors.map((e) => e.message),
+        api: [`Error creating prompt: ${error}`],
       },
-      message: "Error saving prompt.",
+      message: "Error creating prompt.",
       success: false,
     };
   }
-
-  revalidatePath(`/prompts/prompt/${payload.slug}`);
-  redirect(`/prompts/prompt/${payload.slug}`);
 }
 
 export async function deletePrompt(
