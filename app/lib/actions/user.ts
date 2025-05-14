@@ -23,7 +23,8 @@ export async function fetchMyPrompts(userId: string): Promise<Prompt[]> {
   );
 
   if (errors && errors.length > 0) {
-    throw new Error(errors[0].message);
+    const errorMessages = errors.map((error) => error.message).join(", ");
+    throw new Error(errorMessages);
   }
 
   if (!data) {
