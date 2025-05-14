@@ -31,15 +31,14 @@ export async function fetchMyPrompts(userId: string): Promise<Prompt[]> {
     return [];
   }
 
-  // @ts-expect-error - type of tags inferred incorrectly by typescript
-  return data?.prompts.map((p) => {
+  return (data.prompts as Schema["prompt"]["type"][]).map((p) => {
     return {
       id: p.id,
       title: p.name,
       description: p.description,
       author: p.owner_username,
       authorId: p.owner || "",
-      tags: p.tags || [],
+      tags: (p.tags || []).filter((tag): tag is string => tag !== null),
       slug: p.slug || "",
       instruction: p.instruction,
       howto: p.howto || "",
@@ -68,7 +67,6 @@ export async function fetchFavoritePrompts(userId: string): Promise<Prompt[]> {
     return [];
   }
 
-  // @ts-expect-error - type of tags inferred incorrectly by typescript
   return prompts?.stars
     .filter((p) => p.prompt != null)
     .map((p) => {
@@ -78,7 +76,9 @@ export async function fetchFavoritePrompts(userId: string): Promise<Prompt[]> {
         description: p.prompt.description,
         author: p.prompt.owner_username,
         authorId: p.prompt.owner || "",
-        tags: p.prompt.tags || [],
+        tags: (p.prompt.tags || []).filter(
+          (tag): tag is string => tag !== null,
+        ),
         slug: p.prompt.slug || "",
         instruction: p.prompt.instruction,
         howto: p.prompt.howto || "",
