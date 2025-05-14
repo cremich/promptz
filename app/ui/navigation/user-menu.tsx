@@ -50,7 +50,7 @@ export default function UserMenu() {
               className="flex items-center text-sm font-medium"
             >
               <User className="mr-2 h-4 w-4" />
-              <span>{user.displayName}</span>
+              <span data-testid="user-menu_username">{user.displayName}</span>
               <ChevronDown className="ml-1 h-4 w-4" aria-hidden="true" />
             </Button>
           </DropdownMenuTrigger>

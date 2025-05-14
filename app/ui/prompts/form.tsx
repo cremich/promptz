@@ -401,7 +401,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
         </Card>
 
         <div className="flex items-center gap-4">
-          <Button type="submit">
+          <Button type="submit" data-test-id="prompt_form_submit">
             {isPending ? (
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
             ) : (
