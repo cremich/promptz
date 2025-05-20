@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Form from "next/form";
 
-export function SearchForm() {
+export default function SearchForm() {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 

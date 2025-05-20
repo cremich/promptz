@@ -29,7 +29,9 @@ const config: Config = {
     "<rootDir>/components/ui/*",
   ],
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/$1",
+    "^@/components/(.*)$": "<rootDir>/components/$1",
+    "^@/app/(.*)$": "<rootDir>/app/$1",
+    "^@/lib/(.*)$": "<rootDir>/lib/$1",
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testMatch: ["<rootDir>/__tests__/**/*.test.[jt]s?(x)"],

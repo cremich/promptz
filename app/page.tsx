@@ -1,5 +1,5 @@
-import BenefitsGrid from "@/app/ui/landing-page/benefits";
-import { SearchForm } from "@/app/ui/landing-page/search-form";
+import BenefitsGrid from "@/components/benefits/benefits-grid";
+import SearchForm from "@/components/search/search-form";
 
 export default function App() {
   return (
