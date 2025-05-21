@@ -4,17 +4,16 @@ import SearchBox from "@/app/ui/common/search";
 import SearchResults from "@/app/ui/rules/browse/search-result";
 import { SortSelector } from "@/app/ui/common/sorting";
 import CreateProjectRuleButton from "@/app/ui/rules/create-project-rule-button";
-import { Suspense } from "react";
 
 interface BrowsePageProps {
   searchParams?: Promise<{
     query?: string;
     sort?: string;
-    "tags[]": string[];
+    "tags[]"?: string[];
   }>;
 }
 
-export default async function RulesPage(props: BrowsePageProps) {
+export default async function BrowseRulesPage(props: BrowsePageProps) {
   const searchParams = await props.searchParams;
 
   const { projectRules } = await searchProjectRules({
@@ -48,9 +47,7 @@ export default async function RulesPage(props: BrowsePageProps) {
               <SearchBox placeholder="Search project rules..." />
               <SortSelector />
             </div>
-            <Suspense fallback={<div>Loading...</div>}>
-              <SearchResults initialProjectRules={projectRules} />
-            </Suspense>
+            <SearchResults initialProjectRules={projectRules} />
           </div>
         </div>
       </div>
