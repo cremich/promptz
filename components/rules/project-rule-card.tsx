@@ -1,4 +1,4 @@
-import { ProjectRule } from "@/app/lib/project-rule-model";
+import { ProjectRule } from "@/lib/models/project-rule-model";
 import Author from "@/app/ui/common/author";
 import Tags from "@/app/ui/common/tags";
 import { Card, CardHeader, CardFooter } from "@/components/ui/card";

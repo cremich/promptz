@@ -20,7 +20,7 @@ const sortOptions: SortOption[] = [
   { label: "Oldest", value: "created_at:asc" },
 ];
 
-export function SortSelector() {
+export default function SortSelector() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();

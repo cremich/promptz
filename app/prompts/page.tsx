@@ -1,8 +1,8 @@
 import { searchPrompts } from "@/app/lib/actions/prompts";
 import { FilterSidebar } from "@/app/ui/prompts/browse/filter-sidebar";
-import SearchBox from "@/app/ui/common/search";
+import SearchBox from "@/components/search/search-box";
 import SearchResults from "@/app/ui/prompts/browse/search-result";
-import { SortSelector } from "@/app/ui/common/sorting";
+import { SortSelector } from "@/components/search/sort-selector";
 import CreatePromptButton from "@/app/ui/prompts/create-prompt-button";
 import { Suspense } from "react";
 

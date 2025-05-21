@@ -4,34 +4,38 @@ import "@testing-library/jest-dom";
 import BrowseRulesPage from "@/app/rules/rules-page";
 
 // Mock the server action
-jest.mock("@/app/lib/actions/project-rules", () => ({
+jest.mock("@/lib/actions/rule-search-action", () => ({
   searchProjectRules: jest.fn().mockResolvedValue({
     projectRules: [],
   }),
 }));
 
 // Mock child components
-jest.mock("@/app/ui/rules/browse/filter-sidebar", () => ({
-  FilterSidebar: () => <div data-testid="filter-sidebar">Filter Sidebar</div>,
-}));
+jest.mock("@/components/search/filter-sidebar", () => {
+  return function FilterSidebar() {
+    return <div data-testid="filter-sidebar">Filter Sidebar</div>;
+  };
+});
 
-jest.mock("@/app/ui/common/search", () => {
+jest.mock("@/components/search/search-box", () => {
   return function SearchBox() {
     return <div data-testid="search-box">Search Box</div>;
   };
 });
 
-jest.mock("@/app/ui/common/sorting", () => ({
-  SortSelector: () => <div data-testid="sort-selector">Sort Selector</div>,
-}));
+jest.mock("@/components/search/sort-selector", () => {
+  return function SortSelector() {
+    return <div data-testid="sort-selector">Sort Selector</div>;
+  };
+});
 
-jest.mock("@/app/ui/rules/create-project-rule-button", () => {
-  return function CreateProjectRuleButton() {
+jest.mock("@/components/common/create-button", () => {
+  return function CreateButton() {
     return <div data-testid="create-button">Create Button</div>;
   };
 });
 
-jest.mock("@/app/ui/rules/browse/search-result", () => {
+jest.mock("@/components/search/search-result", () => {
   return function SearchResults() {
     return <div data-testid="search-results">Search Results</div>;
   };

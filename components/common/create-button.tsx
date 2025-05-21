@@ -2,12 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-export default function CreateProjectRuleButton() {
+interface CreateButtonProps {
+  href: string;
+  name: string;
+}
+
+export default function CreateButton(props: CreateButtonProps) {
   return (
     <Button asChild className="bg-violet-500 hover:bg-violet-600">
-      <Link href="/rules/create">
+      <Link href={props.href}>
         <Plus className="mr-2 h-4 w-4" />
-        Create Rule
+        {props.name}
       </Link>
     </Button>
   );

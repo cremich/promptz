@@ -1,5 +1,5 @@
-import { ProjectRule } from "@/app/lib/project-rule-model";
-import ProjectRuleCard from "@/app/ui/rules/project-rule-card";
+import { ProjectRule } from "@/lib/models/project-rule-model";
+import ProjectRuleCard from "@/components/rules/project-rule-card";
 
 type SearchResultsProps = {
   initialProjectRules: ProjectRule[];

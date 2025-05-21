@@ -1,7 +1,7 @@
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { fetchMyRules } from "@/app/lib/actions/user";
-import SearchResults from "@/app/ui/rules/browse/search-result";
-import CreateProjectRuleButton from "@/app/ui/rules/create-project-rule-button";
+import SearchResults from "@/components/search/search-result";
+import CreateButton from "@/components/common/create-button";
 import { Suspense } from "react";
 
 export default async function MyRules() {
@@ -14,7 +14,7 @@ export default async function MyRules() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold tracking-tight">My Rules</h1>
-            <CreateProjectRuleButton />
+            <CreateButton />
           </div>
           <p className="text-muted-foreground">
             Manage and refine your project rules.

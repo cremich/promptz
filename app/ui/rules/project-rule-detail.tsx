@@ -1,5 +1,5 @@
 import { ModelType } from "@/app/lib/schema-definitions";
-import { ProjectRule } from "@/app/lib/project-rule-model";
+import { ProjectRule } from "@/lib/models/project-rule-model";
 import Tags from "@/app/ui/common/tags";
 import Author from "@/app/ui/common/author";
 import { ScrollArea } from "@radix-ui/react-scroll-area";

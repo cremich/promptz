@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
-import { projectRuleFormSchema } from "../project-rule-model";
+import { projectRuleFormSchema } from "../../../lib/models/project-rule-model";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 

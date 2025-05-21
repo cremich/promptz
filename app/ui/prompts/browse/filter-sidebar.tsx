@@ -1,9 +1,9 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { QInterface } from "@/app/lib/tags-model";
-import { PromptCategory } from "@/app/lib/tags-model";
-import { SdlcActivity } from "@/app/lib/tags-model";
-import { FilterSection } from "@/app/ui/common/filter-section";
+import { QInterface } from "@/lib/models/tags-model";
+import { PromptCategory } from "@/lib/models/tags-model";
+import { SdlcActivity } from "@/lib/models/tags-model";
+import { FilterSection } from "@/components/search/filter-section";
 
 export function FilterSidebar() {
   return (

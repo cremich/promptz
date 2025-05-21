@@ -5,7 +5,7 @@ import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/ap
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
 import { Prompt } from "../prompt-model";
-import { ProjectRule } from "@/app/lib/project-rule-model";
+import { ProjectRule } from "@/lib/models/project-rule-model";
 
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
