@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react"; // For hamburger and close icons
 import { useState } from "react";
-import { links } from "@/app/ui/navigation/navigation";
-import UserMenu from "@/app/ui/navigation/user-menu";
+import { links } from "@/lib/navigation";
+import UserMenu from "@/components/layout/navigation/user-menu";
 export default function MobileMenu() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 

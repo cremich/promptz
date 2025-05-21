@@ -1,10 +1,10 @@
-import ConfigureAmplifyClientSide from "@/app/configure-amplify";
+import ConfigureAmplifyClientSide from "@/components/amplify/configure-amplify";
 import type { Metadata, Viewport } from "next";
-import { geistMono, geistSans } from "@/app/ui/fonts";
+import { geistMono, geistSans } from "@/components/layout/fonts";
 import "@/app/globals.css";
-import TopNav from "@/app/ui/navigation/topnav";
-import { ThemeProvider } from "@/app/ui/navigation/theme-provider";
-import Footer from "@/app/ui/footer/footer";
+import TopNav from "@/components/layout/navigation/topnav";
+import { ThemeProvider } from "@/components/layout/theme-provider";
+import Footer from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
@@ -78,11 +78,6 @@ export default function RootLayout({
 
           <Footer />
         </ThemeProvider>
-        {/* <AuthProvider>
-          <TopNav />
-          <Suspense>{children}</Suspense>
-          <Footer />
-        </AuthProvider> */}
       </body>
     </html>
   );

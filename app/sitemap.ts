@@ -1,8 +1,8 @@
 import { MetadataRoute } from "next";
 import { cookies } from "next/headers";
-import outputs from "@/amplify_outputs.json";
+import outputs from "../amplify_outputs.json";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
-import { Schema } from "@/amplify/data/resource";
+import { Schema } from "../amplify/data/resource";
 
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,

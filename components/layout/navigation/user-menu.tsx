@@ -8,10 +8,10 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { User, ChevronDown, FileText } from "lucide-react";
-import LogoutButton from "@/app/ui/navigation/logout-button";
+import LogoutButton from "@/components/layout/navigation/logout-button";
 import { fetchCurrentUser } from "@/app/lib/actions/cognito";
 import { useEffect, useState } from "react";
-import LoginMenu from "@/app/ui/navigation/login-menu";
+import LoginMenu from "@/components/layout/navigation/login-menu";
 import { Hub } from "aws-amplify/utils";
 import Link from "next/link";
 

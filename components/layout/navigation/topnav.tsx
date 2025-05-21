@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import MobileMenu from "./mobile-menu";
-import { links } from "@/app/ui/navigation/navigation";
-import UserMenu from "@/app/ui/navigation/user-menu";
+import { links } from "@/lib/navigation";
+import UserMenu from "@/components/layout/navigation/user-menu";
+import MobileMenu from "@/components/layout/navigation/mobile-menu";
 
 export default async function TopNavigation() {
   return (
