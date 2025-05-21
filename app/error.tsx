@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
-export default function Error({
+export default function ErrorBoundary({
   error,
   reset,
 }: {
@@ -10,7 +10,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
+    // Log the error to an error reporting service one day...
     console.error(error);
   }, [error]);
 
