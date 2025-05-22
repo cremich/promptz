@@ -5,7 +5,7 @@ import {
   tagSchema,
   publicSchema,
   idSchema,
-} from "@/app/lib/schema-definitions";
+} from "@/lib/forms/schema-definitions";
 import { z } from "zod";
 
 export type ProjectRule = {

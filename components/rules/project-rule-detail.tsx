@@ -1,12 +1,12 @@
-import { ModelType } from "@/app/lib/schema-definitions";
+import { ModelType } from "@/lib/forms/schema-definitions";
 import { ProjectRule } from "@/lib/models/project-rule-model";
-import Tags from "@/app/ui/common/tags";
-import Author from "@/app/ui/common/author";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import EditRuleButton from "@/app/ui/rules/edit-rules-button";
-import { SourceURL } from "@/app/ui/common/source-url";
-import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
-import { DownloadButton } from "@/app/ui/common/download-button";
+import Tags from "@/components/common/tags";
+import Author from "@/components/common/author";
+import { SourceURL } from "@/components/common/source-url";
+import CopyClipBoardButton from "@/components/common/copy-clipboard";
+import { DownloadButton } from "@/components/common/download-button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import EditButton from "@/components/common/edit-button";
 
 // Define the props for the component
 interface ProjectRuleDetailProps {
@@ -46,7 +46,10 @@ export default function ProjectRuleDetail({
           <div className="flex items-center gap-2">
             {/* Show edit button only if the user is the owner */}
             {isOwner && projectRule.slug && (
-              <EditRuleButton slug={projectRule.slug} />
+              <EditButton
+                href={`/rules/rule/${projectRule.slug}/edit`}
+                name="Edit Rule"
+              />
             )}
             {projectRule.content && (
               <>

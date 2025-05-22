@@ -1,5 +1,5 @@
-import { ModelType } from "@/app/lib/schema-definitions";
-import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
+import { ModelType } from "@/lib/forms/schema-definitions";
+import CopyClipBoardButton from "@/components/common/copy-clipboard";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
 

@@ -5,7 +5,7 @@ import {
   descriptionSchema,
   tagSchema,
   publicSchema,
-} from "@/app/lib/schema-definitions";
+} from "@/lib/forms/schema-definitions";
 import { z } from "zod";
 
 export type Prompt = {

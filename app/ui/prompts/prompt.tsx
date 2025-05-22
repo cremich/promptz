@@ -1,13 +1,13 @@
-import Author from "@/app/ui/common/author";
-import Tags from "@/app/ui/common/tags";
+import Author from "@/components/common/author";
+import Tags from "@/components/common/tags";
 import { HelpCircle, Terminal } from "lucide-react";
 import PromptInstruction from "@/app/ui/prompts/prompt-instruction";
-import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
+import CopyClipBoardButton from "@/components/common/copy-clipboard";
 import EditPromptButton from "@/app/ui/prompts/edit-prompt-button";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { Badge } from "@/components/ui/badge";
-import { SourceURL } from "@/app/ui/common/source-url";
-import { ModelType } from "@/app/lib/schema-definitions";
+import { SourceURL } from "@/components/common/source-url";
+import { ModelType } from "@/lib/forms/schema-definitions";
 import { Prompt } from "@/app/lib/prompt-model";
 import HowTo from "@/app/ui/prompts/howto";
 

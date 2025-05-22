@@ -1,6 +1,6 @@
 "use client";
 
-import { Schema } from "@/amplify/data/resource";
+import { Schema } from "../../amplify/data/resource";
 import { Button } from "@/components/ui/button";
 import { generateClient } from "aws-amplify/api";
 import { Download } from "lucide-react";

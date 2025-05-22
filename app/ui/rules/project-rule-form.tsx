@@ -42,7 +42,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Tags from "@/app/ui/common/tags";
+import Tags from "@/components/common/tags";
 import { Badge } from "@/components/ui/badge";
 import {
   Sheet,
