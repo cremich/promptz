@@ -4,7 +4,7 @@ import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/ap
 import { type Schema } from "../../amplify/data/resource";
 import outputs from "../../amplify_outputs.json";
 import { z } from "zod";
-import { normalizeTags } from "@/app/lib/filters";
+import { normalizeTags } from "../utils";
 import { Prompt, promptSearchParamsSchema } from "@/lib/models/prompt-model";
 
 interface FetchPromptsResult {
