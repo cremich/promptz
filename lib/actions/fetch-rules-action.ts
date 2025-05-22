@@ -2,10 +2,10 @@
 import { cookies } from "next/headers";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 
-import { type Schema } from "@/amplify/data/resource";
-import outputs from "@/amplify_outputs.json";
-import { ProjectRule } from "../../../lib/models/project-rule-model";
+import { type Schema } from "../../amplify/data/resource";
+import outputs from "../../amplify_outputs.json";
 import { GraphQLResult } from "aws-amplify/api";
+import { ProjectRule } from "@/lib/models/project-rule-model";
 
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,

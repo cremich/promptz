@@ -4,10 +4,12 @@ import "@testing-library/jest-dom";
 import ProjectRulePage, {
   generateMetadata,
 } from "@/app/rules/rule/[slug]/rule-page";
+import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
+import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { notFound } from "next/navigation";
 
 // Mock the server actions
-jest.mock("@/app/lib/actions/project-rules", () => ({
+jest.mock("@/lib/actions/fetch-rules-action", () => ({
   fetchProjectRuleBySlug: jest.fn(),
 }));
 
@@ -37,9 +39,6 @@ jest.mock("@/components/rules/project-rule-detail", () => {
 jest.mock("next/navigation", () => ({
   notFound: jest.fn(),
 }));
-
-import { fetchProjectRuleBySlug } from "@/app/lib/actions/project-rules";
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 
 describe("ProjectRulePage", () => {
   // Reset mocks before each test

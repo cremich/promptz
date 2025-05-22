@@ -1,4 +1,4 @@
-import { fetchProjectRuleBySlug } from "@/app/lib/actions/project-rules";
+import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { notFound } from "next/navigation";
 import ProjectRuleDetail from "@/components/rules/project-rule-detail";

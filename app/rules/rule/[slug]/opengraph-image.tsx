@@ -1,4 +1,4 @@
-import { fetchProjectRuleBySlug } from "@/app/lib/actions/project-rules";
+import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
 import { notFound } from "next/navigation";
 import { ImageResponse } from "next/og";
 
