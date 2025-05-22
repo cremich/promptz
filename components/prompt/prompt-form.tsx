@@ -25,11 +25,6 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { useActionState, useEffect } from "react";
 import {
-  deletePrompt,
-  onSubmitAction,
-  FormState,
-} from "@/app/lib/actions/prompt-form";
-import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogDescription,
@@ -67,7 +62,8 @@ import SelectableTags from "@/app/ui/prompts/selectable-tag";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
-import { PromptTextarea } from "@/components/prompt/prompt-textarea";
+import { onSubmitAction, FormState } from "@/lib/actions/submit-prompt-action";
+import { deletePrompt } from "@/lib/actions/delete-prompt-action";
 
 interface PromptFormProps {
   prompt?: Prompt;
@@ -363,10 +359,21 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <PromptTextarea
+                <FormField
+                  control={form.control}
                   name="instruction"
-                  description="Type @ to add placeholders for workspace, folders, or files that must be added to the prompt context."
-                  placeholder="Write your prompt here..."
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Write your prompt here..."
+                          {...field}
+                          className="min-h-[500px] text-white placeholder-white placeholder-opacity-50 font-mono"
+                        />
+                      </FormControl>
+                      <FormMessage>{state.errors?.instruction}</FormMessage>
+                    </FormItem>
+                  )}
                 />
               </CardContent>
             </Card>

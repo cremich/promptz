@@ -1,11 +1,11 @@
 "use server";
 import { cookies } from "next/headers";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
-import { type Schema } from "@/amplify/data/resource";
-import outputs from "@/amplify_outputs.json";
-import { promptFormSchema } from "../../../lib/models/prompt-model";
+import { type Schema } from "../../amplify/data/resource";
+import outputs from "../../amplify_outputs.json";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { promptFormSchema } from "@/lib/models/prompt-model";
 
 export type FormState = {
   errors?: {
@@ -88,27 +88,4 @@ export async function onSubmitAction(
 
   revalidatePath(`/prompts/prompt/${response.data!.slug}`);
   redirect(`/prompts/prompt/${response.data!.slug}`);
-}
-
-export async function deletePrompt(
-  id: string,
-): Promise<{ success: boolean; message: string }> {
-  try {
-    // Delete the prompt
-    await appsync.models.prompt.delete(
-      { id },
-      {
-        authMode: "userPool",
-      },
-    );
-    return {
-      success: true,
-      message: `Prompt deleted`,
-    };
-  } catch (error) {
-    return {
-      success: false,
-      message: `Error deleting prompt: ${error}`,
-    };
-  }
 }
