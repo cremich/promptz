@@ -1,6 +1,8 @@
 "use client";
-import { projectRuleFormSchema } from "@/lib/models/project-rule-model";
-import { ProjectRule } from "@/lib/models/project-rule-model";
+import {
+  projectRuleFormSchema,
+  ProjectRule,
+} from "@/lib/models/project-rule-model";
 import { ProjectRuleTag } from "@/lib/models/tags-model";
 import {
   Form,
@@ -18,11 +20,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { useActionState, useEffect } from "react";
-import {
-  deleteProjectRule,
-  onSubmitAction,
-  FormState,
-} from "@/app/lib/actions/project-rules-form";
+import { onSubmitAction, FormState } from "@/lib/actions/submit-rule-action";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -55,6 +53,7 @@ import {
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
+import { deleteProjectRule } from "@/lib/actions/delete-rule-action";
 
 interface ProjectRuleFormProps {
   projectRule?: ProjectRule;

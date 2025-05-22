@@ -1,6 +1,6 @@
 import { redirect, notFound } from "next/navigation";
-import ProjectRuleForm from "@/app/ui/rules/project-rule-form";
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
+import ProjectRuleForm from "@/components/rules/project-rule-form";
+import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
 
 // Define the props for the page component

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import ProjectRuleForm from "@/app/ui/rules/project-rule-form";
+import ProjectRuleForm from "@/components/rules/project-rule-form";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 
 /**
