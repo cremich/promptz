@@ -3,7 +3,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import UserMenu from "@/components/layout/navigation/user-menu";
 import { fetchCurrentUser } from "@/app/lib/actions/cognito";
-import { User } from "@/app/lib/user-model";
+import { User } from "@/lib/models/user-model";
 
 // Mock the fetchCurrentUser function
 jest.mock("@/app/lib/actions/cognito", () => ({

@@ -1,8 +1,7 @@
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
-import { fetchMyRules } from "@/app/lib/actions/user";
 import SearchResults from "@/components/search/search-result";
 import CreateButton from "@/components/common/create-button";
-import { Suspense } from "react";
+import { fetchMyRules } from "@/lib/actions/my-rules-action";
+import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 
 export default async function MyRules() {
   const user = await fetchCurrentAuthUser();
@@ -14,7 +13,7 @@ export default async function MyRules() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold tracking-tight">My Rules</h1>
-            <CreateButton />
+            <CreateButton href="/rules/create" name="Create Rule" />
           </div>
           <p className="text-muted-foreground">
             Manage and refine your project rules.
@@ -22,9 +21,7 @@ export default async function MyRules() {
         </div>
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1 space-y-6">
-            <Suspense fallback={<div>Loading...</div>}>
-              <SearchResults initialProjectRules={rules} />
-            </Suspense>
+            <SearchResults initialProjectRules={rules} />
           </div>
         </div>
       </div>

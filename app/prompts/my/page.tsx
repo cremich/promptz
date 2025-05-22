@@ -1,5 +1,5 @@
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
-import { fetchMyPrompts } from "@/app/lib/actions/user";
+import { fetchMyPrompts } from "@/lib/actions/my-rules-action";
 import SearchResults from "@/app/ui/prompts/browse/search-result";
 import CreatePromptButton from "@/app/ui/prompts/create-prompt-button";
 import { Suspense } from "react";

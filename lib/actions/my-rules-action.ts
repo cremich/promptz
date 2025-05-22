@@ -2,22 +2,22 @@
 import { cookies } from "next/headers";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 
-import { type Schema } from "../../../amplify/data/resource";
-import outputs from "../../../amplify_outputs.json";
-import { Prompt } from "../prompt-model";
+import { type Schema } from "../../amplify/data/resource";
+import outputs from "../../amplify_outputs.json";
+import { ProjectRule } from "@/lib/models/project-rule-model";
 
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
   cookies,
 });
 
-export async function fetchMyPrompts(userId: string): Promise<Prompt[]> {
+export async function fetchMyRules(userId: string): Promise<ProjectRule[]> {
   const { data: data, errors } = await appsync.models.user.get(
     {
       id: userId,
     },
     {
-      selectionSet: ["prompts.*", "displayName"],
+      selectionSet: ["projectRules.*", "displayName"],
       authMode: "userPool",
     },
   );
@@ -31,17 +31,16 @@ export async function fetchMyPrompts(userId: string): Promise<Prompt[]> {
     return [];
   }
 
-  return (data.prompts as Schema["prompt"]["type"][]).map((p) => {
+  return (data.projectRules as Schema["projectRule"]["type"][]).map((p) => {
     return {
       id: p.id,
       title: p.name,
-      description: p.description,
+      description: p.description || "",
       author: data.displayName || "",
       authorId: p.owner || "",
       tags: (p.tags || []).filter((tag): tag is string => tag !== null),
       slug: p.slug || "",
-      instruction: p.instruction,
-      howto: p.howto || "",
+      instruction: p.content,
       public: p.public || false,
       createdAt: p.createdAt || "",
       updatedAt: p.updatedAt || "",
