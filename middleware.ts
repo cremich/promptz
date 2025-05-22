@@ -19,8 +19,10 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/prompts/create",
+    "/rules/create",
     "/prompts/favorites",
     "/prompts/my",
     "/prompts/prompt/(.*)/edit",
+    "/rules/rule/(.*)/edit",
   ],
 };

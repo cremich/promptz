@@ -11,16 +11,7 @@ export default async function EditProjectRulePage(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
-
-  // Check if the user is authenticated
   const currentUser = await fetchCurrentAuthUser();
-
-  // Redirect unauthenticated users to the login page
-  if (currentUser.guest) {
-    redirect("/login");
-  }
-
-  // Fetch the project rule by slug
   const projectRule = await fetchProjectRuleBySlug(params.slug);
 
   // If the project rule doesn't exist, return a 404 page

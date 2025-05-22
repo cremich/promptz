@@ -37,32 +37,6 @@ describe("EditProjectRulePage", () => {
     jest.clearAllMocks();
   });
 
-  test("Redirects to login page when user is not authenticated", async () => {
-    // Mock user as guest
-    (fetchCurrentAuthUser as jest.Mock).mockResolvedValue({
-      guest: true,
-    });
-
-    // Mock a valid project rule to avoid errors
-    (fetchProjectRuleBySlug as jest.Mock).mockResolvedValue({
-      id: "rule-123",
-      title: "Test Rule",
-      slug: "test-rule",
-      authorId: "user-123",
-    });
-
-    // Render the component
-    await EditProjectRulePage({
-      params: Promise.resolve({ slug: "test-rule" }),
-    });
-
-    // Verify redirect was called with login path
-    expect(redirect).toHaveBeenCalledWith("/login");
-
-    // Verify that notFound was not called
-    expect(notFound).not.toHaveBeenCalled();
-  });
-
   test("Redirects to rule page when user is not the owner", async () => {
     // Mock authenticated user
     (fetchCurrentAuthUser as jest.Mock).mockResolvedValue({
