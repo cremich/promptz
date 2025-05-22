@@ -1,5 +1,5 @@
-import { fetchPromptBySlug } from "@/app/lib/actions/prompts";
 import PromptDetail from "@/app/ui/prompts/prompt";
+import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
