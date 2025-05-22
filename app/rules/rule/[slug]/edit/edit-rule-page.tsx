@@ -3,17 +3,12 @@ import ProjectRuleForm from "@/components/rules/project-rule-form";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
 
-// Define the props for the page component
-interface EditProjectRulePageProps {
-  slug: string;
-}
-
 /**
  * Page component for editing an existing project rule
  * This component handles authentication checks, data fetching, and renders the project rule form
  */
 export default async function EditProjectRulePage(props: {
-  params: Promise<EditProjectRulePageProps>;
+  params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
 
