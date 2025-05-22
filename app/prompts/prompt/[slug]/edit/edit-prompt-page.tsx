@@ -1,9 +1,9 @@
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
-import { fetchPromptBySlug } from "@/app/lib/actions/prompts";
-import PromptForm from "@/app/ui/prompts/form";
+import PromptForm from "@/components/prompt/prompt-form";
+import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
+import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
 import { redirect, notFound } from "next/navigation";
 
-export default async function EditPrompt(props: {
+export default async function EditPromptPage(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;

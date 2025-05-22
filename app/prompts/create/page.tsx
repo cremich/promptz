@@ -1,4 +1,4 @@
-import PromptForm from "@/app/ui/prompts/form";
+import PromptForm from "@/components/prompt/prompt-form";
 
 export default function CreatePrompt() {
   return (
