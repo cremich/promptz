@@ -5,7 +5,7 @@ import { type Schema } from "../../amplify/data/resource";
 import outputs from "../../amplify_outputs.json";
 import { z } from "zod";
 import { normalizeTags } from "@/app/lib/filters";
-import { Prompt, promptSearchParamsSchema } from "@/app/lib/prompt-model";
+import { Prompt, promptSearchParamsSchema } from "@/lib/models/prompt-model";
 
 interface FetchPromptsResult {
   prompts: Prompt[];

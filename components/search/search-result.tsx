@@ -1,7 +1,7 @@
 import { ProjectRule } from "@/lib/models/project-rule-model";
 import ProjectRuleCard from "@/components/rules/project-rule-card";
-import { Prompt } from "@/app/lib/prompt-model";
-import PromptCard from "@/app/ui/prompts/prompt-card";
+import { Prompt } from "@/lib/models/prompt-model";
+import PromptCard from "@/components/prompt/prompt-card";
 
 type SearchResultsProps = {
   initialProjectRules?: ProjectRule[];

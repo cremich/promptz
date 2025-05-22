@@ -5,7 +5,7 @@ import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/ap
 import { type Schema } from "../../amplify/data/resource";
 import outputs from "../../amplify_outputs.json";
 import { GraphQLResult } from "aws-amplify/api";
-import { Prompt } from "@/app/lib/prompt-model";
+import { Prompt } from "@/lib/models/prompt-model";
 
 interface PromptBySlugResponse {
   listBySlug: {

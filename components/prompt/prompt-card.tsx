@@ -1,4 +1,4 @@
-import { Prompt } from "@/app/lib/prompt-model";
+import { Prompt } from "@/lib/models/prompt-model";
 import Author from "@/components/common/author";
 import Tags from "@/components/common/tags";
 import { Card, CardHeader, CardFooter } from "@/components/ui/card";

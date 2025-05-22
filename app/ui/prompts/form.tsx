@@ -1,6 +1,6 @@
 "use client";
-import { promptFormSchema } from "@/app/lib/prompt-model";
-import { Prompt } from "@/app/lib/prompt-model";
+import { promptFormSchema } from "@/lib/models/prompt-model";
+import { Prompt } from "@/lib/models/prompt-model";
 import {
   Form,
   FormControl,
@@ -67,7 +67,7 @@ import SelectableTags from "@/app/ui/prompts/selectable-tag";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
-import { PromptTextarea } from "@/app/ui/prompts/prompt-textarea";
+import { PromptTextarea } from "@/components/prompt/prompt-textarea";
 
 interface PromptFormProps {
   prompt?: Prompt;

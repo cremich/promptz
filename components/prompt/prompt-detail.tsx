@@ -1,23 +1,21 @@
 import Author from "@/components/common/author";
 import Tags from "@/components/common/tags";
 import { HelpCircle, Terminal } from "lucide-react";
-import PromptInstruction from "@/app/ui/prompts/prompt-instruction";
+import PromptInstruction from "@/components/prompt/prompt-instruction";
 import CopyClipBoardButton from "@/components/common/copy-clipboard";
-import EditPromptButton from "@/app/ui/prompts/edit-prompt-button";
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { Badge } from "@/components/ui/badge";
 import { SourceURL } from "@/components/common/source-url";
 import { ModelType } from "@/lib/forms/schema-definitions";
-import { Prompt } from "@/app/lib/prompt-model";
-import HowTo from "@/app/ui/prompts/howto";
+import PromptHowTo from "@/components/prompt/prompt-howto";
+import EditButton from "@/components/common/edit-button";
+import { Prompt } from "@/lib/models/prompt-model";
 
 interface PromptProps {
   prompt: Prompt;
+  isOwner: boolean;
 }
 
 export default async function PromptDetail(props: PromptProps) {
-  const user = await fetchCurrentAuthUser();
-
   return (
     <div>
       <div className="flex items-start justify-between">
@@ -28,8 +26,11 @@ export default async function PromptDetail(props: PromptProps) {
           <p className="text-muted-foreground">{props.prompt.description}</p>
         </div>
         <div className="flex gap-2">
-          {props.prompt.slug && props.prompt.authorId === user.id && (
-            <EditPromptButton slug={props.prompt.slug} />
+          {props.prompt.slug && props.isOwner && (
+            <EditButton
+              href={`/prompts/prompt/${props.prompt.slug}/edit`}
+              name="Edit Prompt"
+            />
           )}
           {props.prompt.instruction && (
             <CopyClipBoardButton
@@ -70,7 +71,7 @@ export default async function PromptDetail(props: PromptProps) {
         )}
         {props.prompt.howto && (
           <div className="lg:col-span-1">
-            <HowTo
+            <PromptHowTo
               title="How to Use"
               icon={HelpCircle}
               text={props.prompt.howto}

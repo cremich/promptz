@@ -7,7 +7,11 @@ interface AttributeProps {
   icon: LucideIcon;
 }
 
-export default function HowTo({ title, text, icon: Icon }: AttributeProps) {
+export default function PromptHowTo({
+  title,
+  text,
+  icon: Icon,
+}: AttributeProps) {
   return (
     <Card className="mb-8">
       <CardHeader className="flex flex-row items-center gap-2">

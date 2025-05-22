@@ -4,80 +4,155 @@ import "@testing-library/jest-dom";
 import PromptDetailPage, {
   generateMetadata,
 } from "@/app/prompts/prompt/[slug]/prompt-page";
+import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
+import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { notFound } from "next/navigation";
-import { Prompt } from "@/app/lib/prompt-model";
 
-// Mock the notFound function
-jest.mock("next/navigation", () => ({
-  notFound: jest.fn(),
-}));
-
-// Mock the fetch prompt action
+// Mock the dependencies
 jest.mock("@/lib/actions/fetch-prompts-action", () => ({
   fetchPromptBySlug: jest.fn(),
 }));
 
-// Mock the PromptDetail component
-jest.mock("@/app/ui/prompts/prompt", () => {
-  return function PromptDetail({ prompt }: { prompt: Prompt }) {
+jest.mock("@/lib/actions/cognito-auth-action", () => ({
+  fetchCurrentAuthUser: jest.fn(),
+}));
+
+jest.mock("next/navigation", () => ({
+  notFound: jest.fn(),
+}));
+
+jest.mock("@/components/prompt/prompt-detail", () => {
+  return function MockPromptDetail({
+    prompt,
+    isOwner,
+  }: {
+    prompt: any;
+    isOwner: boolean;
+  }) {
     return (
-      <div data-testid="prompt-detail">
-        <h2>{prompt.title}</h2>
-        <p>{prompt.description}</p>
+      <div data-testid="prompt-detail-mock">
+        <div data-testid="prompt-title">{prompt.title}</div>
+        <div data-testid="is-owner">{isOwner.toString()}</div>
       </div>
     );
   };
 });
-
-// Sample prompt data for testing
-const mockPrompt = {
-  id: "123",
-  title: "Test Prompt",
-  description: "This is a test prompt",
-  content: "Test content",
-  slug: "test-prompt",
-  author: "Test Author",
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-  tags: ["test"],
-  public: true,
-};
 
 describe("PromptDetailPage", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test("Renders prompt detail when prompt is found", async () => {
-    // Setup mock to return a prompt
-    const { fetchPromptBySlug } = require("@/lib/actions/fetch-prompts-action");
-    fetchPromptBySlug.mockResolvedValue(mockPrompt);
+  test("Renders prompt detail when prompt exists", async () => {
+    // Mock the prompt data
+    const mockPrompt = {
+      id: "123",
+      title: "Test Prompt",
+      description: "Test Description",
+      authorId: "user123::amplify-user",
+    };
+
+    // Mock the current user
+    const mockUser = {
+      id: "user123",
+      username: "testuser",
+      displayName: "Test User",
+      guest: false,
+    };
+
+    // Setup mocks
+    (fetchPromptBySlug as jest.Mock).mockResolvedValue(mockPrompt);
+    (fetchCurrentAuthUser as jest.Mock).mockResolvedValue(mockUser);
 
     // Render the component
-    render(
-      await PromptDetailPage({
-        params: Promise.resolve({ slug: "test-prompt" }),
-      }),
-    );
+    const result = await PromptDetailPage({
+      params: Promise.resolve({ slug: "test-prompt" }),
+    });
+    render(result);
 
-    // Check if PromptDetail component is rendered with correct data
-    expect(screen.getByTestId("prompt-detail")).toBeInTheDocument();
-    expect(screen.getByText("Test Prompt")).toBeInTheDocument();
-    expect(screen.getByText("This is a test prompt")).toBeInTheDocument();
+    // Check if the component renders with the correct data
+    expect(screen.getByTestId("prompt-detail-mock")).toBeInTheDocument();
+    expect(screen.getByTestId("prompt-title")).toHaveTextContent("Test Prompt");
+    expect(screen.getByTestId("is-owner")).toHaveTextContent("true");
+
+    // Verify that the fetch functions were called with the correct parameters
+    expect(fetchPromptBySlug).toHaveBeenCalledWith("test-prompt");
+    expect(fetchCurrentAuthUser).toHaveBeenCalled();
   });
 
-  test("Calls notFound when prompt is not found", async () => {
-    // Setup mock to return null (prompt not found)
-    const { fetchPromptBySlug } = require("@/lib/actions/fetch-prompts-action");
-    fetchPromptBySlug.mockResolvedValue(null);
+  test("Calls notFound when prompt does not exist", async () => {
+    // Mock the prompt data to be null (not found)
+    (fetchPromptBySlug as jest.Mock).mockResolvedValue(null);
 
     // Render the component
     await PromptDetailPage({
-      params: Promise.resolve({ slug: "non-existent" }),
+      params: Promise.resolve({ slug: "non-existent-prompt" }),
     });
 
     // Check if notFound was called
     expect(notFound).toHaveBeenCalled();
+  });
+
+  test("Sets isOwner to false when user is not the prompt owner", async () => {
+    // Mock the prompt data
+    const mockPrompt = {
+      id: "123",
+      title: "Test Prompt",
+      description: "Test Description",
+      authorId: "different-user::amplify-user",
+    };
+
+    // Mock the current user
+    const mockUser = {
+      id: "user123",
+      username: "testuser",
+      displayName: "Test User",
+      guest: false,
+    };
+
+    // Setup mocks
+    (fetchPromptBySlug as jest.Mock).mockResolvedValue(mockPrompt);
+    (fetchCurrentAuthUser as jest.Mock).mockResolvedValue(mockUser);
+
+    // Render the component
+    const result = await PromptDetailPage({
+      params: Promise.resolve({ slug: "test-prompt" }),
+    });
+    render(result);
+
+    // Check if isOwner is false
+    expect(screen.getByTestId("is-owner")).toHaveTextContent("false");
+  });
+
+  test("Sets isOwner to false when user is a guest", async () => {
+    // Mock the prompt data
+    const mockPrompt = {
+      id: "123",
+      title: "Test Prompt",
+      description: "Test Description",
+      authorId: "user123::amplify-user",
+    };
+
+    // Mock the current user as a guest
+    const mockUser = {
+      id: "user123",
+      username: "testuser",
+      displayName: "Test User",
+      guest: true,
+    };
+
+    // Setup mocks
+    (fetchPromptBySlug as jest.Mock).mockResolvedValue(mockPrompt);
+    (fetchCurrentAuthUser as jest.Mock).mockResolvedValue(mockUser);
+
+    // Render the component
+    const result = await PromptDetailPage({
+      params: Promise.resolve({ slug: "test-prompt" }),
+    });
+    render(result);
+
+    // Check if isOwner is false
+    expect(screen.getByTestId("is-owner")).toHaveTextContent("false");
   });
 });
 
@@ -86,37 +161,48 @@ describe("generateMetadata", () => {
     jest.clearAllMocks();
   });
 
-  test("Returns correct metadata when prompt is found", async () => {
-    // Setup mock to return a prompt
-    const { fetchPromptBySlug } = require("@/lib/actions/fetch-prompts-action");
-    fetchPromptBySlug.mockResolvedValue(mockPrompt);
+  test("Returns correct metadata when prompt exists", async () => {
+    // Mock the prompt data
+    const mockPrompt = {
+      id: "123",
+      title: "Test Prompt",
+      description: "Test Description",
+    };
 
-    // Generate metadata
+    // Setup mock
+    (fetchPromptBySlug as jest.Mock).mockResolvedValue(mockPrompt);
+
+    // Call the function
     const metadata = await generateMetadata({
       params: Promise.resolve({ slug: "test-prompt" }),
     });
 
-    // Check metadata values
-    expect(metadata.title).toBe("Test Prompt prompt for Amazon Q Developer");
-    expect(metadata.description).toBe("This is a test prompt");
-    expect(metadata.openGraph?.title).toBe(
-      "Test Prompt prompt for Amazon Q Developer",
-    );
-    expect(metadata.openGraph?.description).toBe("This is a test prompt");
-  });
-
-  test("Returns fallback metadata when prompt is not found", async () => {
-    // Setup mock to return null (prompt not found)
-    const { fetchPromptBySlug } = require("@/lib/actions/fetch-prompts-action");
-    fetchPromptBySlug.mockResolvedValue(null);
-
-    // Generate metadata
-    const metadata = await generateMetadata({
-      params: Promise.resolve({ slug: "non-existent" }),
+    // Check the returned metadata
+    expect(metadata).toEqual({
+      title: "Test Prompt prompt for Amazon Q Developer",
+      description: "Test Description",
+      openGraph: {
+        title: "Test Prompt prompt for Amazon Q Developer",
+        description: "Test Description",
+      },
     });
 
-    // Check metadata values
-    expect(metadata.title).toBe("Prompt Not Found");
-    expect(metadata.description).toBeUndefined();
+    // Verify that fetchPromptBySlug was called with the correct parameter
+    expect(fetchPromptBySlug).toHaveBeenCalledWith("test-prompt");
+  });
+
+  test("Returns 'Prompt Not Found' title when prompt does not exist", async () => {
+    // Mock the prompt data to be null (not found)
+    (fetchPromptBySlug as jest.Mock).mockResolvedValue(null);
+
+    // Call the function
+    const metadata = await generateMetadata({
+      params: Promise.resolve({ slug: "non-existent-prompt" }),
+    });
+
+    // Check the returned metadata
+    expect(metadata).toEqual({
+      title: "Prompt Not Found",
+    });
   });
 });
