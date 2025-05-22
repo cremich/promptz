@@ -1,14 +1,21 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import BrowseRulesPage from "@/app/rules/rules-page";
+import PromptsPage from "@/app/prompts/prompts-page";
 
 // Mock the server action
-jest.mock("@/lib/actions/rule-search-action", () => ({
-  searchProjectRules: jest.fn().mockResolvedValue({
-    projectRules: [],
+jest.mock("@/lib/actions/search-prompts-action", () => ({
+  searchPrompts: jest.fn().mockResolvedValue({
+    prompts: [],
   }),
 }));
+
+// Mock child components
+jest.mock("@/components/search/filter-sidebar", () => {
+  return function FilterSidebar() {
+    return <div data-testid="filter-sidebar">Filter Sidebar</div>;
+  };
+});
 
 jest.mock("@/components/search/search-box", () => {
   return function SearchBox() {
@@ -34,24 +41,27 @@ jest.mock("@/components/search/search-result", () => {
   };
 });
 
-describe("BrowseRulesPage", () => {
+describe("PromptsPage", () => {
   test("Renders page title and description", async () => {
-    render(await BrowseRulesPage({ searchParams: Promise.resolve({}) }));
+    render(await PromptsPage({ searchParams: Promise.resolve({}) }));
 
     // Check for page title
     const heading = screen.getByRole("heading", { level: 1 });
     expect(heading).toBeInTheDocument();
-    expect(heading).toHaveTextContent("Project Rules");
+    expect(heading).toHaveTextContent("Browse Prompts");
 
     // Check for page description
     const description = screen.getByText(
-      "Discover and explore Amazon Q project rules created by the community to enforce coding standards and best practices",
+      "Discover and explore prompts created by the community to enhance your Amazon Q Developer workflow",
     );
     expect(description).toBeInTheDocument();
   });
 
   test("Renders all UI components", async () => {
-    render(await BrowseRulesPage({ searchParams: Promise.resolve({}) }));
+    render(await PromptsPage({ searchParams: Promise.resolve({}) }));
+
+    // Check for filter sidebar
+    expect(screen.getByTestId("filter-sidebar")).toBeInTheDocument();
 
     // Check for search box
     expect(screen.getByTestId("search-box")).toBeInTheDocument();

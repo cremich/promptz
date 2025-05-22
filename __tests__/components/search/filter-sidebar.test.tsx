@@ -23,12 +23,10 @@ jest.mock("@/components/search/filter-section", () => ({
 }));
 
 describe("FilterSidebar", () => {
-  test("Renders FilterSection with correct props", () => {
+  test("Renders FilterSection with correct props", async () => {
     render(<FilterSidebar />);
 
-    const filterSection = screen.getByTestId("filter-section");
-
-    // Check if FilterSection receives the correct props
-    expect(filterSection).toBeInTheDocument();
+    const filterSection = await screen.findAllByTestId("filter-section");
+    expect(filterSection).toHaveLength(3);
   });
 });
