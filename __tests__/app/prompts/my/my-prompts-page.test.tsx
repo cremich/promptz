@@ -4,15 +4,13 @@ import "@testing-library/jest-dom";
 import MyPrompts from "@/app/prompts/my/my-prompts-page";
 
 // Mock the server actions
-jest.mock("@/app/lib/actions/cognito-server", () => ({
-  fetchCurrentAuthUser: jest
-    .fn()
-    .mockResolvedValue({
-      id: "user123",
-      displayName: "Test User",
-      username: "testuser",
-      guest: false,
-    }),
+jest.mock("@/lib/actions/cognito-auth-action", () => ({
+  fetchCurrentAuthUser: jest.fn().mockResolvedValue({
+    id: "user123",
+    displayName: "Test User",
+    username: "testuser",
+    guest: false,
+  }),
 }));
 
 jest.mock("@/lib/actions/my-prompts-action", () => ({

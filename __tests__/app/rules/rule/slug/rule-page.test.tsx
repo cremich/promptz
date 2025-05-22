@@ -1,19 +1,19 @@
 import { describe, expect, test } from "@jest/globals";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ProjectRulePage, {
   generateMetadata,
 } from "@/app/rules/rule/[slug]/rule-page";
 import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { notFound } from "next/navigation";
+import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 
 // Mock the server actions
 jest.mock("@/lib/actions/fetch-rules-action", () => ({
   fetchProjectRuleBySlug: jest.fn(),
 }));
 
-jest.mock("@/app/lib/actions/cognito-server", () => ({
+jest.mock("@/lib/actions/cognito-auth-action", () => ({
   fetchCurrentAuthUser: jest.fn(),
 }));
 

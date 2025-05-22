@@ -1,5 +1,5 @@
 // middleware.ts
-import { fetchCurrentAuthUserFromRequestContext } from "@/app/lib/actions/cognito-server";
+import { fetchCurrentAuthUserFromRequestContext } from "@/lib/actions/cognito-auth-action";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {

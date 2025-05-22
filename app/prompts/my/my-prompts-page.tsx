@@ -1,8 +1,8 @@
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { Suspense } from "react";
 import SearchResults from "@/components/search/search-result";
 import CreateButton from "@/components/common/create-button";
 import { fetchMyPrompts } from "@/lib/actions/my-prompts-action";
+import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 
 export default async function MyPrompts() {
   const user = await fetchCurrentAuthUser();
