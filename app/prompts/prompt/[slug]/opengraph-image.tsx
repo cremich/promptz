@@ -1,4 +1,4 @@
-import { fetchPromptBySlug } from "@/app/lib/actions/prompts";
+import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
 import { notFound } from "next/navigation";
 import { ImageResponse } from "next/og";
 
