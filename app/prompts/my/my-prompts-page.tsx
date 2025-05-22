@@ -1,8 +1,8 @@
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
-import { fetchMyPrompts } from "@/lib/actions/my-rules-action";
-import SearchResults from "@/app/ui/prompts/browse/search-result";
-import CreatePromptButton from "@/app/ui/prompts/create-prompt-button";
 import { Suspense } from "react";
+import SearchResults from "@/components/search/search-result";
+import CreateButton from "@/components/common/create-button";
+import { fetchMyPrompts } from "@/lib/actions/my-prompts-action";
 
 export default async function MyPrompts() {
   const user = await fetchCurrentAuthUser();
@@ -14,7 +14,7 @@ export default async function MyPrompts() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold tracking-tight">My Prompts</h1>
-            <CreatePromptButton />
+            <CreateButton href="/prompts/create" name="Create Prompt" />
           </div>
           <p className="text-muted-foreground">
             Manage and refine your prompts.
