@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ProjectRulePage, {
   generateMetadata,
-} from "@/app/rules/rule/[slug]/rule-page";
+} from "@/app/rules/rule/[slug]/page";
 import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
 import { notFound } from "next/navigation";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";

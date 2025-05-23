@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import CreatePrompt from "@/app/prompts/create/create-prompt-page";
+import CreatePrompt from "@/app/prompts/create/page";
 
 // Mock the PromptForm component
 jest.mock("@/components/prompt/prompt-form", () => {

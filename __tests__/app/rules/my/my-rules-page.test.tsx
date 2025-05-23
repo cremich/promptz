@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import MyRules from "@/app/rules/my/my-rules-page";
+import MyRules from "@/app/rules/my/page";
 
 // Mock the server actions
 jest.mock("@/lib/actions/my-rules-action", () => ({

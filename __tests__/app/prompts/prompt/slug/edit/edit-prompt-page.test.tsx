@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import EditPromptPage from "@/app/prompts/prompt/[slug]/edit/edit-prompt-page";
+import EditPromptPage from "@/app/prompts/prompt/[slug]/edit/page";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
 import { redirect, notFound } from "next/navigation";

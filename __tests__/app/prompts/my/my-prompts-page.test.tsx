@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import MyPrompts from "@/app/prompts/my/my-prompts-page";
+import MyPrompts from "@/app/prompts/my/page";
 
 // Mock the server actions
 jest.mock("@/lib/actions/cognito-auth-action", () => ({

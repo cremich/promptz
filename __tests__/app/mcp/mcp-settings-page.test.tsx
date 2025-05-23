@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import MCPSettingsPage from "@/app/mcp/mcp-settings-page";
+import MCPSettingsPage from "@/app/mcp/page";
 import { toast } from "sonner";
 
 // Mock dependencies

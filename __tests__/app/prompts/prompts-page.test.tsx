@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import PromptsPage from "@/app/prompts/prompts-page";
+import PromptsPage from "@/app/prompts/page";
 
 // Mock the server action
 jest.mock("@/lib/actions/search-prompts-action", () => ({

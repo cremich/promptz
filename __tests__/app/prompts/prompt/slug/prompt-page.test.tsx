@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import PromptDetailPage, {
   generateMetadata,
-} from "@/app/prompts/prompt/[slug]/prompt-page";
+} from "@/app/prompts/prompt/[slug]/page";
 import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { notFound } from "next/navigation";

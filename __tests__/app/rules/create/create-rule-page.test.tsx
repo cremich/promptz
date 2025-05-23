@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import CreateProjectRulePage from "@/app/rules/create/create-rule-page";
+import CreateProjectRulePage from "@/app/rules/create/page";
 
 // Mock the ProjectRuleForm component
 jest.mock("@/components/rules/project-rule-form", () => {

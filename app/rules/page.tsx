@@ -1,4 +1,3 @@
-import FilterSidebar from "@/components/search/filter-sidebar";
 import SearchBox from "@/components/search/search-box";
 import SearchResults from "@/components/search/search-result";
 import SortSelector from "@/components/search/sort-selector";

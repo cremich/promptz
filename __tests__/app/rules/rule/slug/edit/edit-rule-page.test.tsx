@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import EditProjectRulePage from "@/app/rules/rule/[slug]/edit/edit-rule-page";
+import EditProjectRulePage from "@/app/rules/rule/[slug]/edit/page";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
 import { redirect, notFound } from "next/navigation";
