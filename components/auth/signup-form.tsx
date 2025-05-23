@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useActionState, useState } from "react";
 import { handleSignUp, SignUpState } from "@/lib/actions/signup-action";
 import Link from "next/link";
-import { ErrorMessage } from "@/app/ui/error-message";
+import { ErrorMessage } from "@/components/forms/error-message";
 
 export function SignUpForm() {
   const initialState: SignUpState = {

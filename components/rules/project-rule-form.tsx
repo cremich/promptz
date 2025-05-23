@@ -54,6 +54,7 @@ import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
 import { deleteProjectRule } from "@/lib/actions/delete-rule-action";
+import SelectableTags from "@/components/forms/selectable-tag";
 
 interface ProjectRuleFormProps {
   projectRule?: ProjectRule;
@@ -258,22 +259,11 @@ export default function ProjectRuleForm({ projectRule }: ProjectRuleFormProps) {
                                   rule
                                 </p>
                               </div>
-                              <div className="flex flex-wrap gap-2 my-4">
-                                {getProjectRuleTags().map((tag) => (
-                                  <Badge
-                                    key={tag}
-                                    variant="secondary"
-                                    className={`cursor-pointer ${
-                                      field.field.value?.includes(tag)
-                                        ? "bg-violet-500 hover:bg-violet-600"
-                                        : "bg-neutral-700 hover:bg-neutral-600"
-                                    }`}
-                                    onClick={() => selectTag(tag)}
-                                  >
-                                    {tag}
-                                  </Badge>
-                                ))}
-                              </div>
+                              <SelectableTags
+                                tags={getProjectRuleTags()}
+                                selectedTags={field.field.value}
+                                onTagSelect={selectTag}
+                              />
                             </SheetContent>
                           </Sheet>
                         </div>

@@ -58,7 +58,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
-import SelectableTags from "@/app/ui/prompts/selectable-tag";
+import SelectableTags from "@/components/forms/selectable-tag";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
