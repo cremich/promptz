@@ -9,31 +9,31 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useActionState, useState } from "react";
-import { handleSignUp, SignUpState } from "@/app/lib/actions/cognito";
 import Link from "next/link";
+import { useState, useActionState } from "react";
 import { ErrorMessage } from "@/app/ui/error-message";
+import { handleSignIn, LoginState } from "@/lib/actions/signin-action";
 
-export function SignUpForm() {
-  const initialState: SignUpState = {
+export function LoginForm() {
+  const initialState: LoginState = {
     message: null,
     errors: {},
   };
   const [email, setEmail] = useState("");
-  const [state, formAction] = useActionState(handleSignUp, initialState);
+  const [state, formAction] = useActionState(handleSignIn, initialState);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className={"flex flex-col gap-6"}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Create Your Account</CardTitle>
+          <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            Enter your email, and preferred username below to create a new
-            account for Promptz.
+            Enter your email below to request a one-time password to login to
+            your account.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={formAction} className="space-y-3">
+          <form action={formAction}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -51,29 +51,18 @@ export function SignUpForm() {
                 state.errors.email.map((error: string, index: number) => (
                   <ErrorMessage description={error} key={index} />
                 ))}
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="username">Username</Label>
-                </div>
-                <Input id="username" type="text" name="username" required />
-              </div>
-              {state.errors?.username &&
-                state.errors.username.map((error: string, index: number) => (
-                  <ErrorMessage description={error} key={index} />
-                ))}
               <Button type="submit" className="w-full">
-                Create Account
+                Send One-Time Password
               </Button>
-              {state.message && <ErrorMessage description={state.message} />}
             </div>
             <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 key="log-in"
-                href="/login"
+                href="/signup"
                 className="underline underline-offset-4"
               >
-                Log In
+                Create an account
               </Link>
             </div>
           </form>

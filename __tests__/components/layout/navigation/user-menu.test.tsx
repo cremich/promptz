@@ -2,11 +2,11 @@ import { describe, expect, test } from "@jest/globals";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import UserMenu from "@/components/layout/navigation/user-menu";
-import { fetchCurrentUser } from "@/app/lib/actions/cognito";
 import { User } from "@/lib/models/user-model";
+import { fetchCurrentUser } from "@/lib/actions/signin-action";
 
 // Mock the fetchCurrentUser function
-jest.mock("@/app/lib/actions/cognito", () => ({
+jest.mock("@/lib/actions/signin-action", () => ({
   fetchCurrentUser: jest.fn().mockImplementation(() => {
     return Promise.resolve({ displayName: "Test User", guest: false });
   }),

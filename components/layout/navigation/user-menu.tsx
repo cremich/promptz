@@ -9,11 +9,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User, ChevronDown, FileText } from "lucide-react";
 import LogoutButton from "@/components/layout/navigation/logout-button";
-import { fetchCurrentUser } from "@/app/lib/actions/cognito";
 import { useEffect, useState } from "react";
 import LoginMenu from "@/components/layout/navigation/login-menu";
 import { Hub } from "aws-amplify/utils";
 import Link from "next/link";
+import { fetchCurrentUser } from "@/lib/actions/signin-action";
 
 export default function UserMenu() {
   const [user, setUser] = useState({ displayName: "", guest: true });

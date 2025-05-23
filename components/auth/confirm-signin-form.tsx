@@ -10,9 +10,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail } from "lucide-react";
-import { ConfirmState, handleConfirmSignIn } from "@/app/lib/actions/cognito";
 import { ErrorMessage } from "@/app/ui/error-message";
 import { useActionState } from "react";
+import { ConfirmState, handleConfirmSignIn } from "@/lib/actions/signin-action";
 
 export function ConfirmSignInForm() {
   const initialState: ConfirmState = {

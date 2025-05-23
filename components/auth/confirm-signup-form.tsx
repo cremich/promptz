@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail } from "lucide-react";
-import { ConfirmState, handleConfirmSignUp } from "@/app/lib/actions/cognito";
+import { ConfirmState, handleConfirmSignUp } from "@/lib/actions/signup-action";
 import { ErrorMessage } from "@/app/ui/error-message";
 import { useActionState } from "react";
 
