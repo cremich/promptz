@@ -1,5 +1,5 @@
-import { extractCode } from "@/e2e-tests/utils";
 import { test as setup, expect } from "@playwright/test";
+import { extractCode } from "e2e-tests/utils";
 import MailSlurp from "mailslurp-client";
 import path from "path";
 
