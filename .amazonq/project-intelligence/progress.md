@@ -1,144 +1,73 @@
-# Promptz Development Progress
+# Progress: Promptz
+
+## What Works
+
+### Core Platform
+
+- ✅ User authentication (signup, login, account management)
+- ✅ Prompt creation, editing, and management
+- ✅ Project rules creation, editing, and management
+- ✅ Basic search functionality with tag filtering
+- ✅ Copy and download functionality for prompts and rules
+- ✅ Popularity tracking (copy count, download count)
+- ✅ Responsive UI across device sizes
+
+### Testing
+
+- ✅ Jest unit tests for components and utilities
+- ✅ Playwright end-to-end tests for critical user flows
+
+## In Progress
+
+- 🔄 Setup Project Intelligence
+
+## What's Left to Build
+
+- ❌ Advanced filtering of prompts per tag via API.
+- ❌ Allow users to browse prompts per tag on landing page.
+- ❌ Add project rules to sitemaps for better SEO.
+- ❌ Implement a download feature for prompts to use prompts in the local prompt library of Amazon Q Develooer.
+- ❌ Add support to create prompts using prompt frameworks.
+- ❌ Calculate tokens used for prompts and project-rules.
+- ❌ Prompt flows for sophisticated use-cases and complex engineering tasks.
+- ❌ Allow users to embed prompts per iframes.
+- ❌ User-scope tokens for integration into Amazon Q Developer via MCP to access private prompts.
+- ❌ Show most popular prompts on landing page
+- ❌ Show most popular project rules on landing page
 
 ## Current Status
 
-Promptz is in active development with core functionality implemented and several features in progress. The application has a functional frontend and backend with key features available for users.
+The project is in an active development phase with core functionality implemented and working. Recent efforts have focused on refactoring and improving existing features rather than adding new ones, with an emphasis on code quality, performance, and user experience.
 
-## Completed Features
+The platform is usable in its current state, providing the essential functionality for users to create, discover, and share prompts and project rules for Amazon Q Developer. The team is now working on enhancing these core features and improving the overall user experience before expanding to more advanced capabilities.
 
-### Authentication
+## Known Issues
 
-- ✅ User registration and login with email
-- ✅ Email verification flow
-- ✅ Social provider authentication setup (Google in production)
-- ✅ User profile creation on first login
-- ✅ Authentication state management in the UI
+### Technical Debt
 
-### Prompt Management
-
-- ✅ Create new prompts with name, description, and instructions
-- ✅ Edit existing prompts
-- ✅ Delete prompts
-- ✅ Mark prompts as public or private
-- ✅ Add tags to prompts for categorization
-- ✅ Star/favorite prompts
-
-### Project Rules
-
-- ✅ Create project rules with name, description, and content
-- ✅ Edit existing rules
-- ✅ Delete rules
-- ✅ Mark rules as public or private
-- ✅ Add tags to rules for categorization
-- ✅ Download rules for local use
-
-### Discovery
-
-- ✅ Search prompts by keywords
-- ✅ Filter prompts by various attributes
-- ✅ Sort prompts by different criteria
-- ✅ Browse public prompts
-- ✅ View personal prompt collection
-
-### Event Tracking
-
-- ✅ Track prompt copy events
-- ✅ Track prompt star/unstar events
-- ✅ Track rule copy events
-- ✅ Track rule download events
-- ✅ EventBridge integration for event processing
-
-## In Progress Features
-
-### Analytics Processing
-
-- 🔄 Step Functions workflow for processing prompt interactions
-- 🔄 Analytics dashboard for prompt usage
-- 🔄 Popularity metrics for prompts and rules
-
-### Enhanced Search
-
-- 🔄 Improved search algorithm
-- 🔄 Tag-based filtering improvements
-- 🔄 Search result relevance scoring
+- Some API implementations need refactoring for consistency
 
 ### User Experience
 
-- 🔄 Mobile responsiveness improvements
-- 🔄 Performance optimizations
-- 🔄 Accessibility enhancements
+- Search functionality could be more intuitive and powerful
+- Navigation between related features could be improved
+- Limited feedback on prompt effectiveness
 
-## Planned Features
+### Performance
 
-### Community Features
+- Some operations may slow down with larger datasets
+- Search performance may degrade with complex queries
 
-- 📝 Ratings and reviews
+## Next Milestones
 
-### Content Management
+### Milestone 1: Prompt Creation
 
-- 📝 Prompt collections/folders
-- 📝 Prompt flows
-- 📝 Import/export functionality
+- Assisted prompt enginering using prompt frameworks
+- Allow users to define complex prompt flows
+- Allow users to set related prompts
 
-### Integration
+### Milestone 2: Prompt Discovery
 
-- 📝 Direct integration with Amazon Q Developer via MCP
-- 📝 User Scoped Tokens for MCP server authentication
-
-## Known Issues and Limitations
-
-### Frontend
-
-1. **Responsive Design**: Some UI elements need improvement on mobile devices
-2. **Performance**: Large lists of prompts can cause rendering performance issues
-3. **Form Validation**: Some edge cases in form validation need addressing
-
-### Backend
-
-1. **Query Efficiency**: Some DynamoDB queries could be optimized for better performance
-2. **Event Processing**: Step Functions workflow is currently a placeholder
-3. **Rate Limiting**: No rate limiting implemented for API calls
-
-### Authentication
-
-1. **Account Deletion**: Process for account deletion not yet implemented
-2. **User Scoped Tokens**: Allow users to create individual tokens to be used for MCP integration
-
-### Data Model
-
-1. **Indexing**: Some secondary indexes may need optimization
-2. **Pagination**: Pagination implementation needs improvement for large datasets
-
-## Recent Progress
-
-Based on recent git commits, the team has been focusing on:
-
-1. Event-driven architecture implementation
-
-   - Publishing events to EventBridge
-   - Setting up Step Functions for event processing
-
-2. Documentation improvements
-
-   - Removing outdated documentation
-   - Preparing for comprehensive documentation
-
-3. Refactoring
-   - Encapsulating messaging functionality
-   - Improving code organization
-
-## Next Steps
-
-1. **Short-term (1-2 weeks)**
-
-   - Complete Step Functions workflow implementation
-   - Prompt Collections
-
-2. **Medium-term (1-2 months)**
-
-   - Prompt Engineering Guide
-   - Popular Prompts
-
-3. **Long-term (3+ months)**
-   - Develop direct Amazon Q Developer integration
-   - Build community features
+- Implement features to browse prompts and project rules by popularity
+- Increase organic traffic and visibility via features to allow content creates embed their prompts
+- Efficient search for prompts via MCP
