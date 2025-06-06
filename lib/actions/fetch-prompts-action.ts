@@ -110,7 +110,7 @@ export async function fetchPromptBySlug(slug: string) {
     sourceURL: prompt.sourceURL,
     howto: prompt.howto,
     public: prompt.public,
-    author: prompt.author.displayName,
-    authorId: prompt.author.id,
+    author: prompt.author ? prompt.author.displayName : "",
+    authorId: prompt.author ? prompt.author.id : "",
   } as Prompt;
 }
