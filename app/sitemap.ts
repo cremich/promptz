@@ -20,7 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       nextToken: cursor,
     });
     if (searchResults?.results) {
-      prompts.push(...searchResults?.results);
+      prompts.push(...searchResults?.results.filter((p) => p?.public === true));
     }
 
     if (searchResults?.nextToken) {

@@ -30,7 +30,7 @@ export default async function PromptsPage(props: BrowsePageProps) {
             <h1 className="text-3xl font-bold tracking-tight">
               Browse Prompts
             </h1>
-            <CreateButton href="" name="" />
+            <CreateButton href="/prompts/create" name="Create Prompt" />
           </div>
           <p className="text-muted-foreground">
             Discover and explore prompts created by the community to enhance

@@ -6,6 +6,28 @@ test.beforeEach(async () => {
   now = new Date().toISOString();
 });
 
+test("user is able to click the 'create prompt' button in the browse page and navigate to create page", async ({
+  page,
+}) => {
+  // Navigate to the prompts page
+  await page.goto("/prompts");
+
+  // Verify the create prompt button is visible
+  const createPromptLink = page.getByRole("link", { name: "Create Prompt" });
+  await expect(createPromptLink).toBeVisible();
+
+  // Click on the create prompt button
+  await createPromptLink.click();
+
+  // Verify navigation to the create page
+  await expect(page).toHaveURL("/prompts/create");
+
+  // Verify the create page has loaded correctly by checking for the form
+  await expect(
+    page.getByRole("heading", { name: "Create Prompt" }),
+  ).toBeVisible();
+});
+
 test("user is able to create a prompt with only required fields", async ({
   page,
 }) => {
