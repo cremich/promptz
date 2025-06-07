@@ -7,6 +7,7 @@ const schema = a
       name: a.string(),
       tags: a.string().array(),
       slug: a.string(),
+      public: a.boolean(),
       description: a.string(),
       createdAt: a.string(),
       updatedAt: a.string(),

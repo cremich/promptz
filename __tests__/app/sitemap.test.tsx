@@ -14,10 +14,12 @@ jest.mock("@aws-amplify/adapter-nextjs/api", () => ({
                 {
                   slug: "test-prompt-1",
                   updatedAt: "2023-01-01T12:00:00Z",
+                  public: true,
                 },
                 {
                   slug: "test-prompt-2",
                   updatedAt: "2023-01-02T12:00:00Z",
+                  public: false,
                 },
               ],
               nextToken: "next-page-token",
@@ -31,6 +33,7 @@ jest.mock("@aws-amplify/adapter-nextjs/api", () => ({
               {
                 slug: "test-prompt-3",
                 updatedAt: "2023-01-03T12:00:00Z",
+                public: true,
               },
             ],
             nextToken: null,
@@ -54,7 +57,7 @@ describe("Sitemap", () => {
     const sitemapData = await sitemap();
 
     // Check if the sitemap has the correct number of entries
-    expect(sitemapData).toHaveLength(6); // 2 weekly routes + 3 prompts + 1 monthly route
+    expect(sitemapData).toHaveLength(5); // 2 weekly routes + 3 prompts + 1 monthly route
 
     // Check weekly routes
     const homeRoute = sitemapData.find(
@@ -97,7 +100,7 @@ describe("Sitemap", () => {
     const promptRoutes = sitemapData.filter((route) =>
       route.url.startsWith("https://promptz.dev/prompts/prompt/"),
     );
-    expect(promptRoutes).toHaveLength(3);
+    expect(promptRoutes).toHaveLength(2);
 
     // Verify the last prompt from the second page is included
     const lastPromptRoute = sitemapData.find(
