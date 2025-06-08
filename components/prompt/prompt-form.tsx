@@ -105,7 +105,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
   async function onDeletePrompt() {
     const response = await deletePrompt(prompt?.id as string);
     if (response.success === true) {
-      redirect(`/`);
+      redirect(`/prompts`);
     } else {
       toast.error(response.message);
     }

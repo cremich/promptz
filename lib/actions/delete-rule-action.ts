@@ -1,13 +1,13 @@
 "use server";
-// import { cookies } from "next/headers";
-// import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
-// import { type Schema } from "../../amplify/data/resource";
-// import outputs from "../../amplify_outputs.json";
+import { cookies } from "next/headers";
+import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
+import { type Schema } from "../../amplify/data/resource";
+import outputs from "../../amplify_outputs.json";
 
-// const appsync = generateServerClientUsingCookies<Schema>({
-//   config: outputs,
-//   cookies,
-// });
+const appsync = generateServerClientUsingCookies<Schema>({
+  config: outputs,
+  cookies,
+});
 
 /**
  * Deletes a project rule by ID
@@ -19,15 +19,15 @@ export async function deleteProjectRule(
 ): Promise<{ success: boolean; message: string }> {
   try {
     // // Delete the project rule
-    // await appsync.mutations.deleteProjectRule(
-    //   { id },
-    //   {
-    //     authMode: "userPool",
-    //   },
-    // );
+    await appsync.mutations.deleteProjectRule(
+      { id },
+      {
+        authMode: "userPool",
+      },
+    );
     return {
       success: true,
-      message: `Project rule deleted ${id}`,
+      message: `Project rule deleted`,
     };
   } catch (error) {
     return {

@@ -90,19 +90,19 @@ const schema = a
           entry: "./handler/savePrompt.js",
         }),
       ),
-    // deletePrompt: a
-    //   .mutation()
-    //   .arguments({
-    //     id: a.id(),
-    //   })
-    //   .returns(a.ref("prompt"))
-    //   .authorization((allow) => [allow.authenticated()])
-    //   .handler(
-    //     a.handler.custom({
-    //       dataSource: a.ref("prompt"),
-    //       entry: "./handler/delete.js",
-    //     }),
-    //   ),
+    deletePrompt: a
+      .mutation()
+      .arguments({
+        id: a.id(),
+      })
+      .returns(a.ref("prompt"))
+      .authorization((allow) => [allow.authenticated()])
+      .handler(
+        a.handler.custom({
+          dataSource: a.ref("prompt"),
+          entry: "./handler/delete.js",
+        }),
+      ),
     copyPrompt: a
       .mutation()
       .arguments({
@@ -178,19 +178,19 @@ const schema = a
           entry: "./handler/saveProjectRule.js",
         }),
       ),
-    // deleteProjectRule: a
-    //   .mutation()
-    //   .arguments({
-    //     id: a.id(),
-    //   })
-    //   .returns(a.ref("projectRule"))
-    //   .authorization((allow) => [allow.authenticated()])
-    //   .handler(
-    //     a.handler.custom({
-    //       dataSource: a.ref("projectRule"),
-    //       entry: "./handler/delete.js",
-    //     }),
-    //   ),
+    deleteProjectRule: a
+      .mutation()
+      .arguments({
+        id: a.id(),
+      })
+      .returns(a.ref("projectRule"))
+      .authorization((allow) => [allow.authenticated()])
+      .handler(
+        a.handler.custom({
+          dataSource: a.ref("projectRule"),
+          entry: "./handler/delete.js",
+        }),
+      ),
     copyProjectRule: a
       .mutation()
       .arguments({

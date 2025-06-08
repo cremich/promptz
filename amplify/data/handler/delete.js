@@ -18,16 +18,20 @@ export function request(ctx) {
   const identity = ctx.identity;
   const username = identity?.username;
 
-  const condition = {
-    id: { attributeExists: true },
-    owner: { eq: username },
-  };
-
   // For deletes, ensure the user is the owner and the item exists
   return {
     operation: "DeleteItem",
     key: util.dynamodb.toMapValues({ id: id }),
-    condition: util.transform.toDynamoDBConditionExpression(condition),
+    condition: {
+      // Ensure the user is the owner of the prompt
+      expression: "#owner = :owner",
+      expressionNames: {
+        "#owner": "owner",
+      },
+      expressionValues: util.dynamodb.toMapValues({
+        ":owner": username,
+      }),
+    },
   };
 }
 
