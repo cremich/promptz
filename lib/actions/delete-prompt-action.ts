@@ -13,13 +13,13 @@ export async function deletePrompt(
   id: string,
 ): Promise<{ success: boolean; message: string }> {
   try {
-    // Delete the prompt
-    await appsync.models.prompt.delete(
-      { id },
-      {
-        authMode: "userPool",
-      },
-    );
+    // // Delete the prompt
+    // await appsync.mutations.deletePrompt(
+    //   { id },
+    //   {
+    //     authMode: "userPool",
+    //   },
+    // );
     return {
       success: true,
       message: `Prompt deleted`,

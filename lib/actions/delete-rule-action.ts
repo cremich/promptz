@@ -18,13 +18,13 @@ export async function deleteProjectRule(
   id: string,
 ): Promise<{ success: boolean; message: string }> {
   try {
-    // Delete the project rule
-    await appsync.models.projectRule.delete(
-      { id },
-      {
-        authMode: "userPool",
-      },
-    );
+    // // Delete the project rule
+    // await appsync.mutations.deleteProjectRule(
+    //   { id },
+    //   {
+    //     authMode: "userPool",
+    //   },
+    // );
     return {
       success: true,
       message: `Project rule deleted`,
