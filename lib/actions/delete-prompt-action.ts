@@ -1,13 +1,13 @@
 "use server";
-import { cookies } from "next/headers";
-import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
-import { type Schema } from "../../amplify/data/resource";
-import outputs from "../../amplify_outputs.json";
+// import { cookies } from "next/headers";
+// import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
+// import { type Schema } from "../../amplify/data/resource";
+// import outputs from "../../amplify_outputs.json";
 
-const appsync = generateServerClientUsingCookies<Schema>({
-  config: outputs,
-  cookies,
-});
+// const appsync = generateServerClientUsingCookies<Schema>({
+//   config: outputs,
+//   cookies,
+// });
 
 export async function deletePrompt(
   id: string,
@@ -22,7 +22,7 @@ export async function deletePrompt(
     // );
     return {
       success: true,
-      message: `Prompt deleted`,
+      message: `Prompt deleted ${id}`,
     };
   } catch (error) {
     return {

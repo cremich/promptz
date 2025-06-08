@@ -1,13 +1,13 @@
 "use server";
-import { cookies } from "next/headers";
-import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
-import { type Schema } from "../../amplify/data/resource";
-import outputs from "../../amplify_outputs.json";
+// import { cookies } from "next/headers";
+// import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
+// import { type Schema } from "../../amplify/data/resource";
+// import outputs from "../../amplify_outputs.json";
 
-const appsync = generateServerClientUsingCookies<Schema>({
-  config: outputs,
-  cookies,
-});
+// const appsync = generateServerClientUsingCookies<Schema>({
+//   config: outputs,
+//   cookies,
+// });
 
 /**
  * Deletes a project rule by ID
@@ -27,7 +27,7 @@ export async function deleteProjectRule(
     // );
     return {
       success: true,
-      message: `Project rule deleted`,
+      message: `Project rule deleted ${id}`,
     };
   } catch (error) {
     return {
