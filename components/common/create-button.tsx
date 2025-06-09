@@ -9,7 +9,7 @@ interface CreateButtonProps {
 
 export default function CreateButton(props: CreateButtonProps) {
   return (
-    <Button asChild className="bg-violet-500 hover:bg-violet-600">
+    <Button asChild className="bg-cyan-500 hover:bg-cyan-600">
       <Link href={props.href}>
         <Plus className="mr-2 h-4 w-4" />
         {props.name}

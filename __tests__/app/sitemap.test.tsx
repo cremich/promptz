@@ -58,14 +58,14 @@ describe("Sitemap", () => {
 
     // Check weekly routes
     const homeRoute = sitemapData.find(
-      (route) => route.url === "https://promptz.dev",
+      (route) => route.url === "https://prompthub.aws.akkodis.com",
     );
     expect(homeRoute).toBeDefined();
     expect(homeRoute?.changeFrequency).toBe("weekly");
     expect(homeRoute?.priority).toBe(0.7);
 
     const promptsRoute = sitemapData.find(
-      (route) => route.url === "https://promptz.dev/prompts",
+      (route) => route.url === "https://prompthub.aws.akkodis.com/prompts",
     );
     expect(promptsRoute).toBeDefined();
     expect(promptsRoute?.changeFrequency).toBe("weekly");
@@ -74,7 +74,8 @@ describe("Sitemap", () => {
     // Check prompt routes
     const promptRoute1 = sitemapData.find(
       (route) =>
-        route.url === "https://promptz.dev/prompts/prompt/test-prompt-1",
+        route.url ===
+        "https://prompthub.aws.akkodis.com/prompts/prompt/test-prompt-1",
     );
     expect(promptRoute1).toBeDefined();
     expect(promptRoute1?.lastModified).toBe("2023-01-01T12:00:00Z");
@@ -83,7 +84,7 @@ describe("Sitemap", () => {
 
     // Check monthly routes
     const mcpRoute = sitemapData.find(
-      (route) => route.url === "https://promptz.dev/mcp",
+      (route) => route.url === "https://prompthub.aws.akkodis.com/mcp",
     );
     expect(mcpRoute).toBeDefined();
     expect(mcpRoute?.changeFrequency).toBe("monthly");
@@ -95,14 +96,15 @@ describe("Sitemap", () => {
 
     // Check if all prompts from both pages are included
     const promptRoutes = sitemapData.filter((route) =>
-      route.url.startsWith("https://promptz.dev/prompts/prompt/"),
+      route.url.startsWith("https://prompthub.aws.akkodis.com/prompts/prompt/"),
     );
     expect(promptRoutes).toHaveLength(3);
 
     // Verify the last prompt from the second page is included
     const lastPromptRoute = sitemapData.find(
       (route) =>
-        route.url === "https://promptz.dev/prompts/prompt/test-prompt-3",
+        route.url ===
+        "https://prompthub.aws.akkodis.com/prompts/prompt/test-prompt-3",
     );
     expect(lastPromptRoute).toBeDefined();
     expect(lastPromptRoute?.lastModified).toBe("2023-01-03T12:00:00Z");

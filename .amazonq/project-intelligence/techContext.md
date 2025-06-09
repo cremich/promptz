@@ -1,4 +1,4 @@
-# Technical Context: Promptz
+# Technical Context: Akkodis Prompt Hub
 
 ## Technology Stack
 
@@ -49,7 +49,7 @@
 
 ### Environment Variables
 
-- `PROMPTZ_ENV`: Controls environment-specific configurations (e.g., `sandbox`)
+- `APH_ENV`: Controls environment-specific configurations (e.g., `sandbox`)
 
 ## Project Structure
 

@@ -20,7 +20,7 @@ export default function MCPSettingsPage() {
   const apiUrl = config.API?.GraphQL?.endpoint || "";
   const apiKey = config.API?.GraphQL?.apiKey || "";
 
-  const snippet = `"promptz.dev/mcp": {
+  const snippet = `"prompthub.aws.akkodis.com/mcp": {
   "command": "npx",
   "args": [
     "-y",
@@ -46,12 +46,12 @@ export default function MCPSettingsPage() {
           MCP Server Configuration
         </h1>
         <p className="text-zinc-400 mt-2">
-          View the MCP server connection details for PROMPTZ
+          View the MCP server connection details for the Akkodis Prompt Hub
         </p>
       </div>
 
-      <Alert className="border-violet-800 bg-zinc-900">
-        <AlertCircle className="h-4 w-4 text-violet-400" />
+      <Alert className="border-cyan-800 bg-zinc-900">
+        <AlertCircle className="h-4 w-4 text-cyan-400" />
         <AlertTitle className="text-white">Important</AlertTitle>
         <AlertDescription className="text-zinc-300">
           Use these settings to configure your MCP server connection. Copy the
@@ -63,7 +63,7 @@ export default function MCPSettingsPage() {
         <CardHeader>
           <CardTitle className="text-white">Server Details</CardTitle>
           <CardDescription className="text-zinc-400">
-            Default connection details for the PROMPTZ MCP server
+            Default connection details for the Akkodis Prompt Hub MCP server
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -72,7 +72,7 @@ export default function MCPSettingsPage() {
               API URL
             </Label>
             <div className="flex items-center gap-2">
-              <div className="bg-zinc-800 p-2 rounded-md font-mono text-sm flex-1 overflow-x-auto text-violet-300">
+              <div className="bg-zinc-800 p-2 rounded-md font-mono text-sm flex-1 overflow-x-auto text-cyan-300">
                 {apiUrl}
               </div>
               <Button
@@ -80,13 +80,13 @@ export default function MCPSettingsPage() {
                 size="icon"
                 onClick={() => copyToClipboard(apiUrl)}
                 title="Copy to clipboard"
-                className="border-zinc-700 hover:bg-zinc-800 hover:text-violet-300"
+                className="border-zinc-700 hover:bg-zinc-800 hover:text-cyan-300"
               >
                 <Copy className="h-4 w-4" />
               </Button>
             </div>
             <p className="text-sm text-zinc-400">
-              The base URL of the PROMPTZ MCP server API endpoint
+              The base URL of the Akkodis Prompt Hub MCP server API endpoint
             </p>
           </div>
 
@@ -95,7 +95,7 @@ export default function MCPSettingsPage() {
               API Key
             </Label>
             <div className="flex items-center gap-2">
-              <div className="bg-zinc-800 p-2 rounded-md font-mono text-sm flex-1 overflow-x-auto text-violet-300">
+              <div className="bg-zinc-800 p-2 rounded-md font-mono text-sm flex-1 overflow-x-auto text-cyan-300">
                 {apiKey}
               </div>
               <Button
@@ -103,13 +103,14 @@ export default function MCPSettingsPage() {
                 size="icon"
                 onClick={() => copyToClipboard(apiKey)}
                 title="Copy to clipboard"
-                className="border-zinc-700 hover:bg-zinc-800 hover:text-violet-300"
+                className="border-zinc-700 hover:bg-zinc-800 hover:text-cyan-300"
               >
                 <Copy className="h-4 w-4" />
               </Button>
             </div>
             <p className="text-sm text-zinc-400">
-              The public API key for authentication with the PROMPTZ MCP server
+              The public API key for authentication with the Akkodis Prompt Hub
+              MCP server
             </p>
           </div>
         </CardContent>
@@ -130,7 +131,7 @@ export default function MCPSettingsPage() {
             <Button
               variant="outline"
               size="icon"
-              className="absolute top-2 right-2 border-zinc-700 hover:bg-zinc-800 hover:text-violet-300"
+              className="absolute top-2 right-2 border-zinc-700 hover:bg-zinc-800 hover:text-cyan-300"
               onClick={() => copyToClipboard(snippet)}
               title="Copy to clipboard"
             >

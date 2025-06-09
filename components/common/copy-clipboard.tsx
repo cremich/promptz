@@ -47,7 +47,7 @@ export default function CopyClipBoardButton({
     <Button
       variant="outline"
       size="sm"
-      className="border-gray-800 bg-transparent text-white hover:bg-violet-700"
+      className="border-gray-800 bg-transparent text-white hover:bg-cyan-700"
       onClick={copyToClipboard}
     >
       <Copy className="h-4 w-4" />

@@ -17,7 +17,7 @@ describe("Benefits Grid", () => {
     const heading = screen.getByRole("heading", { level: 2 });
 
     expect(heading).toBeInTheDocument();
-    expect(heading).toHaveTextContent("Why Promptz?");
+    expect(heading).toHaveTextContent("Why the Akkodis Prompt Hub?");
   });
 
   test("Renders four benefits", async () => {

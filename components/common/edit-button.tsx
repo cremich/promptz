@@ -14,7 +14,7 @@ export default function EditButton({
     <Link
       data-testid="edit-button"
       href={href}
-      className="py-2 px-3 rounded border-gray-800 border hover:bg-violet-700"
+      className="py-2 px-3 rounded border-gray-800 border hover:bg-cyan-700"
     >
       <Edit className="h-4 w-4" />
       {showButtonText && <span>{name}</span>}

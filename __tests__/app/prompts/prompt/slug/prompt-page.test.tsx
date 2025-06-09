@@ -179,10 +179,10 @@ describe("generateMetadata", () => {
 
     // Check the returned metadata
     expect(metadata).toEqual({
-      title: "Test Prompt prompt for Amazon Q Developer",
+      title: "Test Prompt prompt for AI tools",
       description: "Test Description",
       openGraph: {
-        title: "Test Prompt prompt for Amazon Q Developer",
+        title: "Test Prompt prompt for AI tools",
         description: "Test Description",
       },
     });

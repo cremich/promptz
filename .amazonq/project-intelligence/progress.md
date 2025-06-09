@@ -1,4 +1,4 @@
-# Progress: Promptz
+# Progress: Akkodis Prompt Hub
 
 ## What Works
 
@@ -39,7 +39,7 @@
 
 The project is in an active development phase with core functionality implemented and working. Recent efforts have focused on refactoring and improving existing features rather than adding new ones, with an emphasis on code quality, performance, and user experience.
 
-The platform is usable in its current state, providing the essential functionality for users to create, discover, and share prompts and project rules for Amazon Q Developer. The team is now working on enhancing these core features and improving the overall user experience before expanding to more advanced capabilities.
+The platform is usable in its current state, providing the essential functionality for users to create, discover, and share prompts and project rules for AI coding agents and tools including Amazon Q Developer. The team is now working on enhancing these core features and improving the overall user experience before expanding to more advanced capabilities.
 
 ## Known Issues
 

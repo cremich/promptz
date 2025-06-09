@@ -8,7 +8,7 @@ export default function BenefitsGrid() {
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-              Why Promptz?
+              Why the Akkodis Prompt Hub?
             </h2>
             <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               The perfect prompt is just one click away!
@@ -16,11 +16,11 @@ export default function BenefitsGrid() {
           </div>
         </div>
         <p className="mt-4 text-center max-w-4xl mx-auto text-zinc-400 mb-12">
-          PROMPTZ is your ultimate resource for Amazon Q Developer prompt
+          Akkodis Prompt Hub is your ultimate resource for AI agent prompt
           engineering. Discover, create, and share high-quality prompts to
           tackle real-world software development challenges. From generating AWS
-          architecture blueprints to automating workflows and beyond, PROMPTZ
-          empowers developers to get the most out of Amazon Q Developer with a
+          architecture blueprints to automating workflows and beyond, Akkodis
+          Prompt Hub empowers developers to get the most out of AI agents with a
           rich library of prompt templates and community contributions.
         </p>
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -46,12 +46,12 @@ export default function BenefitsGrid() {
         <div className="mt-12 max-w-2xl mx-auto">
           <BenefitCard
             icon={Github}
-            title="Contribute to PROMPTZ"
-            content="PROMPTZ is a community-first platform. The source code is open on
+            title="Contribute to Akkodis Prompt Hub"
+            content="Akkodis Prompt Hub is a community-first platform. The source code is open on
             GitHub, and we welcome contributions from developers and
             enthusiasts. If you want to share your ideas, join us on Github."
             cta={{
-              href: "https://github.com/cremich/promptz",
+              href: "https://github.com/akkodis-aws/akkodis-prompt-hub",
               text: "Join on GitHub",
             }}
           />

@@ -2,15 +2,23 @@ import { ProjectRule } from "@/lib/models/project-rule-model";
 import ProjectRuleCard from "@/components/rules/project-rule-card";
 import { Prompt } from "@/lib/models/prompt-model";
 import PromptCard from "@/components/prompt/prompt-card";
+import { Model } from "@/lib/models/model-model";
+import ModelCard from "@/components/model/model-card";
+import { ModelProvider } from "@/lib/models/modelProvider-model";
+import ModelProviderCard from "@/components/modelProvider/modelProvider-card";
 
 type SearchResultsProps = {
   initialProjectRules?: ProjectRule[];
   initialPrompts?: Prompt[];
+  initialModels?: Model[];
+  initialModelProviders?: ModelProvider[];
 };
 
 export default function SearchResults({
   initialProjectRules,
   initialPrompts,
+  initialModels,
+  initialModelProviders,
 }: SearchResultsProps) {
   return (
     <div>
@@ -23,6 +31,15 @@ export default function SearchResults({
         ))}
         {initialPrompts?.map((prompt) => (
           <PromptCard prompt={prompt} key={prompt.id} />
+        ))}
+        {initialModels?.map((model) => (
+          <ModelCard model={model} key={model.id} />
+        ))}
+        {initialModelProviders?.map((modelProvider) => (
+          <ModelProviderCard
+            modelProvider={modelProvider}
+            key={modelProvider.id}
+          />
         ))}
       </div>
     </div>

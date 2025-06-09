@@ -33,7 +33,7 @@ describe("Tags", () => {
     render(<Tags tags={["javascript"]} />);
 
     const tag = screen.getByTestId("tag");
-    expect(tag).toHaveClass("bg-violet-500");
-    expect(tag).toHaveClass("hover:bg-violet-500");
+    expect(tag).toHaveClass("bg-cyan-500");
+    expect(tag).toHaveClass("hover:bg-cyan-500");
   });
 });

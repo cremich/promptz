@@ -1,6 +1,6 @@
 import {
   PromptCategory,
-  QInterface,
+  ToolInterface,
   SdlcActivity,
 } from "@/lib/models/tags-model";
 import { FilterSection } from "@/components/search/filter-section";
@@ -12,7 +12,7 @@ export default function FilterSidebar() {
       <FilterSection
         title="Interface"
         filterKey="tags"
-        options={Object.values(QInterface)}
+        options={Object.values(ToolInterface)}
       />
 
       <Separator />

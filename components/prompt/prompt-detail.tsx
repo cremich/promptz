@@ -50,7 +50,7 @@ export default async function PromptDetail(props: PromptProps) {
           <Badge
             key="visibility"
             variant="secondary"
-            className=" border-dashed border-violet-500 hover:bg-neutral-600"
+            className=" border-dashed border-cyan-500 hover:bg-neutral-600"
           >
             {props.prompt.public === true ? "Public" : "Private"}
           </Badge>

@@ -1,14 +1,14 @@
 {
-  "name": "promptz",
+  "name": "akkodis-prompt-hub",
   "version": "0.1.0",
-  "description": "Promptz is the ultimate prompting hub for Amazon Q Developer, designed to help you discover, create, and perfect your prompts for every step of the software development lifecycle.",
+  "description": "Akkodis Prompt Hub is the ultimate prompting hub for AI tooling, designed to help you discover, create, and perfect your prompts for every step of the software development lifecycle.",
   "author": {
-    "name": "Christian Bonzelet",
-    "email": "christian.bonzelet@gmail.com"
+    "name": "Elliot Segler",
+    "email": "elliot.segler@akkodis.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cremich/promptz"
+    "url": "https://github.com/akkodis-aws/akkodis-prompt-hub"
   },
   "scripts": {
     "dev": "next dev --turbopack",
@@ -19,9 +19,10 @@
     "pr": "npm run lint && npm run test",
     "e2e": "playwright test --project chromium",
     "prepare": "husky",
-    "sandbox": "PROMPTZ_ENV=sandbox npx ampx sandbox"
+    "sandbox": "APH_ENV=sandbox npx ampx sandbox"
   },
   "dependencies": {
+    "@ariakit/react": "^0.4.17",
     "@aws-amplify/adapter-nextjs": "1.6.2",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-alert-dialog": "^1.1.11",

@@ -5,7 +5,7 @@ import { ImageResponse } from "next/og";
 export const runtime = "edge";
 
 export const alt =
-  "Image of a project rule for Amazon Q Developer from promptz.dev";
+  "Image of a project rule for AI tools from prompthub.aws.akkodis.com";
 export const size = {
   width: 1200,
   height: 630,
@@ -41,12 +41,12 @@ export default async function Image({ params }: { params: { slug: string } }) {
         >
           <img
             style={{ marginRight: "20px" }}
-            src="https://promptz.dev/images/promptz_logo.png"
+            src="https://prompthub.aws.akkodis.com/images/site_logo.png"
             width="40"
-            alt="Promptz logo"
+            alt="Akkodis Prompt Hub logo"
           ></img>
           <div style={{ color: "white", fontSize: 24, fontWeight: "bold" }}>
-            PROMPTZ
+            Akkodis Prompt Hub
           </div>
         </div>
 

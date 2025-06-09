@@ -8,24 +8,25 @@ import Footer from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "PROMPTZ - Discover, Create, and Share Prompts for Amazon Q Developer",
+  title:
+    "Akkodis Prompt Hub - Discover, Create, and Share Prompts for AI tools",
   description:
-    "Simplify prompt engineering for Amazon Q Developer with the ultimate prompt library for Amazon Q Developer. Discover, create, and perfect prompts for Amazon Q Developer. Explore a rich library of categorized prompts, share your own, and collaborate with the community to enhance your software development lifecycle. ",
+    "Simplify prompt engineering for AI tools with the ultimate prompt library for AI tools. Discover, create, and perfect prompts for AI tools. Explore a rich library of categorized prompts, share your own, and collaborate with the community to enhance your software development lifecycle. ",
   keywords:
-    "promptz, prompt, prompt engineering, Amazon Q Developer, prompt library, promptz.dev, software development lifecycle, SDLC prompts, developer tools, prompt sharing, collaborative platform, software prompts, development best practices, prompt creation, coding prompts, deployment prompts, community-driven development, cloud development tools, generative AI prompts",
+    "akkodis, akkodis-prompt-hub, prompt, prompt engineering, Amazon Q Developer, prompt library, prompthub.aws.akkodis.com, software development lifecycle, SDLC prompts, developer tools, prompt sharing, collaborative platform, software prompts, development best practices, prompt creation, coding prompts, deployment prompts, community-driven development, cloud development tools, generative AI prompts",
   robots: "index, follow",
-  metadataBase: new URL("https://promptz.dev"),
+  metadataBase: new URL("https://prompthub.aws.akkodis.com"),
   openGraph: {
     type: "website",
-    url: "https://promptz.dev",
+    url: "https://prompthub.aws.akkodis.com",
     title:
-      "PROMPTZ - Discover, Create, and Share Prompts for Amazon Q Developer",
+      "Akkodis Prompt Hub - Discover, Create, and Share Prompts for AI tools",
     description:
-      "Explore a rich library of prompts for Amazon Q Developer, share your own, and collaborate with the community.",
-    siteName: "PROMPTZ",
+      "Explore a rich library of prompts for AI tools, share your own, and collaborate with the community.",
+    siteName: "Akkodis Prompt Hub",
     images: [
       {
-        url: "https://promptz.dev/images/og-image.png",
+        url: "https://prompthub.aws.akkodis.com/images/og-image.png",
       },
     ],
   },
@@ -71,7 +72,7 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto px-4">
             <TopNav />
           </div>
-          <div className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black overflow-hidden">
+          <div className="min-h-screen bg-gradient-to-b from-black via-cyan-950/50 to-black overflow-hidden">
             <div className="max-w-7xl mx-auto px-4">{children}</div>
           </div>
           <Toaster />

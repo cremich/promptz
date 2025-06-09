@@ -39,6 +39,12 @@ const schema = a
         projectRules: a
           .hasMany("projectRule", "owner")
           .authorization((allow) => [allow.owner().to(["read"])]),
+        modelProviders: a
+          .hasMany("modelProvider", "owner")
+          .authorization((allow) => [allow.owner().to(["read"])]),
+        models: a
+          .hasMany("model", "owner")
+          .authorization((allow) => [allow.owner().to(["read"])]),
       })
       .disableOperations(["subscriptions", "delete", "update"])
       .authorization((allow) => [allow.owner().to(["read"])]),
@@ -206,6 +212,116 @@ const schema = a
           entry: "./handler/search.js",
         }),
       ),
+
+    modelProvider: a
+      .model({
+        id: a.id().required(),
+        name: a.string().required(),
+        slug: a.string(),
+        description: a.string().required(),
+        website: a.url(),
+        owner: a.string().required(),
+        author: a
+          .belongsTo("user", "owner")
+          .authorization((allow) => [allow.publicApiKey().to(["read"])]),
+        models: a.hasMany("model", "providerId"),
+      })
+      .secondaryIndexes((index) => [
+        index("slug").queryField("listModelProviderBySlug").name("slugIndex"),
+        index("name").queryField("listModelProviderByName").name("nameIndex"),
+      ])
+      .authorization((allow) => [
+        allow.publicApiKey().to(["read"]),
+        allow.authenticated().to(["read"]),
+        allow.owner().to(["delete"]),
+      ])
+      .disableOperations(["subscriptions", "create", "update", "list"]),
+    saveModelProvider: a
+      .mutation()
+      .arguments({
+        id: a.id(),
+        name: a.string().required(),
+        description: a.string().required(),
+        website: a.url(),
+      })
+      .returns(a.ref("modelProvider"))
+      .authorization((allow) => [allow.authenticated()]) // TODO: admin
+      .handler(
+        a.handler.custom({
+          dataSource: a.ref("modelProvider"),
+          entry: "./handler/saveModelProvider.js",
+        }),
+      ),
+    searchModelProviders: a
+      .query()
+      .arguments({
+        query: a.string(),
+        nextToken: a.string(),
+      })
+      .returns(a.ref("paginatedSearchResult"))
+      .authorization((allow) => [allow.publicApiKey()])
+      .handler(
+        a.handler.custom({
+          dataSource: a.ref("modelProvider"),
+          entry: "./handler/searchWithoutPublicFilter.js",
+        }),
+      ),
+
+    model: a
+      .model({
+        id: a.id().required(),
+        name: a.string().required(),
+        slug: a.string(),
+        description: a.string().required(),
+        documentationURL: a.url(),
+        owner: a.string().required(),
+        providerId: a.string().required(),
+        provider: a.belongsTo("modelProvider", "providerId"),
+        author: a
+          .belongsTo("user", "owner")
+          .authorization((allow) => [allow.publicApiKey().to(["read"])]),
+      })
+      .secondaryIndexes((index) => [
+        index("slug").queryField("listModelBySlug").name("slugIndex"),
+        index("name").queryField("listModelByName").name("nameIndex"),
+      ])
+      .authorization((allow) => [
+        allow.publicApiKey().to(["read"]),
+        allow.authenticated().to(["read"]),
+        allow.owner().to(["delete"]),
+      ])
+      .disableOperations(["subscriptions", "create", "update", "list"]),
+    saveModel: a
+      .mutation()
+      .arguments({
+        id: a.id(),
+        name: a.string().required(),
+        description: a.string().required(),
+        documentationURL: a.url(),
+        providerId: a.string(),
+      })
+      .returns(a.ref("model"))
+      .authorization((allow) => [allow.authenticated()]) // TODO: admin
+      .handler(
+        a.handler.custom({
+          dataSource: a.ref("model"),
+          entry: "./handler/saveModel.js",
+        }),
+      ),
+    searchModels: a
+      .query()
+      .arguments({
+        query: a.string(),
+        nextToken: a.string(),
+      })
+      .returns(a.ref("paginatedSearchResult"))
+      .authorization((allow) => [allow.publicApiKey()])
+      .handler(
+        a.handler.custom({
+          dataSource: a.ref("model"),
+          entry: "./handler/searchWithoutPublicFilter.js",
+        }),
+      ),
   })
   .authorization((allow) => [allow.resource(postAuthenticationFunction)]);
 
@@ -213,7 +329,7 @@ export type Schema = ClientSchema<typeof schema>;
 
 export const data = defineData({
   schema,
-  name: "promptz",
+  name: "akkodis-prompt-hub",
   authorizationModes: {
     defaultAuthorizationMode: "apiKey",
     apiKeyAuthorizationMode: { expiresInDays: 90 },

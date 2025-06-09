@@ -2,7 +2,7 @@ import SearchBox from "@/components/search/search-box";
 import SearchResults from "@/components/search/search-result";
 import SortSelector from "@/components/search/sort-selector";
 import CreateButton from "@/components/common/create-button";
-import { searchProjectRules } from "@/lib/actions/rule-search-action";
+import { searchProjectRules } from "@/lib/actions/search-rules-action";
 
 interface BrowsePageProps {
   searchParams?: Promise<{

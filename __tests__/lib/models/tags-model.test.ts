@@ -1,21 +1,21 @@
 import { describe, expect, test } from "@jest/globals";
 import {
-  getQInterfaceTags,
+  getToolInterfaceTags,
   getCategoryTags,
   getSdlcTags,
-  QInterface,
+  ToolInterface,
   PromptCategory,
   SdlcActivity,
   ProjectRuleTag,
 } from "@/lib/models/tags-model";
 
 describe("tags-model", () => {
-  test("getQInterfaceTags returns all QInterface enum values", () => {
+  test("getToolInterfaceTags returns all ToolInterface enum values", () => {
     // Act
-    const result = getQInterfaceTags();
+    const result = getToolInterfaceTags();
 
     // Assert
-    expect(result.length).toBe(Object.keys(QInterface).length);
+    expect(result.length).toBe(Object.keys(ToolInterface).length);
   });
 
   test("getCategoryTags returns all PromptCategory enum values", () => {

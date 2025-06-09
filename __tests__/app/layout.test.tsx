@@ -44,18 +44,18 @@ describe("Root Layout", () => {
   describe("Metadata", () => {
     test("Has correct title", () => {
       expect(metadata.title).toBe(
-        "PROMPTZ - Discover, Create, and Share Prompts for Amazon Q Developer",
+        "Akkodis Prompt Hub - Discover, Create, and Share Prompts for AI tools",
       );
     });
 
     test("Has correct description", () => {
       expect(metadata.description).toContain(
-        "Simplify prompt engineering for Amazon Q Developer",
+        "Simplify prompt engineering for AI tools",
       );
     });
 
     test("Has correct keywords", () => {
-      expect(metadata.keywords).toContain("promptz");
+      expect(metadata.keywords).toContain("akkodis-prompt-hub");
       expect(metadata.keywords).toContain("Amazon Q Developer");
     });
 
@@ -64,15 +64,17 @@ describe("Root Layout", () => {
     });
 
     test("Has correct metadataBase URL", () => {
-      expect(metadata.metadataBase?.toString()).toBe("https://promptz.dev/");
+      expect(metadata.metadataBase?.toString()).toBe(
+        "https://prompthub.aws.akkodis.com/",
+      );
     });
 
     test("Has correct OpenGraph properties", () => {
       // expect(metadata.openGraph?.type).toBe("website");
-      expect(metadata.openGraph?.url).toBe("https://promptz.dev");
-      expect(metadata.openGraph?.title).toContain("PROMPTZ");
-      expect(metadata.openGraph?.siteName).toBe("PROMPTZ");
-      // expect(metadata.openGraph?.images?.[0].url).toBe("https://promptz.dev/images/og-image.png");
+      expect(metadata.openGraph?.url).toBe("https://prompthub.aws.akkodis.com");
+      expect(metadata.openGraph?.title).toContain("Akkodis Prompt Hub");
+      expect(metadata.openGraph?.siteName).toBe("Akkodis Prompt Hub");
+      // expect(metadata.openGraph?.images?.[0].url).toBe("https://prompthub.aws.akkodis.com/images/og-image.png");
     });
   });
 

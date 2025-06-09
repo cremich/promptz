@@ -205,10 +205,10 @@ describe("generateMetadata", () => {
 
     // Check metadata values
     expect(metadata).toEqual({
-      title: "Test Rule - Project Rule for Amazon Q Developer",
+      title: "Test Rule - Project Rule for AI tools",
       description: "This is a test rule",
       openGraph: {
-        title: "Test Rule - Project Rule for Amazon Q Developer",
+        title: "Test Rule - Project Rule for AI tools",
         description: "This is a test rule",
       },
     });

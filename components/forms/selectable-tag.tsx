@@ -18,7 +18,7 @@ export default function SelectableTags(props: TagProps) {
           variant="secondary"
           className={`cursor-pointer ${
             selectedTags.includes(tag)
-              ? "bg-violet-500 hover:bg-violet-500"
+              ? "bg-cyan-500 hover:bg-cyan-500"
               : "bg-neutral-500 hover:bg-neutral-500"
           }`}
           onClick={() => {

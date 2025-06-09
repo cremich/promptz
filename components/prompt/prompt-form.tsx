@@ -45,7 +45,7 @@ import {
 } from "@/components/ui/card";
 import {
   getCategoryTags,
-  getQInterfaceTags,
+  getToolInterfaceTags,
   getSdlcTags,
 } from "@/lib/models/tags-model";
 import Tags from "@/components/common/tags";
@@ -229,15 +229,15 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                                   </div>
                                   <div className="my-2">
                                     Consider things like the{" "}
-                                    <span className="text-violet-500 font-semibold">
+                                    <span className="text-cyan-500 font-semibold">
                                       Amazon Q Developer interface
                                     </span>{" "}
                                     (e.g. IDE, CLI),{" "}
-                                    <span className="text-violet-500 font-semibold">
+                                    <span className="text-cyan-500 font-semibold">
                                       the prompt category
                                     </span>{" "}
                                     (e.g. chat, agent) or the{" "}
-                                    <span className="text-violet-500 font-semibold">
+                                    <span className="text-cyan-500 font-semibold">
                                       SDLC activity
                                     </span>{" "}
                                     (e.g. Design, Implementation) the prompt
@@ -254,7 +254,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                                 </p>
                               </div>
                               <SelectableTags
-                                tags={getQInterfaceTags()}
+                                tags={getToolInterfaceTags()}
                                 selectedTags={field.field.value}
                                 onTagSelect={selectTag}
                               />
@@ -322,8 +322,8 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                         <FormDescription className="pr-10">
                           Keep your prompt private as a draft or just for you. A
                           private prompt can still be shared via URL but will
-                          not be listed on promptz.dev. Make your prompt public
-                          to share it with the community.
+                          not be listed on prompthub.aws.akkodis.com. Make your
+                          prompt public to share it with the community.
                         </FormDescription>
                       </div>
                       <FormControl>

@@ -13,7 +13,7 @@ describe("Footer", () => {
     render(<Footer />);
 
     // Check if copyright text is rendered
-    const copyrightText = screen.getByText(/© PROMPTZ. All rights reserved./i);
+    const copyrightText = screen.getByText(/© Akkodis. All rights reserved./i);
     expect(copyrightText).toBeInTheDocument();
   });
 
@@ -21,12 +21,11 @@ describe("Footer", () => {
     render(<Footer />);
 
     // Check if author link is rendered with correct attributes
-    const authorLink = screen.getByRole("link", { name: "Christian Bonzelet" });
+    const authorLink = screen.getByRole("link", {
+      name: "Akkodis Solution Engineering",
+    });
     expect(authorLink).toBeInTheDocument();
-    expect(authorLink).toHaveAttribute(
-      "href",
-      "https://linkedin.com/in/christian-bonzelet",
-    );
+    expect(authorLink).toHaveAttribute("href", "https://www.akkodis.com");
     expect(authorLink).toHaveAttribute("target", "_blank");
     expect(authorLink).toHaveAttribute("rel", "noopener noreferrer");
   });
@@ -55,7 +54,7 @@ describe("Footer", () => {
     expect(githubLink).toBeInTheDocument();
     expect(githubLink).toHaveAttribute(
       "href",
-      "https://github.com/cremich/promptz",
+      "https://github.com/akkodis-aws/akkodis-prompt-hub",
     );
     expect(githubLink).toHaveAttribute("target", "_blank");
     expect(githubLink).toHaveAttribute("rel", "noopener noreferrer");

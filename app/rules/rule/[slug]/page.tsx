@@ -23,10 +23,10 @@ export async function generateMetadata(props: {
     };
   } else {
     return {
-      title: `${projectRule.title} - Project Rule for Amazon Q Developer`,
+      title: `${projectRule.title} - Project Rule for AI tools`,
       description: projectRule.description,
       openGraph: {
-        title: `${projectRule.title} - Project Rule for Amazon Q Developer`,
+        title: `${projectRule.title} - Project Rule for AI tools`,
         description: projectRule.description,
       },
     };

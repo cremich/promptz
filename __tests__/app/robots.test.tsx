@@ -6,6 +6,8 @@ describe("Robots", () => {
     const robotsConfig = robots();
 
     // Verify the sitemap URL
-    expect(robotsConfig.sitemap).toBe("https://promptz.dev/sitemap.xml");
+    expect(robotsConfig.sitemap).toBe(
+      "https://prompthub.aws.akkodis.com/sitemap.xml",
+    );
   });
 });

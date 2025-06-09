@@ -2,6 +2,7 @@ import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import TopNavigation from "@/components/layout/navigation/topnav";
+import { User } from "@/lib/models/user-model";
 
 // Mock the navigation links
 jest.mock("@/lib/navigation", () => ({
@@ -26,22 +27,39 @@ jest.mock("@/components/layout/navigation/mobile-menu", () => {
   };
 });
 
+// Mock the current user
+jest.mock("@/lib/actions/cognito-auth-action", () => ({
+  fetchCurrentAuthUser: async () => {
+    return {
+      id: "123",
+      username: "XXXXXXXX",
+      email: "test@example.com",
+      displayName: "Test User",
+      groups: ["Test Group"],
+      isAdmin: false,
+      guest: false,
+    };
+  },
+}));
+
 describe("TopNavigation", () => {
   test("Renders logo with correct link", async () => {
     render(await TopNavigation());
 
     // Check if logo link is rendered
-    const logoLink = screen.getByRole("link", { name: "Promptz Logo" });
+    const logoLink = screen.getByRole("link", {
+      name: "Akkodis Prompt Hub Logo",
+    });
     expect(logoLink).toBeInTheDocument();
     expect(logoLink).toHaveAttribute("href", "/");
 
     // Check if logo image is rendered
     const logoImage = screen.getByRole("img");
     expect(logoImage).toBeInTheDocument();
-    expect(logoImage).toHaveAttribute("alt", "Promptz Logo");
+    expect(logoImage).toHaveAttribute("alt", "Akkodis Prompt Hub Logo");
     expect(logoImage).toHaveAttribute(
       "src",
-      "/_next/image?url=%2Fimages%2Fpromptz_logo.png&w=1080&q=75",
+      "/_next/image?url=%2Fimages%2Fsite_logo.png&w=1080&q=75",
     );
   });
 

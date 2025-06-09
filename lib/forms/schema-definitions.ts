@@ -3,6 +3,8 @@ import { z } from "zod";
 export enum ModelType {
   PROMPT = "Prompt",
   RULE = "Rule",
+  MODEL = "Model",
+  MODELPROVIDER = "Model Provider",
 }
 
 const ALLOWED_DOMAINS = [
@@ -31,21 +33,24 @@ export const idSchema = z
   .nullable()
   .or(z.literal(""));
 
-export const sourceURLSchema = z
+export const URLSchema = z
   .string()
   .max(2048, "URL must not exceed 2048 characters")
   .url()
-  .regex(/^https:\/\/.+/, "Only HTTPS URLs are allowed")
-  .refine((url) => {
-    try {
-      const domain = new URL(url).hostname;
-      return ALLOWED_DOMAINS.some(
-        (allowed) => domain === allowed || domain.endsWith(`.${allowed}`),
-      );
-    } catch {
-      return false;
-    }
-  }, "Domain not allowed. Please use a supported content platform.")
+  .regex(/^https:\/\/.+/, "Only HTTPS URLs are allowed");
+
+export const optionalURLSchema = URLSchema.optional().or(z.literal(""));
+
+export const sourceURLSchema = URLSchema.refine((url) => {
+  try {
+    const domain = new URL(url).hostname;
+    return ALLOWED_DOMAINS.some(
+      (allowed) => domain === allowed || domain.endsWith(`.${allowed}`),
+    );
+  } catch {
+    return false;
+  }
+}, "Domain not allowed. Please use a supported content platform.")
   .optional()
   .or(z.literal(""));
 
@@ -54,6 +59,12 @@ export const titleSchema = z
   .trim()
   .max(100, "Title must be less than 100 characters")
   .min(3, "Title must be more than 3 characters");
+
+export const nameSchema = z
+  .string()
+  .trim()
+  .max(100, "Name must be less than 100 characters")
+  .min(3, "Name must be more than 3 characters");
 
 export const descriptionSchema = z
   .string()

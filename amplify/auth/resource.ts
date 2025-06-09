@@ -3,17 +3,17 @@ import { verificationEmailTemplate } from "./email-templates";
 import { postAuthenticationFunction } from "./post-authentication/resource";
 
 const getSenders = () => {
-  return process.env["PROMPTZ_ENV"] === "sandbox"
+  return process.env["APH_ENV"] === "sandbox"
     ? undefined
     : {
         email: {
-          fromEmail: "noreply@promptz.dev",
+          fromEmail: "noreply@akkodis.com",
         },
       };
 };
 
 const getExternalProviders = () => {
-  return process.env["PROMPTZ_ENV"] === "sandbox"
+  return process.env["APH_ENV"] === "sandbox"
     ? undefined
     : {
         google: {
@@ -27,10 +27,13 @@ const getExternalProviders = () => {
           scopes: ["email", "openid", "profile"],
         },
         callbackUrls: [
-          "https://promptz.dev/auth",
-          "https://www.promptz.dev/auth",
+          "https://prompthub.aws.akkodis.com/auth",
+          "https://www.prompthub.aws.akkodis.com/auth",
         ],
-        logoutUrls: ["https://promptz.dev/", "https://www.promptz.dev"],
+        logoutUrls: [
+          "https://prompthub.aws.akkodis.com/",
+          "https://www.prompthub.aws.akkodis.com",
+        ],
       };
 };
 
@@ -42,7 +45,7 @@ export const auth = defineAuth({
   loginWith: {
     email: {
       verificationEmailStyle: "CODE",
-      verificationEmailSubject: "Welcome to PROMPTZ!",
+      verificationEmailSubject: "Welcome to the Akkodis Prompt Hub!",
       verificationEmailBody: (createCode) =>
         verificationEmailTemplate(createCode),
     },

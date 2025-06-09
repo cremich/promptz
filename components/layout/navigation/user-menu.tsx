@@ -73,6 +73,24 @@ export default function UserMenu() {
                 <span>My Rules</span>
               </Link>
             </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link
+                href="/models/my"
+                className="flex items-center w-full cursor-pointer"
+              >
+                <FileText className="mr-2 h-4 w-4" />
+                <span>My Models</span>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link
+                href="/modelProviders/my"
+                className="flex items-center w-full cursor-pointer"
+              >
+                <FileText className="mr-2 h-4 w-4" />
+                <span>My Model Providers</span>
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <LogoutButton />

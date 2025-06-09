@@ -22,7 +22,7 @@ authResources.cfnResources.cfnUserPoolClient.explicitAuthFlows = [
   "ALLOW_USER_AUTH",
 ];
 
-if (process.env["PROMPTZ_ENV"] !== "sandbox") {
+if (process.env["APH_ENV"] !== "sandbox") {
   authResources.cfnResources.cfnUserPool.deletionProtection = "ACTIVE";
 
   for (const table of Object.values(

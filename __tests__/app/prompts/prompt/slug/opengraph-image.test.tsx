@@ -33,7 +33,7 @@ describe("OpenGraph Image", () => {
     // Test static exports
     expect(runtime).toBe("edge");
     expect(alt).toBe(
-      "Image of a community prompt for Amazon Q Developer from promptz.dev",
+      "Image of a community prompt for AI tools from prompthub.aws.akkodis.com",
     );
     expect(size).toEqual({ width: 1200, height: 630 });
     expect(contentType).toBe("image/png");

@@ -16,7 +16,7 @@ export function SourceURL({ url }: SourceURLProps) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="View source"
-        className="flex items-center gap-1.5 text-sm text-violet-400 hover:text-violet-300 transition-colors"
+        className="flex items-center gap-1.5 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
       >
         <LinkIcon className="h-4 w-4" />
         {url}

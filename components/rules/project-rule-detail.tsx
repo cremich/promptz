@@ -61,7 +61,7 @@ export default function ProjectRuleDetail({
                 <DownloadButton
                   id={projectRule.id!}
                   content={projectRule.content}
-                  filename={`promptz-rule-${projectRule.slug}.md`}
+                  filename={`akkodis-prompt-hub-rule-${projectRule.slug}.md`}
                   label="Download"
                 />
               </>

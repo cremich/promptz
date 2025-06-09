@@ -29,7 +29,7 @@ export function SignUpForm() {
           <CardTitle className="text-2xl">Create Your Account</CardTitle>
           <CardDescription>
             Enter your email, and preferred username below to create a new
-            account for Promptz.
+            account for the Akkodis Prompt Hub.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -41,7 +41,7 @@ export function SignUpForm() {
                   id="email"
                   type="email"
                   name="email"
-                  placeholder="m@example.com"
+                  placeholder="me@example.com"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

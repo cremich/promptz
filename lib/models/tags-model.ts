@@ -2,8 +2,8 @@ function convertEnumToTags(enumObj: Record<string, string>): string[] {
   return Object.values(enumObj).filter((value) => typeof value === "string");
 }
 
-export function getQInterfaceTags(): string[] {
-  return convertEnumToTags(QInterface);
+export function getToolInterfaceTags(): string[] {
+  return convertEnumToTags(ToolInterface);
 }
 
 export function getCategoryTags(): string[] {
@@ -40,9 +40,10 @@ export enum PromptCategory {
   TRANSFORM = "Transform Agent",
   TRANSLATE = "Translate",
 }
-export enum QInterface {
+export enum ToolInterface {
   IDE = "IDE",
   CLI = "CLI",
+  SDK = "SDK",
   CONSOLE = "Management Console",
 }
 export enum ProjectRuleTag {

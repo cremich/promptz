@@ -3,7 +3,7 @@ export function request(ctx) {
     operation: "PutEvents",
     events: [
       {
-        source: "promptz.dev",
+        source: "prompthub.aws.akkodis.com",
         detailType: "RuleCopied",
         detail: { ...ctx.args },
       },

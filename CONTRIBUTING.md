@@ -1,6 +1,6 @@
 # Contributing Guide
 
-First off, thank you for considering contributing to Promptz. It’s people like you that make a difference. Pull requests are welcome. For major changes, please open an [issue](https://github.com/cremich/promptz/issues) first to discuss what you would like to change.
+First off, thank you for considering contributing to the Akkodis Prompt Hub. It’s people like you that make a difference. Pull requests are welcome. For major changes, please open an [issue](https://github.com/akkodis-aws/akkodis-prompt-hub/issues) first to discuss what you would like to change.
 
 ## Pull Requests
 

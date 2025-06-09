@@ -236,15 +236,15 @@ export default function ProjectRuleForm({ projectRule }: ProjectRuleFormProps) {
                                   </div>
                                   <div className="my-2">
                                     Consider things like the{" "}
-                                    <span className="text-violet-500 font-semibold">
+                                    <span className="text-cyan-500 font-semibold">
                                       programming language
                                     </span>{" "}
                                     (e.g. TypeScript, JavaScript),{" "}
-                                    <span className="text-violet-500 font-semibold">
+                                    <span className="text-cyan-500 font-semibold">
                                       frameworks
                                     </span>{" "}
                                     (e.g. React, NextJS) or{" "}
-                                    <span className="text-violet-500 font-semibold">
+                                    <span className="text-cyan-500 font-semibold">
                                       AWS services
                                     </span>{" "}
                                     (e.g. Amplify, Authentication) the rule
@@ -306,8 +306,9 @@ export default function ProjectRuleForm({ projectRule }: ProjectRuleFormProps) {
                         <FormDescription className="pr-10">
                           Keep your project rule private as a draft or just for
                           you. A private project rule can still be shared via
-                          URL but will not be listed on promptz.dev. Make your
-                          project rule public to share it with the community.
+                          URL but will not be listed on
+                          prompthub.aws.akkodis.com. Make your project rule
+                          public to share it with the community.
                         </FormDescription>
                       </div>
                       <FormControl>

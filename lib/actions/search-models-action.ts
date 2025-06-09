@@ -2,45 +2,32 @@
 import { cookies } from "next/headers";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import { type Schema } from "../../amplify/data/resource";
-import outputs from "../..//amplify_outputs.json";
+import outputs from "../../amplify_outputs.json";
 import { z } from "zod";
-import { normalizeTags } from "../utils";
-import {
-  ProjectRule,
-  projectRuleSearchParamsSchema,
-} from "@/lib/models/project-rule-model";
+import { Model, modelSearchParamsSchema } from "@/lib/models/model-model";
 
-interface FetchProjectRulesResult {
-  projectRules: ProjectRule[];
+interface FetchModelResult {
+  model: Model[];
   nextToken?: string | null;
 }
 
-type SearchSchema = z.output<typeof projectRuleSearchParamsSchema>;
+type SearchSchema = z.output<typeof modelSearchParamsSchema>;
 
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
   cookies,
 });
 
-/**
- * Searches for project rules based on provided parameters
- * @param params Search parameters for filtering project rules
- * @returns Object containing project rules and next token for pagination
- */
-export async function searchProjectRules(
+export async function searchModel(
   params: SearchSchema,
-): Promise<FetchProjectRulesResult> {
+): Promise<FetchModelResult> {
   try {
     // Validate search params
-    const validatedParams = projectRuleSearchParamsSchema.parse(params);
+    const validatedParams = modelSearchParamsSchema.parse(params);
 
-    const normalizedTags = normalizeTags(validatedParams.tags || []);
-
-    const { data: searchResults, errors } =
-      await appsync.queries.searchProjectRules({
-        query: validatedParams.query,
-        tags: normalizedTags,
-      });
+    const { data: searchResults, errors } = await appsync.queries.searchModels({
+      query: validatedParams.query,
+    });
 
     if (errors && errors.length > 0) {
       throw new Error(errors[0].message);
@@ -48,31 +35,30 @@ export async function searchProjectRules(
 
     if (!searchResults?.results) {
       return {
-        projectRules: [],
+        model: [],
         nextToken: undefined,
       };
     }
 
-    // Map the project rules to our frontend model
-    let projectRulesList = searchResults?.results
+    // Map the model to our frontend model
+    let modelList = searchResults?.results
       ?.filter((p) => p != null)
       .map((p) => {
         return {
           id: p.id || "",
-          title: p.name || "",
+          name: p.name || "",
           description: p.description || "",
-          tags: p.tags,
           slug: p.slug || "",
           createdAt: p.createdAt || "",
           updatedAt: p.updatedAt || "",
-        } as ProjectRule;
+        } as Model;
       });
 
     const sortParam = validatedParams.sort || "created_at:desc";
     const [sortField, sortDirection] = sortParam.split(":");
 
     if (sortField === "created_at") {
-      projectRulesList = projectRulesList.sort((a, b) => {
+      modelList = modelList.sort((a, b) => {
         const aDate = new Date(a.createdAt || "").getTime();
         const bDate = new Date(b.createdAt || "").getTime();
         return sortDirection === "asc" ? aDate - bDate : bDate - aDate;
@@ -80,11 +66,11 @@ export async function searchProjectRules(
     }
 
     return {
-      projectRules: projectRulesList,
+      model: modelList,
       nextToken: searchResults.nextToken,
     };
   } catch (error) {
-    console.error("Error fetching project rules:", error);
+    console.error("Error fetching model:", error);
     throw error;
   }
 }

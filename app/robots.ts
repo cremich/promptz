@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://promptz.dev/sitemap.xml",
+    sitemap: "https://prompthub.aws.akkodis.com/sitemap.xml",
   };
 }

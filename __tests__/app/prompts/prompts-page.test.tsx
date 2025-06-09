@@ -52,7 +52,7 @@ describe("PromptsPage", () => {
 
     // Check for page description
     const description = screen.getByText(
-      "Discover and explore prompts created by the community to enhance your Amazon Q Developer workflow",
+      "Discover and explore prompts created by the community to enhance your AI tools workflow",
     );
     expect(description).toBeInTheDocument();
   });

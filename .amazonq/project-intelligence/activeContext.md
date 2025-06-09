@@ -1,8 +1,8 @@
-# Active Context: Promptz
+# Active Context: Akkodis Prompt Hub
 
 ## Current Focus
 
-The project is currently focused on refining the core functionality of the Promptz platform, with recent work centered on improving the project structure, code organization, and API implementations. The team has been refactoring various components to enhance performance, maintainability, and user experience.
+The project is currently focused on refining the core functionality of the Akkodis Prompt Hub platform, with recent work centered on improving the project structure, code organization, and API implementations. The team has been refactoring various components to enhance performance, maintainability, and user experience.
 
 ## Recent Changes
 
@@ -61,7 +61,7 @@ The project is currently focused on refining the core functionality of the Promp
 ### Long-term Vision
 
 - Develop more advanced community features.
-- Explore deeper integration with Amazon Q Developer via MCP.
+- Explore deeper integration with AI Coding Agents via MCP.
 - Implement advanced categorization and recommendation systems.
 
 ## Open Questions

@@ -35,8 +35,8 @@ export default defineConfig({
     // Credentials for HTTP authentication.
     httpCredentials: process.env.CI
       ? {
-          username: process.env.PROMPTZ_BASIC_AUTH_USER || "",
-          password: process.env.PROMPTZ_BASIC_AUTH_PASSWORD || "",
+          username: process.env.APH_BASIC_AUTH_USER || "",
+          password: process.env.APH_BASIC_AUTH_PASSWORD || "",
         }
       : undefined,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */

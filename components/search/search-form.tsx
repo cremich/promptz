@@ -36,13 +36,13 @@ export default function SearchForm() {
             name="query"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 py-6 bg-background border-violet-700 focus:border-violet-500 focus:ring-violet-500 w-full text-base"
+            className="pl-10 py-6 bg-background border-cyan-700 focus:border-cyan-500 focus:ring-cyan-500 w-full text-base"
             placeholder="The perfect prompt is just one click away!"
           />
         </div>
         <Button
           type="submit"
-          className="ml-2 bg-violet-600 hover:bg-violet-700 text-white py-6 px-6"
+          className="ml-2 bg-cyan-600 hover:bg-cyan-700 text-white py-6 px-6"
         >
           Search
         </Button>

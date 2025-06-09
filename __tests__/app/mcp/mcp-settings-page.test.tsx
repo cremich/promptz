@@ -40,7 +40,7 @@ describe("MCP Settings Page", () => {
 
     // Check for page description
     const description = screen.getByText(
-      "View the MCP server connection details for PROMPTZ",
+      "View the MCP server connection details for the Akkodis Prompt Hub",
     );
     expect(description).toBeInTheDocument();
   });

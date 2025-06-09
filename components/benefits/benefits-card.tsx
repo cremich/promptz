@@ -28,7 +28,7 @@ export default function BenefitCard({
     <Card className="text-center">
       <CardHeader>
         <CardTitle className="items-center flex flex-col">
-          <Icon className="w-12 h-12 text-violet-500 mb-4" />
+          <Icon className="w-12 h-12 text-cyan-500 mb-4" />
           {title}
         </CardTitle>
       </CardHeader>
@@ -37,7 +37,7 @@ export default function BenefitCard({
         <CardFooter className="justify-center">
           <Link
             href={cta.href}
-            className="px-6 py-3 rounded-full bg-violet-600 hover:bg-violet-700 text-white font-medium transition-colors"
+            className="px-6 py-3 rounded-full bg-cyan-600 hover:bg-cyan-700 text-white font-medium transition-colors"
           >
             {cta.text}
           </Link>

@@ -34,7 +34,7 @@ export default async function PromptsPage(props: BrowsePageProps) {
           </div>
           <p className="text-muted-foreground">
             Discover and explore prompts created by the community to enhance
-            your Amazon Q Developer workflow
+            your AI tools workflow
           </p>
         </div>
         <div className="flex flex-col lg:flex-row gap-6">

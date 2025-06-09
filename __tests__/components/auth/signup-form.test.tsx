@@ -32,7 +32,7 @@ describe("SignUpForm", () => {
     expect(screen.getByText("Create Your Account")).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Enter your email, and preferred username below to create a new account for Promptz.",
+        "Enter your email, and preferred username below to create a new account for the Akkodis Prompt Hub.",
       ),
     ).toBeInTheDocument();
 
@@ -55,7 +55,7 @@ describe("SignUpForm", () => {
     const emailInput = screen.getByLabelText("Email");
     expect(emailInput).toHaveAttribute("type", "email");
     expect(emailInput).toHaveAttribute("required");
-    expect(emailInput).toHaveAttribute("placeholder", "m@example.com");
+    expect(emailInput).toHaveAttribute("placeholder", "me@example.com");
 
     const usernameInput = screen.getByLabelText("Username");
     expect(usernameInput).toHaveAttribute("type", "text");

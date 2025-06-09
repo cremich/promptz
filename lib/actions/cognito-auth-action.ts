@@ -22,17 +22,30 @@ export async function fetchCurrentAuthUser(): Promise<User> {
         return Promise.all([
           fetchUserAttributes(contextSpec),
           getCurrentUser(contextSpec),
+          fetchAuthSession(contextSpec),
         ]);
       },
     });
+    const groups = user[2].tokens?.accessToken.payload[
+      "cognito:groups"
+    ] as Array<string>;
     return {
       id: user[0].sub!,
       username: user[1].username,
       displayName: user[0].preferred_username!,
+      groups: groups,
+      isAdmin: Boolean(groups && groups.includes("Admins")),
       guest: false,
     };
   } catch {
-    return { id: "", displayName: "", username: "", guest: true };
+    return {
+      id: "",
+      displayName: "",
+      username: "",
+      groups: [],
+      isAdmin: false,
+      guest: true,
+    };
   }
 }
 

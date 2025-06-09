@@ -15,7 +15,7 @@ export default function PromptHowTo({
   return (
     <Card className="mb-8">
       <CardHeader className="flex flex-row items-center gap-2">
-        <Icon className="h-6 w-6 text-violet-400" />
+        <Icon className="h-6 w-6 text-cyan-400" />
         <h2 className="text-xl font-semibold">{title}</h2>
       </CardHeader>
       <CardContent>

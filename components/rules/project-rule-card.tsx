@@ -18,7 +18,7 @@ export default function ProjectRuleCard({ projectRule }: ProjectRuleCardProps) {
           <h3 className="font-semibold text-xl">
             <Link
               href={`/rules/rule/${projectRule.slug}`}
-              className="hover:text-violet-500"
+              className="hover:text-cyan-500"
             >
               {projectRule.title}
             </Link>

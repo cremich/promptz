@@ -54,7 +54,7 @@ describe("LoginForm", () => {
     const input = screen.getByLabelText("Email");
     expect(input).toHaveAttribute("type", "email");
     expect(input).toHaveAttribute("required");
-    expect(input).toHaveAttribute("placeholder", "m@example.com");
+    expect(input).toHaveAttribute("placeholder", "me@example.com");
   });
 
   test("Form submission with input value", () => {

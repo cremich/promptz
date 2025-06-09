@@ -23,9 +23,7 @@ describe("Home Page", () => {
     const heading = screen.getByRole("heading", { level: 1 });
 
     expect(heading).toBeInTheDocument();
-    expect(heading).toHaveTextContent(
-      "Simplify promptingfor Amazon Q Developer",
-    );
+    expect(heading).toHaveTextContent("Simplify prompting for AI tools");
   });
 
   test("Renders a search form component", () => {

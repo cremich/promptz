@@ -44,7 +44,7 @@ describe("EditButton", () => {
       "rounded",
       "border-gray-800",
       "border",
-      "hover:bg-violet-700",
+      "hover:bg-cyan-700",
     );
   });
 });

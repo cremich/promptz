@@ -1,8 +1,8 @@
-# System Patterns: Promptz
+# System Patterns: Akkodis Prompt Hub
 
 ## Architecture Overview
 
-Promptz follows a modern serverless architecture built on AWS Amplify Gen 2 and Next.js. The system is designed with a clear separation of concerns, following the principles of the Next.js App Router pattern combined with AWS serverless services.
+Akkodis Prompt Hub follows a modern serverless architecture built on AWS Amplify Gen 2 and Next.js. The system is designed with a clear separation of concerns, following the principles of the Next.js App Router pattern combined with AWS serverless services.
 
 ```
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
@@ -80,14 +80,14 @@ Promptz follows a modern serverless architecture built on AWS Amplify Gen 2 and 
 
 ### Prompt Model
 
-- Core entity representing a prompt for Amazon Q Developer
+- Core entity representing a prompt for an LLM or AI agent tool
 - Contains title, description, content, tags, and metadata
 - Tracks popularity through copy and download counts
 - Associated with a user (owner)
 
 ### Project Rule Model
 
-- Represents a set of guidelines for using Amazon Q Developer in a project
+- Represents a set of guidelines for using an AI coding agent in a project
 - Contains name, description, content, tags, and metadata
 - Tracks popularity similar to prompts
 - Associated with a user (owner)

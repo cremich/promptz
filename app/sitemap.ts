@@ -10,7 +10,7 @@ const appsync = generateServerClientUsingCookies<Schema>({
 });
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://promptz.dev";
+  const baseUrl = "https://prompthub.aws.akkodis.com";
 
   const prompts = [];
   let cursor: string | undefined | null;

@@ -11,7 +11,7 @@ export default function Tags(props: TagProps) {
         <Badge
           key={tag}
           variant="secondary"
-          className="bg-violet-500 hover:bg-violet-500"
+          className="bg-cyan-500 hover:bg-cyan-500"
           data-testid="tag"
         >
           {tag}
