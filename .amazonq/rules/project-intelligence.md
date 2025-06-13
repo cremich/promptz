@@ -65,7 +65,7 @@ flowchart TD
 
 ### Additional Context
 
-Create additional files/folders within memory-bank/ when they help organize:
+Create additional files/folders within `./.amazonq/project-intelligence` when they help organize:
 
 - Complex feature documentation
 - Integration specifications
