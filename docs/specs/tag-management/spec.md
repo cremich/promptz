@@ -117,7 +117,7 @@ The solution introduces a new Tag data model with many-to-many relationships to 
 1. **Data Model Enhancement**:
 
    - A dedicated Tag model will be created to represent tags as first-class entities
-   - Many-to-many relationships will be established using a single join table (LinkedTag)
+   - Many-to-many relationships will be established using a multiple join tables (PromptTag and RuleTag)
    - Tag names will be used as IDs to ensure backward compatibility with existing code
 
 2. **Data Access Patterns**:
@@ -176,14 +176,18 @@ erDiagram
         datetime createdAt
         datetime updatedAt
     }
-    LinkedTag {
-        string linkedId
+    PromptTag {
+        string promptId
         string tagId
     }
-
-    Prompt ||--o{ LinkedTag : "associated via linkedId"
-    ProjectRule ||--o{ LinkedTag : "associated via linkedId"
-    Tag ||--o{ LinkedTag : "associated via tagId"
+    RuleTag {
+        string ruleId
+        string tagId
+    }
+    Prompt ||--o{ PromptTag : "associated via promptId"
+    ProjectRule ||--o{ RuleTag : "associated via ruleId"
+    Tag ||--o{ PromptTag : "associated via tagId"
+    Tag ||--o{ RuleTag : "associated via tagId"
 ```
 
 The diagram illustrates the entity relationships in our data model:
@@ -191,7 +195,7 @@ The diagram illustrates the entity relationships in our data model:
 - **Tag**: Represents a tag entity with a unique ID (using the tag name), description, category and creation/update timestamps.
 - **Prompt**: Existing prompt model that maintains the original tags array for backward compatibility.
 - **ProjectRule**: Existing project rule model that maintains the original tags array for backward compatibility.
-- **LinkedTag**: Join table that establishes the many-to-many relationship between Tags and Prompts as well as Tags and ProjectRules.
+- **PromptTag** and **RuleTag**: Join table that establishes the many-to-many relationship between Tags and Prompts as well as Tags and ProjectRules.
 
 This design allows us to:
 

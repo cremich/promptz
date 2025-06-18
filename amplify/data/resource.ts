@@ -16,6 +16,54 @@ const schema = a
       nextToken: a.string(),
     }),
 
+    // Tag model for enhanced discoverability
+    tag: a
+      .model({
+        id: a.id().required(), // Using tag name as ID for backward compatibility
+        name: a.string().required(), // Tag display name
+        description: a.string(), // Optional description of the tag
+        category: a.string(), // Category grouping (e.g., "SDLC", "Interface", "Technology")
+        prompts: a.hasMany("promptTag", "tagId"), // Relationship to prompts via join table
+        rules: a.hasMany("ruleTag", "tagId"), // Relationship to rules via join table
+      })
+      .authorization((allow) => [
+        // Public read access for tag browsing and discovery
+        allow.publicApiKey().to(["read"]),
+        // No mutations or subscriptions allowed as specified
+      ])
+      .disableOperations(["mutations", "subscriptions"]),
+
+    // Join table for many-to-many relationships between tags and prompts
+    promptTag: a
+      .model({
+        promptId: a.id().required(), // ID of the linked prompt
+        tagId: a.id().required(), // ID of the associated tag
+        prompt: a.belongsTo("prompt", "promptId"),
+        tag: a.belongsTo("tag", "tagId"),
+      })
+      .authorization((allow) => [
+        // Owner-based access for managing tag associations
+        allow.owner().to(["create", "read", "update", "delete"]),
+        // Public read access for browsing tag associations
+        allow.publicApiKey().to(["read"]),
+      ])
+      .disableOperations(["subscriptions"]),
+
+    // Join table for many-to-many relationships between tags and prompts
+    ruleTag: a
+      .model({
+        ruleId: a.id().required(), // ID of the linked prompt
+        tagId: a.id().required(), // ID of the associated tag
+        rule: a.belongsTo("projectRule", "ruleId"),
+        tag: a.belongsTo("tag", "tagId"),
+      })
+      .authorization((allow) => [
+        // Owner-based access for managing tag associations
+        allow.owner().to(["create", "read", "update", "delete"]),
+        // Public read access for browsing tag associations
+        allow.publicApiKey().to(["read"]),
+      ])
+      .disableOperations(["subscriptions"]),
     user: a
       .model({
         id: a
@@ -49,7 +97,7 @@ const schema = a
         name: a.string().required(),
         slug: a.string(),
         description: a.string().required(),
-        tags: a.string().array(),
+        tags: a.string().array(), // Maintained for backward compatibility
         instruction: a.string().required(),
         sourceURL: a.string(),
         howto: a.string(),
@@ -59,6 +107,8 @@ const schema = a
           .belongsTo("user", "owner")
           .authorization((allow) => [allow.publicApiKey().to(["read"])]),
         copyCount: a.integer().default(0),
+        // Many-to-many relationship with tags through linkedTag join table
+        linkedTags: a.hasMany("promptTag", "promptId"),
       })
       .secondaryIndexes((index) => [
         index("slug").queryField("listBySlug").name("slugIndex"),
@@ -148,6 +198,8 @@ const schema = a
           .authorization((allow) => [allow.publicApiKey().to(["read"])]),
         copyCount: a.integer().default(0),
         downloadCount: a.integer().default(0),
+        // Many-to-many relationship with tags through linkedTag join table
+        linkedTags: a.hasMany("ruleTag", "ruleId"),
       })
       .secondaryIndexes((index) => [
         index("slug").queryField("listRuleBySlug").name("slugIndex"),
