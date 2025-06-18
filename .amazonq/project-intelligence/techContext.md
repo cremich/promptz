@@ -30,6 +30,12 @@
 - **Husky 9.1.7**: Git hooks for code quality
 - **Commitizen**: Standardized commit messages
 
+### Planned Integrations
+
+- **Anthropic Tokenizer**: For token calculation of prompts and project rules
+- **Model Context Protocol (MCP)**: For integration with AI assistants
+- **GitHub API**: For collaborative updates and publishing
+
 ## Development Environment Setup
 
 ### Prerequisites
@@ -83,8 +89,11 @@ interface Prompt {
   ownerName: string;
   copyCount: number;
   downloadCount: number;
+  sourceURL?: string; // Added for attribution of external sources
+  isPublic: boolean;
   createdAt: string;
   updatedAt: string;
+  slug?: string; // Added for SEO-friendly URLs
 }
 ```
 
@@ -102,8 +111,36 @@ interface ProjectRule {
   ownerName: string;
   copyCount: number;
   downloadCount: number;
+  sourceURL?: string; // Added for attribution of external sources
+  isPublic: boolean;
   createdAt: string;
   updatedAt: string;
+  slug?: string; // Added for SEO-friendly URLs
+}
+```
+
+### Planned Tag Schema (Issue #93)
+
+```typescript
+// Simplified representation
+interface Tag {
+  id: string; // Same as name for backward compatibility
+  name: string;
+  promptCount: number;
+  ruleCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Many-to-many relationships
+interface PromptTag {
+  promptId: string;
+  tagId: string;
+}
+
+interface RuleTag {
+  ruleId: string;
+  tagId: string;
 }
 ```
 
@@ -133,6 +170,43 @@ interface User {
 - Next.js server actions handle form submissions and data mutations
 - Actions communicate with AppSync for data operations
 - Zod schemas validate input data
+
+## Planned Technical Implementations
+
+### Token Calculation (Issue #102)
+
+- Integration with Anthropic TypeScript Tokenizer
+- Token calculation for prompts and project rules
+- Display of token count on prompt and rule detail pages
+- Consideration of context window limits
+
+### Sitemap Generation (Issue #103)
+
+- Separate sitemap files for prompts and project rules
+- Sitemap index file referencing individual sitemaps
+- Dynamic generation based on public prompts and rules
+- SEO optimization for better discoverability
+
+### MCP Server Integration (Issue #100)
+
+- Catalog of compatible MCP servers
+- Documentation for integration with Amazon Q Developer
+- Filtering by use case and vendor
+- Prerequisites documentation for using prompts with MCP servers
+
+### Context Hooks Support (Issue #101)
+
+- Repository of context hook commands
+- Documentation for using context hooks with Amazon Q CLI
+- Categorization by use case and functionality
+- Examples and best practices
+
+### Prompt Engineering Frameworks (Issue #104)
+
+- Support for RISEN, RODES, and RTF frameworks
+- Templates for structured prompt engineering
+- Documentation and examples for each framework
+- Pre-filling prompts with framework templates
 
 ## Testing Strategy
 
@@ -193,3 +267,9 @@ interface User {
 - Testing frameworks (Jest, Playwright)
 - Code quality tools (ESLint, Prettier)
 - Build tools (TypeScript, SWC)
+
+### Planned Dependencies
+
+- Anthropic TypeScript Tokenizer for token calculation
+- GitHub API for collaborative updates
+- MCP server integration libraries

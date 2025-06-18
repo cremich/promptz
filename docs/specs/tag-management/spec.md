@@ -13,7 +13,7 @@ priority: High
 
 ## 1. Summary
 
-This feature enhances the discoverability of prompts and project rules by implementing a robust tag-based retrieval system. Currently, Promptz uses a static list of tags with limited query capabilities, hampering user experience and integration with external clients like the MCP server. The enhancement will introduce dedicated tag-based browsing sections on the homepage, virtual routes for SEO optimization, and an efficient API for tag-based queries, significantly improving content discovery both on the website and through the MCP server.
+This feature enhances the discoverability of prompts and project rules by implementing a robust tag-based retrieval system. Currently, Promptz uses a static list of tags with limited query capabilities, hampering user experience and integration with external clients like the MCP server. The enhancement will introduce dedicated tag-based browsing sections on the homepage, virtual routes for SEO optimization, and an efficient API for tag-based queries, significantly improving content discovery.
 
 ## 2. Goals
 
@@ -24,7 +24,6 @@ This feature enhances the discoverability of prompts and project rules by implem
 - Add "Prompts per Tag" and "Project Rules per Tag" sections to the homepage
 - Create virtual routes for each tag to improve SEO (e.g., `/prompts/tag/CLI`)
 - Ensure backward compatibility with existing tag implementation
-- Improve MCP server integration for AI-assisted prompt discovery
 
 **Non-Goals:**
 
@@ -41,11 +40,9 @@ This feature enhances the discoverability of prompts and project rules by implem
 
 3. **As a developer**, I want to access a dedicated page for each tag (e.g., `/prompts/tag/CLI`), so that I can bookmark or share specific tag collections.
 
-4. **As an AI assistant user**, I want to query prompts by tag through the MCP server, so that I can get relevant prompts based on my natural language requests.
+4. **As a content creator**, I want my tagged prompts to be more discoverable, so that more users can benefit from my contributions.
 
-5. **As a content creator**, I want my tagged prompts to be more discoverable, so that more users can benefit from my contributions.
-
-6. **As a platform administrator**, I want to maintain backward compatibility with existing tag implementations, so that existing data remains valid.
+5. **As a platform administrator**, I want to maintain backward compatibility with existing tag implementations, so that existing data remains valid.
 
 ## 5. Functional Requirements
 
@@ -184,8 +181,9 @@ erDiagram
         string tagId
     }
 
-    Prompt }o--o{ Tag : "associated with"
-    ProjectRule }o--o{ Tag : "associated with"
+    Prompt ||--o{ LinkedTag : "associated via linkedId"
+    ProjectRule ||--o{ LinkedTag : "associated via linkedId"
+    Tag ||--o{ LinkedTag : "associated via tagId"
 ```
 
 The diagram illustrates the entity relationships in our data model:
@@ -275,7 +273,7 @@ The sequence diagram above illustrates key data flows:
 
 4. **Prompt Creation Flow with Tag Associations**: When a user creates or updates a prompt with tags, a pipeline resolver processes the operation in two steps:
    - First, it creates or updates the prompt record with the standard tags array (for backward compatibility)
-   - Then, it processes the tag associations by checking if the tags exist, creating them if needed, and establishing the relationships in the join table
+   - Then, it establishes the relationships in the join table
 
 The Project Rule creation flow follows a similar pattern to the Prompt creation flow, using the same pipeline resolver approach to maintain both the traditional tags array and the new relational structure.
 
