@@ -47,7 +47,7 @@ const schema = a
         // Public read access for browsing tag associations
         allow.publicApiKey().to(["read"]),
       ])
-      .disableOperations(["subscriptions"]),
+      .disableOperations(["subscriptions", "mutations"]),
 
     // Join table for many-to-many relationships between tags and prompts
     ruleTag: a
@@ -63,7 +63,7 @@ const schema = a
         // Public read access for browsing tag associations
         allow.publicApiKey().to(["read"]),
       ])
-      .disableOperations(["subscriptions"]),
+      .disableOperations(["subscriptions", "mutations"]),
     user: a
       .model({
         id: a
