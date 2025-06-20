@@ -41,6 +41,7 @@ const schema = a
         prompt: a.belongsTo("prompt", "promptId"),
         tag: a.belongsTo("tag", "tagName"),
       })
+      .identifier(["promptId", "tagName"])
       .authorization((allow) => [
         // Owner-based access for managing tag associations
         allow.owner().to(["create", "read", "update", "delete"]),
@@ -57,6 +58,7 @@ const schema = a
         rule: a.belongsTo("projectRule", "ruleId"),
         tag: a.belongsTo("tag", "tagName"),
       })
+      .identifier(["ruleId", "tagName"])
       .authorization((allow) => [
         // Owner-based access for managing tag associations
         allow.owner().to(["create", "read", "update", "delete"]),

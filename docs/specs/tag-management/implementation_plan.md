@@ -68,25 +68,22 @@ Constraints:
 You are acting as an AWS AppSync developer specializing in GraphQL pipeline resolvers and JavaScript handlers.
 Your task is to implement pipeline resolvers that maintain tag relationships when prompts and project rules are created or updated.
 To complete the task you must:
-1. Create a pipeline resolver for the savePrompt mutation with two functions: existing prompt save logic and new tag relationship handler
-2. Create a pipeline resolver for the saveProjectRule mutation with two functions: existing rule save logic and new tag relationship handler
-3. Implement JavaScript handlers that process tag arrays and create/update LinkedTag relationships
-4. Ensure the handlers maintain data consistency between tags arrays and LinkedTag relationships
-5. Implement proper error handling and rollback mechanisms for failed operations
-6. Add logging and monitoring for the pipeline resolver operations
-7. Write comprehensive unit tests for the pipeline resolver functions and JavaScript handlers
-8. Verify the implementation by running tests and ensuring tag relationships are properly maintained
+1. Search the official documentation for resources relevant to the task
+2. Update the savePrompt mutation to process three handlers in a pipeline: existing prompt save handler, delete existing tag relations, and add new tag relationship handler
+3. Update the saveProjectRule mutation to process three handlers in a pipeline: existing rule save handler, delete existing tag relations, and add new tag relationship handler
+4. Implement JavaScript handlers that process tag arrays and create/update LinkedTag relationships
+5. Ensure the handlers maintain data consistency between tags arrays and LinkedTag relationships
+6. Implement proper error handling and rollback mechanisms for failed operations
+7. Add logging for the pipeline resolver operations
 
 Your goal is to ensure that when prompts or project rules are saved, both the traditional tags array and the new tag relationships are properly maintained in sync.
 
 Constraints:
 1. You must maintain backward compatibility with existing savePrompt and saveProjectRule mutations
-2. You must ensure atomic operations - both the main save and tag relationships must succeed or fail together
-3. You must handle cases where tags in the array don't exist in the Tag table gracefully
-4. You must implement proper error handling and logging for debugging
-5. You must write tests that verify both successful operations and error scenarios
-6. You must not break any existing functionality during this implementation
-7. You must follow the AppSync JavaScript resolver patterns established in the codebase
+2. You must handle cases where tags in the array don't exist in the Tag table gracefully
+3. You must implement proper error handling and logging for debugging
+4. You must not break any existing functionality during this implementation
+5. You must follow the AppSync JavaScript resolver patterns established in the codebase
 ```
 
 ### Step 4: Data Migration Script
