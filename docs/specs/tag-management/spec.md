@@ -51,7 +51,7 @@ This feature enhances the discoverability of prompts and project rules by implem
    - Create a new Tag model in the Amplify data schema
    - Establish many-to-many relationships between Tags and Prompts
    - Establish many-to-many relationships between Tags and Project Rules
-   - Use tag names as IDs to ensure backward compatibility
+   - Use tag names as identifier to ensure backward compatibility
 
 2. **Data Migration:**
 
@@ -63,8 +63,8 @@ This feature enhances the discoverability of prompts and project rules by implem
 
    - The basic API functionality is automatically provided by Amplify once the data model is defined.
    - Implement data fetching to list all available tags
-   - Implement data fetching to get prompts by tag ID
-   - Implement data fetching to get project rules by tag ID
+   - Implement data fetching to get prompts by tag name
+   - Implement data fetching to get project rules by tag name
    - Disable mutations and subscriptions for the Tag model
 
 4. **UI Components:**
@@ -72,7 +72,7 @@ This feature enhances the discoverability of prompts and project rules by implem
    - Add "Prompts per Tag" section to the homepage with tab navigation
    - Add "Project Rules per Tag" section to the homepage with tab navigation
    - Reuse existing PromptCard and ProjectRule components for rendering
-   - Update tag-based filtering on the browse page using new data fetching methods to get prompts and project rules by tag ID
+   - Update tag-based filtering on the browse page using new data fetching methods to get prompts and project rules by tag name
 
 5. **Routing:**
 
@@ -118,7 +118,7 @@ The solution introduces a new Tag data model with many-to-many relationships to 
 
    - A dedicated Tag model will be created to represent tags as first-class entities
    - Many-to-many relationships will be established using a multiple join tables (PromptTag and RuleTag)
-   - Tag names will be used as IDs to ensure backward compatibility with existing code
+   - Tag names will be used as identifier to ensure backward compatibility with existing code
 
 2. **Data Access Patterns**:
 
@@ -143,7 +143,6 @@ The solution introduces a new Tag data model with many-to-many relationships to 
 ```mermaid
 erDiagram
     Tag {
-        string id
         string name
         string description
         string category
@@ -178,21 +177,21 @@ erDiagram
     }
     PromptTag {
         string promptId
-        string tagId
+        string tagName
     }
     RuleTag {
         string ruleId
-        string tagId
+        string tagName
     }
     Prompt ||--o{ PromptTag : "associated via promptId"
     ProjectRule ||--o{ RuleTag : "associated via ruleId"
-    Tag ||--o{ PromptTag : "associated via tagId"
-    Tag ||--o{ RuleTag : "associated via tagId"
+    Tag ||--o{ PromptTag : "associated via tag name"
+    Tag ||--o{ RuleTag : "associated via tag name"
 ```
 
 The diagram illustrates the entity relationships in our data model:
 
-- **Tag**: Represents a tag entity with a unique ID (using the tag name), description, category and creation/update timestamps.
+- **Tag**: Represents a tag entity with a unique tag name, description, category and creation/update timestamps.
 - **Prompt**: Existing prompt model that maintains the original tags array for backward compatibility.
 - **ProjectRule**: Existing project rule model that maintains the original tags array for backward compatibility.
 - **PromptTag** and **RuleTag**: Join table that establishes the many-to-many relationship between Tags and Prompts as well as Tags and ProjectRules.
@@ -228,7 +227,7 @@ sequenceDiagram
     %% Tag Tab Selection Flow
     User->>NextJS: Select tag tab
     NextJS->>ServerAction: Request prompts for selected tag
-    ServerAction->>AppSync: Query prompts by tag ID
+    ServerAction->>AppSync: Query prompts by tag name
     AppSync->>DynamoDB: Fetch prompts with tag relationship
     DynamoDB-->>AppSync: Return prompt data
     AppSync-->>ServerAction: Return prompts
@@ -238,11 +237,11 @@ sequenceDiagram
     %% Tag Page Navigation Flow
     User->>NextJS: Navigate to tag page (/prompts/tag/CLI)
     NextJS->>ServerAction: Request tag details and prompts
-    ServerAction->>AppSync: Query tag by ID
+    ServerAction->>AppSync: Query tag by name
     AppSync->>DynamoDB: Fetch tag data
     DynamoDB-->>AppSync: Return tag data
     AppSync-->>ServerAction: Return tag details
-    ServerAction->>AppSync: Query prompts by tag ID with pagination
+    ServerAction->>AppSync: Query prompts by tag name with pagination
     AppSync->>DynamoDB: Fetch prompts with pagination
     DynamoDB-->>AppSync: Return paginated prompts
     AppSync-->>ServerAction: Return prompts with pagination token
@@ -322,7 +321,7 @@ The migration strategy involves:
 
    - Must maintain backward compatibility with existing tag implementation
    - Must disable mutations and subscriptions for the Tag model
-   - Must use tag names as IDs for backward compatibility
+   - Must use tag names as identifier for backward compatibility
 
 2. **Business Constraints:**
    - Tags remain predefined (no user-defined tags)

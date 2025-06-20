@@ -19,27 +19,27 @@ const schema = a
     // Tag model for enhanced discoverability
     tag: a
       .model({
-        id: a.id().required(), // Using tag name as ID for backward compatibility
-        name: a.string().required(), // Tag display name
+        name: a.string().required(), // Tag name
         description: a.string(), // Optional description of the tag
         category: a.string(), // Category grouping (e.g., "SDLC", "Interface", "Technology")
-        prompts: a.hasMany("promptTag", "tagId"), // Relationship to prompts via join table
-        rules: a.hasMany("ruleTag", "tagId"), // Relationship to rules via join table
+        prompts: a.hasMany("promptTag", "tagName"), // Relationship to prompts via join table
+        rules: a.hasMany("ruleTag", "tagName"), // Relationship to rules via join table
       })
       .authorization((allow) => [
         // Public read access for tag browsing and discovery
         allow.publicApiKey().to(["read"]),
-        // No mutations or subscriptions allowed as specified
       ])
+      .identifier(["name"])
+      // No mutations or subscriptions allowed as specified
       .disableOperations(["mutations", "subscriptions"]),
 
     // Join table for many-to-many relationships between tags and prompts
     promptTag: a
       .model({
         promptId: a.id().required(), // ID of the linked prompt
-        tagId: a.id().required(), // ID of the associated tag
+        tagName: a.string().required(), // Name of the associated tag as identifier
         prompt: a.belongsTo("prompt", "promptId"),
-        tag: a.belongsTo("tag", "tagId"),
+        tag: a.belongsTo("tag", "tagName"),
       })
       .authorization((allow) => [
         // Owner-based access for managing tag associations
@@ -53,9 +53,9 @@ const schema = a
     ruleTag: a
       .model({
         ruleId: a.id().required(), // ID of the linked prompt
-        tagId: a.id().required(), // ID of the associated tag
+        tagName: a.string().required(), // Name of the associated tag as identifier
         rule: a.belongsTo("projectRule", "ruleId"),
-        tag: a.belongsTo("tag", "tagId"),
+        tag: a.belongsTo("tag", "tagName"),
       })
       .authorization((allow) => [
         // Owner-based access for managing tag associations

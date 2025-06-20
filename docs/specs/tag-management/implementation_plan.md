@@ -54,7 +54,7 @@ Your goal is to populate the Tag table with all predefined tags, ensuring they a
 Constraints:
 1. You must use only the predefined tags from the existing tag enumerations
 2. You must not create any user-defined or custom tags
-3. You must ensure tag IDs match tag names exactly for backward compatibility
+3. You must ensure tag names match exactly for backward compatibility
 4. You must include proper error handling for duplicate entries and validation failures
 5. You must create a reversible seeding process for testing and development
 6. You must write comprehensive tests that verify the seeding process
@@ -124,8 +124,8 @@ You are acting as a full-stack developer specializing in Next.js server actions 
 Your task is to implement server actions for fetching tags and their associated content.
 To complete the task you must:
 1. Create server actions in lib/actions/tags.ts for fetching all available tags with counts
-2. Create server actions for fetching prompts by tag ID with pagination support
-3. Create server actions for fetching project rules by tag ID with pagination support
+2. Create server actions for fetching prompts by tag name with pagination support
+3. Create server actions for fetching project rules by tag name with pagination support
 4. Implement efficient GraphQL queries that utilize the LinkedTag relationships
 5. Add proper error handling and validation for all tag-based queries
 6. Implement caching strategies for frequently accessed tag data
@@ -181,10 +181,10 @@ Constraints:
 You are acting as a Next.js developer specializing in dynamic routing and SEO optimization.
 Your task is to implement virtual routes for tag-specific pages that improve SEO and provide direct access to tag collections.
 To complete the task you must:
-1. Create dynamic routes for /prompts/tag/[tagId] and /rules/tag/[tagId] pages
+1. Create dynamic routes for /prompts/tag/[tagName] and /rules/tag/[tagName] pages
 2. Implement server-side rendering with proper metadata and SEO optimization for each tag page
 3. Create page components that display tag information and associated content with pagination
-4. Implement proper error handling for invalid tag IDs and empty result sets
+4. Implement proper error handling for invalid tag names and empty result sets
 5. Add structured data markup for better search engine understanding
 6. Create breadcrumb navigation for improved user experience
 7. Update the sitemap generation to include all tag-specific routes
@@ -196,7 +196,7 @@ Your goal is to create SEO-optimized tag-specific pages that provide direct acce
 Constraints:
 1. You must implement proper server-side rendering for optimal SEO performance
 2. You must include comprehensive metadata and structured data for each tag page
-3. You must handle edge cases like invalid tag IDs and empty result sets gracefully
+3. You must handle edge cases like invalid tag names and empty result sets gracefully
 4. You must implement pagination for tags with large numbers of associated items
 5. You must follow the existing routing and page structure patterns in the codebase
 6. You must write tests that verify routing, rendering, and SEO metadata
