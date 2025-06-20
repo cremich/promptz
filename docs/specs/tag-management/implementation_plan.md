@@ -41,7 +41,7 @@ You are acting as a data migration specialist with expertise in AWS Amplify and 
 Your task is to create and populate the Tag entities based on the predefined tag enumerations.
 To complete the task you must:
 1. Analyze the existing tag enumerations in the codebase to identify all predefined tags
-2. Create a data seeding script that populates the Tag table with all predefined tags
+2. Create a data seeding script in the scripts folder that populates the Tag table with all predefined tags. Use other scripts as an example
 3. Include proper categorization for each tag (e.g., "Technology", "Framework", "Tool", etc.)
 4. Add meaningful descriptions for each tag to improve user understanding
 5. Implement error handling and validation in the seeding script
@@ -52,13 +52,14 @@ To complete the task you must:
 Your goal is to populate the Tag table with all predefined tags, ensuring they are properly categorized and described for optimal user experience.
 
 Constraints:
-1. You must use only the predefined tags from the existing tag enumerations
-2. You must not create any user-defined or custom tags
-3. You must ensure tag names match exactly for backward compatibility
-4. You must include proper error handling for duplicate entries and validation failures
-5. You must create a reversible seeding process for testing and development
-6. You must write comprehensive tests that verify the seeding process
-7. You must not modify any existing data or relationships in this step
+1. The script must be written in javascript
+2. The script must write directly into the dynamodb table that stores the tags
+3. You must use only the predefined tags from the existing tag enumerations
+4. You must not create any user-defined or custom tags
+5. You must ensure tag names match exactly for backward compatibility
+6. You must include proper error handling for duplicate entries and validation failures
+7. You must create a reversible seeding process for testing and development
+8. You must not modify any existing data or relationships in this step
 ```
 
 ### Step 3: Pipeline Resolvers for Tag Relationships
