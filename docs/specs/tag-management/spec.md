@@ -4,7 +4,7 @@ author: Christian Bonzelet
 team: Promptz Development
 reviewers: TBD
 created: May 27, 2025
-lastUpdated: May 27, 2025
+lastUpdated: June 21, 2025
 relatedTickets: https://github.com/cremich/promptz/issues/93
 priority: High
 ---
@@ -31,6 +31,17 @@ This feature enhances the discoverability of prompts and project rules by implem
 - Implementing a tag suggestion system
 - Adding user-defined custom tags (tags remain predefined)
 - Changing the visual design of prompt and project rule cards
+
+## 3. Background and Context
+
+Currently, Promptz uses a simple array of string tags on both Prompt and ProjectRule models. This implementation has several limitations:
+
+- Limited query capabilities (can only filter by exact tag match)
+- No efficient way to count prompts or rules per tag
+- Difficult to maintain consistency across the platform
+- Challenging to integrate with external clients like the MCP server
+
+The tag-based discoverability enhancement addresses these limitations by introducing a dedicated Tag data model while maintaining backward compatibility with the existing implementation. This approach allows for more sophisticated queries, better organization, and improved user experience without disrupting existing functionality.
 
 ## 4. User Stories / Use Cases
 
@@ -117,15 +128,15 @@ The solution introduces a new Tag data model with many-to-many relationships to 
 1. **Data Model Enhancement**:
 
    - A dedicated Tag model will be created to represent tags as first-class entities
-   - Many-to-many relationships will be established using a multiple join tables (PromptTag and RuleTag)
-   - Tag names will be used as identifier to ensure backward compatibility with existing code
+   - Many-to-many relationships will be established using multiple join tables (PromptTag and RuleTag)
+   - Tag names will be used as identifiers to ensure backward compatibility with existing code
 
 2. **Data Access Patterns**:
 
    - The solution will support efficient querying of tags and their associated content
    - Existing tag arrays will be maintained for backward compatibility
    - New relationships will enable more sophisticated queries and filtering
-   - The savePrompt and saveProjectRule mutation will be updated to a pipeline resolver with a new handler being called after the existing handler to save the relations of linked tags in the join table.
+   - A change data capture pattern will be implemented to maintain tag relationships by monitoring changes to the tags array in prompts and project rules
 
 3. **UI Integration**:
 
@@ -211,8 +222,8 @@ sequenceDiagram
     participant NextJS as Next.js App
     participant ServerAction as Server Actions
     participant AppSync as AWS AppSync
-    participant PipelineResolver as Pipeline Resolver
     participant DynamoDB as Amazon DynamoDB
+    participant CDCHandler as Change Data Capture Handler
 
     %% Homepage Tag Section Flow
     User->>NextJS: Visit homepage
@@ -248,19 +259,15 @@ sequenceDiagram
     ServerAction->>NextJS: Return tag details and prompts
     NextJS-->>User: Render tag page with prompts
 
-    %% Prompt Creation Flow with Tag Associations
+    %% Prompt Creation Flow with Tag Associations using CDC
     User->>NextJS: Submit prompt form with tags
     NextJS->>ServerAction: Submit form data
     ServerAction->>AppSync: Create/Update prompt mutation
-    AppSync->>PipelineResolver: Execute pipeline resolver
-    PipelineResolver->>PipelineResolver: First function: Create/Update prompt
-    PipelineResolver->>DynamoDB: Save prompt with tags array
-    DynamoDB-->>PipelineResolver: Return saved prompt
-    PipelineResolver->>PipelineResolver: Second function: Process tag associations
-
-    PipelineResolver->>DynamoDB: Create associations in join table
-    DynamoDB-->>PipelineResolver: Confirm associations created
-    PipelineResolver-->>AppSync: Return complete result
+    AppSync->>DynamoDB: Save prompt with tags array
+    DynamoDB-->>AppSync: Return saved prompt
+    DynamoDB->>CDCHandler: Trigger CDC handler via DynamoDB streams
+    CDCHandler->>DynamoDB: Read prompt tags array
+    CDCHandler->>DynamoDB: Update tag relationships in join table
     AppSync-->>ServerAction: Return mutation result
     ServerAction-->>NextJS: Return success/error
     NextJS-->>User: Show success message
@@ -274,13 +281,13 @@ The sequence diagram above illustrates key data flows:
 
 3. **Tag Page Navigation Flow**: When a user navigates to a dedicated tag page (e.g., `/prompts/tag/CLI`), the system fetches detailed information about the tag and all associated prompts with pagination support.
 
-4. **Prompt Creation Flow with Tag Associations**: When a user creates or updates a prompt with tags, a pipeline resolver processes the operation in two steps:
-   - First, it creates or updates the prompt record with the standard tags array (for backward compatibility)
-   - Then, it establishes the relationships in the join table
+4. **Prompt Creation Flow with Tag Associations using CDC**: When a user creates or updates a prompt with tags:
+   - First, the standard mutation creates or updates the prompt record with the tags array (for backward compatibility)
+   - Then, DynamoDB streams trigger a CDC handler that establishes the relationships in the join table
 
-The Project Rule creation flow follows a similar pattern to the Prompt creation flow, using the same pipeline resolver approach to maintain both the traditional tags array and the new relational structure.
+The Project Rule creation flow follows a similar pattern to the Prompt creation flow, using the same change data capture approach to maintain both the traditional tags array and the new relational structure.
 
-This pipeline resolver approach ensures that:
+This change data capture pattern ensures that:
 
 - Backward compatibility is maintained with the existing tags array
 - New tag relationships are properly established for enhanced querying

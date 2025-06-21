@@ -62,28 +62,28 @@ Constraints:
 8. You must not modify any existing data or relationships in this step
 ```
 
-### Step 3: Pipeline Resolvers for Tag Relationships
+### Step 3: Change Data Capture for Tag Relationships
 
 ```
-You are acting as an AWS AppSync developer specializing in GraphQL pipeline resolvers and JavaScript handlers.
-Your task is to implement pipeline resolvers that maintain tag relationships when prompts and project rules are created or updated.
+You are acting as an AWS developer specializing in DynamoDB streams and Change Data Capture patterns.
+Your task is to implement a CDC handler that maintains tag relationships when prompts and project rules are created or updated.
 To complete the task you must:
-1. Search the official documentation for resources relevant to the task
-2. Update the savePrompt mutation to process three handlers in a pipeline: existing prompt save handler, delete existing tag relations, and add new tag relationship handler
-3. Update the saveProjectRule mutation to process three handlers in a pipeline: existing rule save handler, delete existing tag relations, and add new tag relationship handler
-4. Implement JavaScript handlers that process tag arrays and create/update LinkedTag relationships
-5. Ensure the handlers maintain data consistency between tags arrays and LinkedTag relationships
-6. Implement proper error handling and rollback mechanisms for failed operations
-7. Add logging for the pipeline resolver operations
+1. Search the official documentation for resources relevant to DynamoDB streams and CDC patterns
+2. Configure DynamoDB streams on the Prompt and ProjectRule tables to capture changes
+3. Create a Lambda function that processes DynamoDB stream events for Prompt and ProjectRule changes
+4. Implement logic to extract tag arrays from changed items and update LinkedTag relationships
+5. Ensure the CDC handler maintains data consistency between tags arrays and LinkedTag relationships
+6. Implement proper error handling, retry mechanisms, and dead-letter queues for failed operations
+7. Add comprehensive logging for the CDC handler operations
 
-Your goal is to ensure that when prompts or project rules are saved, both the traditional tags array and the new tag relationships are properly maintained in sync.
+Your goal is to ensure that when prompts or project rules are saved, the tag relationships are properly maintained in sync with the tags array through an asynchronous CDC process.
 
 Constraints:
 1. You must maintain backward compatibility with existing savePrompt and saveProjectRule mutations
 2. You must handle cases where tags in the array don't exist in the Tag table gracefully
-3. You must implement proper error handling and logging for debugging
+3. You must implement proper error handling, logging, and retry mechanisms
 4. You must not break any existing functionality during this implementation
-5. You must follow the AppSync JavaScript resolver patterns established in the codebase
+5. You must follow the AWS Lambda and DynamoDB stream patterns established in the codebase
 ```
 
 ### Step 4: Data Migration Script
@@ -99,8 +99,7 @@ To complete the task you must:
 5. Create detailed logging and progress reporting for the migration process
 6. Implement a dry-run mode to preview migration changes without applying them
 7. Create a rollback mechanism to reverse the migration if issues are discovered
-8. Write unit tests for the migration logic and validation functions
-9. Verify the implementation by running the migration script in dry-run mode and executing unit tests
+8. Verify the implementation by running the migration script in dry-run mode
 
 Your goal is to establish tag relationships for all existing content while ensuring data integrity and providing safe migration capabilities.
 
@@ -124,7 +123,7 @@ To complete the task you must:
 1. Create server actions in lib/actions/tags.ts for fetching all available tags with counts
 2. Create server actions for fetching prompts by tag name with pagination support
 3. Create server actions for fetching project rules by tag name with pagination support
-4. Implement efficient GraphQL queries that utilize the LinkedTag relationships
+4. Implement efficient GraphQL queries that utilize the LinkedTag relationships created by the CDC process
 5. Add proper error handling and validation for all tag-based queries
 6. Implement caching strategies for frequently accessed tag data
 7. Add TypeScript interfaces for all tag-related data structures
@@ -212,7 +211,7 @@ To complete the task you must:
 2. Ensure seamless integration between the new tag system and existing search functionality
 3. Update any remaining components that reference the old tag filtering approach
 4. Create comprehensive end-to-end tests that cover the complete user journey for tag-based discovery
-5. Test the migration process in a staging environment to ensure data integrity
+5. Test the CDC handler and migration process in a staging environment to ensure data integrity
 6. Perform performance testing to ensure the new tag system meets the specified performance requirements
 7. Conduct accessibility testing to ensure all new features meet WCAG AA standards
 8. Write integration tests that verify the interaction between all components of the tag system
@@ -226,15 +225,15 @@ Constraints:
 3. You must write comprehensive tests that cover all user journeys and edge cases
 4. You must verify that performance requirements (300ms for tag queries, 1.5s for homepage) are met
 5. You must ensure all accessibility requirements are satisfied and tested
-6. You must conduct thorough testing of the migration process before production deployment
+6. You must conduct thorough testing of the CDC handler and migration process before production deployment
 7. You must not break any existing functionality or user workflows
 8. You must provide comprehensive documentation for the completed feature implementation
 ```
 
 ## Implementation Timeline
 
-- **Step 1-2**: Data foundation and seeding (2-3 days)
-- **Step 3-4**: Pipeline resolvers and migration (3-4 days)
+- **Step 1-2**: Data foundation and seeding (2-3 days) ✅ COMPLETED
+- **Step 3-4**: CDC handler and migration (3-4 days)
 - **Step 5**: API development (2-3 days)
 - **Step 6**: Homepage UI implementation (3-4 days)
 - **Step 7**: Virtual routes and SEO (2-3 days)
@@ -257,8 +256,10 @@ Each step must meet the following criteria before proceeding to the next:
 - Each step is designed to be reversible if issues are discovered
 - Comprehensive testing at each stage prevents cascading failures
 - Backward compatibility is maintained throughout the implementation
+- CDC handler includes retry mechanisms and dead-letter queues for failed operations
 - Migration includes dry-run and rollback capabilities
 - Performance monitoring is implemented at each stage
+- CDC pattern provides natural decoupling that reduces risk of breaking changes
 
 ## Dependencies
 
