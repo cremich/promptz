@@ -3,14 +3,19 @@ import { auth } from "./auth/resource.js";
 import { data } from "./data/resource.js";
 import { aws_iam as iam, aws_logs as logs } from "aws-cdk-lib";
 import { ServicePrincipal, PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { configureDynamoDB } from "./dynamodb/resource";
+import { tagRelationsFunction } from "./functions/tag-relations/resource";
 
 const backend = defineBackend({
   auth,
   data,
+  tagRelationsFunction,
 });
 
 const dataResources = backend.data.resources;
 const authResources = backend.auth.resources;
+
+configureDynamoDB(backend);
 
 authResources.cfnResources.cfnUserPool.addPropertyOverride(
   "Policies.SignInPolicy.AllowedFirstAuthFactors",

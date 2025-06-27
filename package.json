@@ -57,6 +57,8 @@
   "devDependencies": {
     "@aws-amplify/backend": "^1.16.0",
     "@aws-amplify/backend-cli": "^1.7.0",
+    "@aws-lambda-powertools/batch": "^2.22.0",
+    "@aws-lambda-powertools/logger": "^2.22.0",
     "@aws-sdk/client-dynamodb": "^3.825.0",
     "@aws-sdk/lib-dynamodb": "^3.825.0",
     "@commitlint/cli": "^19.8.0",
@@ -66,6 +68,7 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
+    "@types/aws-lambda": "^8.10.150",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.3",
     "@types/react": "^19.1.2",

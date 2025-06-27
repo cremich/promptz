@@ -43,8 +43,6 @@ const schema = a
       })
       .identifier(["promptId", "tagName"])
       .authorization((allow) => [
-        // Owner-based access for managing tag associations
-        allow.owner().to(["create", "read", "update", "delete"]),
         // Public read access for browsing tag associations
         allow.publicApiKey().to(["read"]),
       ])
@@ -60,8 +58,6 @@ const schema = a
       })
       .identifier(["ruleId", "tagName"])
       .authorization((allow) => [
-        // Owner-based access for managing tag associations
-        allow.owner().to(["create", "read", "update", "delete"]),
         // Public read access for browsing tag associations
         allow.publicApiKey().to(["read"]),
       ])

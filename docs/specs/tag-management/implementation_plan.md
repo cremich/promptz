@@ -68,22 +68,18 @@ Constraints:
 You are acting as an AWS developer specializing in DynamoDB streams and Change Data Capture patterns.
 Your task is to implement a CDC handler that maintains tag relationships when prompts and project rules are created or updated.
 To complete the task you must:
-1. Search the official documentation for resources relevant to DynamoDB streams and CDC patterns
-2. Configure DynamoDB streams on the Prompt and ProjectRule tables to capture changes
-3. Create a Lambda function that processes DynamoDB stream events for Prompt and ProjectRule changes
-4. Implement logic to extract tag arrays from changed items and update LinkedTag relationships
-5. Ensure the CDC handler maintains data consistency between tags arrays and LinkedTag relationships
-6. Implement proper error handling, retry mechanisms, and dead-letter queues for failed operations
-7. Add comprehensive logging for the CDC handler operations
+1. Search the official powertools documentation for best practices in processing messages from DynamoDB streams
+2. Implement tag-relations lambda handlers to extract tag arrays from changed items and update LinkedTag relationships
+3. Ensure the CDC handler maintains data consistency between tags arrays and LinkedTag relationships
+4. Implement proper error handling, retry mechanisms, and dead-letter queues for failed operations
+5. Add comprehensive logging for the CDC handler operations
 
 Your goal is to ensure that when prompts or project rules are saved, the tag relationships are properly maintained in sync with the tags array through an asynchronous CDC process.
 
 Constraints:
-1. You must maintain backward compatibility with existing savePrompt and saveProjectRule mutations
-2. You must handle cases where tags in the array don't exist in the Tag table gracefully
-3. You must implement proper error handling, logging, and retry mechanisms
-4. You must not break any existing functionality during this implementation
-5. You must follow the AWS Lambda and DynamoDB stream patterns established in the codebase
+1. You must handle cases where tags in the array don't exist in the Tag table gracefully
+2. You must implement proper error handling, logging, and retry mechanisms
+3. You must follow best practices from AWS powertools
 ```
 
 ### Step 4: Data Migration Script
