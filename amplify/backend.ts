@@ -1,8 +1,6 @@
 import { defineBackend } from "@aws-amplify/backend";
 import { auth } from "./auth/resource.js";
 import { data } from "./data/resource.js";
-import { aws_iam as iam } from "aws-cdk-lib";
-import { ServicePrincipal, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { configureDynamoDB } from "./dynamodb/resource";
 import { tagRelationsFunction } from "./functions/tag-relations/resource";
 import { configureMonitoring } from "./monitoring/resource";
@@ -38,26 +36,4 @@ if (process.env["PROMPTZ_ENV"] !== "sandbox") {
     table.deletionProtectionEnabled = true;
     table.pointInTimeRecoveryEnabled = true;
   }
-
-  const role = new iam.Role(backend.stack, "AmplifyLoggingRole", {
-    assumedBy: new ServicePrincipal("appsync.amazonaws.com"),
-  });
-
-  role.addToPolicy(
-    new PolicyStatement({
-      resources: ["*"],
-      actions: [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents",
-      ],
-    }),
-  );
-
-  dataResources.cfnResources.cfnGraphqlApi.xrayEnabled = true;
-  dataResources.cfnResources.cfnGraphqlApi.logConfig = {
-    fieldLogLevel: "INFO",
-    excludeVerboseContent: true,
-    cloudWatchLogsRoleArn: role.roleArn,
-  };
 }
