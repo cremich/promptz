@@ -1,7 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
-import { data, type Schema } from "../../amplify/data/resource";
+import { type Schema } from "../../amplify/data/resource";
 import outputs from "../../amplify_outputs.json";
 import { Tag } from "@/lib/models/tags-model";
 import { GraphQLResult } from "aws-amplify/api";
