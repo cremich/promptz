@@ -112,27 +112,24 @@ Constraints:
 You are acting as a full-stack developer specializing in Next.js server actions and AWS AppSync integration.
 Your task is to implement server actions for fetching tags and their associated content.
 To complete the task you must:
-1. Create server actions in lib/actions/tags.ts for fetching all available tags with counts
+1. Create server actions in lib/actions/fetch-tags-action.ts for fetching all available tags with counts
 2. Create server actions for fetching prompts by tag name with pagination support
 3. Create server actions for fetching project rules by tag name with pagination support
-4. Implement efficient GraphQL queries that utilize the LinkedTag relationships created by the CDC process
-5. Add proper error handling and validation for all tag-based queries
-6. Implement caching strategies for frequently accessed tag data
-7. Add TypeScript interfaces for all tag-related data structures
-8. Write comprehensive unit tests for all server actions and data fetching logic
-9. Verify the implementation by running unit tests and testing the API endpoints
+4. Add proper error handling and validation for all tag-based queries
+5. Add TypeScript interfaces for all tag-related data structures
 
-Your goal is to provide efficient and reliable API endpoints for tag-based content discovery that will power the new UI components.
+Your goal is to provide reliable data-fetching implementation for tag-based content discovery that will power the new UI components.
 
 Constraints:
-1. You must follow the existing server action patterns established in the codebase
-2. You must implement proper pagination for queries that may return large result sets
-3. You must include comprehensive error handling and user-friendly error messages
-4. You must optimize queries for performance and minimize data transfer
-5. You must maintain consistency with existing API response formats
-6. You must write tests that cover both successful operations and error scenarios
-7. You must not modify any existing server actions or break backward compatibility
-8. You must follow the TypeScript and validation patterns used throughout the project
+1. You must follow Amplify Gen2 best practices
+2. You must follow the existing server action patterns established in the codebase
+3. You must implement proper pagination for queries that may return large result sets
+4. You must include comprehensive error handling and user-friendly error messages
+5. You must optimize queries for performance and minimize data transfer
+6. You must maintain consistency with existing API response formats
+7. You must write tests that cover both successful operations and error scenarios
+8. You must not modify any existing server actions or break backward compatibility
+9. You must follow the TypeScript and validation patterns used throughout the project
 ```
 
 ### Step 6: Homepage Tag Sections UI

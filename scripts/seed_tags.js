@@ -184,52 +184,52 @@ const tagDefinitions = [
       "Tags for testing, quality assurance, and test automation prompts and rules",
   },
 
-  // Prompt Category Tags
+  // Prompt Agent Tags
   {
     name: PromptCategory.CHAT,
-    category: "Interface",
+    category: "Agent",
     description:
       "Tags for conversational prompts designed for chat-based interactions with Amazon Q Developer",
   },
   {
     name: PromptCategory.DEV_AGENT,
-    category: "Interface",
+    category: "Agent",
     description:
       "Tags for prompts designed for Amazon Q Developer Agent for software development tasks",
   },
   {
     name: PromptCategory.DOC_AGENT,
-    category: "Interface",
+    category: "Agent",
     description:
       "Tags for prompts designed for Amazon Q Developer Agent for documentation tasks",
   },
   {
     name: PromptCategory.INLINE,
-    category: "Interface",
+    category: "Agent",
     description:
       "Tags for inline prompts used directly within code editors and development environments",
   },
   {
     name: PromptCategory.REVIEW_AGENT,
-    category: "Interface",
+    category: "Agent",
     description:
       "Tags for prompts designed for Amazon Q Developer Agent for code review tasks",
   },
   {
     name: PromptCategory.TEST_AGENT,
-    category: "Interface",
+    category: "Agent",
     description:
       "Tags for prompts designed for Amazon Q Developer Agent for testing and quality assurance tasks",
   },
   {
     name: PromptCategory.TRANSFORM,
-    category: "Interface",
+    category: "Agent",
     description:
       "Tags for prompts designed for Amazon Q Developer Transform Agent for code transformation tasks",
   },
   {
     name: PromptCategory.TRANSLATE,
-    category: "Interface",
+    category: "Agent",
     description:
       "Tags for prompts designed for code translation and language conversion tasks",
   },
@@ -237,19 +237,19 @@ const tagDefinitions = [
   // Q Interface Tags
   {
     name: QInterface.IDE,
-    category: "Platform",
+    category: "Interface",
     description:
       "Tags for prompts and rules designed for use within Integrated Development Environments",
   },
   {
     name: QInterface.CLI,
-    category: "Platform",
+    category: "Interface",
     description:
       "Tags for prompts and rules designed for use with Amazon Q Developer CLI",
   },
   {
     name: QInterface.CONSOLE,
-    category: "Platform",
+    category: "Interface",
     description:
       "Tags for prompts and rules designed for use within AWS Management Console",
   },
@@ -320,49 +320,43 @@ const tagDefinitions = [
       "Tags for Go programming language-specific prompts and project rules",
   },
   {
-    name: ProjectRuleTag.AWS,
-    category: "Cloud",
-    description:
-      "Tags for AWS cloud services-specific prompts and project rules",
-  },
-  {
     name: ProjectRuleTag.AMPLIFY,
-    category: "Cloud",
+    category: "Framework",
     description: "Tags for AWS Amplify-specific prompts and project rules",
   },
   {
     name: ProjectRuleTag.CDK,
-    category: "Cloud",
+    category: "IaC",
     description:
       "Tags for AWS CDK (Cloud Development Kit)-specific prompts and project rules",
   },
   {
     name: ProjectRuleTag.SAM,
-    category: "Cloud",
+    category: "IaC",
     description:
       "Tags for AWS SAM (Serverless Application Model)-specific prompts and project rules",
   },
   {
     name: ProjectRuleTag.CLOUDFORMATION,
-    category: "Cloud",
+    category: "IaC",
     description:
       "Tags for AWS CloudFormation-specific prompts and project rules",
   },
   {
     name: ProjectRuleTag.PERFORMANCE,
-    category: "Quality",
+    category: "Misc",
     description:
       "Tags for performance optimization and monitoring prompts and project rules",
   },
   {
     name: ProjectRuleTag.ACCESSIBILITY,
-    category: "Quality",
+    category: "Misc",
     description:
       "Tags for accessibility compliance and inclusive design prompts and project rules",
   },
   {
     name: ProjectRuleTag.SEO,
-    category: "Quality",
+    category: "Misc",
     description:
       "Tags for search engine optimization prompts and project rules",
   },

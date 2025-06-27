@@ -48,7 +48,7 @@ test("user is able to search for prompts", async ({ page }) => {
   }
 });
 
-test("user is able to filter prompts by tags", async ({ page }) => {
+test("user is able to filter prompts by interface tags", async ({ page }) => {
   const tag = "IDE";
 
   // Navigate to prompts page

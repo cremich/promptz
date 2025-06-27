@@ -29,6 +29,9 @@ const schema = a
         // Public read access for tag browsing and discovery
         allow.publicApiKey().to(["read"]),
       ])
+      .secondaryIndexes((index) => [
+        index("category").queryField("listByCategory").name("categoryIndex"),
+      ])
       .identifier(["name"])
       // No mutations or subscriptions allowed as specified
       .disableOperations(["mutations", "subscriptions"]),

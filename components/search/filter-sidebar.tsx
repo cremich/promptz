@@ -1,35 +1,35 @@
-import {
-  PromptCategory,
-  QInterface,
-  SdlcActivity,
-} from "@/lib/models/tags-model";
 import { FilterSection } from "@/components/search/filter-section";
 import { Separator } from "@/components/ui/separator";
+import { fetchTagsByCategory } from "@/lib/actions/fetch-tags-action";
 
-export default function FilterSidebar() {
+export default async function FilterSidebar() {
+  const qInterfaceTags = await fetchTagsByCategory("Interface");
+  const qAgentTags = await fetchTagsByCategory("Agent");
+  const sdlcTags = await fetchTagsByCategory("SDLC");
+
   return (
     <div className="space-y-6">
       <FilterSection
         title="Interface"
         filterKey="tags"
-        options={Object.values(QInterface)}
+        options={qInterfaceTags.map((tag) => tag.name)}
       />
 
       <Separator />
 
       <FilterSection
-        title="Categories"
+        title="Agent"
         filterKey="tags"
-        options={Object.values(PromptCategory)}
+        options={qAgentTags.map((tag) => tag.name)}
         collapsible
       />
 
       <Separator />
 
       <FilterSection
-        title="SDLC Activity"
+        title="SDLC"
         filterKey="tags"
-        options={Object.values(SdlcActivity)}
+        options={sdlcTags.map((tag) => tag.name)}
         collapsible
       />
     </div>
