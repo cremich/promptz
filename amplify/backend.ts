@@ -1,10 +1,11 @@
 import { defineBackend } from "@aws-amplify/backend";
 import { auth } from "./auth/resource.js";
 import { data } from "./data/resource.js";
-import { aws_iam as iam, aws_logs as logs } from "aws-cdk-lib";
+import { aws_iam as iam } from "aws-cdk-lib";
 import { ServicePrincipal, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { configureDynamoDB } from "./dynamodb/resource";
 import { tagRelationsFunction } from "./functions/tag-relations/resource";
+import { configureMonitoring } from "./monitoring/resource";
 
 const backend = defineBackend({
   auth,
@@ -16,6 +17,7 @@ const dataResources = backend.data.resources;
 const authResources = backend.auth.resources;
 
 configureDynamoDB(backend);
+configureMonitoring(backend);
 
 authResources.cfnResources.cfnUserPool.addPropertyOverride(
   "Policies.SignInPolicy.AllowedFirstAuthFactors",
