@@ -89,7 +89,7 @@ You are acting as a database migration specialist with expertise in AWS DynamoDB
 Your task is to create a comprehensive migration script that establishes tag relationships for all existing prompts and project rules.
 To complete the task you must:
 1. Create a migration script that scans all existing Prompt and ProjectRule records
-2. For each record, extract the tags array and create corresponding LinkedTag relationships
+2. For each record, add a new boolean attribute "tags-denormalized" with value true to trigger the CDC based denormalization
 3. Implement batch processing to handle large datasets efficiently
 4. Add comprehensive validation to ensure data integrity during migration
 5. Create detailed logging and progress reporting for the migration process
@@ -100,14 +100,10 @@ To complete the task you must:
 Your goal is to establish tag relationships for all existing content while ensuring data integrity and providing safe migration capabilities.
 
 Constraints:
-1. You must not modify or delete any existing data during migration
-2. You must handle cases where referenced tags don't exist in the Tag table
-3. You must implement comprehensive error handling and recovery mechanisms
-4. You must provide detailed logging and progress reporting throughout the process
-5. You must create a reversible migration process for safety
-6. You must write tests that verify migration accuracy and data integrity
-7. You must process data in batches to avoid performance issues
-8. You must validate all relationships after migration completion
+1. Use existing scripts in the scripts folder as a reference for patterns and structure
+2. You must create a reversible migration process for safety
+3. You must process data in batches to avoid performance issues
+4. You must validate all relationships after migration completion
 ```
 
 ### Step 5: Tag-Based Data Fetching API
@@ -229,7 +225,7 @@ Constraints:
 ## Implementation Timeline
 
 - **Step 1-2**: Data foundation and seeding (2-3 days) ✅ COMPLETED
-- **Step 3-4**: CDC handler and migration (3-4 days)
+- **Step 3-4**: CDC handler and migration (3-4 days) ✅ COMPLETED
 - **Step 5**: API development (2-3 days)
 - **Step 6**: Homepage UI implementation (3-4 days)
 - **Step 7**: Virtual routes and SEO (2-3 days)
