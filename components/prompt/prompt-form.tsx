@@ -43,35 +43,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  getCategoryTags,
-  getQInterfaceTags,
-  getSdlcTags,
-} from "@/lib/models/tags-model";
+
 import Tags from "@/components/common/tags";
-import { Badge } from "@/components/ui/badge";
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from "@/components/ui/sheet";
-import SelectableTags from "@/components/forms/selectable-tag";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
 import { onSubmitAction, FormState } from "@/lib/actions/submit-prompt-action";
 import { deletePrompt } from "@/lib/actions/delete-prompt-action";
+import TagSheet from "@/components/forms/tag-sheet";
+import { Tag } from "@/lib/models/tags-model";
 
 interface PromptFormProps {
   prompt?: Prompt;
+  tags: Tag[];
 }
 
 type FormSchema = z.output<typeof promptFormSchema>;
 
-export default function PromptForm({ prompt }: PromptFormProps) {
+export default function PromptForm({ prompt, tags }: PromptFormProps) {
   const [state, formAction, isPending] = useActionState(onSubmitAction, {
     message: "",
     success: true,
@@ -209,81 +198,12 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                             />
                           ))}
                           <Tags tags={field.field.value || []}></Tags>
-                          <Sheet>
-                            <SheetTrigger>
-                              <Badge
-                                key="add-tag"
-                                variant="secondary"
-                                className="bg-neutral-600 border-dashed border-white hover:bg-neutral-600 cursor-pointer"
-                              >
-                                Edit Tags
-                              </Badge>
-                            </SheetTrigger>
-                            <SheetContent>
-                              <SheetHeader>
-                                <SheetTitle>Prompt Tags</SheetTitle>
-                                <SheetDescription>
-                                  <div>
-                                    Select the relevant tags below to improve
-                                    the discoverability of your prompt.
-                                  </div>
-                                  <div className="my-2">
-                                    Consider things like the{" "}
-                                    <span className="text-violet-500 font-semibold">
-                                      Amazon Q Developer interface
-                                    </span>{" "}
-                                    (e.g. IDE, CLI),{" "}
-                                    <span className="text-violet-500 font-semibold">
-                                      the prompt category
-                                    </span>{" "}
-                                    (e.g. chat, agent) or the{" "}
-                                    <span className="text-violet-500 font-semibold">
-                                      SDLC activity
-                                    </span>{" "}
-                                    (e.g. Design, Implementation) the prompt
-                                    relates to.
-                                  </div>
-                                </SheetDescription>
-                              </SheetHeader>
-                              <div className="my-4">
-                                <p>Amazon Q Developer Interface:</p>
-                                <p className="text-sm text-muted-foreground">
-                                  Is the prompt related to Amazon Q Developer in
-                                  your IDE, your CLI or the AWS Management
-                                  Console?
-                                </p>
-                              </div>
-                              <SelectableTags
-                                tags={getQInterfaceTags()}
-                                selectedTags={field.field.value}
-                                onTagSelect={selectTag}
-                              />
-                              <div className="my-4">
-                                <p>Prompt Category:</p>
-                                <p className="text-sm text-muted-foreground">
-                                  Is this prompt related to Amazon Q Developer
-                                  Chat, an Agent, or inline code completion?
-                                </p>
-                              </div>
-                              <SelectableTags
-                                tags={getCategoryTags()}
-                                selectedTags={field.field.value}
-                                onTagSelect={selectTag}
-                              />
-                              <div className="my-4">
-                                <p>SDLC Activity:</p>
-                                <p className="text-sm text-muted-foreground">
-                                  Which activity of the SDLC does this prompt
-                                  relate to?
-                                </p>
-                              </div>
-                              <SelectableTags
-                                tags={getSdlcTags()}
-                                selectedTags={field.field.value}
-                                onTagSelect={selectTag}
-                              />
-                            </SheetContent>
-                          </Sheet>
+                          <TagSheet
+                            onTagSelect={selectTag}
+                            submission="prompt"
+                            selectedTags={field.field.value}
+                            tags={tags}
+                          ></TagSheet>
                         </div>
                       </FormControl>
                     </FormItem>

@@ -1,6 +1,7 @@
 import PromptForm from "@/components/prompt/prompt-form";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
+import { fetchTagsByCategory } from "@/lib/actions/fetch-tags-action";
 import { redirect, notFound } from "next/navigation";
 
 export default async function EditPromptPage(props: {
@@ -15,6 +16,12 @@ export default async function EditPromptPage(props: {
     notFound();
   }
 
+  const qInterfaceTags = await fetchTagsByCategory("Interface");
+  const qAgentTags = await fetchTagsByCategory("Agent");
+  const sdlcTags = await fetchTagsByCategory("SDLC");
+
+  const tags = [...qInterfaceTags, ...qAgentTags, ...sdlcTags];
+
   // Check if current user is the author
   if (prompt.authorId !== user.id) {
     redirect(`/prompts/prompt/${params.slug}`);
@@ -26,7 +33,7 @@ export default async function EditPromptPage(props: {
         Edit Prompt{" "}
         <span className="text-violet-600">&apos;{prompt.title}&apos;</span>
       </h1>
-      <PromptForm prompt={prompt} />
+      <PromptForm prompt={prompt} tags={tags} />
     </main>
   );
 }

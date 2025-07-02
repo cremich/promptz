@@ -15,6 +15,16 @@ jest.mock("@/lib/actions/fetch-prompts-action", () => ({
   fetchPromptBySlug: jest.fn(),
 }));
 
+jest.mock("@/lib/actions/fetch-tags-action", () => ({
+  fetchTagsByCategory: jest.fn().mockResolvedValue([
+    {
+      name: "Test Tag",
+      description: "Test Description",
+      category: "Interface",
+    },
+  ]),
+}));
+
 jest.mock("next/navigation", () => ({
   redirect: jest.fn(),
   notFound: jest.fn(),
@@ -22,10 +32,17 @@ jest.mock("next/navigation", () => ({
 
 // Mock the PromptForm component
 jest.mock("@/components/prompt/prompt-form", () => {
-  return function MockPromptForm({ prompt }: { prompt: any }) {
+  return function MockPromptForm({
+    prompt,
+    tags,
+  }: {
+    prompt: any;
+    tags: any[];
+  }) {
     return (
       <div data-testid="prompt-form">
         <div data-testid="prompt-title">{prompt.title}</div>
+        <div data-testid="tags-count">{tags.length}</div>
       </div>
     );
   };
