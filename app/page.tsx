@@ -1,5 +1,6 @@
 import BenefitsGrid from "@/components/benefits/benefits-grid";
 import SearchForm from "@/components/search/search-form";
+import TagBrowseSection from "@/components/tags/tag-browse-section";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         </h1>
         <SearchForm />
       </div>
+      <TagBrowseSection />
       <BenefitsGrid />
     </div>
   );

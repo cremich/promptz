@@ -10,6 +10,12 @@ jest.mock("@/components/search/search-form", () => {
   };
 });
 
+jest.mock("@/components//tags/tag-browse-section", () => {
+  return function TagsBrowseSection() {
+    return <div data-testid="tags-browse-section">Tags Browse Section</div>;
+  };
+});
+
 jest.mock("@/components/benefits/benefits-grid", () => {
   return function BenefitsGrid() {
     return <div data-testid="benefits-grid">Benefits Grid</div>;
@@ -36,5 +42,10 @@ describe("Home Page", () => {
   test("Renders a benefits grid form component", () => {
     render(<App />);
     expect(screen.getByTestId("benefits-grid")).toBeInTheDocument();
+  });
+
+  test("Renders a a tags browse section component", () => {
+    render(<App />);
+    expect(screen.getByTestId("tags-browse-section")).toBeInTheDocument();
   });
 });

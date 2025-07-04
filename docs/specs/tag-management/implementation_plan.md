@@ -151,9 +151,10 @@ Your goal is to create an intuitive and accessible tag-based browsing experience
 
 Constraints:
 1. You must ensure visual appealing through the strategic use of gradients
-2. You must implement proper accessibility features including keyboard navigation and ARIA labels
-3. You must follow the existing UI patterns and styling established in the codebase
-4. You must follow the React Server Component patterns used throughout the application
+2. Use the getTag method from `fetch-tags-action.ts` for data fetching
+3. You must implement proper accessibility features including keyboard navigation and ARIA labels
+4. You must follow the existing UI patterns and styling established in the codebase
+5. You must follow the React Server Component patterns used throughout the application
 ```
 
 ### Step 7: Tag-Specific Virtual Routes

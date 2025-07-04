@@ -17,6 +17,28 @@ interface TagsByCategoryResponse {
   };
 }
 
+interface TagWithCountResponse {
+  getTag: {
+    name?: string;
+    description?: string;
+    category?: string;
+    prompts: {
+      items: [
+        {
+          promptId: string;
+        },
+      ];
+    };
+    rules: {
+      items: [
+        {
+          ruleId: string;
+        },
+      ];
+    };
+  };
+}
+
 // Initialize AppSync client
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
@@ -65,4 +87,57 @@ export async function fetchTagsByCategory(category: string): Promise<Tag[]> {
       category: d.category,
     } as Tag;
   });
+}
+
+export async function getTag(name: string): Promise<Tag | undefined> {
+  const GET_TAG_WITH_COUNTS = `
+  query GetTagWithCounts($name: String!) {
+    getTag(name: $name) {
+      category
+      description
+      name
+      prompts {
+        items {
+          promptId
+        }
+      }
+      rules {
+        items {
+          ruleId
+        }
+      }
+    }
+  }
+`;
+
+  try {
+    // Execute raw GraphQL query
+    const result = (await appsync.graphql({
+      query: GET_TAG_WITH_COUNTS,
+      variables: {
+        name: name,
+      },
+    })) as GraphQLResult<TagWithCountResponse>;
+
+    const tag = result.data.getTag;
+
+    if (!tag) {
+      return;
+    }
+
+    // Calculate counts from the response
+    const promptCount = tag.prompts?.items?.length || 0;
+    const ruleCount = tag.rules?.items.length || 0;
+
+    return {
+      name: tag.name,
+      category: tag.category,
+      description: tag.description,
+      promptCount,
+      ruleCount,
+    } as Tag;
+  } catch (error) {
+    console.error("Error fetching tag with counts:", error);
+    throw error;
+  }
 }
