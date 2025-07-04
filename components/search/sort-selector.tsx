@@ -16,6 +16,7 @@ export type SortOption = {
 };
 
 const sortOptions: SortOption[] = [
+  { label: "Trending", value: "trending" },
   { label: "Newest", value: "created_at:desc" },
   { label: "Oldest", value: "created_at:asc" },
 ];
@@ -25,7 +26,7 @@ export default function SortSelector() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentSort = searchParams.get("sort") || "created_at:desc";
+  const currentSort = searchParams.get("sort") || "trending";
 
   const handleSortChange = (value: string) => {
     const params = new URLSearchParams(searchParams);

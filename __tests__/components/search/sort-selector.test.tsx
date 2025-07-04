@@ -31,8 +31,7 @@ describe("SortSelector", () => {
     const selectTrigger = screen.getByRole("combobox");
     expect(selectTrigger).toBeInTheDocument();
 
-    // Default value should be "Newest" (corresponding to "created_at:desc")
-    expect(selectTrigger).toHaveTextContent("Newest");
+    expect(selectTrigger).toHaveTextContent("Trending");
   });
 
   test("Shows sort options when clicked", async () => {
