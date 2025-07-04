@@ -59,6 +59,7 @@ export async function searchPrompts(
           tags: p.tags,
           createdAt: p.createdAt || "",
           updatedAt: p.updatedAt || "",
+          copyCount: p.copyCount || 0,
         } as Prompt;
       });
 

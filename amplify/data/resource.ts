@@ -10,6 +10,7 @@ const schema = a
       description: a.string(),
       createdAt: a.string(),
       updatedAt: a.string(),
+      copyCount: a.integer(),
     }),
     paginatedSearchResult: a.customType({
       results: a.ref("searchResult").array(),
