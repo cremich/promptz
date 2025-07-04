@@ -71,6 +71,8 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto px-4">
             <TopNav />
           </div>
+          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-violet-500 to-transparent"></div>
+
           <div className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black overflow-hidden">
             <div className="max-w-7xl mx-auto px-4">{children}</div>
           </div>
