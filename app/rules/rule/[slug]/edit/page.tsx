@@ -2,6 +2,7 @@ import { redirect, notFound } from "next/navigation";
 import ProjectRuleForm from "@/components/rules/project-rule-form";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
+import { fetchTagsByCategory } from "@/lib/actions/fetch-tags-action";
 
 /**
  * Page component for editing an existing project rule
@@ -26,6 +27,21 @@ export default async function EditProjectRulePage(props: {
     redirect(`/rules/rule/${projectRule.slug}`);
   }
 
+  // Fetch tags for project rules
+  const interfaceTags = await fetchTagsByCategory("Interface");
+  const sdlcTags = await fetchTagsByCategory("SDLC");
+  const languageTags = await fetchTagsByCategory("Language");
+  const frameworkTags = await fetchTagsByCategory("Framework");
+  const miscTags = await fetchTagsByCategory("Misc");
+
+  const tags = [
+    ...interfaceTags,
+    ...sdlcTags,
+    ...languageTags,
+    ...frameworkTags,
+    ...miscTags,
+  ];
+
   return (
     <main className="py-8">
       <div className="flex flex-col space-y-6">
@@ -40,7 +56,7 @@ export default async function EditProjectRulePage(props: {
         </div>
 
         {/* Render the project rule form component with the existing project rule data */}
-        <ProjectRuleForm projectRule={projectRule} />
+        <ProjectRuleForm projectRule={projectRule} tags={tags} />
       </div>
     </main>
   );

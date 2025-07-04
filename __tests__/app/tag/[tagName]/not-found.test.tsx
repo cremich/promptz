@@ -48,7 +48,7 @@ describe("TagNotFound", () => {
 
     // Check if description is rendered
     expect(
-      screen.getByText(/The tag you're looking for doesn't exist/),
+      screen.getByText(/The tag you are looking for does not exist/),
     ).toBeInTheDocument();
 
     // Check if action buttons are rendered

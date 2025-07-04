@@ -15,6 +15,13 @@ jest.mock("@/lib/actions/fetch-rules-action", () => ({
   fetchProjectRuleBySlug: jest.fn(),
 }));
 
+jest.mock("@/lib/actions/fetch-tags-action", () => ({
+  fetchTagsByCategory: jest.fn().mockResolvedValue([
+    { name: "IDE", category: "Interface" },
+    { name: "TypeScript", category: "Language" },
+  ]),
+}));
+
 jest.mock("next/navigation", () => ({
   redirect: jest.fn(),
   notFound: jest.fn(),
@@ -22,10 +29,17 @@ jest.mock("next/navigation", () => ({
 
 // Mock the ProjectRuleForm component
 jest.mock("@/components/rules/project-rule-form", () => {
-  return function MockProjectRuleForm({ projectRule }: { projectRule: any }) {
+  return function MockProjectRuleForm({
+    projectRule,
+    tags,
+  }: {
+    projectRule: any;
+    tags: any[];
+  }) {
     return (
       <div data-testid="project-rule-form">
         <div data-testid="project-rule-title">{projectRule.title}</div>
+        <div data-testid="tags-count">Tags: {tags.length}</div>
       </div>
     );
   };
@@ -92,6 +106,7 @@ describe("EditProjectRulePage", () => {
     expect(screen.getByTestId("project-rule-title")).toHaveTextContent(
       "Test Rule",
     );
+    expect(screen.getByTestId("tags-count")).toBeInTheDocument();
 
     // Verify page title is rendered
     expect(screen.getByText("Edit Project Rule")).toBeInTheDocument();

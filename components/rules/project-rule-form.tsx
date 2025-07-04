@@ -3,7 +3,7 @@ import {
   projectRuleFormSchema,
   ProjectRule,
 } from "@/lib/models/project-rule-model";
-import { ProjectRuleTag } from "@/lib/models/tags-model";
+import { Tag } from "@/lib/models/tags-model";
 import {
   Form,
   FormControl,
@@ -41,35 +41,23 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Tags from "@/components/common/tags";
-import { Badge } from "@/components/ui/badge";
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from "@/components/ui/sheet";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
 import { deleteProjectRule } from "@/lib/actions/delete-rule-action";
-import SelectableTags from "@/components/forms/selectable-tag";
+import TagSheet from "@/components/forms/tag-sheet";
 
 interface ProjectRuleFormProps {
   projectRule?: ProjectRule;
-}
-
-// Convert enum to array of strings for tag selection
-function getProjectRuleTags(): string[] {
-  return Object.values(ProjectRuleTag).filter(
-    (value) => typeof value === "string",
-  );
+  tags: Tag[];
 }
 
 type FormSchema = z.output<typeof projectRuleFormSchema>;
 
-export default function ProjectRuleForm({ projectRule }: ProjectRuleFormProps) {
+export default function ProjectRuleForm({
+  projectRule,
+  tags,
+}: ProjectRuleFormProps) {
   // Set up form action state for handling submission
   const [state, formAction, isPending] = useActionState(onSubmitAction, {
     message: "",
@@ -216,56 +204,12 @@ export default function ProjectRuleForm({ projectRule }: ProjectRuleFormProps) {
                             />
                           ))}
                           <Tags tags={field.field.value || []}></Tags>
-                          <Sheet>
-                            <SheetTrigger>
-                              <Badge
-                                key="add-tag"
-                                variant="secondary"
-                                className="bg-neutral-600 border-dashed border-white hover:bg-neutral-600 cursor-pointer"
-                              >
-                                Edit Tags
-                              </Badge>
-                            </SheetTrigger>
-                            <SheetContent>
-                              <SheetHeader>
-                                <SheetTitle>Project Rule Tags</SheetTitle>
-                                <SheetDescription>
-                                  <div>
-                                    Select the relevant tags below to improve
-                                    the discoverability of your project rule.
-                                  </div>
-                                  <div className="my-2">
-                                    Consider things like the{" "}
-                                    <span className="text-violet-500 font-semibold">
-                                      programming language
-                                    </span>{" "}
-                                    (e.g. TypeScript, JavaScript),{" "}
-                                    <span className="text-violet-500 font-semibold">
-                                      frameworks
-                                    </span>{" "}
-                                    (e.g. React, NextJS) or{" "}
-                                    <span className="text-violet-500 font-semibold">
-                                      AWS services
-                                    </span>{" "}
-                                    (e.g. Amplify, Authentication) the rule
-                                    relates to.
-                                  </div>
-                                </SheetDescription>
-                              </SheetHeader>
-                              <div className="my-4">
-                                <p>Project Rule Tags:</p>
-                                <p className="text-sm text-muted-foreground">
-                                  Select all tags that apply to this project
-                                  rule
-                                </p>
-                              </div>
-                              <SelectableTags
-                                tags={getProjectRuleTags()}
-                                selectedTags={field.field.value}
-                                onTagSelect={selectTag}
-                              />
-                            </SheetContent>
-                          </Sheet>
+                          <TagSheet
+                            onTagSelect={selectTag}
+                            submission="project rule"
+                            selectedTags={field.field.value}
+                            tags={tags}
+                          />
                         </div>
                       </FormControl>
                     </FormItem>

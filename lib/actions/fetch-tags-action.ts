@@ -229,7 +229,15 @@ export async function getPromptsAndRulesByTag(tagName: string): Promise<{
  * @returns Promise<string[]> - Array of all tag names
  */
 export async function getAllTags(): Promise<string[]> {
-  const categories = ["SDLC", "Interface", "Technology"];
+  const categories = [
+    "SDLC",
+    "Interface",
+    "Language",
+    "Agent",
+    "Framework",
+    "IaC",
+    "Misc",
+  ];
   const allTags: string[] = [];
 
   try {
