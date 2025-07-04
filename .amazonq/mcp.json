@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "powertools-typescript-docs": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@serverless-dna/mkdocs-mcp",
+        "https://docs.powertools.aws.dev/lambda/typescript/latest/",
+        "The official Powertools for AWS Lambda Typescript documentation"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--isolated",
+        "--storage-state=./.playwright/.auth/user.json"
+      ]
+    }
+  }
+}
