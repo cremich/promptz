@@ -157,8 +157,8 @@ export default async function PromptsTagPage(props: {
               <div className=" py-12">
                 <h3 className="text-lg font-semibold mb-2">No content found</h3>
                 <p className="text-muted-foreground mb-4">
-                  There are no prompts or project rules tagged with "
-                  {contentData.tag.name}" yet.
+                  There are no prompts or project rules tagged with
+                  {contentData.tag.name} yet.
                 </p>
                 <div className="flex gap-4 ">
                   <CreateButton href="/prompts/create" name="Create Prompt" />

@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tag as TagIcon, ArrowLeft, Search } from "lucide-react";
+import { Tag as TagIcon, Search } from "lucide-react";
 import CreateButton from "@/components/common/create-button";
 
 export default function TagNotFound() {
@@ -24,7 +24,7 @@ export default function TagNotFound() {
             Tag Not Found
           </h1>
           <p className="text-muted-foreground text-center max-w-md mb-8">
-            The tag you're looking for doesn't exist or may have been removed.
+            The tag you are looking for does not exist or may have been removed.
             Try browsing our available prompts or search for something else.
           </p>
 
