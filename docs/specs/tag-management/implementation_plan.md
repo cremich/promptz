@@ -138,27 +138,22 @@ Constraints:
 You are acting as a frontend developer specializing in React Server Components and modern UI development.
 Your task is to implement the homepage tag sections that allow users to browse prompts and project rules by tag.
 To complete the task you must:
-1. Create a TagSection component that displays tabs for different tags with content counts
-2. Create a PromptsByTag component that renders prompts for a selected tag using existing PromptCard components
-3. Create a ProjectRulesByTag component that renders project rules for a selected tag using existing components
-4. Implement tab navigation with keyboard accessibility and proper ARIA labels
-5. Add loading states and error handling for tag-based content fetching
-6. Integrate the new components into the existing homepage layout
-7. Ensure responsive design that works across all device sizes
-8. Write comprehensive unit tests for all new UI components and their interactions
-9. Verify the implementation by running unit tests and testing the UI functionality
+1. Create a TagCard component that renders the name, description, the number of rules, and the number of prompts for a selected tag
+2. Create a TagSection component that renders a grid of TagCard components including the IDE, CLI, Design, and Implement tag.
+3. Add appropriate ARIA attributes to meet WCAG 2.1 AA standards
+4. Add loading states and error handling for data fetching
+5. Integrate the new components into the existing homepage layout
+6. Ensure responsive design that works across all device sizes
+7. Write comprehensive unit tests for all new UI components and their interactions
+8. Verify the implementation by running unit tests and testing the UI functionality
 
 Your goal is to create an intuitive and accessible tag-based browsing experience on the homepage that helps users quickly discover relevant content.
 
 Constraints:
-1. You must reuse existing PromptCard and ProjectRule components for consistent presentation
+1. You must ensure visual appealing through the strategic use of gradients
 2. You must implement proper accessibility features including keyboard navigation and ARIA labels
 3. You must follow the existing UI patterns and styling established in the codebase
-4. You must ensure responsive design that works on mobile, tablet, and desktop devices
-5. You must implement proper loading states and error handling for all async operations
-6. You must write tests that verify component rendering, user interactions, and accessibility features
-7. You must not modify the existing homepage layout structure significantly
-8. You must follow the React Server Component patterns used throughout the application
+4. You must follow the React Server Component patterns used throughout the application
 ```
 
 ### Step 7: Tag-Specific Virtual Routes
