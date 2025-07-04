@@ -58,3 +58,51 @@ test("prompt engineer can delete rules", async ({ page }) => {
     page.getByRole("heading", { name: `${test.info().title}_${now}` }),
   ).not.toBeVisible();
 });
+
+test("should allow a prompt engineer to select tags when creating a new prompt", async ({
+  page,
+}) => {
+  // Step 1: Navigate to /prompts/create to create a new prompt
+  await page.goto("/prompts/create");
+
+  // Verify we're on the create prompt page
+  await expect(page).toHaveTitle(
+    /PROMPTZ - Discover, Create, and Share Prompts for Amazon Q Developer/,
+  );
+  await expect(
+    page.getByRole("heading", { name: "Create Prompt", level: 1 }),
+  ).toBeVisible();
+
+  // Step 2: Click on the "Edit Tags" button
+  await page.getByRole("button", { name: "Edit Tags" }).click();
+
+  // Step 3: Verify the sheet with the title "Tags" opens
+  const tagsDialog = page.getByRole("dialog", { name: "Tags" });
+  await expect(tagsDialog).toBeVisible();
+  await expect(
+    tagsDialog.getByRole("heading", { name: "Tags", level: 2 }),
+  ).toBeVisible();
+
+  // Step 4: Verify the Tags IDE, Chat and Debugging are visible
+  await expect(tagsDialog.getByText("IDE", { exact: true })).toBeVisible();
+  await expect(tagsDialog.getByText("Chat", { exact: true })).toBeVisible();
+  await expect(
+    tagsDialog.getByText("Debugging", { exact: true }),
+  ).toBeVisible();
+
+  // Step 5: Select the IDE tag
+  await tagsDialog.getByText("IDE", { exact: true }).click();
+
+  // Step 6: Close the sheet
+  await tagsDialog.getByRole("button", { name: "Close" }).click();
+
+  // Verify the dialog is closed
+  await expect(tagsDialog).not.toBeVisible();
+
+  // Step 7: Verify the IDE tag is marked as selected in the form
+  await expect(page.getByText("IDE", { exact: true }).first()).toBeVisible();
+
+  // Verify the IDE tag appears in the tags section of the form
+  const tagsSection = page.locator("text=Tags").locator("..").locator("..");
+  await expect(tagsSection.getByText("IDE", { exact: true })).toBeVisible();
+});
