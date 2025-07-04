@@ -3,11 +3,11 @@ import { BookOpen, Code, Github, Users } from "lucide-react";
 
 export default function BenefitsGrid() {
   return (
-    <section className="w-full">
+    <section className="space-y-16 py-16">
       <div className="px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-5xl bg-gradient-to-r from-white to-violet-300 bg-clip-text text-transparent">
               Why Promptz?
             </h2>
             <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -15,7 +15,7 @@ export default function BenefitsGrid() {
             </p>
           </div>
         </div>
-        <p className="mt-4 text-center max-w-4xl mx-auto text-zinc-400 mb-12">
+        <p className="mt-4  mx-auto text-zinc-400 mb-12">
           PROMPTZ is your ultimate resource for Amazon Q Developer prompt
           engineering. Discover, create, and share high-quality prompts to
           tackle real-world software development challenges. From generating AWS
@@ -43,13 +43,12 @@ export default function BenefitsGrid() {
           />
         </div>
 
-        <div className="mt-12 max-w-2xl mx-auto">
+        <div className="mt-12 mx-auto">
           <BenefitCard
             icon={Github}
             title="Contribute to PROMPTZ"
             content="PROMPTZ is a community-first platform. The source code is open on
-            GitHub, and we welcome contributions from developers and
-            enthusiasts. If you want to share your ideas, join us on Github."
+            GitHub, and we welcome your contributions and ideas."
             cta={{
               href: "https://github.com/cremich/promptz",
               text: "Join on GitHub",
