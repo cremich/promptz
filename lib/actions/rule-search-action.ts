@@ -65,6 +65,7 @@ export async function searchProjectRules(
           slug: p.slug || "",
           createdAt: p.createdAt || "",
           updatedAt: p.updatedAt || "",
+          copyCount: p.copyCount || 0,
         } as ProjectRule;
       });
 

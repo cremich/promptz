@@ -42,6 +42,7 @@ export async function fetchMyRules(userId: string): Promise<ProjectRule[]> {
       slug: p.slug || "",
       instruction: p.content,
       public: p.public || false,
+      copyCount: p.copyCount || 0,
       createdAt: p.createdAt || "",
       updatedAt: p.updatedAt || "",
     };

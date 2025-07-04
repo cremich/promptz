@@ -26,6 +26,7 @@ interface ProjectRuleBySlugResponse {
       content?: string;
       sourceURL?: string;
       public?: string;
+      copyCount?: number;
       author: {
         id?: string;
         displayName?: string;
@@ -55,6 +56,7 @@ export async function fetchProjectRuleBySlug(slug: string) {
         content
         sourceURL
         public
+        copyCount
         author {
           id
           displayName
@@ -92,6 +94,7 @@ export async function fetchProjectRuleBySlug(slug: string) {
     content: projectRule.content,
     sourceURL: projectRule.sourceURL,
     public: projectRule.public,
+    copyCount: projectRule.copyCount || 0,
     author: projectRule.author?.displayName || "",
     authorId: projectRule.author?.id || "",
   } as ProjectRule;

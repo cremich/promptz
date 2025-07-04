@@ -21,6 +21,7 @@ export type ProjectRule = {
   sourceURL?: string;
   createdAt?: string;
   updatedAt?: string;
+  copyCount?: number;
 };
 export const projectRuleFormSchema = z.object({
   id: idSchema,
