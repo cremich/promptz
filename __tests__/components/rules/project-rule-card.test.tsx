@@ -28,7 +28,7 @@ describe("ProjectRuleCard", () => {
     tags: ["test", "example"],
   };
 
-  test("Renders basic project rule card without copy count", () => {
+  test("Renders basic project rule card without copy count or download count", () => {
     render(<ProjectRuleCard projectRule={baseProjectRule} />);
 
     expect(screen.getByText("Test Project Rule")).toBeInTheDocument();
@@ -42,56 +42,125 @@ describe("ProjectRuleCard", () => {
     render(<ProjectRuleCard projectRule={projectRuleWithCopies} />);
 
     expect(screen.getByText("25 times copied")).toBeInTheDocument();
-    expect(screen.getByText("25 times copied").closest("div")).toHaveClass(
-      "flex",
-      "items-center",
-    );
   });
 
-  test("Shows copy count even when copyCount is 0", () => {
-    const projectRuleWithZeroCopies = { ...baseProjectRule, copyCount: 0 };
-    render(<ProjectRuleCard projectRule={projectRuleWithZeroCopies} />);
+  test("Shows download count when downloadCount is greater than 0", () => {
+    const projectRuleWithDownloads = { ...baseProjectRule, downloadCount: 15 };
+    render(<ProjectRuleCard projectRule={projectRuleWithDownloads} />);
 
-    // Should show copy count even when it's 0
+    expect(screen.getByText("15 downloads")).toBeInTheDocument();
+  });
+
+  test("Shows both copy count and download count", () => {
+    const projectRuleWithBoth = {
+      ...baseProjectRule,
+      copyCount: 25,
+      downloadCount: 15,
+    };
+    render(<ProjectRuleCard projectRule={projectRuleWithBoth} />);
+
+    expect(screen.getByText("25 times copied")).toBeInTheDocument();
+    expect(screen.getByText("15 downloads")).toBeInTheDocument();
+  });
+
+  test("Shows copy count and download count even when they are 0", () => {
+    const projectRuleWithZeros = {
+      ...baseProjectRule,
+      copyCount: 0,
+      downloadCount: 0,
+    };
+    render(<ProjectRuleCard projectRule={projectRuleWithZeros} />);
+
     expect(screen.getByText("0 times copied")).toBeInTheDocument();
-    // The copy icon should be present - check by looking for the SVG with the lucide-copy class
-    const copyIcon = document.querySelector(".lucide-copy");
-    expect(copyIcon).toBeInTheDocument();
+    expect(screen.getByText("0 downloads")).toBeInTheDocument();
   });
 
-  test("Shows 'Trending' badge for project rules with 50-99 copies", () => {
-    const trendingProjectRule = { ...baseProjectRule, copyCount: 75 };
+  test("Shows 'Trending' badge for project rules with total popularity 50-99", () => {
+    // 30 copies + 25 downloads = 55 total popularity
+    const trendingProjectRule = {
+      ...baseProjectRule,
+      copyCount: 30,
+      downloadCount: 25,
+    };
     render(<ProjectRuleCard projectRule={trendingProjectRule} />);
 
     expect(screen.getByText("Trending")).toBeInTheDocument();
-    expect(screen.getByText("75 times copied")).toBeInTheDocument();
+    expect(screen.getByText("30 times copied")).toBeInTheDocument();
+    expect(screen.getByText("25 downloads")).toBeInTheDocument();
   });
 
-  test("Shows 'Hot' badge for project rules with 100+ copies", () => {
-    const hotProjectRule = { ...baseProjectRule, copyCount: 150 };
+  test("Shows 'Hot' badge for project rules with total popularity 100+", () => {
+    // 60 copies + 50 downloads = 110 total popularity
+    const hotProjectRule = {
+      ...baseProjectRule,
+      copyCount: 60,
+      downloadCount: 50,
+    };
     render(<ProjectRuleCard projectRule={hotProjectRule} />);
 
     expect(screen.getByText("Hot")).toBeInTheDocument();
-    expect(screen.getByText("150 times copied")).toBeInTheDocument();
+    expect(screen.getByText("60 times copied")).toBeInTheDocument();
+    expect(screen.getByText("50 downloads")).toBeInTheDocument();
   });
 
-  test("Does not show popularity badge for project rules with less than 50 copies", () => {
-    const lowCopyProjectRule = { ...baseProjectRule, copyCount: 25 };
-    render(<ProjectRuleCard projectRule={lowCopyProjectRule} />);
+  test("Does not show popularity badge for project rules with total popularity less than 50", () => {
+    // 20 copies + 15 downloads = 35 total popularity
+    const lowPopularityProjectRule = {
+      ...baseProjectRule,
+      copyCount: 20,
+      downloadCount: 15,
+    };
+    render(<ProjectRuleCard projectRule={lowPopularityProjectRule} />);
 
     expect(screen.queryByText("Trending")).not.toBeInTheDocument();
     expect(screen.queryByText("Hot")).not.toBeInTheDocument();
-    expect(screen.getByText("25 times copied")).toBeInTheDocument();
+    expect(screen.getByText("20 times copied")).toBeInTheDocument();
+    expect(screen.getByText("15 downloads")).toBeInTheDocument();
   });
 
-  test("Formats large copy counts with locale string", () => {
-    const popularProjectRule = { ...baseProjectRule, copyCount: 1234 };
+  test("Shows 'Trending' badge when only copyCount reaches threshold", () => {
+    // 75 copies + 0 downloads = 75 total popularity
+    const trendingByCopiesProjectRule = {
+      ...baseProjectRule,
+      copyCount: 75,
+      downloadCount: 0,
+    };
+    render(<ProjectRuleCard projectRule={trendingByCopiesProjectRule} />);
+
+    expect(screen.getByText("Trending")).toBeInTheDocument();
+    expect(screen.getByText("75 times copied")).toBeInTheDocument();
+    expect(screen.getByText("0 downloads")).toBeInTheDocument();
+  });
+
+  test("Shows 'Trending' badge when only downloadCount reaches threshold", () => {
+    // 0 copies + 60 downloads = 60 total popularity
+    const trendingByDownloadsProjectRule = {
+      ...baseProjectRule,
+      copyCount: 0,
+      downloadCount: 60,
+    };
+    render(<ProjectRuleCard projectRule={trendingByDownloadsProjectRule} />);
+
+    expect(screen.getByText("Trending")).toBeInTheDocument();
+    expect(screen.getByText("0 times copied")).toBeInTheDocument();
+    expect(screen.getByText("60 downloads")).toBeInTheDocument();
+  });
+
+  test("Formats large copy counts and download counts with locale string", () => {
+    const popularProjectRule = {
+      ...baseProjectRule,
+      copyCount: 1234,
+      downloadCount: 5678,
+    };
     render(<ProjectRuleCard projectRule={popularProjectRule} />);
 
-    // Check that the number is formatted (could be "1,234" or "1.234" depending on locale)
-    const formattedNumber = (1234).toLocaleString();
+    const formattedCopyCount = (1234).toLocaleString();
+    const formattedDownloadCount = (5678).toLocaleString();
     expect(
-      screen.getByText(`${formattedNumber} times copied`),
+      screen.getByText(`${formattedCopyCount} times copied`),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(`${formattedDownloadCount} downloads`),
     ).toBeInTheDocument();
   });
 
@@ -116,12 +185,18 @@ describe("ProjectRuleCard", () => {
     );
   });
 
-  test("Shows both badge and copy count for highly popular project rules", () => {
-    const veryPopularProjectRule = { ...baseProjectRule, copyCount: 200 };
+  test("Shows both badge and metrics for highly popular project rules", () => {
+    // 120 copies + 80 downloads = 200 total popularity
+    const veryPopularProjectRule = {
+      ...baseProjectRule,
+      copyCount: 120,
+      downloadCount: 80,
+    };
     render(<ProjectRuleCard projectRule={veryPopularProjectRule} />);
 
     expect(screen.getByText("Hot")).toBeInTheDocument();
-    expect(screen.getByText("200 times copied")).toBeInTheDocument();
+    expect(screen.getByText("120 times copied")).toBeInTheDocument();
+    expect(screen.getByText("80 downloads")).toBeInTheDocument();
   });
 
   test("Handles project rules without tags gracefully", () => {
@@ -144,11 +219,39 @@ describe("ProjectRuleCard", () => {
     const projectRuleWithoutCopyCount = {
       ...baseProjectRule,
       copyCount: undefined,
+      downloadCount: 10,
     };
     render(<ProjectRuleCard projectRule={projectRuleWithoutCopyCount} />);
 
     expect(screen.queryByText(/times copied/)).not.toBeInTheDocument();
+    expect(screen.getByText("10 downloads")).toBeInTheDocument();
+  });
+
+  test("Does not show download count when downloadCount is undefined", () => {
+    const projectRuleWithoutDownloadCount = {
+      ...baseProjectRule,
+      copyCount: 10,
+      downloadCount: undefined,
+    };
+    render(<ProjectRuleCard projectRule={projectRuleWithoutDownloadCount} />);
+
+    expect(screen.getByText("10 times copied")).toBeInTheDocument();
+    expect(screen.queryByText(/downloads/)).not.toBeInTheDocument();
+  });
+
+  test("Does not show any metrics when both counts are undefined", () => {
+    const projectRuleWithoutCounts = {
+      ...baseProjectRule,
+      copyCount: undefined,
+      downloadCount: undefined,
+    };
+    render(<ProjectRuleCard projectRule={projectRuleWithoutCounts} />);
+
+    expect(screen.queryByText(/times copied/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/downloads/)).not.toBeInTheDocument();
     const copyIcon = document.querySelector(".lucide-copy");
+    const downloadIcon = document.querySelector(".lucide-download");
     expect(copyIcon).not.toBeInTheDocument();
+    expect(downloadIcon).not.toBeInTheDocument();
   });
 });

@@ -66,10 +66,11 @@ export async function searchProjectRules(
           createdAt: p.createdAt || "",
           updatedAt: p.updatedAt || "",
           copyCount: p.copyCount || 0,
+          downloadCount: p.downloadCount || 0,
         } as ProjectRule;
       });
 
-    const sortParam = validatedParams.sort || "created_at:desc";
+    const sortParam = validatedParams.sort || "trending";
     const [sortField, sortDirection] = sortParam.split(":");
 
     if (sortField === "created_at") {
@@ -77,6 +78,14 @@ export async function searchProjectRules(
         const aDate = new Date(a.createdAt || "").getTime();
         const bDate = new Date(b.createdAt || "").getTime();
         return sortDirection === "asc" ? aDate - bDate : bDate - aDate;
+      });
+    }
+
+    if (sortField === "trending") {
+      projectRulesList = projectRulesList.sort((a, b) => {
+        const aCount = a.copyCount || 0;
+        const bCount = b.copyCount || 0;
+        return bCount - aCount;
       });
     }
 

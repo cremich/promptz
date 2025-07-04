@@ -43,6 +43,7 @@ export async function fetchMyRules(userId: string): Promise<ProjectRule[]> {
       instruction: p.content,
       public: p.public || false,
       copyCount: p.copyCount || 0,
+      downloadCount: p.downloadCount || 0,
       createdAt: p.createdAt || "",
       updatedAt: p.updatedAt || "",
     };

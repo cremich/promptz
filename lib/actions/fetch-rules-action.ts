@@ -27,6 +27,7 @@ interface ProjectRuleBySlugResponse {
       sourceURL?: string;
       public?: string;
       copyCount?: number;
+      downloadCount?: number;
       author: {
         id?: string;
         displayName?: string;
@@ -57,6 +58,7 @@ export async function fetchProjectRuleBySlug(slug: string) {
         sourceURL
         public
         copyCount
+        downloadCount
         author {
           id
           displayName
@@ -95,6 +97,7 @@ export async function fetchProjectRuleBySlug(slug: string) {
     sourceURL: projectRule.sourceURL,
     public: projectRule.public,
     copyCount: projectRule.copyCount || 0,
+    downloadCount: projectRule.downloadCount || 0,
     author: projectRule.author?.displayName || "",
     authorId: projectRule.author?.id || "",
   } as ProjectRule;

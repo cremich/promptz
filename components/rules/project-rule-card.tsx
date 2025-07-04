@@ -1,7 +1,7 @@
 import { ProjectRule } from "@/lib/models/project-rule-model";
 import Author from "@/components/common/author";
 import Tags from "@/components/common/tags";
-import { Flame, Copy } from "lucide-react";
+import { Flame, Copy, Download } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -16,18 +16,24 @@ interface ProjectRuleCardProps {
   projectRule: ProjectRule;
 }
 
-function GetPopularityBadge(copyCount: number) {
-  if (copyCount >= 100)
+function GetPopularityBadge(totalPopularity: number) {
+  if (totalPopularity >= 100)
     return { label: "Hot", color: "bg-red-500 hover:bg-red-600" };
-  if (copyCount >= 50)
+  if (totalPopularity >= 50)
     return { label: "Trending", color: "bg-orange-500 hover:bg-orange-600" };
   return null;
 }
 
+function CalculatePopularity(projectRule: ProjectRule): number {
+  const copyCount = projectRule.copyCount || 0;
+  const downloadCount = projectRule.downloadCount || 0;
+  return copyCount + downloadCount;
+}
+
 export default function ProjectRuleCard({ projectRule }: ProjectRuleCardProps) {
-  const popularityBadge = projectRule.copyCount
-    ? GetPopularityBadge(projectRule.copyCount)
-    : null;
+  const totalPopularity = CalculatePopularity(projectRule);
+  const popularityBadge =
+    totalPopularity > 0 ? GetPopularityBadge(totalPopularity) : null;
 
   return (
     <Link
@@ -58,12 +64,24 @@ export default function ProjectRuleCard({ projectRule }: ProjectRuleCardProps) {
         </CardContent>
         <CardFooter className="flex justify-between items-center">
           {projectRule.author && <Author name={projectRule.author} />}
-          {projectRule.copyCount !== undefined && (
-            <div className="flex items-center text-muted-foreground text-sm">
-              <Copy className="w-4 h-4 mr-1" />
-              <span>{projectRule.copyCount.toLocaleString()} times copied</span>
-            </div>
-          )}
+          <div className="flex items-center gap-4 text-muted-foreground text-sm">
+            {projectRule.copyCount !== undefined && (
+              <div className="flex items-center">
+                <Copy className="w-4 h-4 mr-1" />
+                <span>
+                  {projectRule.copyCount.toLocaleString()} times copied
+                </span>
+              </div>
+            )}
+            {projectRule.downloadCount !== undefined && (
+              <div className="flex items-center">
+                <Download className="w-4 h-4 mr-1" />
+                <span>
+                  {projectRule.downloadCount.toLocaleString()} downloads
+                </span>
+              </div>
+            )}
+          </div>
         </CardFooter>
       </Card>
     </Link>

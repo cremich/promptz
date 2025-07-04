@@ -11,6 +11,7 @@ const schema = a
       createdAt: a.string(),
       updatedAt: a.string(),
       copyCount: a.integer(),
+      downloadCount: a.integer(),
     }),
     paginatedSearchResult: a.customType({
       results: a.ref("searchResult").array(),
