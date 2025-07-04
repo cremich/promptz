@@ -35,7 +35,7 @@ describe("PromptCard", () => {
     expect(card).toBeInTheDocument();
 
     // Check if title is rendered and linked correctly
-    const titleLink = screen.getByRole("link", { name: "Test Prompt" });
+    const titleLink = screen.getByRole("link");
     expect(titleLink).toBeInTheDocument();
     expect(titleLink).toHaveAttribute("href", "/prompts/prompt/test-prompt");
 

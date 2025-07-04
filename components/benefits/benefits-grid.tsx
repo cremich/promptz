@@ -47,8 +47,7 @@ export default function BenefitsGrid() {
           <BenefitCard
             icon={Github}
             title="Contribute to PROMPTZ"
-            content="PROMPTZ is a community-first platform. The source code is open on
-            GitHub, and we welcome your contributions and ideas."
+            content="PROMPTZ is a community-first platform. The source code is open on GitHub, and we welcome contributions from developers and enthusiasts. If you want to share your ideas, star or fork this project, join us on GitHub."
             cta={{
               href: "https://github.com/cremich/promptz",
               text: "Join on GitHub",

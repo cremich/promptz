@@ -25,16 +25,16 @@ export default function BenefitCard({
   cta,
 }: BenefitCardProps) {
   return (
-    <Card className="text-center">
+    <Card className="h-full bg-gradient-to-br from-neutral-800 to-neutral-900 border-neutral-700 hover:border-violet-500/50 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-violet-500/20">
       <CardHeader>
-        <CardTitle className="items-center flex flex-col">
+        <CardTitle className="text-lg font-semibold text-white group-hover:text-violet-300 transition-colors">
           <Icon className="w-12 h-12 text-violet-500 mb-4" />
           {title}
         </CardTitle>
       </CardHeader>
-      <CardContent className="text-zinc-400">{content}</CardContent>
+      <CardContent>{content}</CardContent>
       {cta && (
-        <CardFooter className="justify-center">
+        <CardFooter>
           <Link
             href={cta.href}
             className="px-6 py-3 rounded-full bg-violet-600 hover:bg-violet-700 text-white font-medium transition-colors"
