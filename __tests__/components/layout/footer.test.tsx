@@ -8,6 +8,13 @@ jest.mock("lucide-react", () => ({
   Github: () => <svg data-testid="github-icon" />,
 }));
 
+// Mock the FooterTags component
+jest.mock("@/components/layout/footer-tags", () => {
+  return function MockFooterTags() {
+    return <div data-testid="footer-tags">Footer Tags Component</div>;
+  };
+});
+
 describe("Footer", () => {
   test("Renders copyright text correctly", () => {
     render(<Footer />);
@@ -63,5 +70,13 @@ describe("Footer", () => {
     // Check if GitHub icon is rendered
     const githubIcon = screen.getByTestId("github-icon");
     expect(githubIcon).toBeInTheDocument();
+  });
+
+  test("Renders FooterTags component", () => {
+    render(<Footer />);
+
+    // Check if FooterTags component is rendered
+    const footerTags = screen.getByTestId("footer-tags");
+    expect(footerTags).toBeInTheDocument();
   });
 });

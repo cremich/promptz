@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge";
-import { data } from "amplify/data/resource";
 import Link from "next/link";
 
 interface TagProps {
@@ -11,6 +10,7 @@ export default function Tags(props: TagProps) {
     <div className="flex flex-wrap gap-2">
       {props.tags.map((tag) => (
         <Link
+          key={tag}
           href={`/tag/${encodeURIComponent(tag)}`}
           aria-label={`View prompts tagged with ${tag}`}
           title={`Browse prompts tagged with ${tag}`}
@@ -18,7 +18,6 @@ export default function Tags(props: TagProps) {
           itemProp="keywords"
         >
           <Badge
-            key={tag}
             variant="secondary"
             className="bg-violet-500 hover:bg-violet-500"
             data-testid="tag"
