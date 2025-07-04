@@ -5,6 +5,8 @@ import { type Schema } from "../../amplify/data/resource";
 import outputs from "../../amplify_outputs.json";
 import { Tag } from "@/lib/models/tags-model";
 import { GraphQLResult } from "aws-amplify/api";
+import { Prompt } from "@/lib/models/prompt-model";
+import { ProjectRule } from "@/lib/models/project-rule-model";
 
 interface TagsByCategoryResponse {
   listByCategory: {
@@ -139,5 +141,107 @@ export async function getTag(name: string): Promise<Tag | undefined> {
   } catch (error) {
     console.error("Error fetching tag with counts:", error);
     throw error;
+  }
+}
+
+/**
+ * Fetches prompts and rules associated with a specific tag
+ * @param tagName - Name of the tag to filter by
+ * @returns Promise containing prompts, rules and tags
+ */
+export async function getPromptsAndRulesByTag(tagName: string): Promise<{
+  prompts: Prompt[];
+  rules: ProjectRule[];
+  tag?: Tag;
+}> {
+  try {
+    const { data, errors } = await appsync.models.tag.get(
+      {
+        name: tagName,
+      },
+      {
+        selectionSet: [
+          "category",
+          "name",
+          "description",
+          "prompts.prompt.*",
+          "rules.rule.*",
+        ],
+      },
+    );
+    if (errors && errors.length > 0) {
+      throw new Error(errors[0].message);
+    }
+
+    if (!data) {
+      return {
+        prompts: [],
+        rules: [],
+        tag: undefined,
+      };
+    }
+
+    const prompts = data.prompts.map((prompts) => {
+      return {
+        title: prompts.prompt.name,
+        public: prompts.prompt.public,
+        description: prompts.prompt.description,
+        tags: prompts.prompt.tags,
+        id: prompts.prompt.id,
+        createdAt: prompts.prompt.createdAt,
+        updatedAt: prompts.prompt.updatedAt,
+        copyCount: prompts.prompt.copyCount,
+        slug: prompts.prompt.slug,
+        sourceURL: prompts.prompt.sourceURL,
+      } as Prompt;
+    });
+
+    const rules = data.rules.map((rules) => {
+      return {
+        title: rules.rule.name,
+        public: rules.rule.public,
+        description: rules.rule.description,
+        tags: rules.rule.tags,
+        id: rules.rule.id,
+        createdAt: rules.rule.createdAt,
+        updatedAt: rules.rule.updatedAt,
+        slug: rules.rule.slug,
+        sourceURL: rules.rule.sourceURL,
+      } as ProjectRule;
+    });
+
+    return {
+      tag: {
+        name: data.name,
+        description: data.description || "",
+      },
+      prompts: prompts.filter((p) => p.public),
+      rules: rules.filter((r) => r.public),
+    };
+  } catch (error) {
+    console.error("Error fetching prompts by tag:", error);
+    throw error;
+  }
+}
+
+/**
+ * Fetches all available tags for sitemap generation
+ * @returns Promise<string[]> - Array of all tag names
+ */
+export async function getAllTags(): Promise<string[]> {
+  const categories = ["SDLC", "Interface", "Technology"];
+  const allTags: string[] = [];
+
+  try {
+    for (const category of categories) {
+      const tags = await fetchTagsByCategory(category);
+      allTags.push(...tags.map((tag) => tag.name).filter(Boolean));
+    }
+
+    // Remove duplicates and return sorted array
+    return allTags;
+  } catch (error) {
+    console.error("Error fetching all tags:", error);
+    return [];
   }
 }
