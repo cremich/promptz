@@ -34,6 +34,13 @@ jest.mock("@/components/search/search-result", () => {
   };
 });
 
+// Mock child components
+jest.mock("@/components/search/filter-sidebar", () => {
+  return function FilterSidebar() {
+    return <div data-testid="filter-sidebar">Filter Sidebar</div>;
+  };
+});
+
 describe("BrowseRulesPage", () => {
   test("Renders page title and description", async () => {
     render(await BrowseRulesPage({ searchParams: Promise.resolve({}) }));
@@ -64,5 +71,8 @@ describe("BrowseRulesPage", () => {
 
     // Check for search results
     expect(screen.getByTestId("search-results")).toBeInTheDocument();
+
+    // Check for filter sidebar
+    expect(screen.getByTestId("filter-sidebar")).toBeInTheDocument();
   });
 });

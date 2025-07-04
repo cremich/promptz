@@ -2,6 +2,7 @@ import SearchBox from "@/components/search/search-box";
 import SearchResults from "@/components/search/search-result";
 import SortSelector from "@/components/search/sort-selector";
 import CreateButton from "@/components/common/create-button";
+import FilterSidebar from "@/components/search/filter-sidebar";
 import { searchProjectRules } from "@/lib/actions/rule-search-action";
 
 interface BrowsePageProps {
@@ -35,6 +36,11 @@ export default async function BrowseRulesPage(props: BrowsePageProps) {
           </p>
         </div>
         <div className="flex flex-col lg:flex-row gap-6">
+          {/* Filters sidebar - hidden on mobile */}
+          <div className="hidden lg:block w-64 shrink-0">
+            <FilterSidebar type="rules" />
+          </div>
+
           <div className="flex-1 space-y-6">
             {/* Search and filter bar */}
             <div className="flex flex-col sm:flex-row gap-4">
