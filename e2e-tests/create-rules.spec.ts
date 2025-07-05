@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { toBeVisible } from "node_modules/@testing-library/jest-dom/types/matchers";
 
 let now = "";
 
@@ -36,9 +37,7 @@ test("user is able to create a project rule with only required fields", async ({
   await page.goto("/rules/my");
 
   await expect(
-    page.getByRole("heading", {
-      name: `Private project rule with only required fields ${now}`,
-    }),
+    page.getByText(`Private project rule with only required fields ${now}`),
   ).toBeVisible();
 
   await page.goto("/rules");
@@ -80,15 +79,11 @@ test("user is able to create a public project rule with only required fields", a
   await page.goto("/rules/my");
 
   await expect(
-    page.getByRole("heading", {
-      name: `Public project rule with only required fields ${now}`,
-    }),
+    page.getByText(`Public project rule with only required fields ${now}`),
   ).toBeVisible();
 
   await page.goto("/rules");
   await expect(
-    page.getByRole("heading", {
-      name: `Public project rule with only required fields ${now}`,
-    }),
+    page.getByText(`Public project rule with only required fields ${now}`),
   ).toBeVisible();
 });

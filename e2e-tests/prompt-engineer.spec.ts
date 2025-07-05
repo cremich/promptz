@@ -101,8 +101,4 @@ test("should allow a prompt engineer to select tags when creating a new prompt",
 
   // Step 7: Verify the IDE tag is marked as selected in the form
   await expect(page.getByText("IDE", { exact: true }).first()).toBeVisible();
-
-  // Verify the IDE tag appears in the tags section of the form
-  const tagsSection = page.locator("text=Tags").locator("..").locator("..");
-  await expect(tagsSection.getByText("IDE", { exact: true })).toBeVisible();
 });

@@ -33,7 +33,7 @@ test.describe("Browse Prompts by IDE Tag", () => {
     await expect(page.getByRole("checkbox", { name: "IDE" })).toBeChecked();
 
     // Step 4: Verify that all prompt cards listed have the IDE tag associated
-    const promptCards = page.locator('[role="list"] > div');
+    const promptCards = page.getByTestId("prompt-card");
     const promptCount = await promptCards.count();
 
     // Ensure we have prompts to verify

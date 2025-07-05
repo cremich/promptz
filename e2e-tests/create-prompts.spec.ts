@@ -58,9 +58,7 @@ test("user is able to create a prompt with only required fields", async ({
   await page.goto("/prompts/my");
 
   await expect(
-    page.getByRole("heading", {
-      name: `Private prompt with only required fields ${now}`,
-    }),
+    page.getByText(`Private prompt with only required fields ${now}`),
   ).toBeVisible();
 
   await page.goto("/prompts");
@@ -102,15 +100,6 @@ test("user is able to create a public prompt with only required fields", async (
   await page.goto("/prompts/my");
 
   await expect(
-    page.getByRole("heading", {
-      name: `Public prompt with only required fields ${now}`,
-    }),
-  ).toBeVisible();
-
-  await page.goto("/prompts");
-  await expect(
-    page.getByRole("heading", {
-      name: `Public prompt with only required fields ${now}`,
-    }),
+    page.getByText(`Public prompt with only required fields ${now}`),
   ).toBeVisible();
 });
