@@ -85,4 +85,49 @@ test.describe("Search prompts", () => {
       await expect(searchInput).toHaveValue("nonexistentterm12345");
     });
   });
+
+  test("should filter prompts by CLI facet and show only CLI-tagged prompts", async ({
+    page,
+  }) => {
+    await test.step("Navigate to /prompts page", async () => {
+      await page.goto("/prompts");
+      await expect(page).toHaveTitle(
+        /PROMPTZ - Discover, Create, and Share Prompts for Amazon Q Developer/,
+      );
+    });
+
+    await test.step("Select the CLI facet in the filter sidebar", async () => {
+      const cliCheckbox = page.getByRole("checkbox", { name: "CLI" });
+      await cliCheckbox.click();
+    });
+
+    await test.step("Verify URL contains CLI filter parameter", async () => {
+      await expect(page).toHaveURL(/\/prompts\?tags%5B%5D=CLI/);
+    });
+
+    await test.step("Verify CLI checkbox is checked", async () => {
+      const cliCheckbox = page.getByRole("checkbox", { name: "CLI" });
+      await expect(cliCheckbox).toBeChecked();
+    });
+
+    await test.step("Verify search results only show prompts with CLI tag", async () => {
+      const searchResults = page.getByRole("list");
+      await expect(searchResults).toBeVisible();
+
+      // Get all main prompt card links (those that go to /prompts/prompt/ URLs)
+      const promptCards = page.locator('a[href*="/prompts/prompt/"]');
+      const promptCount = await promptCards.count();
+
+      // Ensure at least one prompt is displayed
+      expect(promptCount).toBeGreaterThanOrEqual(1);
+
+      // // Verify each prompt card contains the CLI tag text
+      for (let i = 0; i < promptCount; i++) {
+        const promptCard = promptCards.nth(i);
+
+        // Check if this prompt card contains CLI text
+        await expect(promptCard).toContainText("CLI");
+      }
+    });
+  });
 });
