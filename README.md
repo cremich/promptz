@@ -10,6 +10,7 @@ Promptz is the ultimate prompting hub for Amazon Q Developer, designed to help y
 
 - [Prerequisites](#-prerequisites)
 - [Getting Started](#-getting-started)
+- [End-to-End Testing](#-end-to-end-testing)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -81,6 +82,88 @@ When the build completes, visit the newly deployed branch by selecting "View dep
 Run `npm run dev` to start a local development server using the amplify configuration downloaded in step 4.
 
 After starting the development server, open your browser and navigate to `http://localhost:3000`.
+
+## 🧪 End-to-End Testing
+
+Promptz uses Playwright for automated end-to-end testing to ensure the application works correctly across different browsers and user scenarios. The tests use MailSlurp for email-based authentication flows, allowing automated testing of passwordless login and signup processes.
+
+### Prerequisites for E2E Testing
+
+Before running end-to-end tests, ensure you have:
+
+1. **Completed the Getting Started setup** - Your sandbox environment must be deployed and running
+2. **MailSlurp API Key** - Required for email automation during authentication tests
+
+### MailSlurp Setup
+
+The E2E tests rely on MailSlurp to handle email verification codes during authentication flows:
+
+1. **Create a MailSlurp account**:
+   - Sign up at [MailSlurp](https://www.mailslurp.com/) for a free account
+   - Get your API key from the dashboard
+
+2. **Create a permanent inbox for login tests**:
+   - In your MailSlurp dashboard, create a permanent inbox
+   - Note the inbox ID for the login test user
+
+3. **Configure environment variables**:
+   ```bash
+   # Add to your .env file
+   echo "MAILSLURP_API_KEY=your-mailslurp-api-key" >> .env
+   echo "MAILSLURP_PLAYWRIGHT_USER_INBOX_ID=your-inbox-id" >> .env
+   echo "PLAYWRIGHT_BASE_URL=http://127.0.0.1:3000" >> .env
+   ```
+
+### Test User Setup
+
+The E2E tests require a dedicated test user in your Cognito user pool that corresponds to your MailSlurp inbox:
+
+1. **Identify your Cognito User Pool ID**:
+   - After deploying your sandbox, check the Amplify console or AWS Console
+   - Look for the Cognito User Pool created by your sandbox deployment
+   - Note the User Pool ID (format: `region_xxxxxxxxx`)
+
+2. **Create the test user** using AWS CLI:
+
+   ```bash
+   aws cognito-idp admin-create-user \
+     --user-pool-id YOUR_USER_POOL_ID \
+     --username "your-mailslurp-inbox-email@mailslurp.biz" \
+     --user-attributes Name=email,Value="your-mailslurp-inbox-email@mailslurp.biz" Name=preferred_username,Value="playwright" \
+     --message-action SUPPRESS \
+     --region YOUR_AWS_REGION
+   ```
+
+   Replace:
+   - `YOUR_USER_POOL_ID` with your actual User Pool ID
+   - `your-mailslurp-inbox-email@mailslurp.biz` with your MailSlurp inbox email address
+   - `YOUR_AWS_REGION` with your deployment region
+
+### Running E2E Tests
+
+Once your MailSlurp and test user setup is complete **Run Playwright tests**:
+
+```bash
+# Run all E2E tests
+npm run e2e
+```
+
+### Test Architecture
+
+The E2E tests are organized as follows:
+
+- **Authentication Tests**: Handle login and signup flows using MailSlurp for email verification
+  - `login.spec.ts`: Tests passwordless login with existing user
+  - `signup.spec.ts`: Tests new user registration and first login
+- **Helper Functions**: Utility functions for common test operations
+  - `authentication.ts`: Email code extraction utilities
+
+### Test Environment Notes
+
+- Tests run against your local development server (`http://localhost:3000`) by default.
+- Authentication state is persisted in `.playwright/.auth/user.json` to avoid hitting the free quotas of mailslurp due to repetitive logins or signups.
+- The signup test creates temporary inboxes that are automatically cleaned up
+- The login test uses a permanent inbox for consistent testing
 
 ## Contributing
 
