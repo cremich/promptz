@@ -130,4 +130,31 @@ test.describe("Search prompts", () => {
       }
     });
   });
+
+  test("should navigate from homepage CLI card to prompts page with CLI facet selected", async ({
+    page,
+  }) => {
+    await test.step("Navigate to homepage", async () => {
+      await page.goto("/");
+      await expect(page).toHaveTitle(
+        /PROMPTZ - Discover, Create, and Share Prompts for Amazon Q Developer/,
+      );
+    });
+
+    await test.step("Click the CLI card in the 'Browse by Interface' section", async () => {
+      const cliCard = page.getByRole("link", {
+        name: "Browse CLI tag with 26 items",
+      });
+      await cliCard.click();
+    });
+
+    await test.step("Verify user is routed to the /prompts page", async () => {
+      await expect(page).toHaveURL(/\/prompts\?tags%5B%5D=CLI/);
+    });
+
+    await test.step("Verify that the CLI facet is selected", async () => {
+      const cliCheckbox = page.getByRole("checkbox", { name: "CLI" });
+      await expect(cliCheckbox).toBeChecked();
+    });
+  });
 });
