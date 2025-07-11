@@ -1,6 +1,17 @@
 # Amazon Q Developer Project Intelligence
 
-I am Amazon Q Developer, an AI assistant for software engineering with a unique characteristic: my memory resets completely between sessions. This isn't a limitation - it's what drives me to maintain perfect documentation. After each reset, I rely ENTIRELY on my project intelligence folder to understand the project and continue work effectively. I MUST read ALL project intelligence files at the start of EVERY task - this is not optional.
+## Preamble
+
+- Your task is to maintain a documentation system called project intelligence as a living documentation throughout the lifecycle of this codebase.
+- Project intelligence helps you to maintain comprehensive context about this application. Think of it as your long term memory.
+
+## Guidelines
+
+- Before writing the documentation, ask all relevant questions to understand the context of this codebase.
+- Select and use available tools specialized in gathering external context such as documentation, wikis, or issue trackers.
+- The documentation must be specific with a focus on simplicity and clearance.
+- Write documentation in prose.
+- Prevent repetitions and ambiguity in the documentation.
 
 ## Project Intelligence Structure
 
@@ -9,59 +20,32 @@ Files build upon each other in a clear hierarchy:
 
 ```mermaid
 flowchart TD
-    PB[projectbrief.md] --> PC[productContext.md]
-    PB --> SP[systemPatterns.md]
-    PB --> TC[techContext.md]
-
-    PC --> AC[activeContext.md]
-    SP --> AC
-    TC --> AC
-
-    AC --> P[progress.md]
+    PI[Project Intelligence] --> PC[project.md]
+    PI --> SP[architecture.md]
+    PI --> TC[tech.md]
 ```
 
 ### Required Core Files
 
-1. `projectbrief.md`
+1. `project.md`
+   - Source of truth for project and business scope. Explains the product vision, features, core requirements, goals and target users.
+   - Outlines customer problems being solved and how the product helps to solve the problems of the users.
+   - Visualize user journeys using the user journey mermaid syntax.
+   - Describes current state of development based on open issues, and the product backlog.
 
-   - Foundation document that shapes all other files
-   - Created at project start if it doesn't exist
-   - Defines core requirements and goals
-   - Source of truth for project scope
+2. `architecture.md`
+   - Source of truth for software architecture and software design.
+   - Describes system architecture and design patterns.
+   - Documents key architecture decisions.
+   - Visualize the software architecture using the architecture mermaid syntax.
+   - Describes data models, database schemas and APIs.
+   - Visualize data models using the entity-relationship-diagram mermaid syntax.
+   - Use sequence diagrams in mermaid syntax to visualize processes and interactions between components.
 
-2. `productContext.md`
-
-   - Why this project exists
-   - Problems it solves
-   - How it should work
-   - User experience goals
-
-3. `activeContext.md`
-
-   - Current work focus
-   - Recent changes
-   - Next steps
-   - Active decisions and considerations
-
-4. `systemPatterns.md`
-
-   - System architecture
-   - Key technical decisions
-   - Design patterns in use
-   - Component relationships
-
-5. `techContext.md`
-
-   - Technologies used
-   - Development setup
-   - Technical constraints
-   - Dependencies
-
-6. `progress.md`
-   - What works
-   - What's left to build
-   - Current status
-   - Known issues
+3. `tech.md`
+   - Explains the project's directory structure and code organization.
+   - Documents the tech stack, technologies, and development tools used.
+   - Includes listing of packages and dependencies.
 
 ### Additional Context
 
@@ -72,43 +56,3 @@ Create additional files/folders within `./.amazonq/project-intelligence` when th
 - API documentation
 - Testing strategies
 - Deployment procedures
-
-## Core Workflow
-
-### Initializing project intelligence
-
-```mermaid
-flowchart TD
-    Start[Session Starts] --> ReadFiles[Read Project Intelligence]
-    ReadFiles --> CheckFiles{Files Complete?}
-
-    CheckFiles -->|No| AnalyzeFiles[Analyze the application]
-    AnalyzeFiles --> AnalyzeHistory[Analyze the git history]
-    AnalyzeHistory --> Create[Create Project Intelligence]
-    Create --> SenseCheck[Review Project Intelligence]
-    SenseCheck --> End
-    CheckFiles -->|Yes| End[End]
-```
-
-### Working on a task
-
-```mermaid
-flowchart TD
-    Start[Session Starts] --> ReadFiles[Read Project Intelligence files]
-    ReadFiles --> RebuildContext[Rebuild Context]
-    RebuildContext --> ExecuteTask[Execute Task]
-    ExecuteTask --> TaskFinished[Task finished]
-    TaskFinished --> UpdateRequired{Project Intelligence requires update?}
-    UpdateRequired -->|No| End[Session Ends]
-    UpdateRequired -->|Yes| Update[Update Project Intelligence]
-    Update --> End[Session Ends]
-```
-
-Project intelligence requires updates when
-
-1. Discovering new project patterns
-2. After implementing significant changes
-3. When user requests with **update project intelligence**
-4. When context needs clarification
-
-Whenever you update the project intelligence you MUST review all files.
