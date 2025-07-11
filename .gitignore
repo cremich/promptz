@@ -48,4 +48,4 @@ amplifyconfiguration*
 /playwright/.cache/
 
 #Amazon Q Developer
-./.amazonq/conversations/
+/.amazonq/conversations/
