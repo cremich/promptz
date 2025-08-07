@@ -1,5 +1,6 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 import { postAuthenticationFunction } from "../auth/post-authentication/resource";
+import { userModel } from "./models/user";
 const schema = a
   .schema({
     searchResult: a.customType({
@@ -67,33 +68,7 @@ const schema = a
         allow.publicApiKey().to(["read"]),
       ])
       .disableOperations(["subscriptions", "mutations"]),
-    user: a
-      .model({
-        id: a
-          .id()
-          .authorization((allow) => [
-            allow.publicApiKey().to(["read"]),
-            allow.owner().to(["read"]),
-          ]),
-        username: a.string(),
-        email: a.string(),
-        displayName: a
-          .string()
-          .authorization((allow) => [
-            allow.publicApiKey().to(["read"]),
-            allow.owner().to(["read"]),
-          ]),
-        owner: a.string(),
-        prompts: a
-          .hasMany("prompt", "owner")
-          .authorization((allow) => [allow.owner().to(["read"])]),
-        projectRules: a
-          .hasMany("projectRule", "owner")
-          .authorization((allow) => [allow.owner().to(["read"])]),
-      })
-      .disableOperations(["subscriptions", "delete", "update"])
-      .authorization((allow) => [allow.owner().to(["read"])]),
-
+    ...userModel,
     prompt: a
       .model({
         id: a.id().required(),
