@@ -9,7 +9,7 @@ import { Prompt } from "@/lib/models/prompt-model";
 import { ProjectRule } from "@/lib/models/project-rule-model";
 
 interface TagsByCategoryResponse {
-  listByCategory: {
+  listTagsByCategory: {
     items: {
       name?: string;
       description?: string;
@@ -55,7 +55,7 @@ const appsync = generateServerClientUsingCookies<Schema>({
 export async function fetchTagsByCategory(category: string): Promise<Tag[]> {
   const GET_TAG_BY_CATEGORY = `
   query ListTag($category: String!) {
-    listByCategory(category: $category) {
+    listTagsByCategory(category: $category) {
       items {
         name
         description
@@ -82,7 +82,7 @@ export async function fetchTagsByCategory(category: string): Promise<Tag[]> {
     throw new Error("No data returned from query");
   }
 
-  return response.data.listByCategory.items.map((d) => {
+  return response.data.listTagsByCategory.items.map((d) => {
     return {
       name: d.name,
       description: d.description,

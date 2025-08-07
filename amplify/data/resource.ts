@@ -1,6 +1,7 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 import { postAuthenticationFunction } from "../auth/post-authentication/resource";
 import { userModel } from "./models/user";
+import { tagModel } from "./models/tags";
 const schema = a
   .schema({
     searchResult: a.customType({
@@ -19,25 +20,7 @@ const schema = a
       nextToken: a.string(),
     }),
 
-    // Tag model for enhanced discoverability
-    tag: a
-      .model({
-        name: a.string().required(), // Tag name
-        description: a.string(), // Optional description of the tag
-        category: a.string(), // Category grouping (e.g., "SDLC", "Interface", "Technology")
-        prompts: a.hasMany("promptTag", "tagName"), // Relationship to prompts via join table
-        rules: a.hasMany("ruleTag", "tagName"), // Relationship to rules via join table
-      })
-      .authorization((allow) => [
-        // Public read access for tag browsing and discovery
-        allow.publicApiKey().to(["read"]),
-      ])
-      .secondaryIndexes((index) => [
-        index("category").queryField("listByCategory").name("categoryIndex"),
-      ])
-      .identifier(["name"])
-      // No mutations or subscriptions allowed as specified
-      .disableOperations(["mutations", "subscriptions"]),
+    ...tagModel,
 
     // Join table for many-to-many relationships between tags and prompts
     promptTag: a
