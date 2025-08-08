@@ -10,29 +10,5 @@ export function configureMonitoring(
     data: ConstructFactory<AmplifyGraphqlApi>;
   }>,
 ) {
-  const role = new iam.Role(backend.stack, "AmplifyLoggingRole", {
-    assumedBy: new iam.ServicePrincipal("appsync.amazonaws.com"),
-  });
-
-  role.addToPolicy(
-    new iam.PolicyStatement({
-      resources: ["*"],
-      actions: [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents",
-      ],
-    }),
-  );
-
   backend.data.resources.cfnResources.cfnGraphqlApi.xrayEnabled = true;
-  backend.data.resources.cfnResources.cfnGraphqlApi.logConfig = {
-    fieldLogLevel: "INFO",
-    excludeVerboseContent: true,
-    cloudWatchLogsRoleArn: role.roleArn,
-  };
-
-  new logs.LogGroup(backend.stack, "AppsyncApiLogGroup", {
-    logGroupName: `/aws/appsync/apis/${backend.data.apiId}`,
-  });
 }
