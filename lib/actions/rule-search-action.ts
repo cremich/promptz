@@ -59,7 +59,7 @@ export async function searchProjectRules(
       .map((p) => {
         return {
           id: p.id || "",
-          title: p.name || "",
+          name: p.name || "",
           description: p.description || "",
           tags: p.tags,
           slug: p.slug || "",

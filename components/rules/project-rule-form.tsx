@@ -46,6 +46,13 @@ import { redirect } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
 import { deleteProjectRule } from "@/lib/actions/delete-rule-action";
 import TagSheet from "@/components/forms/tag-sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface ProjectRuleFormProps {
   projectRule?: ProjectRule;
@@ -81,12 +88,12 @@ export default function ProjectRuleForm({
     resolver: zodResolver(projectRuleFormSchema),
     defaultValues: {
       id: projectRule?.id || "",
-      title: projectRule?.title || "",
+      name: projectRule?.name || "",
       description: projectRule?.description || "",
       content: projectRule?.content || "",
       tags: projectRule?.tags || [],
       sourceURL: projectRule?.sourceURL || "",
-      public: projectRule?.public || false,
+      scope: projectRule?.scope || "PRIVATE",
     },
   });
 
@@ -147,7 +154,7 @@ export default function ProjectRuleForm({
                 {/* Title field */}
                 <FormField
                   control={form.control}
-                  name="title"
+                  name="name"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="flex items-center gap-2">
@@ -160,7 +167,7 @@ export default function ProjectRuleForm({
                           className="text-white placeholder-white placeholder-opacity-50"
                         />
                       </FormControl>
-                      <FormMessage>{state.errors?.title}</FormMessage>
+                      <FormMessage>{state.errors?.name}</FormMessage>
                     </FormItem>
                   )}
                 />
@@ -242,32 +249,37 @@ export default function ProjectRuleForm({
                 {/* Visibility toggle */}
                 <FormField
                   control={form.control}
-                  name="public"
+                  name="scope"
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-center justify-between">
                       <div className="space-y-0.5">
                         <FormLabel>Visibility</FormLabel>
-                        <FormDescription className="pr-10">
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="bg-black">
+                              <SelectValue placeholder="Select a privacy scope for your prompt" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="PRIVATE">Private</SelectItem>
+                            <SelectItem value="PUBLIC">Public</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormDescription>
                           Keep your project rule private as a draft or just for
-                          you. A private project rule can still be shared via
-                          URL but will not be listed on promptz.dev. Make your
-                          project rule public to share it with the community.
+                          you or make it public to share it with the community.
+                          A private project rule can still be shared via URL but
+                          will not be listed on promptz.dev.
                         </FormDescription>
+                        <input
+                          type="hidden"
+                          name="scope"
+                          value={`${field.value}`}
+                        />
                       </div>
-                      <FormControl>
-                        <div>
-                          <Switch
-                            className="border-neutral-400"
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                          <input
-                            type="hidden"
-                            name="public"
-                            value={`${field.value}`}
-                          />
-                        </div>
-                      </FormControl>
                     </FormItem>
                   )}
                 />

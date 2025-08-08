@@ -16,7 +16,7 @@ const appsync = generateServerClientUsingCookies<Schema>({
  * Interface for the GraphQL response when fetching a project rule by slug
  */
 interface ProjectRuleBySlugResponse {
-  listRuleBySlug: {
+  listProjectRuleBySlug: {
     items: {
       id?: string;
       name?: string;
@@ -25,7 +25,7 @@ interface ProjectRuleBySlugResponse {
       tags?: string[];
       content?: string;
       sourceURL?: string;
-      public?: string;
+      scope?: string;
       copyCount?: number;
       downloadCount?: number;
       author: {
@@ -47,7 +47,7 @@ interface ProjectRuleBySlugResponse {
 export async function fetchProjectRuleBySlug(slug: string) {
   const GET_PROJECT_RULE_BY_SLUG = `
   query ListProjectRules($slug: String!) {
-    listRuleBySlug(slug: $slug) {
+    listProjectRuleBySlug(slug: $slug) {
       items {
         id
         name
@@ -56,7 +56,7 @@ export async function fetchProjectRuleBySlug(slug: string) {
         tags
         content
         sourceURL
-        public
+        scope
         copyCount
         downloadCount
         author {
@@ -81,7 +81,7 @@ export async function fetchProjectRuleBySlug(slug: string) {
     throw new Error("No data returned from query");
   }
 
-  const projectRule = response.data.listRuleBySlug.items[0];
+  const projectRule = response.data.listProjectRuleBySlug.items[0];
 
   if (!projectRule) {
     return;
@@ -89,16 +89,18 @@ export async function fetchProjectRuleBySlug(slug: string) {
 
   return {
     id: projectRule.id,
-    title: projectRule.name,
+    name: projectRule.name,
     slug: projectRule.slug,
     description: projectRule.description,
     tags: projectRule.tags,
     content: projectRule.content,
     sourceURL: projectRule.sourceURL,
-    public: projectRule.public,
+    scope: projectRule.scope,
     copyCount: projectRule.copyCount || 0,
     downloadCount: projectRule.downloadCount || 0,
     author: projectRule.author?.displayName || "",
     authorId: projectRule.author?.id || "",
+    createdAt: projectRule.createdAt,
+    updatedAt: projectRule.updatedAt,
   } as ProjectRule;
 }

@@ -21,7 +21,7 @@ jest.mock("@/components/common/tags", () => {
 describe("ProjectRuleCard", () => {
   const baseProjectRule: ProjectRule = {
     id: "test-id",
-    title: "Test Project Rule",
+    name: "Test Project Rule",
     description: "Test description",
     slug: "test-project-rule",
     author: "Test Author",

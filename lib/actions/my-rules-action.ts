@@ -34,14 +34,14 @@ export async function fetchMyRules(userId: string): Promise<ProjectRule[]> {
   return (data.projectRules as Schema["projectRule"]["type"][]).map((p) => {
     return {
       id: p.id,
-      title: p.name,
+      name: p.name,
       description: p.description || "",
       author: data.displayName || "",
       authorId: p.owner || "",
       tags: (p.tags || []).filter((tag): tag is string => tag !== null),
       slug: p.slug || "",
       instruction: p.content,
-      public: p.public || false,
+      public: p.scope || "PRIVATE",
       copyCount: p.copyCount || 0,
       downloadCount: p.downloadCount || 0,
       createdAt: p.createdAt || "",

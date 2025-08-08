@@ -7,6 +7,7 @@ import ProjectRulePage, {
 import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
 import { notFound } from "next/navigation";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
+import { ProjectRule } from "@/lib/models/project-rule-model";
 
 // Mock the server actions
 jest.mock("@/lib/actions/fetch-rules-action", () => ({
@@ -188,9 +189,9 @@ describe("generateMetadata", () => {
 
   test("Returns correct metadata when project rule exists", async () => {
     // Mock project rule
-    const mockProjectRule = {
+    const mockProjectRule: ProjectRule = {
       id: "rule-123",
-      title: "Test Rule",
+      name: "Test Rule",
       slug: "test-rule",
       description: "This is a test rule",
     };

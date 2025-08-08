@@ -2,6 +2,7 @@ import { describe, expect, test } from "@jest/globals";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ProjectRuleForm from "@/components/rules/project-rule-form";
+import { ProjectRule } from "@/lib/models/project-rule-model";
 
 jest.mock("@/lib/actions/submit-rule-action", () => ({
   onSubmitAction: jest.fn(),
@@ -43,7 +44,7 @@ describe("ProjectRuleForm", () => {
   });
 
   test("Renders form with all required elements", () => {
-    render(<ProjectRuleForm />);
+    render(<ProjectRuleForm tags={[]} />);
 
     // Check if basic information section is present
     expect(screen.getByText("Basic Information")).toBeInTheDocument();
@@ -66,7 +67,7 @@ describe("ProjectRuleForm", () => {
   });
 
   test("Form submission with required fields", () => {
-    const { container } = render(<ProjectRuleForm />);
+    const { container } = render(<ProjectRuleForm tags={[]} />);
 
     // Fill out required fields
     fireEvent.change(screen.getByLabelText("Title"), {
@@ -92,7 +93,7 @@ describe("ProjectRuleForm", () => {
   });
 
   test("Displays delete button only when project rule has an id", () => {
-    const { rerender } = render(<ProjectRuleForm />);
+    const { rerender } = render(<ProjectRuleForm tags={[]} />);
 
     // Without projectRule prop, delete button should not be present
     expect(screen.queryByText("Delete Project Rule")).not.toBeInTheDocument();
@@ -102,28 +103,29 @@ describe("ProjectRuleForm", () => {
       <ProjectRuleForm
         projectRule={{
           id: "test-id",
-          title: "Test",
+          name: "Test",
           description: "Test",
           content: "Test",
           tags: [],
         }}
+        tags={[]}
       />,
     );
     expect(screen.getByText("Delete Project Rule")).toBeInTheDocument();
   });
 
   test("Loads existing project rule data into form", () => {
-    const testProjectRule = {
+    const testProjectRule: ProjectRule = {
       id: "test-id",
-      title: "Test Title",
+      name: "Test Title",
       description: "Test Description",
       content: "# Test Content",
       tags: ["typescript", "nextjs"],
       sourceURL: "https://test.com",
-      public: true,
+      scope: "PUBLIC",
     };
 
-    render(<ProjectRuleForm projectRule={testProjectRule} />);
+    render(<ProjectRuleForm projectRule={testProjectRule} tags={[]} />);
 
     // Check if form fields are populated with project rule data
     expect(screen.getByLabelText("Title")).toHaveValue("Test Title");
@@ -143,7 +145,7 @@ describe("ProjectRuleForm", () => {
         message: "Validation failed",
         success: false,
         errors: {
-          title: ["Title is required"],
+          name: ["Title is required"],
           description: ["Description is required"],
           content: ["Content is required"],
         },
@@ -152,7 +154,7 @@ describe("ProjectRuleForm", () => {
       false,
     ]);
 
-    render(<ProjectRuleForm />);
+    render(<ProjectRuleForm tags={[]} />);
 
     // Check if error messages are displayed
     expect(screen.getByText("Title is required")).toBeInTheDocument();

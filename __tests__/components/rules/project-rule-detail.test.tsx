@@ -68,7 +68,7 @@ describe("ProjectRuleDetail", () => {
   // Sample project rule data for testing
   const mockProjectRule: ProjectRule = {
     id: "rule-123",
-    title: "Test Rule",
+    name: "Test Rule",
     description: "This is a test rule description",
     tags: ["test", "rule", "example"],
     content: "# Test Rule Content\n\nThis is the content of the test rule.",
@@ -136,7 +136,7 @@ describe("ProjectRuleDetail", () => {
   test("Handles missing optional fields gracefully", () => {
     const minimalProjectRule: ProjectRule = {
       id: "rule-123",
-      title: "Minimal Rule",
+      name: "Minimal Rule",
       description: "Minimal description",
     };
 

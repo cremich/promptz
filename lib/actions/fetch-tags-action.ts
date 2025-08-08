@@ -198,8 +198,8 @@ export async function getPromptsAndRulesByTag(tagName: string): Promise<{
 
     const rules = data.rules.map((rules) => {
       return {
-        title: rules.rule.name,
-        public: rules.rule.public,
+        name: rules.rule.name,
+        scope: rules.rule.public,
         description: rules.rule.description,
         tags: rules.rule.tags,
         id: rules.rule.id,

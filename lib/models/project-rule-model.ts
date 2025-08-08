@@ -5,18 +5,19 @@ import {
   tagSchema,
   publicSchema,
   idSchema,
+  scopeSchema,
 } from "@/lib/forms/schema-definitions";
 import { z } from "zod";
 
 export type ProjectRule = {
   id?: string;
-  title?: string;
+  name?: string;
   description?: string;
   tags?: string[];
   content?: string;
   author?: string;
   authorId?: string;
-  public?: boolean;
+  scope?: string;
   slug?: string;
   sourceURL?: string;
   createdAt?: string;
@@ -27,7 +28,7 @@ export type ProjectRule = {
 export const projectRuleFormSchema = z.object({
   id: idSchema,
   sourceURL: sourceURLSchema,
-  title: titleSchema,
+  name: titleSchema,
   description: descriptionSchema,
   content: z
     .string()
@@ -35,7 +36,7 @@ export const projectRuleFormSchema = z.object({
     .min(10, "Content must be more than 10 characters")
     .max(30000, "Content must be less than 30000 characters"),
   tags: tagSchema,
-  public: publicSchema,
+  scope: scopeSchema,
 }); // Validation schema for project rule search and filter params
 
 export const projectRuleSearchParamsSchema = z.object({

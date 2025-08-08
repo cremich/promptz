@@ -66,7 +66,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
               lineHeight: 1.2,
             }}
           >
-            {projectRule.title?.toUpperCase()}
+            {projectRule.name?.toUpperCase()}
           </div>
 
           {/* Description */}

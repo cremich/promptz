@@ -38,7 +38,7 @@ export default function ProjectRuleCard({ projectRule }: ProjectRuleCardProps) {
   return (
     <Link
       href={`/rules/rule/${projectRule.slug}`}
-      aria-label={`Show ${projectRule.title}`}
+      aria-label={`Show ${projectRule.name}`}
     >
       <Card
         key={projectRule.id}
@@ -55,7 +55,7 @@ export default function ProjectRuleCard({ projectRule }: ProjectRuleCardProps) {
             )}
             {projectRule.tags && <Tags tags={projectRule.tags} />}
             <CardTitle className="text-lg font-semibold text-white group-hover:text-violet-300 transition-colors">
-              {projectRule.title}
+              {projectRule.name}
             </CardTitle>
           </div>
         </CardHeader>

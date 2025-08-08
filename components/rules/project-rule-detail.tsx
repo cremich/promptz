@@ -40,7 +40,7 @@ export default function ProjectRuleDetail({
       <div className="flex flex-col space-y-4">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <h1 className="text-3xl font-bold tracking-tight">
-            {projectRule.title}
+            {projectRule.name}
           </h1>
 
           <div className="flex items-center gap-2">
