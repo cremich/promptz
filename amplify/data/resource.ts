@@ -24,4 +24,11 @@ export const data = defineData({
     defaultAuthorizationMode: "apiKey",
     apiKeyAuthorizationMode: { expiresInDays: 90 },
   },
+  logging:
+    process.env["PROMPTZ_ENV"] === "sandbox"
+      ? {
+          excludeVerboseContent: true,
+          fieldLogLevel: "all",
+        }
+      : true,
 });
