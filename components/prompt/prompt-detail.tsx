@@ -21,7 +21,7 @@ export default async function PromptDetail(props: PromptProps) {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            {props.prompt.title}
+            {props.prompt.name}
           </h1>
           <p className="text-muted-foreground">{props.prompt.description}</p>
         </div>
@@ -32,11 +32,11 @@ export default async function PromptDetail(props: PromptProps) {
               name="Edit Prompt"
             />
           )}
-          {props.prompt.instruction && (
+          {props.prompt.content && (
             <CopyClipBoardButton
               id={props.prompt.id!}
               type={ModelType.PROMPT}
-              text={props.prompt.instruction}
+              text={props.prompt.content}
             />
           )}
         </div>
@@ -52,12 +52,12 @@ export default async function PromptDetail(props: PromptProps) {
             variant="secondary"
             className=" border-dashed border-violet-500 hover:bg-neutral-600"
           >
-            {props.prompt.public === true ? "Public" : "Private"}
+            {props.prompt.scope === "PUBLIC" ? "Public" : "Private"}
           </Badge>
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {props.prompt.instruction && (
+        {props.prompt.content && (
           <div
             className={`overflow-hidden gap-4 ${props.prompt.howto ? "lg:col-span-2" : "lg:col-span-3"}`}
           >
@@ -65,7 +65,7 @@ export default async function PromptDetail(props: PromptProps) {
               title="Prompt"
               promptId={props.prompt.id!}
               icon={Terminal}
-              text={props.prompt.instruction!}
+              text={props.prompt.content!}
             />
           </div>
         )}

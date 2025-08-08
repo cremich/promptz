@@ -7,6 +7,7 @@ import PromptDetailPage, {
 import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { notFound } from "next/navigation";
+import { Prompt } from "@/lib/models/prompt-model";
 
 // Mock the dependencies
 jest.mock("@/lib/actions/fetch-prompts-action", () => ({
@@ -163,9 +164,9 @@ describe("generateMetadata", () => {
 
   test("Returns correct metadata when prompt exists", async () => {
     // Mock the prompt data
-    const mockPrompt = {
+    const mockPrompt: Prompt = {
       id: "123",
-      title: "Test Prompt",
+      name: "Test Prompt",
       description: "Test Description",
     };
 

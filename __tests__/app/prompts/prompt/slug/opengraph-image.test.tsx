@@ -7,6 +7,7 @@ import Image, {
 } from "@/app/prompts/prompt/[slug]/opengraph-image";
 import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
 import { ImageResponse } from "next/og";
+import { Prompt } from "@/lib/models/prompt-model";
 
 // Mock dependencies
 jest.mock("@/lib/actions/fetch-prompts-action", () => ({
@@ -41,8 +42,8 @@ describe("OpenGraph Image", () => {
 
   test("Renders image with prompt data", async () => {
     // Mock prompt data
-    const mockPrompt = {
-      title: "Test Prompt",
+    const mockPrompt: Prompt = {
+      name: "Test Prompt",
       description: "This is a test description",
       author: "Test Author",
       tags: ["tag1", "tag2"],

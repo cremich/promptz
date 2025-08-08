@@ -8,17 +8,17 @@ import { GraphQLResult } from "aws-amplify/api";
 import { Prompt } from "@/lib/models/prompt-model";
 
 interface PromptBySlugResponse {
-  listBySlug: {
+  listPromptBySlug: {
     items: {
       id?: string;
       name?: string;
       slug?: string;
       description?: string;
       tags?: string[];
-      instruction?: string;
+      content?: string;
       sourceURL?: string;
       howto?: string;
-      public?: string;
+      scope?: string;
       author: {
         id?: string;
         displayName?: string;
@@ -35,41 +35,20 @@ const appsync = generateServerClientUsingCookies<Schema>({
   cookies,
 });
 
-export async function fetchPromptSlug(id: string) {
-  const { data, errors } = await appsync.models.prompt.get(
-    {
-      id,
-    },
-    {
-      selectionSet: ["slug"],
-    },
-  );
-
-  if (errors && errors.length > 0) {
-    throw new Error(errors[0].message);
-  }
-
-  if (!data) {
-    return;
-  }
-
-  return data.slug;
-}
-
 export async function fetchPromptBySlug(slug: string) {
   const GET_PROMPT_BY_SLUG = `
   query ListPrompts($slug: String!) {
-    listBySlug(slug: $slug) {
+    listPromptBySlug(slug: $slug) {
       items {
         id
         name
         slug
         description
         tags
-        instruction
+        content
         sourceURL
         howto
-        public
+        scope
         author {
           id
           displayName
@@ -94,7 +73,7 @@ export async function fetchPromptBySlug(slug: string) {
     throw new Error("No data returned from query");
   }
 
-  const prompt = response.data.listBySlug.items[0];
+  const prompt = response.data.listPromptBySlug.items[0];
 
   if (!prompt) {
     return;
@@ -102,14 +81,14 @@ export async function fetchPromptBySlug(slug: string) {
 
   return {
     id: prompt.id,
-    title: prompt.name,
+    name: prompt.name,
     slug: prompt.slug,
     description: prompt.description,
     tags: prompt.tags,
-    instruction: prompt.instruction,
+    content: prompt.content,
     sourceURL: prompt.sourceURL,
     howto: prompt.howto,
-    public: prompt.public,
+    scope: prompt.scope,
     author: prompt.author ? prompt.author.displayName : "",
     authorId: prompt.author ? prompt.author.id : "",
   } as Prompt;

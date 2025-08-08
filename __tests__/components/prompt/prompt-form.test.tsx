@@ -43,7 +43,7 @@ describe("PromptForm", () => {
   });
 
   test("Renders form with all required elements", () => {
-    render(<PromptForm />);
+    render(<PromptForm tags={[]} />);
 
     // Check if basic information section is present
     expect(screen.getByText("Basic Information")).toBeInTheDocument();
@@ -69,7 +69,7 @@ describe("PromptForm", () => {
   });
 
   test("Form submission with required fields", () => {
-    const { container } = render(<PromptForm />);
+    const { container } = render(<PromptForm tags={[]} />);
 
     // Fill out required fields
     fireEvent.change(screen.getByLabelText("Title"), {
@@ -92,7 +92,7 @@ describe("PromptForm", () => {
   });
 
   test("Displays delete button only when prompt has an id", () => {
-    const { rerender } = render(<PromptForm />);
+    const { rerender } = render(<PromptForm tags={[]} />);
 
     // Without prompt prop, delete button should not be present
     expect(screen.queryByText("Delete Prompt")).not.toBeInTheDocument();
@@ -102,11 +102,12 @@ describe("PromptForm", () => {
       <PromptForm
         prompt={{
           id: "test-id",
-          title: "Test",
+          name: "Test",
           description: "Test",
-          instruction: "Test",
+          content: "Test",
           tags: [],
         }}
+        tags={[]}
       />,
     );
     expect(screen.getByText("Delete Prompt")).toBeInTheDocument();
@@ -115,16 +116,16 @@ describe("PromptForm", () => {
   test("Loads existing prompt data into form", () => {
     const testPrompt = {
       id: "test-id",
-      title: "Test Title",
+      name: "Test Title",
       description: "Test Description",
-      instruction: "Test Instruction",
+      content: "Test Instruction",
       tags: ["ide", "chat"],
       howto: "Test How-To",
       sourceURL: "https://test.com",
-      public: true,
+      scope: "PUBLIC",
     };
 
-    render(<PromptForm prompt={testPrompt} />);
+    render(<PromptForm prompt={testPrompt} tags={[]} />);
 
     // Check if form fields are populated with prompt data
     expect(screen.getByLabelText("Title")).toHaveValue("Test Title");
@@ -144,16 +145,16 @@ describe("PromptForm", () => {
         message: "Validation failed",
         success: false,
         errors: {
-          title: ["Title is required"],
+          name: ["Title is required"],
           description: ["Description is required"],
-          instruction: ["Instruction is required"],
+          content: ["Instruction is required"],
         },
       },
       jest.fn(),
       false,
     ]);
 
-    render(<PromptForm />);
+    render(<PromptForm tags={[]} />);
 
     // Check if error messages are displayed
     expect(screen.getByText("Title is required")).toBeInTheDocument();

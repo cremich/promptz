@@ -5,19 +5,20 @@ import {
   descriptionSchema,
   tagSchema,
   publicSchema,
+  scopeSchema,
 } from "@/lib/forms/schema-definitions";
 import { z } from "zod";
 
 export type Prompt = {
   id?: string;
-  title?: string;
+  name?: string;
   description?: string;
   tags?: string[];
-  instruction?: string;
+  content?: string;
   howto?: string;
   author?: string;
   authorId?: string;
-  public?: boolean;
+  scope?: string;
   slug?: string;
   sourceURL?: string;
   createdAt?: string;
@@ -29,22 +30,23 @@ export type Prompt = {
 export const promptFormSchema = z.object({
   id: idSchema,
   sourceURL: sourceURLSchema,
-  title: titleSchema,
+  name: titleSchema,
   description: descriptionSchema,
   howto: z
     .string()
     .trim()
     .max(4000, "How to must be less than 4000 characters")
     .optional(),
-  instruction: z
+  content: z
     .string()
     .trim()
     .min(10, "Prompt must be more than 10 characters")
     .max(4000, "Prompt must be less than 4000 characters"),
   tags: tagSchema,
-  public: publicSchema,
+  scope: scopeSchema,
 }); // Validation schema for search and filter params
 
+//TODO: refactor to use a single schema for both project rules and prompts
 export const promptSearchParamsSchema = z.object({
   query: z.string().optional(),
   sort: z.string().optional(),

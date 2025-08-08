@@ -5,6 +5,7 @@ import { configureDynamoDB } from "./dynamodb/resource";
 import { tagRelationsFunction } from "./functions/tag-relations/resource";
 import { configureMonitoring } from "./monitoring/resource";
 import { configureCognito } from "./cognito/resource.js";
+import { configureEventBridge } from "./eventbridge/resource.js";
 
 const backend = defineBackend({
   auth,
@@ -16,6 +17,7 @@ const dataResources = backend.data.resources;
 configureCognito(backend);
 configureDynamoDB(backend);
 configureMonitoring(backend);
+configureEventBridge(backend);
 
 if (process.env["PROMPTZ_ENV"] !== "sandbox") {
   for (const table of Object.values(

@@ -63,3 +63,4 @@ export const descriptionSchema = z
 
 export const tagSchema = z.array(z.string()).optional();
 export const publicSchema = z.boolean();
+export const scopeSchema = z.string();

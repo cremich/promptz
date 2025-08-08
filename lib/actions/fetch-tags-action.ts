@@ -183,7 +183,7 @@ export async function getPromptsAndRulesByTag(tagName: string): Promise<{
 
     const prompts = data.prompts.map((prompts) => {
       return {
-        title: prompts.prompt.name,
+        name: prompts.prompt.name,
         public: prompts.prompt.public,
         description: prompts.prompt.description,
         tags: prompts.prompt.tags,

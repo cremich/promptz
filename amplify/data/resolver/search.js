@@ -13,7 +13,7 @@ export function request(ctx) {
 
   // Initialize filter conditions
   const filter = {
-    public: { eq: true }, // Only return public prompts
+    scope: { eq: "PUBLIC" }, // Only return public prompts
   };
 
   // Add text search filter if query is provided

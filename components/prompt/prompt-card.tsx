@@ -32,7 +32,7 @@ export default function PromptCard({ prompt }: PromptCardProps) {
   return (
     <Link
       href={`/prompts/prompt/${prompt.slug}`}
-      aria-label={`Show ${prompt.title}`}
+      aria-label={`Show ${prompt.name}`}
     >
       <Card
         key={prompt.id}
@@ -49,7 +49,7 @@ export default function PromptCard({ prompt }: PromptCardProps) {
             )}
             {prompt.tags && <Tags tags={prompt.tags} />}
             <CardTitle className="text-lg font-semibold text-white group-hover:text-violet-300 transition-colors">
-              {prompt.title}
+              {prompt.name}
             </CardTitle>
           </div>
         </CardHeader>

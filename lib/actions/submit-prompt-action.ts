@@ -10,10 +10,10 @@ import { promptFormSchema } from "@/lib/models/prompt-model";
 export type FormState = {
   errors?: {
     id?: string[];
-    title?: string[];
+    name?: string[];
     description?: string[];
     howto?: string[];
-    instruction?: string[];
+    content?: string[];
     tags?: string[];
     api?: string[];
     sourceURL?: string[];
@@ -32,14 +32,16 @@ export async function onSubmitAction(
 ): Promise<FormState> {
   const formData = {
     id: data.get("id") as string,
-    title: data.get("title") as string,
+    name: data.get("name") as string,
     description: data.get("description") as string,
     howto: data.get("howto") as string,
-    instruction: data.get("instruction") as string,
+    content: data.get("content") as string,
     tags: data.getAll("tags"),
-    public: data.get("public") === "true" ? true : false,
+    scope: data.get("scope"),
     sourceURL: data.get("sourceURL") as string,
   };
+
+  console.log(formData);
 
   const parsed = promptFormSchema.safeParse(formData);
   if (!parsed.success) {
@@ -52,12 +54,12 @@ export async function onSubmitAction(
 
   const payload = {
     id: parsed.data.id,
-    name: parsed.data.title,
+    name: parsed.data.name,
     description: parsed.data.description,
     howto: parsed.data.howto,
-    instruction: parsed.data.instruction,
+    content: parsed.data.content,
     tags: parsed.data.tags,
-    public: parsed.data.public,
+    scope: parsed.data.scope,
     sourceURL: parsed.data.sourceURL,
   };
 

@@ -52,6 +52,13 @@ import { onSubmitAction, FormState } from "@/lib/actions/submit-prompt-action";
 import { deletePrompt } from "@/lib/actions/delete-prompt-action";
 import TagSheet from "@/components/forms/tag-sheet";
 import { Tag } from "@/lib/models/tags-model";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface PromptFormProps {
   prompt?: Prompt;
@@ -81,13 +88,13 @@ export default function PromptForm({ prompt, tags }: PromptFormProps) {
     resolver: zodResolver(promptFormSchema),
     defaultValues: {
       id: prompt?.id || "",
-      title: prompt?.title || "",
+      name: prompt?.name || "",
       description: prompt?.description || "",
-      instruction: prompt?.instruction || "",
+      content: prompt?.content || "",
       tags: prompt?.tags || [],
       howto: prompt?.howto || "",
       sourceURL: prompt?.sourceURL || "",
-      public: prompt?.public || false,
+      scope: prompt?.scope || "PRIVATE",
     },
   });
 
@@ -143,7 +150,7 @@ export default function PromptForm({ prompt, tags }: PromptFormProps) {
               <CardContent className="space-y-4">
                 <FormField
                   control={form.control}
-                  name="title"
+                  name="name"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="flex items-center gap-2">
@@ -156,7 +163,7 @@ export default function PromptForm({ prompt, tags }: PromptFormProps) {
                           className="text-white placeholder-white placeholder-opacity-50"
                         />
                       </FormControl>
-                      <FormMessage>{state.errors?.title}</FormMessage>
+                      <FormMessage>{state.errors?.name}</FormMessage>
                     </FormItem>
                   )}
                 />
@@ -234,32 +241,37 @@ export default function PromptForm({ prompt, tags }: PromptFormProps) {
                 />
                 <FormField
                   control={form.control}
-                  name="public"
+                  name="scope"
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-center justify-between">
                       <div className="space-y-0.5">
                         <FormLabel>Visibility</FormLabel>
-                        <FormDescription className="pr-10">
-                          Keep your prompt private as a draft or just for you. A
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="bg-black">
+                              <SelectValue placeholder="Select a privacy scope for your prompt" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="PRIVATE">Private</SelectItem>
+                            <SelectItem value="PUBLIC">Public</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormDescription>
+                          Keep your prompt private as a draft or just for you or
+                          make it public to share it with the community. A
                           private prompt can still be shared via URL but will
-                          not be listed on promptz.dev. Make your prompt public
-                          to share it with the community.
+                          not be listed on promptz.dev.
                         </FormDescription>
+                        <input
+                          type="hidden"
+                          name="scope"
+                          value={`${field.value}`}
+                        />
                       </div>
-                      <FormControl>
-                        <div>
-                          <Switch
-                            className="border-neutral-400"
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                          <input
-                            type="hidden"
-                            name="public"
-                            value={`${field.value}`}
-                          />
-                        </div>
-                      </FormControl>
                     </FormItem>
                   )}
                 />
@@ -281,7 +293,7 @@ export default function PromptForm({ prompt, tags }: PromptFormProps) {
               <CardContent className="space-y-4">
                 <FormField
                   control={form.control}
-                  name="instruction"
+                  name="content"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -291,7 +303,7 @@ export default function PromptForm({ prompt, tags }: PromptFormProps) {
                           className="min-h-[500px] text-white placeholder-white placeholder-opacity-50 font-mono"
                         />
                       </FormControl>
-                      <FormMessage>{state.errors?.instruction}</FormMessage>
+                      <FormMessage>{state.errors?.content}</FormMessage>
                     </FormItem>
                   )}
                 />

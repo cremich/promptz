@@ -53,7 +53,7 @@ export async function searchPrompts(
       .map((p) => {
         return {
           id: p.id || "",
-          title: p.name || "",
+          name: p.name || "",
           description: p.description || "",
           slug: p.slug || "",
           tags: p.tags,

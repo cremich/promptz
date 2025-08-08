@@ -52,14 +52,14 @@ jest.mock("@/components/common/source-url", () => {
 describe("PromptDetail", () => {
   const mockPrompt: Prompt = {
     id: "123",
-    title: "Test Prompt",
+    name: "Test Prompt",
     description: "This is a test prompt description",
-    instruction: "This is the prompt instruction",
+    content: "This is the prompt instruction",
     howto: "This is how to use the prompt",
     tags: ["test", "example"],
     slug: "test-prompt",
     author: "Test Author",
-    public: true,
+    scope: "PUBLIC",
     sourceURL: "https://example.com",
   };
 
@@ -103,7 +103,7 @@ describe("PromptDetail", () => {
   });
 
   test("Renders private badge when prompt is not public", async () => {
-    const privatePrompt = { ...mockPrompt, public: false };
+    const privatePrompt = { ...mockPrompt, scope: "PRIVATE" };
     render(await PromptDetail({ prompt: privatePrompt, isOwner: true }));
 
     // Check for Private badge

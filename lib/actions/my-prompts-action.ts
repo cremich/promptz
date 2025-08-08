@@ -34,15 +34,15 @@ export async function fetchMyPrompts(userId: string): Promise<Prompt[]> {
   return (data.prompts as Schema["prompt"]["type"][]).map((p) => {
     return {
       id: p.id,
-      title: p.name,
+      name: p.name,
       description: p.description,
       author: data.displayName || "",
       authorId: p.owner || "",
       tags: (p.tags || []).filter((tag): tag is string => tag !== null),
       slug: p.slug || "",
-      instruction: p.instruction,
+      content: p.content,
       howto: p.howto || "",
-      public: p.public || false,
+      scope: p.scope || "PRIVATE",
       createdAt: p.createdAt || "",
       updatedAt: p.updatedAt || "",
     };

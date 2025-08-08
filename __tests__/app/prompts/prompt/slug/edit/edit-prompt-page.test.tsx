@@ -5,6 +5,8 @@ import EditPromptPage from "@/app/prompts/prompt/[slug]/edit/page";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
 import { redirect, notFound } from "next/navigation";
+import { Prompt } from "@/lib/models/prompt-model";
+import { Tag } from "@/lib/models/tags-model";
 
 // Mock dependencies
 jest.mock("@/lib/actions/cognito-auth-action", () => ({
@@ -36,12 +38,12 @@ jest.mock("@/components/prompt/prompt-form", () => {
     prompt,
     tags,
   }: {
-    prompt: any;
-    tags: any[];
+    prompt: Prompt;
+    tags: Tag[];
   }) {
     return (
       <div data-testid="prompt-form">
-        <div data-testid="prompt-title">{prompt.title}</div>
+        <div data-testid="prompt-title">{prompt.name}</div>
         <div data-testid="tags-count">{tags.length}</div>
       </div>
     );
@@ -90,9 +92,9 @@ describe("EditPromptPage", () => {
     (fetchCurrentAuthUser as jest.Mock).mockResolvedValue(mockUser);
 
     // Mock prompt with same author
-    const mockPrompt = {
+    const mockPrompt: Prompt = {
       id: "prompt-123",
-      title: "Test Prompt",
+      name: "Test Prompt",
       slug: "test-prompt",
       authorId: "user-123",
     };

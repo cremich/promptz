@@ -21,7 +21,7 @@ jest.mock("@/components/common/tags", () => {
 describe("PromptCard", () => {
   const basePrompt: Prompt = {
     id: "test-id",
-    title: "Test Prompt",
+    name: "Test Prompt",
     description: "Test description",
     slug: "test-prompt",
     author: "Test Author",
