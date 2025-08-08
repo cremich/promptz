@@ -13,17 +13,7 @@ const backend = defineBackend({
   tagRelationsFunction,
 });
 
-const dataResources = backend.data.resources;
 configureCognito(backend);
 configureDynamoDB(backend);
 configureMonitoring(backend);
 configureEventBridge(backend);
-
-if (process.env["PROMPTZ_ENV"] !== "sandbox") {
-  for (const table of Object.values(
-    dataResources.cfnResources.amplifyDynamoDbTables,
-  )) {
-    table.deletionProtectionEnabled = true;
-    table.pointInTimeRecoveryEnabled = true;
-  }
-}

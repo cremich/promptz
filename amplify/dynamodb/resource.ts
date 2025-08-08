@@ -70,4 +70,13 @@ export function configureDynamoDB(
       reportBatchItemFailures: true, // Enable partial batch failure reporting
     }),
   );
+
+  if (process.env["PROMPTZ_ENV"] !== "sandbox") {
+    for (const table of Object.values(
+      backend.data.resources.cfnResources.amplifyDynamoDbTables,
+    )) {
+      table.deletionProtectionEnabled = true;
+      table.pointInTimeRecoveryEnabled = true;
+    }
+  }
 }
