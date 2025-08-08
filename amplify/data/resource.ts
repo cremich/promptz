@@ -2,24 +2,10 @@ import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 import { postAuthenticationFunction } from "../auth/post-authentication/resource";
 import { userModel } from "./models/user";
 import { tagModel } from "./models/tags";
+import { searchSchema } from "./models/search";
 const schema = a
   .schema({
-    searchResult: a.customType({
-      id: a.id(),
-      name: a.string(),
-      tags: a.string().array(),
-      slug: a.string(),
-      description: a.string(),
-      createdAt: a.string(),
-      updatedAt: a.string(),
-      copyCount: a.integer(),
-      downloadCount: a.integer(),
-    }),
-    paginatedSearchResult: a.customType({
-      results: a.ref("searchResult").array(),
-      nextToken: a.string(),
-    }),
-
+    ...searchSchema,
     ...tagModel,
 
     // Join table for many-to-many relationships between tags and prompts
@@ -127,21 +113,6 @@ const schema = a
           entry: "./handler/incrementCopyCount.js",
         }),
       ),
-    searchPrompts: a
-      .query()
-      .arguments({
-        query: a.string(),
-        tags: a.string().array(),
-        nextToken: a.string(),
-      })
-      .returns(a.ref("paginatedSearchResult"))
-      .authorization((allow) => [allow.publicApiKey()])
-      .handler(
-        a.handler.custom({
-          dataSource: a.ref("prompt"),
-          entry: "./handler/search.js",
-        }),
-      ),
 
     projectRule: a
       .model({
@@ -228,21 +199,6 @@ const schema = a
         a.handler.custom({
           dataSource: a.ref("projectRule"),
           entry: "./handler/incrementDownloadCount.js",
-        }),
-      ),
-    searchProjectRules: a
-      .query()
-      .arguments({
-        query: a.string(),
-        tags: a.string().array(),
-        nextToken: a.string(),
-      })
-      .returns(a.ref("paginatedSearchResult"))
-      .authorization((allow) => [allow.publicApiKey()])
-      .handler(
-        a.handler.custom({
-          dataSource: a.ref("projectRule"),
-          entry: "./handler/search.js",
         }),
       ),
   })
