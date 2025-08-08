@@ -3,7 +3,6 @@ import {
   titleSchema,
   descriptionSchema,
   tagSchema,
-  publicSchema,
   idSchema,
   scopeSchema,
 } from "@/lib/forms/schema-definitions";

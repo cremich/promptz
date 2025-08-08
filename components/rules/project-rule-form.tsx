@@ -43,7 +43,6 @@ import {
 import Tags from "@/components/common/tags";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
-import { Switch } from "@/components/ui/switch";
 import { deleteProjectRule } from "@/lib/actions/delete-rule-action";
 import TagSheet from "@/components/forms/tag-sheet";
 import {

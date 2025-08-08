@@ -4,7 +4,6 @@ import {
   titleSchema,
   descriptionSchema,
   tagSchema,
-  publicSchema,
   scopeSchema,
 } from "@/lib/forms/schema-definitions";
 import { z } from "zod";

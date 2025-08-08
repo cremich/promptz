@@ -47,7 +47,6 @@ import {
 import Tags from "@/components/common/tags";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
-import { Switch } from "@/components/ui/switch";
 import { onSubmitAction, FormState } from "@/lib/actions/submit-prompt-action";
 import { deletePrompt } from "@/lib/actions/delete-prompt-action";
 import TagSheet from "@/components/forms/tag-sheet";

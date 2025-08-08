@@ -62,5 +62,4 @@ export const descriptionSchema = z
   .max(500, "Description must be less than 500 characters");
 
 export const tagSchema = z.array(z.string()).optional();
-export const publicSchema = z.boolean();
 export const scopeSchema = z.string();
