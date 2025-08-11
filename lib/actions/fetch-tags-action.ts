@@ -41,6 +41,52 @@ interface TagWithCountResponse {
   };
 }
 
+interface TagWithRelationsResponse {
+  getTag: {
+    name?: string;
+    description?: string;
+    category?: string;
+    prompts: {
+      items: [
+        {
+          prompt: {
+            name: string;
+            scope: string;
+            description: string;
+            tags: string[];
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            copyCount: number;
+            downloadCount: number;
+            slug: string;
+            sourceURL: string;
+          };
+        },
+      ];
+    };
+    rules: {
+      items: [
+        {
+          rule: {
+            name: string;
+            scope: string;
+            description: string;
+            tags: string[];
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            copyCount: number;
+            downloadCount: number;
+            slug: string;
+            sourceURL: string;
+          };
+        },
+      ];
+    };
+  };
+}
+
 // Initialize AppSync client
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
@@ -154,26 +200,63 @@ export async function getPromptsAndRulesByTag(tagName: string): Promise<{
   rules: ProjectRule[];
   tag?: Tag;
 }> {
+  const GET_TAG_WITH_RELATIONS = `
+  query GetTagWithRelations($name: String!) {
+    getTag(name: $name) {
+      category
+      description
+      name
+      prompts {
+        items {
+          prompt {
+            name
+            scope
+            description
+            tags
+            id
+            createdAt
+            updatedAt
+            copyCount
+            downloadCount
+            slug
+            sourceURL
+          }
+        }
+      }
+      rules {
+        items {
+           rule {
+            name
+            scope
+            description
+            tags
+            id
+            createdAt
+            updatedAt
+            copyCount
+            downloadCount
+            slug
+            sourceURL
+          }
+        }
+      }  
+    }
+  }
+`;
+
   try {
-    const { data, errors } = await appsync.models.tag.get(
-      {
+    const result = (await appsync.graphql({
+      query: GET_TAG_WITH_RELATIONS,
+      variables: {
         name: tagName,
       },
-      {
-        selectionSet: [
-          "category",
-          "name",
-          "description",
-          "prompts.prompt.*",
-          "rules.rule.*",
-        ],
-      },
-    );
-    if (errors && errors.length > 0) {
-      throw new Error(errors[0].message);
+    })) as GraphQLResult<TagWithRelationsResponse>;
+
+    if (result.errors && result.errors.length > 0) {
+      throw new Error(result.errors[0].message);
     }
 
-    if (!data) {
+    if (!result.data) {
       return {
         prompts: [],
         rules: [],
@@ -181,42 +264,51 @@ export async function getPromptsAndRulesByTag(tagName: string): Promise<{
       };
     }
 
-    const prompts = data.prompts.map((prompts) => {
-      return {
-        name: prompts.prompt.name,
-        public: prompts.prompt.public,
-        description: prompts.prompt.description,
-        tags: prompts.prompt.tags,
-        id: prompts.prompt.id,
-        createdAt: prompts.prompt.createdAt,
-        updatedAt: prompts.prompt.updatedAt,
-        copyCount: prompts.prompt.copyCount,
-        slug: prompts.prompt.slug,
-        sourceURL: prompts.prompt.sourceURL,
-      } as Prompt;
-    });
+    const tag = result.data.getTag;
 
-    const rules = data.rules.map((rules) => {
-      return {
-        name: rules.rule.name,
-        scope: rules.rule.public,
-        description: rules.rule.description,
-        tags: rules.rule.tags,
-        id: rules.rule.id,
-        createdAt: rules.rule.createdAt,
-        updatedAt: rules.rule.updatedAt,
-        slug: rules.rule.slug,
-        sourceURL: rules.rule.sourceURL,
-      } as ProjectRule;
-    });
+    const prompts = tag.prompts.items
+      .filter((p) => p.prompt.scope === "PUBLIC")
+      .map((p) => {
+        return {
+          name: p.prompt.name,
+          scope: p.prompt.scope,
+          description: p.prompt.description,
+          tags: p.prompt.tags,
+          id: p.prompt.id,
+          createdAt: p.prompt.createdAt,
+          updatedAt: p.prompt.updatedAt,
+          copyCount: p.prompt.copyCount,
+          downloadCount: p.prompt.downloadCount,
+          slug: p.prompt.slug,
+          sourceURL: p.prompt.sourceURL,
+        } as Prompt;
+      });
+
+    const rules = tag.rules.items
+      .filter((r) => r.rule.scope === "PUBLIC")
+      .map((r) => {
+        return {
+          name: r.rule.name,
+          scope: r.rule.scope,
+          description: r.rule.description,
+          tags: r.rule.tags,
+          id: r.rule.id,
+          createdAt: r.rule.createdAt,
+          updatedAt: r.rule.updatedAt,
+          copyCount: r.rule.copyCount,
+          downloadCount: r.rule.downloadCount,
+          slug: r.rule.slug,
+          sourceURL: r.rule.sourceURL,
+        } as ProjectRule;
+      });
 
     return {
       tag: {
-        name: data.name,
-        description: data.description || "",
+        name: tag.name || "",
+        description: tag.description || "",
       },
-      prompts: prompts.filter((p) => p.public),
-      rules: rules.filter((r) => r.public),
+      prompts: prompts,
+      rules: rules,
     };
   } catch (error) {
     console.error("Error fetching prompts by tag:", error);

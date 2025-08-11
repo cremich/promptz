@@ -153,6 +153,7 @@ async function createTagRelationships(
             [itemType === "prompt" ? "promptId" : "ruleId"]: itemId,
             tagName: tagName,
             createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           },
         },
       }));

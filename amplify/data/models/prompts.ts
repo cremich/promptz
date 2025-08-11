@@ -32,6 +32,8 @@ export const promptModel = {
       tagName: a.string().required(),
       prompt: a.belongsTo("prompt", "promptId"),
       tag: a.belongsTo("tag", "tagName"),
+      createdAt: a.datetime(),
+      updatedAt: a.datetime(),
     })
     .identifier(["promptId", "tagName"])
     .authorization((allow) => [

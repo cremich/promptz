@@ -32,6 +32,8 @@ export const projectRuleModel = {
       tagName: a.string().required(),
       rule: a.belongsTo("projectRule", "ruleId"),
       tag: a.belongsTo("tag", "tagName"),
+      createdAt: a.datetime(),
+      updatedAt: a.datetime(),
     })
     .identifier(["ruleId", "tagName"])
     .authorization((allow) => [
