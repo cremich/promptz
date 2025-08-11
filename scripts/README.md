@@ -207,3 +207,7 @@ Or check the Amplify console for your deployed resources.
 ### `update_owner_attribute.js`
 
 Script to update owner attributes in DynamoDB table entries. See the script file for detailed usage instructions.
+
+### `update_scope.js`
+
+Script to update scope attributes in DynamoDB table entries. See the script file for detailed usage instructions.
