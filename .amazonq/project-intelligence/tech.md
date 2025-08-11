@@ -20,10 +20,11 @@
 ### Backend and Infrastructure
 
 - **AWS Amplify Gen 2**: Full-stack development platform with backend-as-code
-- **AWS AppSync**: Managed GraphQL API service with real-time capabilities
+- **AWS AppSync**: Managed GraphQL API service with real-time capabilities and pipeline resolvers
 - **Amazon Cognito**: User authentication and authorization service
-- **Amazon DynamoDB**: NoSQL database for scalable data storage
-- **AWS Lambda**: Serverless compute for business logic and custom resolvers
+- **Amazon DynamoDB**: NoSQL database for scalable data storage with streams for CDC
+- **Amazon EventBridge**: Custom event bus for domain event publishing and messaging
+- **AWS Lambda**: Serverless compute for business logic, custom resolvers, and stream processing
 - **Amazon SES**: Email service for notifications (production environment)
 
 ### Development Tools
@@ -62,6 +63,7 @@ promptz/
 ├── .amazonq/                    # Amazon Q Developer configuration
 │   ├── hooks/                   # Context hooks for Q CLI
 │   ├── project-intelligence/    # Project documentation
+│   ├── cli-agents/              # CLI agent configurations
 │   └── rules/                   # Project rules for coding standards
 ├── .amplify/                    # Amplify generated files
 ├── .github/                     # GitHub workflows and templates
@@ -74,8 +76,16 @@ promptz/
 │   └── lib/                     # Library function tests
 ├── amplify/                     # Amplify backend configuration
 │   ├── auth/                    # Authentication configuration
+│   ├── cognito/                 # Cognito-specific configurations
 │   ├── data/                    # GraphQL schema and resolvers
+│   │   ├── models/              # Data model definitions
+│   │   ├── resolver/            # Custom JavaScript resolvers
+│   │   ├── mutations.ts         # Pipeline mutation definitions
+│   │   └── resource.ts          # Data resource configuration
+│   ├── dynamodb/                # DynamoDB configuration and streams
+│   ├── eventbridge/             # EventBridge event bus configuration
 │   ├── functions/               # Lambda functions
+│   ├── monitoring/              # Monitoring and observability
 │   └── backend.ts               # Backend configuration
 ├── app/                         # Next.js App Router pages
 │   ├── (auth)/                  # Authentication pages
@@ -116,6 +126,7 @@ promptz/
 ├── scripts/                     # Utility scripts
 │   ├── migrate_tag_relationships.js
 │   ├── seed_tags.js
+│   ├── update_scope.js          # Scope attribute migration
 │   └── update_owner_attribute.js
 └── configuration files          # Various config files
 ```

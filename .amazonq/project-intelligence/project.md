@@ -110,27 +110,31 @@ journey
 
 ### Recently Completed Features
 
-- **Tag-Based Discoverability** (Issue #93): Enhanced tag system with many-to-many relationships
-- **Project Rules Support** (Issue #86): Complete implementation of Amazon Q project rules
-- **SEO Improvements** (Issue #85): Slug-based URLs and sitemap generation
-- **MCP Server Integration** (Issue #84): Model Context Protocol server for AI assistant integration
-- **User Management System**: Authentication and user profile management
-- **Prompt Analytics**: Copy count and popularity tracking
+- **EventBridge Integration**: Implemented Amazon EventBridge custom event bus with pipeline resolvers for domain event publishing (prompt.saved, prompt.deleted, prompt.copied, projectrule.saved, projectrule.deleted, projectrule.copied, projectrule.downloaded)
+- **API Refactoring and Code Organization** (Issues #90, #92, #94): Complete restructuring of server actions, model definitions, and project organization for better maintainability
+- **Pipeline Resolvers Architecture**: Refactored AppSync mutations to use two-step pipeline resolvers that combine data operations with event publishing
+- **User Data Privacy Protection**: Removed sensitive user data (email, username) from GraphQL API exposure to minimize data exposure and comply with privacy best practices
+- **Tag-Based Discoverability** (Issue #93): Enhanced tag system with many-to-many relationships, tag-specific pages, and improved SEO
+- **Project Rules Sitemap Integration** (Issue #103): Added project rules to sitemap.xml with separate sitemap files for better search engine indexing
+- **Scope Attribute Migration**: Migrated from boolean `public` attribute to enum-based `scope` attribute (PRIVATE/PUBLIC) for better data modeling
+- **UI/UX Improvements for prompt visibility** (Issue #98): Better visibility controls and user guidance for prompt/rule visibility toggles
 
 ### Active Development (Open Issues)
 
-- **Token Calculation** (Issue #102): Implement approximate token counting for prompts and rules
-- **Context Hooks Support** (Issue #101): Add support for Amazon Q CLI context hooks
-- **MCP Server Listings** (Issue #100): Curated catalog of compatible MCP servers
-- **UI/UX Improvements** (Issue #98): Better visibility controls and user guidance
-- **GitHub Integration** (Issue #88): Collaborative updates through GitHub Actions
+- **Token Calculation** (Issue #102): Implement approximate token counting for prompts and rules using Anthropic TypeScript Tokenizer
+- **Context Hooks Support** (Issue #101): Add support for Amazon Q CLI context hooks to help developers discover proven context hook commands
+- **MCP Server Listings** (Issue #100): Curated catalog of compatible MCP servers with filtering by use cases and vendors
+- **GitHub Integration** (Issue #88): Collaborative updates through GitHub Actions with API hooks for publishing
 
 ### Technical Debt and Improvements
 
-- Enhanced search functionality optimization
+- Enhanced search functionality optimization (pagination and caching needed for scalability beyond 20,000 requests/day)
 - Performance improvements for large content libraries
 - Mobile responsiveness enhancements
 - Accessibility compliance improvements
+- Rate limiting and usage quotas for public API
+- API versioning for GraphQL API
+- Automated monitoring alerts and operational runbooks
 
 ## Success Metrics
 
@@ -159,6 +163,7 @@ journey
 ### Long-term (6+ months)
 
 - Enhanced MCP server capabilities and features
+- GitHub integration for collaborative updates (Issue #88)
 - Advanced personalization features
 - Multi-language support
 - Additional Amazon Q Developer capability integrations

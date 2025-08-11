@@ -1,0 +1,35 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/refs/heads/main/schemas/agent-v1.json",
+  "name": "project-intelligence",
+  "description": "",
+  "prompt": "Your task is to maintain a documentation system called Project Intelligence as a living documentation throughout the lifecycle of this codebase.\n\nYou have access to tools that help you to gather information and additional context. Use these tools appropriate:\n\n- You can read and write files with the fs_read and fs_write tools.\n- You can read, create, update issues and their comments with the github tools.\n- You can read documentation and code examples of libraries and SDKs with the context7 tools.\n\nWhen initializing or updating the the project intelligence documentation:\n\n1. Read all files to understand the codebase of the application.\n2. Gather information about the current state of development based on the product backlog from tools provided by the Github MCP server.\n3. Once you collected all required information, create the core files.\n4. Ask relevant questions to improve the documentation and fulfill the task to the best of your ability.\n5. Use my answers on your questions to update the relevant sections of the documentation.\n6. Make a critical sense-check of the finalized documentation and proof-read against the guidelines.\n7. End with a final report of the initialization or update process.\n\nYou must update the Project Intelligence when:\n\n1. You discovered new project patterns\n2. After closing features or bugfixes\n3. When the user requests an explicit update with 'update project intelligence'\n\nYour goal is to help engineers improve their productivity by providing detailed, and up-to-date documentation.",
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    }
+  },
+  "tools": ["fs_read", "fs_write", "execute_bash", "@github", "@context7"],
+  "toolAliases": {},
+  "allowedTools": ["fs_read"],
+  "resources": [
+    "file://README.md",
+    "file://.amazonq/project-intelligence/*.md",
+    "file://.amazonq/rules/project-intelligence.md"
+  ],
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "sh .amazonq/hooks/git.sh",
+        "timeout_ms": 10000,
+        "cache_ttl_seconds": 300
+      }
+    ]
+  },
+  "toolsSettings": {
+    "fs_write": {
+      "allowedPaths": [".amazonq/project-intelligence/**"]
+    }
+  },
+  "useLegacyMcpJson": true
+}

@@ -11,6 +11,7 @@ architecture-beta
     group api(cloud)[API Layer]
     group logic(cloud)[Business Logic Layer]
     group data(cloud)[Data Layer]
+    group messaging(cloud)[Messaging Layer]
     group external(cloud)[External Integrations]
 
     service nextjs(logos:aws-amplify)[AWS Amplify] in frontend
@@ -20,11 +21,13 @@ architecture-beta
     service email(logos:aws-ses)[Amazon SES] in auth
 
     service appsync(logos:aws-appsync)[AWS AppSync GraphQL] in api
-    service resolvers(server)[Custom JS Resolvers] in logic
+    service resolvers(server)[Pipeline Resolvers] in logic
 
     service lambda(logos:aws-lambda)[CDC Functions] in data
     service dynamodb(logos:aws-dynamodb)[Amazon DynamoDB] in data
     service kinesis(logos:aws-kinesis)[Amazon DynamoDB streams] in data
+
+    service eventbridge(logos:aws-eventbridge)[Amazon EventBridge] in messaging
 
     service mcp(server)[MCP Server] in external
 
@@ -35,6 +38,7 @@ architecture-beta
     postauth:R --> L:dynamodb
     appsync:R --> L:resolvers
     resolvers:B --> T:dynamodb
+    resolvers:R --> L:eventbridge
     dynamodb:R --> L:kinesis
     lambda:T --> B:kinesis
     lambda:R --> B:dynamodb
@@ -69,7 +73,19 @@ The **API Layer** provides the GraphQL interface for data operations:
 
 #### Business Logic Layer
 
-The **Business Logic Layer** contains custom javascript resolver functions to handle business logic including search functionality, data validation, and custom mutations like `savePrompt`, `copyPrompt`, and analytics tracking.
+The **Business Logic Layer** contains pipeline resolvers that handle complex business operations:
+
+- **Pipeline Resolvers**: Multi-step resolvers that combine data operations with event publishing. Each mutation (save, delete, copy, download) uses a two-step pipeline: first executing the DynamoDB operation, then publishing events to EventBridge.
+- **Custom JavaScript Resolvers**: Handle business logic including search functionality, data validation, and custom mutations like `savePrompt`, `copyPrompt`, and analytics tracking.
+- **Event Integration**: All mutations automatically emit domain events (e.g., "prompt.saved", "prompt.deleted", "prompt.copied") to EventBridge for downstream processing and analytics.
+
+#### Messaging Layer
+
+The **Messaging Layer** manages the required messaging infrastructure to support communication between components.
+
+- **Amazon EventBridge**: Custom event bus that receives domain events from AppSync pipeline resolvers. Events include "prompt.saved", "prompt.deleted", "prompt.copied", "projectrule.saved", "projectrule.deleted", "projectrule.copied", and "projectrule.downloaded".
+- **Event-Driven Architecture**: Enables loose coupling between components and supports future integrations like analytics, notifications, or third-party webhooks.
+- **Pipeline Integration**: Seamlessly integrated with AppSync mutations through pipeline resolvers that first perform data operations, then emit corresponding events.
 
 #### Data Layer
 
@@ -85,14 +101,16 @@ The **Data Layer** manages persistent storage and data streaming:
 The **External Integrations** layer handles third-party services and protocols:
 
 - **MCP Server**: Model Context Protocol server that allows AI assistants to access Promptz data directly. Provides GraphQL endpoint configuration and API key access for seamless integration with Amazon Q Developer and other AI tools.
+- **CLI Agents**: Amazon Q Developer CLI agents configured for operations and project intelligence tasks, including Playwright integration for E2E testing and GitHub integration for repository management.
 
 ### Key Relationships and Data Flow
 
 1. **User Authentication Flow**: Users authenticate through Cognito → PostAuth trigger creates/updates user record → JWT tokens enable API access
-2. **Content Management**: Authenticated users create prompts/rules → Custom resolvers validate and store data → Tag relations are automatically maintained via DynamoDB streams
+2. **Content Management**: Authenticated users create prompts/rules → Pipeline resolvers validate and store data → Events published to EventBridge → Tag relations are automatically maintained via DynamoDB streams
 3. **Public Access**: Anonymous users access public content via API key → AppSync serves cached responses → Search and browse functionality available without authentication
-4. **MCP Integration**: AI assistants connect via MCP server → GraphQL queries retrieve relevant prompts/rules → Formatted responses enable in-context usage
-5. **Analytics Tracking**: Copy/download actions trigger mutations → Analytics counters updated → Usage patterns tracked for content popularity
+4. **Event-Driven Operations**: All mutations (save, delete, copy, download) trigger pipeline resolvers → First step performs data operation → Second step publishes domain events to EventBridge
+5. **MCP Integration**: AI assistants connect via MCP server → GraphQL queries retrieve relevant prompts/rules → Formatted responses enable in-context usage
+6. **Analytics Tracking**: Copy/download actions trigger mutations → Analytics counters updated → Usage patterns tracked for content popularity
 
 ### Security and Authorization Model
 
@@ -116,10 +134,7 @@ erDiagram
 
     User {
         string id PK
-        string username
-        string email
         string displayName
-        string owner
         datetime createdAt
         datetime updatedAt
     }
@@ -129,13 +144,14 @@ erDiagram
         string name
         string slug
         string description
-        string instruction
+        string content
         string howto
         string sourceURL
         string owner FK
-        boolean public
+        enum scope "PRIVATE | PUBLIC"
         array tags
         integer copyCount
+        integer downloadCount
         datetime createdAt
         datetime updatedAt
     }
@@ -148,7 +164,7 @@ erDiagram
         string content
         string sourceURL
         string owner FK
-        boolean public
+        enum scope "PRIVATE | PUBLIC"
         array tags
         integer copyCount
         integer downloadCount
@@ -183,11 +199,29 @@ erDiagram
 - **Rationale**: Better query performance, enhanced discoverability, SEO benefits
 - **Trade-offs**: Increased complexity, data migration requirements
 
-### 4. Passwordless Authentication
+### 4. Scope Attribute Migration
+
+- **Decision**: Migrate from boolean `public` attribute to enum-based `scope` attribute
+- **Rationale**: Better data modeling, support for secondary indices, clearer intent, and future extensibility for additional visibility levels
+- **Trade-offs**: Required data migration script, temporary complexity during transition
+
+### 5. Passwordless Authentication
 
 - **Decision**: Use Amazon Cognito with email-based passwordless login
 - **Rationale**: Improved user experience, reduced security risks, lower friction
 - **Trade-offs**: Email dependency, potential delivery issues, limited customization
+
+### 6. Messaging with EventBridge
+
+- **Decision**: Implement Amazon EventBridge for domain event publishing from AppSync mutations
+- **Rationale**: Enable loose coupling, support future integrations, and provide audit trail for all content operations
+- **Trade-offs**: Added complexity in pipeline resolvers, additional AWS service dependency, eventual consistency considerations
+
+### 7. User Data Privacy Protection
+
+- **Decision**: Remove sensitive user data (email, username) from GraphQL API exposure
+- **Rationale**: Minimize data exposure, comply with privacy best practices, reduce attack surface
+- **Trade-offs**: Limited user profile information available to clients, requires careful data modeling
 
 ## Security Architecture
 
@@ -215,6 +249,29 @@ sequenceDiagram
     D->>L: Response
     L->>A: Return data
     A->>U: GraphQL response
+```
+
+### Event-Driven Operations
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant A as AppSync
+    participant R1 as Data Resolver
+    participant D as DynamoDB
+    participant R2 as Event Resolver
+    participant E as EventBridge
+
+    U->>A: Mutation (save/delete/copy)
+    A->>R1: Execute first resolver
+    R1->>D: Perform data operation
+    D->>R1: Return result
+    R1->>A: Store result in stash
+    A->>R2: Execute second resolver
+    R2->>E: Publish domain event
+    E->>R2: Confirm event published
+    R2->>A: Return original result
+    A->>U: Return mutation result
 ```
 
 ### Authorization Levels
@@ -305,7 +362,7 @@ sequenceDiagram
 
 ### Data Migration Strategy
 
-- **Migration Scripts**: Developer-executed scripts for schema changes
+- **Migration Scripts**: Developer-executed scripts for schema changes (e.g., scope attribute migration)
 - **Backward Compatibility**: Essential for schema evolution
 - **Data Protection**: DynamoDB tables configured with deletion protection and PITR
 - **Staged Rollouts**: Changes tested on staging before production deployment
@@ -331,6 +388,7 @@ sequenceDiagram
 - **No Feature Flags**: No mechanism for feature flags or gradual rollouts
 - **No Rate Limiting**: No rate limiting or usage quotas implemented for public API
 - **No API Versioning**: No explicit versioning implemented for GraphQL API
+- **Search Scalability**: Current search implementation lacks pagination and caching, limiting scalability beyond 20,000 requests per day
 
 ## Scalability Considerations
 

@@ -1,14 +1,9 @@
 # Amazon Q Developer Project Intelligence
 
-## Preamble
-
-- Your task is to maintain a documentation system called project intelligence as a living documentation throughout the lifecycle of this codebase.
-- Project intelligence helps you to maintain comprehensive context about this application. Think of it as your long term memory.
-
 ## Guidelines
 
 - Before writing the documentation, ask all relevant questions to understand the context of this codebase.
-- Select and use available tools specialized in gathering external context such as documentation, wikis, or issue trackers.
+- You must use the tools provided to you.
 - The documentation must be specific with a focus on simplicity and clearance.
 - Write documentation in prose.
 - Prevent repetitions and ambiguity in the documentation.
