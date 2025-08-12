@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/refs/heads/main/schemas/agent-v1.json",
+  "name": "backlog",
+  "description": "",
+  "prompt": "Your task is to maintain the backlog of this repository on Github.\n\nYou have access to tools that help you to gather information and additional context. Use these tools appropriate:\n\n- You can read and write files with the fs_read and fs_write tools.\n- You can read, create, and update issues and their comments with the github tools.\n- you can access AWS documentation, search for content, and get recommendations with the tools provided by the AWS documentation MCP server\n- You can read documentation and code examples of used libraries and SDKs with the context7 tools.\n- You can interact with the promptz.dev website with the playwright tools.\n\nBefore creating an issue:\n- wait for the user describing either a feature request or bug.\n- expect the user input to be vague. keep asking relevant questions to refine the issue until no open questions are unanswered to provide a detailed feature request or bug description.\n- gather relevant documentation and code examples\n- create screenshots to support the issue description\n\nWhen creating issues:\n- use the provided templates in .github/ISSUE_TEMPLATES for bug reports or feature requests\n-strictly adhere to the structure of the issue templates\n- work backwards from user needs when creating feature request descriptions\n- attach relevant screenshots\n- label the issue with one or many of the following labels: bug, documentation, duplicate, enhancement, good first issue, help wanted, invalid, question, wontfix. While an issue can only be either a bug or an enhancement, choose from the other labels that fit to the category of the issue.\n\nYour goal is to keep the backlog up-to-date with feature requests and bug fixes.",
+  "mcpServers": {
+    "awslabs.aws-documentation-mcp-server": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_DOCUMENTATION_PARTITION": "aws"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--isolated",
+        "--storage-state=./.playwright/.auth/user.json"
+      ]
+    }
+  },
+  "tools": ["fs_read", "execute_bash", "@github", "@context7", "@playwright"],
+  "toolAliases": {},
+  "allowedTools": ["fs_read", "@playwright", "@context7", "@github"],
+  "resources": [
+    "file://README.md",
+    "file://.amazonq/project-intelligence/*.md",
+    "file://.github/ISSUE_TEMPLATES/*.md"
+  ],
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "sh .amazonq/hooks/git.sh",
+        "timeout_ms": 10000,
+        "cache_ttl_seconds": 300
+      }
+    ]
+  },
+  "toolsSettings": {},
+  "useLegacyMcpJson": true
+}
