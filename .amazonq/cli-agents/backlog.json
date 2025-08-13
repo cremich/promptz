@@ -28,7 +28,14 @@
       ]
     }
   },
-  "tools": ["fs_read", "execute_bash", "@github", "@context7", "@playwright"],
+  "tools": [
+    "fs_read",
+    "execute_bash",
+    "@github",
+    "@context7",
+    "@playwright",
+    "@awslabs"
+  ],
   "toolAliases": {},
   "allowedTools": ["fs_read", "@playwright", "@context7", "@github"],
   "resources": [
