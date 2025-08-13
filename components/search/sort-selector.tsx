@@ -26,7 +26,7 @@ export default function SortSelector() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentSort = searchParams.get("sort") || "trending";
+  const currentSort = searchParams.get("sort") || "created_at:desc";
 
   const handleSortChange = (value: string) => {
     const params = new URLSearchParams(searchParams);

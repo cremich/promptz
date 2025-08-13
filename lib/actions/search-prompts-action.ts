@@ -63,7 +63,7 @@ export async function searchPrompts(
         } as Prompt;
       });
 
-    const sortParam = validatedParams.sort || "trending";
+    const sortParam = validatedParams.sort || "created_at:desc";
     const [sortField, sortDirection] = sortParam.split(":");
 
     if (sortField === "created_at") {

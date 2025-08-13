@@ -1,15 +1,24 @@
-# Next.js rules
+# Development Guidelines for Next.js
 
-## General
+## Core Philosophy
 
-- Follow the user’s requirements carefully & to the letter.
+TEST-DRIVEN DEVELOPMENT IS NON-NEGOTIABLE. Every single line of production code must be written in response to a failing test. No exceptions. This is not a suggestion or a preference - it is the fundamental practice that enables all other principles in this document.
+
+All work should be done in small, incremental changes that maintain a working state throughout development.
+
+## Key Principles
+
+- Follow the user’s requirements carefully and to the letter.
+- Always write tests first following Test-Driven Development principles
+- Test behavior, not implementation
+- Typescript with strict type checking
 - Always write correct, best practice, DRY principle (Dont Repeat Yourself), bug free, fully functional and working code also it should be aligned to listed rules down below at Code Implementation Guidelines .
 - Focus on easy and readability code, over being performant.
 - Fully implement all requested functionality.
 - Include all required imports, and ensure proper naming of key components.
 - Use next.js app router.
 
-### Code Implementation Guidelines
+## Code Implementation Guidelines
 
 Follow these rules when you write code:
 
@@ -20,8 +29,6 @@ Follow these rules when you write code:
 - Use functional and declarative programming patterns. Avoid classes.
 - Use the function keyword for functions.
 - Use Zod for schema validation and type inference.
-- Use the `app/lib/definitions.ts` file for data model and schema related type definitions
-- Use the `lib/formatter.ts` file for formatter related utility functions.
 - Use path alias to simplify import statements
 
 ### Naming conventions
@@ -84,6 +91,7 @@ Follow these rules when you write code:
 6. Mock external dependencies and services to isolate the component under test.
 7. Test component behavior rather than implementation details and CSS styling.
 8. Prefer testing user interactions over internal state.
+9. Focus on component testing. Skip creating unit tests for server-actions.
 
 ### File Structure and Naming
 
