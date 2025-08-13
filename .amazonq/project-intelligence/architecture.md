@@ -83,9 +83,11 @@ The **Business Logic Layer** contains pipeline resolvers that handle complex bus
 
 The **Messaging Layer** manages the required messaging infrastructure to support communication between components.
 
-- **Amazon EventBridge**: Custom event bus that receives domain events from AppSync pipeline resolvers. Events include "prompt.saved", "prompt.deleted", "prompt.copied", "projectrule.saved", "projectrule.deleted", "projectrule.copied", and "projectrule.downloaded".
+- **Amazon EventBridge**: Custom event bus that receives domain events from AppSync pipeline resolvers. Events include "prompt.saved", "prompt.deleted", "prompt.copied", "prompt.downloaded", "projectrule.saved", "projectrule.deleted", "projectrule.copied", and "projectrule.downloaded".
+- **EventBridge Archive**: Automatically captures and stores all events published to the custom event bus for replay and audit capabilities. Configured with environment-specific retention periods (infinite retention for production, 7 days for sandbox) to support analytics, compliance, and debugging scenarios.
 - **Event-Driven Architecture**: Enables loose coupling between components and supports future integrations like analytics, notifications, or third-party webhooks.
 - **Pipeline Integration**: Seamlessly integrated with AppSync mutations through pipeline resolvers that first perform data operations, then emit corresponding events.
+- **Replay Capabilities**: Archived events can be replayed for building historical analytics, testing scenarios, or recovering from data processing failures.
 
 #### Data Layer
 
