@@ -22,12 +22,12 @@
   - **Expected Outcome:** AgentTag model with bidirectional relationships
   - **Status:** ✅ COMPLETED - Created agentTag model with composite identifier [agentId, tagName], proper belongsTo relationships to both agent and tag models, and tagIndex for efficient querying by tag.
 
-- [] **1.1.3** Add agent mutations to mutations.ts
+- [x] **1.1.3** Add agent mutations to mutations.ts
   - Create saveAgent, deleteAgent, copyAgent, downloadAgent mutations
   - Follow existing pipeline resolver pattern
   - Integrate with EventBridge event publishing
   - **Expected Outcome:** Complete mutation definitions for agent operations
-  - **Status:** 🔄 PARTIALLY COMPLETED - Created specialized createSaveAgentMutation() with all agent-specific fields and integrated other mutations using existing pipeline resolver patterns. However, the JavaScript resolver function `./resolver/saveAgent.js` is missing and needs to be implemented to handle agent-specific validation and processing logic.
+  - **Status:** ✅ COMPLETED - Created specialized createSaveAgentMutation() with all agent-specific fields and integrated other mutations using existing pipeline resolver patterns. Implemented the missing JavaScript resolver function `./resolver/saveAgent.js` to handle agent-specific validation and processing logic. Updated resource.ts to include agent model in the schema.
 
 - [ ] **1.1.4** Update resource.ts with agent table configuration
   - Add agent table to DynamoDB configuration

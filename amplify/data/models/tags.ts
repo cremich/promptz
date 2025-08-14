@@ -8,6 +8,7 @@ export const tagModel = {
       category: a.string(),
       prompts: a.hasMany("promptTag", "tagName"),
       rules: a.hasMany("ruleTag", "tagName"),
+      agents: a.hasMany("agentTag", "tagName"),
     })
     .authorization((allow) => [
       allow.publicApiKey().to(["read"]),
