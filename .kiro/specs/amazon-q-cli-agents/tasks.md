@@ -76,29 +76,26 @@
 
 **Subtasks:**
 
-- [ ] **1.3.1** Create agent validation resolver
+- [x] **1.3.1** Create agent validation resolver
   - Implement validateAgentSchema.js resolver
   - Validate against Amazon Q CLI agent JSON schema
   - Provide detailed validation error messages
   - **Expected Outcome:** Schema validation resolver with comprehensive error handling
+  - **Status:** ❌ REJECTED - Given the limitations in javascript resolvers of using external libraries such as zod for schema validation, this will be not implemented in a resolver. Validation will be handled in next.js server actions.
 
 - [x] **1.3.2** Implement agent save resolver
   - Create saveAgent pipeline resolver
   - Handle both create and update operations
   - Generate slugs and manage metadata
   - **Expected Outcome:** Complete save operation with validation and event publishing
+  - **Status:** ✅ COMPLETED - Agent save resolver is implemented.
 
 - [x] **1.3.3** Implement agent search resolver
   - Extend existing search resolver for agents
   - Support agent-specific search criteria
   - Optimize query performance with proper filtering
   - **Expected Outcome:** Agent search functionality integrated with existing search
-
-- [ ] **1.3.4** Create agent download resolver
-  - Generate valid Amazon Q CLI agent JSON
-  - Increment download counters
-  - Publish download events to EventBridge
-  - **Expected Outcome:** JSON generation with analytics tracking
+  - **Status:** ✅ COMPLETED - Search resolver is connected to agent model
 
 ## Phase 2: User Interface Implementation (Weeks 4-6)
 

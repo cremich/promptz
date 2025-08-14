@@ -19,4 +19,5 @@ export const searchSchema = {
   }),
   searchPrompts: createSearchQuery("prompt"),
   searchProjectRules: createSearchQuery("projectRule"),
+  searchAgents: createSearchQuery("agent"),
 };
