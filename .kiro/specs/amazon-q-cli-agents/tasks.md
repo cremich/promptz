@@ -8,29 +8,33 @@
 
 **Subtasks:**
 
-- [ ] **1.1.1** Create agent model definition in `amplify/data/models/agents.ts`
+- [x] **1.1.1** Create agent model definition in `amplify/data/models/agents.ts`
   - Extend commonContentAttributes with agent-specific fields
   - Define McpServerConfig and HookCommand interfaces
   - Add proper TypeScript types for all agent configuration options
   - **Expected Outcome:** Agent model file with complete type definitions
+  - **Status:** ✅ COMPLETED - Created agent model with all required fields including prompt, tools, mcpServers, resources, hooks, toolsSettings, toolAliases, allowedTools, and useLegacyMcpJson. Added TypeScript interfaces for McpServerConfig and HookCommand. Created specialized saveAgent mutation to handle agent-specific fields.
 
-- [ ] **1.1.2** Implement agent-tag relationship model
+- [x] **1.1.2** Implement agent-tag relationship model
   - Create AgentTag model following the promptTag/ruleTag pattern
   - Define many-to-many relationship between agents and tags
   - Add proper indexes for efficient querying
   - **Expected Outcome:** AgentTag model with bidirectional relationships
+  - **Status:** ✅ COMPLETED - Created agentTag model with composite identifier [agentId, tagName], proper belongsTo relationships to both agent and tag models, and tagIndex for efficient querying by tag.
 
-- [ ] **1.1.3** Add agent mutations to mutations.ts
+- [] **1.1.3** Add agent mutations to mutations.ts
   - Create saveAgent, deleteAgent, copyAgent, downloadAgent mutations
   - Follow existing pipeline resolver pattern
   - Integrate with EventBridge event publishing
   - **Expected Outcome:** Complete mutation definitions for agent operations
+  - **Status:** 🔄 PARTIALLY COMPLETED - Created specialized createSaveAgentMutation() with all agent-specific fields and integrated other mutations using existing pipeline resolver patterns. However, the JavaScript resolver function `./resolver/saveAgent.js` is missing and needs to be implemented to handle agent-specific validation and processing logic.
 
 - [ ] **1.1.4** Update resource.ts with agent table configuration
   - Add agent table to DynamoDB configuration
   - Configure secondary indexes (slug, name, scope, owner)
   - Set up proper authorization rules
   - **Expected Outcome:** Agent tables configured in Amplify backend
+  - **Status:** 🔄 PARTIALLY COMPLETED - Agent model includes all secondary indexes and authorization rules, but needs to be integrated into the main resource.ts file to be included in the backend configuration.
 
 ### Task 1.2: GraphQL Schema Extensions
 
