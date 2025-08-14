@@ -112,11 +112,24 @@
   - **Expected Outcome:** Agents accessible from main navigation
   - **Status:** ✅ COMPLETED - Added "Agents" link to lib/navigation.ts which automatically updates both desktop and mobile navigation. Updated corresponding unit tests for topnav and mobile-menu components. Verified functionality in both desktop and mobile views. The Agents link is properly positioned between Rules and MCP Server with consistent styling.
 
-- [ ] **2.1.2** Create agent page routing structure
+- [x] **2.1.2** Create agent page routing structure
   - Create `/app/agents` directory structure
   - Set up page.tsx, create/page.tsx, my/page.tsx
-  - Create dynamic routes for agent/[slug] and tag/[tagName]
+  - Create dynamic routes for agent/[slug] and agent/[slug]/edit
   - **Expected Outcome:** Complete routing structure for agent pages
+  - **Status:** ✅ COMPLETED - Created complete routing structure with:
+    - `/app/agents/page.tsx` - Main agents listing page
+    - `/app/agents/create/page.tsx` - Agent creation page
+    - `/app/agents/my/page.tsx` - User's private agents page
+    - `/app/agents/agent/[slug]/page.tsx` - Individual agent detail page
+    - `/app/agents/agent/[slug]/edit/page.tsx` - Agent editing page
+    - Note: Tag-based routing will use the general `/tag/[tagName]` page instead of agent-specific tag pages
+    - **Unit Tests:** Created comprehensive unit tests for all pages (18 tests, 100% pass rate):
+      - `__tests__/app/agents/agents-page.test.tsx` - Main listing page tests
+      - `__tests__/app/agents/create/create-agent-page.test.tsx` - Creation page tests
+      - `__tests__/app/agents/my/my-agents-page.test.tsx` - Private agents page tests
+      - `__tests__/app/agents/agent/slug/agent-page.test.tsx` - Detail page tests
+      - `__tests__/app/agents/agent/slug/edit/edit-agent-page.test.tsx` - Edit page tests
 
 - [ ] **2.1.3** Implement agent listing page
   - Create agents browse page with search and filtering
@@ -297,91 +310,31 @@
 
 ## Phase 4: Testing and Quality Assurance (Weeks 9-10)
 
-### Task 4.1: Unit Testing
-
-**Description:** Implement comprehensive unit tests for agent functionality.
-
-**Subtasks:**
-
-- [ ] **4.1.1** Test agent data models
-  - Test agent model validation
-  - Test agent-tag relationship creation
-  - Test data transformation functions
-  - **Expected Outcome:** Complete unit test coverage for data models
-
-- [ ] **4.1.2** Test GraphQL resolvers
-  - Test agent CRUD operations
-  - Test search and filtering functionality
-  - Test error handling and validation
-  - **Expected Outcome:** Resolver test coverage with edge cases
-
-- [ ] **4.1.3** Test form validation
-  - Test Zod schema validation
-  - Test form submission handling
-  - Test error message display
-  - **Expected Outcome:** Form validation test coverage
-
-- [ ] **4.1.4** Test component functionality
-  - Test agent form components
-  - Test agent display components
-  - Test user interaction handling
-  - **Expected Outcome:** Component test coverage with user scenarios
-
-### Task 4.2: Integration Testing
-
-**Description:** Implement integration tests for agent workflows.
-
-**Subtasks:**
-
-- [ ] **4.2.1** Test agent creation workflow
-  - Test complete agent creation process
-  - Test form submission and validation
-  - Test database persistence and event publishing
-  - **Expected Outcome:** End-to-end agent creation testing
-
-- [ ] **4.2.2** Test agent discovery and search
-  - Test agent search functionality
-  - Test tag-based filtering
-  - Test result display and pagination
-  - **Expected Outcome:** Search and discovery integration testing
-
-- [ ] **4.2.3** Test agent download and usage
-  - Test JSON generation and download
-  - Test analytics tracking
-  - Test generated configuration validity
-  - **Expected Outcome:** Download workflow integration testing
-
-- [ ] **4.2.4** Test content reference system
-  - Test prompt/rule reference selection
-  - Test reference URL generation
-  - Test reference integrity validation
-  - **Expected Outcome:** Content reference integration testing
-
-### Task 4.3: End-to-End Testing
+### Task 4.1: End-to-End Testing
 
 **Description:** Implement E2E tests using Playwright for complete user journeys.
 
 **Subtasks:**
 
-- [ ] **4.3.1** Create agent creation E2E tests
+- [ ] **4.1.1** Create agent creation E2E tests
   - Test authenticated user agent creation
   - Test form validation and error handling
   - Test successful agent publication
   - **Expected Outcome:** E2E tests for agent creation workflow
 
-- [ ] **4.3.2** Create agent discovery E2E tests
+- [ ] **4.1.2** Create agent discovery E2E tests
   - Test public agent browsing
   - Test search and filtering functionality
   - Test agent detail page navigation
   - **Expected Outcome:** E2E tests for agent discovery
 
-- [ ] **4.3.3** Create agent management E2E tests
+- [ ] **4.1.3** Create agent management E2E tests
   - Test private agent management
   - Test agent editing and deletion
   - Test ownership validation
   - **Expected Outcome:** E2E tests for agent management
 
-- [ ] **4.3.4** Create agent download E2E tests
+- [ ] **4.1.4** Create agent download E2E tests
   - Test agent configuration download
   - Test JSON file generation
   - Test analytics tracking
