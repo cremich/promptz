@@ -29,12 +29,12 @@
   - **Expected Outcome:** Complete mutation definitions for agent operations
   - **Status:** ✅ COMPLETED - Created specialized createSaveAgentMutation() with all agent-specific fields and integrated other mutations using existing pipeline resolver patterns. Implemented the missing JavaScript resolver function `./resolver/saveAgent.js` to handle agent-specific validation and processing logic. Updated resource.ts to include agent model in the schema.
 
-- [ ] **1.1.4** Update resource.ts with agent table configuration
+- [x] **1.1.4** Update resource.ts with agent table configuration
   - Add agent table to DynamoDB configuration
   - Configure secondary indexes (slug, name, scope, owner)
   - Set up proper authorization rules
   - **Expected Outcome:** Agent tables configured in Amplify backend
-  - **Status:** 🔄 PARTIALLY COMPLETED - Agent model includes all secondary indexes and authorization rules, but needs to be integrated into the main resource.ts file to be included in the backend configuration.
+  - **Status:** ✅ COMPLETED - Agent model integrated into the main resource.ts file to be included in the backend configuration.
 
 ### Task 1.2: GraphQL Schema Extensions
 
@@ -42,29 +42,33 @@
 
 **Subtasks:**
 
-- [ ] **1.2.1** Define Agent GraphQL type
+- [x] **1.2.1** Define Agent GraphQL type
   - Add all agent fields to GraphQL schema
   - Use AWSJSON type for complex configuration objects
   - Define proper field relationships and nullability
   - **Expected Outcome:** Complete Agent type definition in schema
+  - **Status:** ✅ COMPLETED - Schema ist automatically created by Amplify once added to the data schema.
 
-- [ ] **1.2.2** Create AgentInput input type
+- [x] **1.2.2** Create AgentInput input type
   - Define input type for agent creation and updates
   - Include validation constraints in schema
   - Map to internal agent data structure
   - **Expected Outcome:** AgentInput type for mutations
+  - **Status:** ✅ COMPLETED - Schema ist automatically created by Amplify once added to the data schema.
 
-- [ ] **1.2.3** Add agent queries and mutations to schema
+- [x] **1.2.3** Add agent queries and mutations to schema
   - getAgent, getAgentBySlug queries
   - listAgentsByTag, searchAgents queries
   - saveAgent, deleteAgent, copyAgent, downloadAgent mutations
   - **Expected Outcome:** Complete GraphQL operations for agents
+  - **Status:** ✅ COMPLETED - Schema ist automatically created by Amplify once added to the data schema.
 
-- [ ] **1.2.4** Update existing search queries to include agents
+- [x] **1.2.4** Update existing search queries to include agents
   - Modify search resolvers to include agent content type
   - Add agent filtering to tag-based queries
   - Ensure backward compatibility with existing queries
   - **Expected Outcome:** Unified search supporting agents
+  - **Status:** ✅ COMPLETED - Schema ist automatically created by Amplify once added to the data schema.
 
 ### Task 1.3: Pipeline Resolvers Implementation
 
@@ -78,13 +82,13 @@
   - Provide detailed validation error messages
   - **Expected Outcome:** Schema validation resolver with comprehensive error handling
 
-- [ ] **1.3.2** Implement agent save resolver
+- [x] **1.3.2** Implement agent save resolver
   - Create saveAgent pipeline resolver
   - Handle both create and update operations
   - Generate slugs and manage metadata
   - **Expected Outcome:** Complete save operation with validation and event publishing
 
-- [ ] **1.3.3** Implement agent search resolver
+- [x] **1.3.3** Implement agent search resolver
   - Extend existing search resolver for agents
   - Support agent-specific search criteria
   - Optimize query performance with proper filtering
