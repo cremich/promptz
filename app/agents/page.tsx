@@ -3,6 +3,7 @@ import SortSelector from "@/components/search/sort-selector";
 import SearchResults from "@/components/search/search-result";
 import CreateButton from "@/components/common/create-button";
 import FilterSidebar from "@/components/search/filter-sidebar";
+import { searchAgents } from "@/lib/actions/search-agents-action";
 
 interface BrowsePageProps {
   searchParams?: Promise<{
@@ -15,14 +16,11 @@ interface BrowsePageProps {
 export default async function AgentsPage(props: BrowsePageProps) {
   const searchParams = await props.searchParams;
 
-  // TODO: Implement searchAgents action
-  // const { agents } = await searchAgents({
-  //   query: searchParams?.query,
-  //   sort: searchParams?.sort,
-  //   tags: searchParams ? searchParams["tags[]"] : [],
-  // });
-
-  const agents: any[] = []; // Placeholder until search action is implemented
+  const { agents } = await searchAgents({
+    query: searchParams?.query,
+    sort: searchParams?.sort,
+    tags: searchParams ? searchParams["tags[]"] : [],
+  });
 
   return (
     <main className="py-8">

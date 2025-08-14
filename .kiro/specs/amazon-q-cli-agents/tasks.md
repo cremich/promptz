@@ -131,11 +131,12 @@
       - `__tests__/app/agents/agent/slug/agent-page.test.tsx` - Detail page tests
       - `__tests__/app/agents/agent/slug/edit/edit-agent-page.test.tsx` - Edit page tests
 
-- [ ] **2.1.3** Implement agent listing page
+- [x] **2.1.3** Implement agent listing page
   - Create agents browse page with search and filtering
   - Integrate with existing search components
   - Add agent-specific sorting options
   - **Expected Outcome:** Functional agent discovery page
+  - **Status:** ✅ COMPLETED - Created functional agent listing page with search, filtering, and sorting capabilities. Implemented searchAgents server action, AgentCard component, updated SearchResults component to support agents, and enhanced FilterSidebar with agent-specific tag categories. Added comprehensive unit tests for all components. The page integrates seamlessly with existing search infrastructure and provides full agent discovery functionality.
 
 - [ ] **2.1.4** Create agent detail page
   - Display complete agent configuration
@@ -192,11 +193,12 @@
 
 **Subtasks:**
 
-- [ ] **2.3.1** Create AgentCard component
+- [x] **2.3.1** Create AgentCard component
   - Display agent summary information
   - Show usage statistics (downloads, copies)
   - Include action buttons (view, copy, download)
   - **Expected Outcome:** Reusable agent card component
+  - **Status:** ✅ COMPLETED with 2.1.3
 
 - [ ] **2.3.2** Implement AgentDetail component
   - Show complete agent configuration
