@@ -6,8 +6,10 @@ import MobileMenu from "@/components/layout/navigation/mobile-menu";
 // Mock the navigation links
 jest.mock("@/lib/navigation", () => ({
   links: [
-    { name: "Home", href: "/" },
-    { name: "Browse", href: "/browse" },
+    { name: "Prompts", href: "/prompts" },
+    { name: "Rules", href: "/rules" },
+    { name: "Agents", href: "/agents" },
+    { name: "MCP Server", href: "/mcp" },
   ],
 }));
 
@@ -30,7 +32,7 @@ describe("Mobile Menu", () => {
     expect(screen.getByTestId("menu-button-burger")).toBeInTheDocument();
 
     // Menu content should not be visible initially
-    expect(screen.queryByText("Home")).not.toBeInTheDocument();
+    expect(screen.queryByText("Prompts")).not.toBeInTheDocument();
   });
 
   test("Opens menu when button is clicked", () => {
@@ -43,8 +45,10 @@ describe("Mobile Menu", () => {
     expect(screen.getByTestId("menu-button-x")).toBeInTheDocument();
 
     // Check if navigation links are rendered
-    expect(screen.getByText("Home")).toBeInTheDocument();
-    expect(screen.getByText("Browse")).toBeInTheDocument();
+    expect(screen.getByText("Prompts")).toBeInTheDocument();
+    expect(screen.getByText("Rules")).toBeInTheDocument();
+    expect(screen.getByText("Agents")).toBeInTheDocument();
+    expect(screen.getByText("MCP Server")).toBeInTheDocument();
 
     // Check if UserMenu is rendered
     expect(screen.getByTestId("user-menu-mock")).toBeInTheDocument();
@@ -58,11 +62,11 @@ describe("Mobile Menu", () => {
     fireEvent.click(menuButton);
 
     // Click on a navigation link
-    const homeLink = screen.getByText("Home");
-    fireEvent.click(homeLink);
+    const promptsLink = screen.getByText("Prompts");
+    fireEvent.click(promptsLink);
 
     // Menu should be closed and burger icon should be visible again
-    expect(screen.queryByText("Home")).not.toBeInTheDocument();
+    expect(screen.queryByText("Prompts")).not.toBeInTheDocument();
     expect(screen.getByTestId("menu-button-burger")).toBeInTheDocument();
   });
 });

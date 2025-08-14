@@ -1,0 +1,400 @@
+
+> promptz@0.1.0 sandbox
+> PROMPTZ_ENV=sandbox npx ampx sandbox
+
+  
+  Amplify Sandbox
+  
+  Identifier: 	christian.bonzelet
+  Stack: 	amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+  Region: 	eu-central-1
+  
+  To specify a different sandbox identifier, use --identifier
+
+2:10:06 PM Synthesizing backend...
+2:10:18 PM ✔ Backend synthesized in 11.83 seconds
+2:10:18 PM Running type checks...
+2:10:46 PM ✔ Type checks completed in 28.19 seconds
+2:10:46 PM Building and publishing assets...
+2:10:48 PM ✔ Built and published assets
+2:10:54 PM ✔ Updated AWS::AppSync::ApiKey data/promptz/GraphQLAPI/DefaultApiKey
+2:10:54 PM ✔ Deployment completed in 5.745 seconds
+2:10:54 PM AppSync API endpoint = https://kajdkrbvyjfbrnk7pfppdohivu.appsync-api.eu-central-1.amazonaws.com/graphql
+2:10:54 PM [Sandbox] Watching for file changes...
+2:10:54 PM File written: amplify_outputs.json
+  
+  Amplify Sandbox
+  
+  Identifier: 	christian.bonzelet
+  Stack: 	amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+  Region: 	eu-central-1
+  
+  To specify a different sandbox identifier, use --identifier
+
+2:15:45 PM [Sandbox] Triggered due to a file create event: amplify/data/resolver/validateAgentSchema.js
+2:15:45 PM Synthesizing backend...
+2:15:55 PM ✔ Backend synthesized in 10.12 seconds
+2:15:55 PM Running type checks...
+2:15:55 PM Building and publishing assets...
+2:15:57 PM ✔ Built and published assets
+2:16:02 PM ✔ Updated AWS::AppSync::ApiKey data/promptz/GraphQLAPI/DefaultApiKey
+2:16:02 PM ✔ Deployment completed in 5.927 seconds
+2:16:02 PM AppSync API endpoint = https://kajdkrbvyjfbrnk7pfppdohivu.appsync-api.eu-central-1.amazonaws.com/graphql
+2:16:02 PM [Sandbox] Watching for file changes...
+2:16:03 PM File written: amplify_outputs.json
+  
+  Amplify Sandbox
+  
+  Identifier: 	christian.bonzelet
+  Stack: 	amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+  Region: 	eu-central-1
+  
+  To specify a different sandbox identifier, use --identifier
+
+2:16:12 PM [Sandbox] Triggered due to a file update event: amplify/data/mutations.ts
+2:16:12 PM Synthesizing backend...
+2:16:15 PM ✔ Backend synthesized in 3.11 seconds
+2:16:15 PM Running type checks...
+2:16:26 PM ✔ Type checks completed in 10.62 seconds
+2:16:26 PM Building and publishing assets...
+2:16:27 PM ✔ Built and published assets
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:16:38 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b User Initiated
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:16:41 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:16:41 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 1/6 | 2:16:41 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 2/6 | 2:16:41 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 2/6 | 2:16:42 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 3/6 | 2:16:43 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 3/6 | 2:16:44 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:16:44 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 User Initiated
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:16:50 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:16:50 PM | UPDATE_IN_PROGRESS | AWS::AppSync::ApiKey | data/promptz/GraphQLAPI/DefaultApiKey (promptzGraphQLAPIDefaultApiKey4AB0DC76)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 4/6 | 2:16:51 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:16:51 PM | UPDATE_COMPLETE | AWS::AppSync::ApiKey | data/promptz/GraphQLAPI/DefaultApiKey (promptzGraphQLAPIDefaultApiKey4AB0DC76)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:16:52 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:16:52 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:16:52 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:16:52 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:16:52 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:16:52 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:16:52 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:16:52 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 6/6 | 2:16:52 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 7/6 | 2:16:52 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 8/6 | 2:16:52 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 9/6 | 2:16:52 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 10/6 | 2:16:53 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:16:53 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:16:53 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 13/6 | 2:16:53 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 13/6 | 2:16:54 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+2:16:58 PM [Sandbox] Triggered due to a file update event: amplify/data/resolver/saveAgent.js
+2:16:58 PM [Sandbox] Previous deployment is still in progress. Will queue for another deployment after this one finishes
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:16:54 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:16:55 PM | CREATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_3 (FnMutationsaveAgent3)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:16:56 PM | UPDATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_1 (FnMutationsaveAgent1)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:16:56 PM | UPDATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_2 (FnMutationsaveAgent2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:16:57 PM | CREATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_3 (FnMutationsaveAgent3) Resource creation Initiated
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 15/6 | 2:16:57 PM | CREATE_COMPLETE | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_3 (FnMutationsaveAgent3)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 16/6 | 2:16:59 PM | UPDATE_COMPLETE | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_2 (FnMutationsaveAgent2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 16/6 | 2:17:01 PM | UPDATE_FAILED | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_1 (FnMutationsaveAgent1) Resource handler returned message: "Data source not found. (Service: AppSync, Status Code: 404, Request ID: 53da79f8-2b82-4441-9a06-c4307fa2b74f) (SDK Attempt Count: 1)" (RequestToken: 0c3e8c70-0d8d-439a-0633-b9fdafcd621e, HandlerErrorCode: NotFound)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 16/6 | 2:17:02 PM | UPDATE_ROLLBACK_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 The following resource(s) failed to update: [FnMutationsaveAgent1].
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 16/6 | 2:17:06 PM | UPDATE_FAILED | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31) Embedded stack arn:aws:cloudformation:eu-central-1:407852952636:stack/amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3/2700be30-73cf-11f0-8d41-06decc156333 was not successfully updated. Currently in UPDATE_ROLLBACK_IN_PROGRESS with reason: The following resource(s) failed to update: [FnMutationsaveAgent1].
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 16/6 | 2:17:06 PM | UPDATE_ROLLBACK_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b The following resource(s) failed to update: [data7552DF31].
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 16/6 | 2:17:08 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 16/6 | 2:17:08 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 15/6 | 2:17:08 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 14/6 | 2:17:08 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 14/6 | 2:17:09 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 13/6 | 2:17:09 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 13/6 | 2:17:09 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 13/6 | 2:17:14 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 13/6 | 2:17:14 PM | UPDATE_IN_PROGRESS | AWS::AppSync::ApiKey | data/promptz/GraphQLAPI/DefaultApiKey (promptzGraphQLAPIDefaultApiKey4AB0DC76)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:17:14 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:17:14 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:17:14 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:17:14 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:17:14 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:17:14 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:17:14 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:17:14 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:17:14 PM | UPDATE_COMPLETE | AWS::AppSync::ApiKey | data/promptz/GraphQLAPI/DefaultApiKey (promptzGraphQLAPIDefaultApiKey4AB0DC76)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:17:14 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 10/6 | 2:17:14 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 9/6 | 2:17:15 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 8/6 | 2:17:15 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 7/6 | 2:17:15 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 6/6 | 2:17:15 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:17:15 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 4/6 | 2:17:15 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:17:15 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:17:15 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 2/6 | 2:17:15 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 2/6 | 2:17:16 PM | UPDATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_2 (FnMutationsaveAgent2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 2/6 | 2:17:16 PM | UPDATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_1 (FnMutationsaveAgent1)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 1/6 | 2:17:20 PM | UPDATE_COMPLETE | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_2 (FnMutationsaveAgent2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 2/6 | 2:17:20 PM | UPDATE_COMPLETE | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_1 (FnMutationsaveAgent1)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:17:21 PM | UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 4/6 | 2:17:31 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 5/6 | 2:17:31 PM | UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:17:34 PM | DELETE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_3 (FnMutationsaveAgent3)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 4/6 | 2:17:35 PM | DELETE_COMPLETE | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_3 (FnMutationsaveAgent3)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:17:35 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 2/6 | 2:17:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 1/6 | 2:17:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:17:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:17:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:17:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:17:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:17:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:17:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:17:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 1/6 | 2:17:36 PM | UPDATE_ROLLBACK_COMPLETE | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:17:43 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:17:43 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:17:43 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:17:44 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 1/6 | 2:17:44 PM | UPDATE_ROLLBACK_COMPLETE | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+2:17:49 PM [ERROR] [CloudFormationDeploymentError] The CloudFormation deployment has failed.
+  ∟ Caused by: [_ToolkitError] The stack named amplify-promptz-christianbonzelet-sandbox-831c4a6b0b failed to deploy: UPDATE_ROLLBACK_COMPLETE: Resource handler returned message: "Data source not found. (Service: AppSync, Status Code: 404, Request ID: 53da79f8-2b82-4441-9a06-c4307fa2b74f) (SDK Attempt Count: 1)" (RequestToken: 0c3e8c70-0d8d-439a-0633-b9fdafcd621e, HandlerErrorCode: NotFound), Embedded stack arn:aws:cloudformation:eu-central-1:407852952636:stack/amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3/2700be30-73cf-11f0-8d41-06decc156333 was not successfully updated. Currently in UPDATE_ROLLBACK_IN_PROGRESS with reason: The following resource(s) failed to update: [FnMutationsaveAgent1]. 
+Resolution: Find more information in the CloudFormation AWS Console for this stack.
+  
+  Amplify Sandbox
+  
+  Identifier: 	christian.bonzelet
+  Stack: 	amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+  Region: 	eu-central-1
+  
+  To specify a different sandbox identifier, use --identifier
+
+2:17:49 PM [Sandbox] Detected file changes while previous deployment was in progress. Invoking 'sandbox' again
+2:17:49 PM Synthesizing backend...
+2:17:53 PM ✔ Backend synthesized in 3.92 seconds
+2:17:53 PM Running type checks...
+2:17:53 PM Building and publishing assets...
+2:17:54 PM ✔ Built and published assets
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:18:05 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b User Initiated
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:18:08 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:18:08 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 1/6 | 2:18:09 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 2/6 | 2:18:09 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 2/6 | 2:18:09 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 3/6 | 2:18:10 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 3/6 | 2:18:11 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:18:12 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 User Initiated
+2:18:14 PM [Sandbox] Triggered due to a file update event: amplify/data/mutations.ts
+2:18:14 PM [Sandbox] Previous deployment is still in progress. Will queue for another deployment after this one finishes
+2:18:19 PM [Sandbox] Triggered due to a file update event: amplify/data/resolver/saveAgent.js
+2:18:19 PM [Sandbox] Previous deployment is still in progress. Will queue for another deployment after this one finishes
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:18:17 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:18:17 PM | UPDATE_IN_PROGRESS | AWS::AppSync::ApiKey | data/promptz/GraphQLAPI/DefaultApiKey (promptzGraphQLAPIDefaultApiKey4AB0DC76)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 4/6 | 2:18:18 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:18:18 PM | UPDATE_COMPLETE | AWS::AppSync::ApiKey | data/promptz/GraphQLAPI/DefaultApiKey (promptzGraphQLAPIDefaultApiKey4AB0DC76)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:18:18 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:18:19 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:18:19 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:18:19 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:18:19 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:18:19 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:18:19 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:18:19 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 6/6 | 2:18:19 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 7/6 | 2:18:19 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 8/6 | 2:18:19 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 9/6 | 2:18:19 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 10/6 | 2:18:19 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:18:19 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:18:19 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 13/6 | 2:18:20 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 13/6 | 2:18:21 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:18:21 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:18:22 PM | CREATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_3 (FnMutationsaveAgent3)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:18:22 PM | UPDATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_1 (FnMutationsaveAgent1)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:18:22 PM | UPDATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_2 (FnMutationsaveAgent2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:18:23 PM | CREATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_3 (FnMutationsaveAgent3) Resource creation Initiated
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 15/6 | 2:18:24 PM | CREATE_COMPLETE | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_3 (FnMutationsaveAgent3)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 15/6 | 2:18:25 PM | UPDATE_FAILED | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_1 (FnMutationsaveAgent1) Resource handler returned message: "Data source not found. (Service: AppSync, Status Code: 404, Request ID: a4c84858-eaf1-44c8-9480-b849438e0ed5) (SDK Attempt Count: 1)" (RequestToken: 4eaeb300-a3f6-7981-5da3-68f37adc5948, HandlerErrorCode: NotFound)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 15/6 | 2:18:26 PM | UPDATE_FAILED | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_2 (FnMutationsaveAgent2) Resource update cancelled
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 15/6 | 2:18:26 PM | UPDATE_ROLLBACK_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 The following resource(s) failed to update: [FnMutationsaveAgent1, FnMutationsaveAgent2].
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 15/6 | 2:18:33 PM | UPDATE_FAILED | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31) Embedded stack arn:aws:cloudformation:eu-central-1:407852952636:stack/amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3/2700be30-73cf-11f0-8d41-06decc156333 was not successfully updated. Currently in UPDATE_ROLLBACK_IN_PROGRESS with reason: The following resource(s) failed to update: [FnMutationsaveAgent1, FnMutationsaveAgent2].
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 15/6 | 2:18:33 PM | UPDATE_ROLLBACK_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b The following resource(s) failed to update: [data7552DF31].
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 15/6 | 2:18:36 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 15/6 | 2:18:36 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 14/6 | 2:18:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 13/6 | 2:18:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 13/6 | 2:18:36 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 12/6 | 2:18:36 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 12/6 | 2:18:37 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:18:44 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:18:44 PM | UPDATE_IN_PROGRESS | AWS::AppSync::ApiKey | data/promptz/GraphQLAPI/DefaultApiKey (promptzGraphQLAPIDefaultApiKey4AB0DC76)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:18:44 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:18:44 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:18:44 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:18:44 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:18:44 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:18:44 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:18:44 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:18:44 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:18:44 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 10/6 | 2:18:45 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 9/6 | 2:18:45 PM | UPDATE_COMPLETE | AWS::AppSync::ApiKey | data/promptz/GraphQLAPI/DefaultApiKey (promptzGraphQLAPIDefaultApiKey4AB0DC76)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 8/6 | 2:18:45 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 7/6 | 2:18:45 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 6/6 | 2:18:45 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:18:45 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 4/6 | 2:18:45 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:18:45 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 2/6 | 2:18:45 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 2/6 | 2:18:45 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 1/6 | 2:18:45 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 1/6 | 2:18:46 PM | UPDATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_1 (FnMutationsaveAgent1)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 1/6 | 2:18:46 PM | UPDATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_2 (FnMutationsaveAgent2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 2/6 | 2:18:49 PM | UPDATE_COMPLETE | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_2 (FnMutationsaveAgent2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:18:50 PM | UPDATE_COMPLETE | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_1 (FnMutationsaveAgent1)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 4/6 | 2:18:51 PM | UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 5/6 | 2:18:59 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 6/6 | 2:18:59 PM | UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 6/6 | 2:19:01 PM | DELETE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_3 (FnMutationsaveAgent3)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:19:02 PM | DELETE_COMPLETE | AWS::AppSync::FunctionConfiguration | data/Fn_Mutation_saveAgent_3 (FnMutationsaveAgent3)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 4/6 | 2:19:03 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:19:03 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 2/6 | 2:19:03 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 1/6 | 2:19:03 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:19:03 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:19:03 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:19:03 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:19:03 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:19:04 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 0/6 | 2:19:04 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 1/6 | 2:19:04 PM | UPDATE_ROLLBACK_COMPLETE | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:19:10 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:19:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:19:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:19:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 1/6 | 2:19:11 PM | UPDATE_ROLLBACK_COMPLETE | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+2:19:16 PM [ERROR] [CloudFormationDeploymentError] The CloudFormation deployment has failed.
+  ∟ Caused by: [_ToolkitError] The stack named amplify-promptz-christianbonzelet-sandbox-831c4a6b0b failed to deploy: UPDATE_ROLLBACK_COMPLETE: Resource handler returned message: "Data source not found. (Service: AppSync, Status Code: 404, Request ID: a4c84858-eaf1-44c8-9480-b849438e0ed5) (SDK Attempt Count: 1)" (RequestToken: 4eaeb300-a3f6-7981-5da3-68f37adc5948, HandlerErrorCode: NotFound), Embedded stack arn:aws:cloudformation:eu-central-1:407852952636:stack/amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3/2700be30-73cf-11f0-8d41-06decc156333 was not successfully updated. Currently in UPDATE_ROLLBACK_IN_PROGRESS with reason: The following resource(s) failed to update: [FnMutationsaveAgent1, FnMutationsaveAgent2]. 
+Resolution: Find more information in the CloudFormation AWS Console for this stack.
+  
+  Amplify Sandbox
+  
+  Identifier: 	christian.bonzelet
+  Stack: 	amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+  Region: 	eu-central-1
+  
+  To specify a different sandbox identifier, use --identifier
+
+2:19:16 PM [Sandbox] Detected file changes while previous deployment was in progress. Invoking 'sandbox' again
+2:19:16 PM Synthesizing backend...
+2:19:19 PM ✔ Backend synthesized in 2.65 seconds
+2:19:19 PM Running type checks...
+2:19:24 PM ✔ Type checks completed in 5.1 seconds
+2:19:24 PM Building and publishing assets...
+2:19:25 PM ✔ Built and published assets
+2:19:30 PM ✔ Updated AWS::AppSync::ApiKey data/promptz/GraphQLAPI/DefaultApiKey
+2:19:30 PM ✔ Deployment completed in 4.539 seconds
+2:19:30 PM AppSync API endpoint = https://kajdkrbvyjfbrnk7pfppdohivu.appsync-api.eu-central-1.amazonaws.com/graphql
+2:19:30 PM [Sandbox] Watching for file changes...
+2:19:30 PM File written: amplify_outputs.json
+  
+  Amplify Sandbox
+  
+  Identifier: 	christian.bonzelet
+  Stack: 	amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+  Region: 	eu-central-1
+  
+  To specify a different sandbox identifier, use --identifier
+
+2:20:02 PM [Sandbox] Triggered due to a file delete event: amplify/data/resolver/validateAgentSchema.js
+2:20:03 PM Synthesizing backend...
+2:20:05 PM ✔ Backend synthesized in 2.59 seconds
+2:20:05 PM Running type checks...
+2:20:05 PM Building and publishing assets...
+2:20:06 PM ✔ Built and published assets
+2:20:11 PM ✔ Updated AWS::AppSync::ApiKey data/promptz/GraphQLAPI/DefaultApiKey
+2:20:11 PM ✔ Deployment completed in 4.401 seconds
+2:20:11 PM AppSync API endpoint = https://kajdkrbvyjfbrnk7pfppdohivu.appsync-api.eu-central-1.amazonaws.com/graphql
+2:20:11 PM [Sandbox] Watching for file changes...
+2:20:11 PM File written: amplify_outputs.json
+  
+  Amplify Sandbox
+  
+  Identifier: 	christian.bonzelet
+  Stack: 	amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+  Region: 	eu-central-1
+  
+  To specify a different sandbox identifier, use --identifier
+
+2:25:40 PM [Sandbox] Triggered due to a file update event: amplify/data/models/search.ts
+2:25:40 PM Synthesizing backend...
+2:25:55 PM ✔ Backend synthesized in 15.34 seconds
+2:25:55 PM Running type checks...
+2:26:15 PM ✔ Type checks completed in 19.92 seconds
+2:26:15 PM Building and publishing assets...
+2:26:16 PM ✔ Built and published assets
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:26:27 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b User Initiated
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:26:30 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 0/6 | 2:26:30 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 1/6 | 2:26:31 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 2/6 | 2:26:31 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 2/6 | 2:26:32 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 3/6 | 2:26:32 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 3/6 | 2:26:33 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:26:34 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 User Initiated
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:26:39 PM | UPDATE_IN_PROGRESS | Custom::CDKBucketDeployment | data/modelIntrospectionSchemaBucketDeployment/CustomResource-1536MiB/Default (modelIntrospectionSchemaBucketDeploymentCustomResource1536MiB104B97EC)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:26:40 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:26:40 PM | UPDATE_IN_PROGRESS | AWS::AppSync::ApiKey | data/promptz/GraphQLAPI/DefaultApiKey (promptzGraphQLAPIDefaultApiKey4AB0DC76)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:26:40 PM | UPDATE_IN_PROGRESS | AWS::AppSync::GraphQLSchema | data/promptz/GraphQLAPI/TransformerSchema (promptzGraphQLAPITransformerSchema34906605)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 3/6 | 2:26:40 PM | UPDATE_IN_PROGRESS | Custom::CDKBucketDeployment | data/promptz/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/CustomResource-1536MiB/Default (promptzAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB6DC104D3)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 4/6 | 2:26:40 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:26:41 PM | UPDATE_COMPLETE | AWS::AppSync::ApiKey | data/promptz/GraphQLAPI/DefaultApiKey (promptzGraphQLAPIDefaultApiKey4AB0DC76)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:26:41 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:26:41 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 5/6 | 2:26:41 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 6/6 | 2:26:42 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 7/6 | 2:26:42 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 8/6 | 2:26:42 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 9/6 | 2:26:43 PM | UPDATE_COMPLETE | Custom::CDKBucketDeployment | data/modelIntrospectionSchemaBucketDeployment/CustomResource-1536MiB/Default (modelIntrospectionSchemaBucketDeploymentCustomResource1536MiB104B97EC)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 10/6 | 2:26:44 PM | UPDATE_COMPLETE | Custom::CDKBucketDeployment | data/promptz/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/CustomResource-1536MiB/Default (promptzAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB6DC104D3)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:26:52 PM | UPDATE_COMPLETE | AWS::AppSync::GraphQLSchema | data/promptz/GraphQLAPI/TransformerSchema (promptzGraphQLAPITransformerSchema34906605)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:26:53 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:26:53 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:26:53 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:26:53 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 11/6 | 2:26:53 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:26:54 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 13/6 | 2:26:54 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:26:54 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 15/6 | 2:26:54 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 16/6 | 2:26:54 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 16/6 | 2:26:55 PM | UPDATE_IN_PROGRESS | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 17/6 | 2:26:55 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 17/6 | 2:26:56 PM | CREATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Query_searchAgents_1 (FnQuerysearchAgents1)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 17/6 | 2:26:58 PM | CREATE_IN_PROGRESS | AWS::AppSync::FunctionConfiguration | data/Fn_Query_searchAgents_1 (FnQuerysearchAgents1) Resource creation Initiated
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 18/6 | 2:26:58 PM | CREATE_COMPLETE | AWS::AppSync::FunctionConfiguration | data/Fn_Query_searchAgents_1 (FnQuerysearchAgents1)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 18/6 | 2:26:59 PM | CREATE_IN_PROGRESS | AWS::AppSync::Resolver | data/Resolver_Query_searchAgents (ResolverQuerysearchAgents)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 18/6 | 2:27:00 PM | CREATE_IN_PROGRESS | AWS::AppSync::Resolver | data/Resolver_Query_searchAgents (ResolverQuerysearchAgents) Resource creation Initiated
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 19/6 | 2:27:02 PM | CREATE_COMPLETE | AWS::AppSync::Resolver | data/Resolver_Query_searchAgents (ResolverQuerysearchAgents)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 20/6 | 2:27:04 PM | UPDATE_COMPLETE_CLEANUP_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 21/6 | 2:27:07 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 22/6 | 2:27:09 PM | UPDATE_COMPLETE_CLEANUP_IN_PROGRESS | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 21/6 | 2:27:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource (promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 20/6 | 2:27:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/promptTag.NestedStack/promptTag.NestedStackResource (promptzpromptTagNestedStackpromptTagNestedStackResource8D0FDDF2)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 19/6 | 2:27:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/ruleTag.NestedStack/ruleTag.NestedStackResource (promptzruleTagNestedStackruleTagNestedStackResourceF77C4446)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 18/6 | 2:27:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/tag.NestedStack/tag.NestedStackResource (promptztagNestedStacktagNestedStackResourceDB8A3F40)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 17/6 | 2:27:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agent.NestedStack/agent.NestedStackResource (promptzagentNestedStackagentNestedStackResource57BCB54C)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 16/6 | 2:27:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/agentTag.NestedStack/agentTag.NestedStackResource (promptzagentTagNestedStackagentTagNestedStackResource1C5ED614)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 15/6 | 2:27:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/user.NestedStack/user.NestedStackResource (promptzuserNestedStackuserNestedStackResource876AF04B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 14/6 | 2:27:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/prompt.NestedStack/prompt.NestedStackResource (promptzpromptNestedStackpromptNestedStackResource266C1B2E)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 13/6 | 2:27:11 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/projectRule.NestedStack/projectRule.NestedStackResource (promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 12/6 | 2:27:12 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource (promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3 | 13/6 | 2:27:12 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b-data7552DF31-14L5V0UH4TYO3
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 12/6 | 2:27:20 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | data.NestedStack/data.NestedStackResource (data7552DF31)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 11/6 | 2:27:21 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | PromptzMessagingStack.NestedStack/PromptzMessagingStack.NestedStackResource (PromptzMessagingStack894A6573)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 10/6 | 2:27:21 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | auth.NestedStack/auth.NestedStackResource (auth179371D7)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 9/6 | 2:27:21 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | function.NestedStack/function.NestedStackResource (function1351588B)
+amplify-promptz-christianbonzelet-sandbox-831c4a6b0b | 10/6 | 2:27:21 PM | UPDATE_COMPLETE | AWS::CloudFormation::Stack | amplify-promptz-christianbonzelet-sandbox-831c4a6b0b
+2:27:24 PM ✔ Deployment completed in 67.226 seconds
+2:27:24 PM AppSync API endpoint = https://kajdkrbvyjfbrnk7pfppdohivu.appsync-api.eu-central-1.amazonaws.com/graphql
+2:27:24 PM [Sandbox] Watching for file changes...
+2:27:24 PM File written: amplify_outputs.json

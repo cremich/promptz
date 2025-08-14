@@ -105,11 +105,12 @@
 
 **Subtasks:**
 
-- [ ] **2.1.1** Update main navigation component
+- [x] **2.1.1** Update main navigation component
   - Add "Agents" link to header navigation
   - Update mobile menu with agents section
   - Ensure consistent styling with existing navigation
   - **Expected Outcome:** Agents accessible from main navigation
+  - **Status:** ✅ COMPLETED - Added "Agents" link to lib/navigation.ts which automatically updates both desktop and mobile navigation. Updated corresponding unit tests for topnav and mobile-menu components. Verified functionality in both desktop and mobile views. The Agents link is properly positioned between Rules and MCP Server with consistent styling.
 
 - [ ] **2.1.2** Create agent page routing structure
   - Create `/app/agents` directory structure
