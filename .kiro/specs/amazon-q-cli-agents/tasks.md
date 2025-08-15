@@ -393,19 +393,7 @@
   - Test successful agent publication
   - **Expected Outcome:** E2E tests for agent creation workflow
 
-- [ ] **4.1.2** Create agent discovery E2E tests
-  - Test public agent browsing
-  - Test search and filtering functionality
-  - Test agent detail page navigation
-  - **Expected Outcome:** E2E tests for agent discovery
-
-- [ ] **4.1.3** Create agent management E2E tests
-  - Test private agent management
-  - Test agent editing and deletion
-  - Test ownership validation
-  - **Expected Outcome:** E2E tests for agent management
-
-- [ ] **4.1.4** Create agent download E2E tests
+- [ ] **4.1.2** Create agent download E2E tests
   - Test agent configuration download
   - Test JSON file generation
   - Test analytics tracking

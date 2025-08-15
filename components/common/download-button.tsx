@@ -17,22 +17,7 @@ interface DownloadButtonProps {
   /**
    * The content to be downloaded
    */
-  content:
-    | string
-    | Pick<
-        Agent,
-        | "name"
-        | "description"
-        | "prompt"
-        | "tools"
-        | "mcpServers"
-        | "resources"
-        | "hooks"
-        | "toolsSettings"
-        | "toolAliases"
-        | "allowedTools"
-        | "useLegacyMcpJson"
-      >;
+  content: string | Agent;
 
   /**
    * The filename for the downloaded file
@@ -89,7 +74,21 @@ export function DownloadButton({
     let blobContent = "";
 
     if (modelType === ModelType.AGENT) {
-      blobContent = JSON.stringify(content as Agent, null, 2);
+      const filteredAgent = {
+        name: (content as Agent).name,
+        description: (content as Agent).description,
+        prompt: (content as Agent).prompt,
+        tools: (content as Agent).tools,
+        mcpServers: (content as Agent).mcpServers,
+        resources: (content as Agent).resources,
+        hooks: (content as Agent).hooks,
+        toolsSettings: (content as Agent).toolsSettings,
+        toolAliases: (content as Agent).toolAliases,
+        allowedTools: (content as Agent).allowedTools,
+        useLegacyMcpJson: (content as Agent).useLegacyMcpJson,
+      };
+
+      blobContent = JSON.stringify(filteredAgent, null, 2);
     } else {
       blobContent = content as string;
     }
