@@ -25,7 +25,7 @@ export default async function FooterTags() {
             Explore by Tags
           </h3>
           <p className="text-sm text-gray-400">
-            Discover prompts and project rules organized by technology,
+            Discover prompts, project rules, and tags organized by technology,
             framework, and use case
           </p>
         </div>

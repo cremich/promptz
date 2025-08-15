@@ -276,7 +276,7 @@
     - **Data Flow:** Complete data handling from form input through validation to database storage
     - **Accessibility:** Full accessibility support with proper labels, descriptions, and keyboard navigation
 
-- [ ] **2.2.6** Implement metadata and tags section
+- [x] **2.2.6** Implement metadata and tags section
   - Tag selection using existing tag system
   - Visibility controls (public/private)
   - Source URL and how-to guide fields
@@ -330,13 +330,13 @@
   - Maintain consistent UI with prompts and rules
   - **Expected Outcome:** Agents visible on tag-specific pages
 
-- [ ] **3.1.2** Extend search functionality for agents
+- [x] **3.1.2** Extend search functionality for agents
   - Update search components to handle agent content type
   - Add agent-specific search filters
   - Implement agent search result display
   - **Expected Outcome:** Unified search supporting all content types
 
-- [ ] **3.1.3** Update footer tag navigation
+- [x] **3.1.3** Update footer tag navigation
   - Include agents in footer tag links
   - Update tag statistics to include agent counts
   - Ensure consistent navigation experience
@@ -348,65 +348,17 @@
   - Maintain tag relationship integrity
   - **Expected Outcome:** Robust tag relationship management
 
-### Task 3.2: Content Reference System
-
-**Description:** Implement the ability to reference existing prompts and rules in agent configurations.
-
-**Subtasks:**
-
-- [ ] **3.2.1** Create content reference selector
-  - Browse and select prompts/rules for agent resources
-  - Generate appropriate resource URLs
-  - Handle reference validation
-  - **Expected Outcome:** Content reference selection interface
-
-- [ ] **3.2.2** Implement reference URL generation
-  - Generate promptz.dev URLs for referenced content
-  - Handle both public and private content references
-  - Validate reference accessibility
-  - **Expected Outcome:** Automatic URL generation for content references
-
-- [ ] **3.2.3** Add reference integrity checking
-  - Validate referenced content exists and is accessible
-  - Handle broken references gracefully
-  - Provide warnings for private content references
-  - **Expected Outcome:** Reference integrity validation
-
-- [ ] **3.2.4** Create reference display in agent details
-  - Show referenced prompts and rules in agent detail view
-  - Provide links to referenced content
-  - Display reference metadata
-  - **Expected Outcome:** Clear reference display in agent details
-
 ### Task 3.3: Analytics and Monitoring
 
 **Description:** Implement analytics tracking and monitoring for agent operations.
 
 **Subtasks:**
 
-- [ ] **3.3.1** Add agent event tracking
+- [x] **3.3.1** Add agent event tracking
   - Implement EventBridge event publishing for agent operations
   - Track agent.saved, agent.deleted, agent.copied, agent.downloaded events
   - Include relevant metadata in events
   - **Expected Outcome:** Comprehensive event tracking for agents
-
-- [ ] **3.3.2** Create agent analytics dashboard
-  - Display agent usage statistics
-  - Show popular agents and trending configurations
-  - Provide owner-specific analytics
-  - **Expected Outcome:** Analytics dashboard for agent insights
-
-- [ ] **3.3.3** Implement usage counters
-  - Track download and copy counts for agents
-  - Update counters atomically
-  - Display usage statistics in agent listings
-  - **Expected Outcome:** Accurate usage tracking and display
-
-- [ ] **3.3.4** Add monitoring and alerting
-  - Monitor agent creation and download rates
-  - Alert on validation failures or errors
-  - Track performance metrics for agent operations
-  - **Expected Outcome:** Operational monitoring for agent features
 
 ## Phase 4: Testing and Quality Assurance (Weeks 9-10)
 
