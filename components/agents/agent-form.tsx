@@ -276,16 +276,11 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                   <FormLabel>Tool Aliases</FormLabel>
                   <FormControl>
                     <div>
-                      {field.value &&
-                        Object.entries(field.value).map(([alias, tool]) => (
-                          <div key={alias}>
-                            <input
-                              type="hidden"
-                              name={`toolAliases.${alias}`}
-                              value={tool}
-                            />
-                          </div>
-                        ))}
+                      <input
+                        type="hidden"
+                        name="toolAliases"
+                        value={JSON.stringify(field.value || {})}
+                      />
                       <ToolAliasesManager
                         value={field.value || {}}
                         onChange={field.onChange}

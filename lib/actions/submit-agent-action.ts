@@ -64,8 +64,6 @@ export async function onSubmitAction(
     sourceURL: data.get("sourceURL") as string,
   };
 
-  console.log(formData);
-
   const parsed = agentFormSchema.safeParse(formData);
   if (!parsed.success) {
     return {
@@ -80,6 +78,11 @@ export async function onSubmitAction(
     name: parsed.data.name,
     description: parsed.data.description,
     prompt: parsed.data.prompt,
+    tools: parsed.data.tools,
+    toolsSettings: JSON.stringify(parsed.data.toolsSettings),
+    toolAliases: JSON.stringify(parsed.data.toolAliases),
+    allowedTools: parsed.data.allowedTools,
+    useLegacyMcpJson: parsed.data.useLegacyMcpJson,
     tags: parsed.data.tags,
     scope: parsed.data.scope,
     sourceURL: parsed.data.sourceURL,
