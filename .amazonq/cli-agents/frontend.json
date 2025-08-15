@@ -31,7 +31,6 @@
   "resources": [
     "file://README.md",
     "file://.amazonq/rules/nextjs.md",
-    "file://.amazonq/rules/playwright.md",
     "file://.amazonq/project-intelligence/*.md"
   ],
   "hooks": {
