@@ -1,136 +1,205 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import EditAgent from "@/app/agents/agent/[slug]/edit/page";
+import EditAgentPage from "@/app/agents/agent/[slug]/edit/page";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
-import { notFound, redirect } from "next/navigation";
+import { fetchAgentBySlug } from "@/lib/actions/fetch-agents-action";
+import { redirect, notFound } from "next/navigation";
+import { Agent } from "@/lib/models/agent-model";
+import { Tag } from "@/lib/models/tags-model";
 
-// Mock the dependencies
+// Mock dependencies
 jest.mock("@/lib/actions/cognito-auth-action", () => ({
   fetchCurrentAuthUser: jest.fn(),
 }));
 
+jest.mock("@/lib/actions/fetch-agents-action", () => ({
+  fetchAgentBySlug: jest.fn(),
+}));
+
 jest.mock("@/lib/actions/fetch-tags-action", () => ({
-  fetchTagsByCategory: jest.fn().mockImplementation((category: string) => {
-    const mockTags = {
-      Interface: [
-        {
-          name: "CLI",
-          description: "Command Line Interface",
-          category: "Interface",
-        },
-      ],
-      Agent: [
-        { name: "Custom", description: "Custom Agent", category: "Agent" },
-      ],
-      SDLC: [
-        { name: "Testing", description: "Testing Tools", category: "SDLC" },
-      ],
-    };
-    return Promise.resolve(mockTags[category as keyof typeof mockTags] || []);
-  }),
+  fetchTagsByCategory: jest.fn().mockResolvedValue([
+    {
+      name: "Test Tag",
+      description: "Test Description",
+      category: "Interface",
+    },
+  ]),
 }));
 
 jest.mock("next/navigation", () => ({
-  notFound: jest.fn(),
   redirect: jest.fn(),
+  notFound: jest.fn(),
 }));
 
-describe("EditAgent", () => {
+// Mock the AgentForm component
+jest.mock("@/components/agents/agent-form", () => {
+  return function MockAgentForm({
+    agent,
+    tags,
+  }: {
+    agent: Agent;
+    tags: Tag[];
+  }) {
+    return (
+      <div data-testid="agent-form">
+        <div data-testid="agent-name">{agent.name}</div>
+        <div data-testid="tags-count">{tags.length}</div>
+      </div>
+    );
+  };
+});
+
+describe("EditAgentPage", () => {
+  // Reset mocks before each test
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   test("Calls notFound when agent does not exist", async () => {
-    // Mock the current user
-    const mockUser = {
-      id: "user123",
-      username: "testuser",
-      displayName: "Test User",
-      guest: false,
-    };
-
-    // Setup mocks
-    (fetchCurrentAuthUser as jest.Mock).mockResolvedValue(mockUser);
+    // Mock agent not found
+    (fetchAgentBySlug as jest.Mock).mockResolvedValue(null);
 
     // Render the component
-    await EditAgent({
+    await EditAgentPage({
       params: Promise.resolve({ slug: "non-existent-agent" }),
     });
 
-    // Check if notFound was called
+    // Verify notFound was called
     expect(notFound).toHaveBeenCalled();
+
+    // Verify that fetchCurrentAuthUser was not called
+    expect(fetchCurrentAuthUser).not.toHaveBeenCalled();
+
+    // Verify that redirect was not called
+    expect(redirect).not.toHaveBeenCalled();
   });
 
-  test("Does not call fetchCurrentAuthUser when agent is null", async () => {
-    // Mock the current user
-    const mockUser = {
-      id: "user123",
-      username: "testuser",
-      displayName: "Test User",
+  test("Redirects to agent page when user is not the author", async () => {
+    // Mock authenticated user
+    (fetchCurrentAuthUser as jest.Mock).mockResolvedValue({
+      id: "user-123",
       guest: false,
-    };
+    });
 
-    // Setup mocks
-    (fetchCurrentAuthUser as jest.Mock).mockResolvedValue(mockUser);
+    // Mock agent with different author
+    (fetchAgentBySlug as jest.Mock).mockResolvedValue({
+      id: "agent-123",
+      name: "Test Agent",
+      slug: "test-agent",
+      authorId: "different-user-id",
+    });
 
     // Render the component
-    await EditAgent({
+    await EditAgentPage({
       params: Promise.resolve({ slug: "test-agent" }),
     });
 
-    // Verify that fetchCurrentAuthUser was not called because agent is null
-    expect(fetchCurrentAuthUser).not.toHaveBeenCalled();
-    // But notFound should have been called
-    expect(notFound).toHaveBeenCalled();
+    // Verify redirect was called with agent page path
+    expect(redirect).toHaveBeenCalledWith("/agents/agent/test-agent");
+
+    // Verify that notFound was not called
+    expect(notFound).not.toHaveBeenCalled();
   });
 
-  test("Fetches tags from all categories when agent exists", async () => {
-    const { fetchTagsByCategory } = require("@/lib/actions/fetch-tags-action");
+  test("Redirects to agent page when user is guest", async () => {
+    // Mock guest user
+    (fetchCurrentAuthUser as jest.Mock).mockResolvedValue({
+      id: "user-123",
+      guest: true,
+    });
 
-    // Mock the current user
-    const mockUser = {
-      id: "user123",
-      username: "testuser",
-      displayName: "Test User",
-      guest: false,
-    };
+    // Mock agent
+    (fetchAgentBySlug as jest.Mock).mockResolvedValue({
+      id: "agent-123",
+      name: "Test Agent",
+      slug: "test-agent",
+      authorId: "user-123",
+    });
 
-    // Setup mocks
-    (fetchCurrentAuthUser as jest.Mock).mockResolvedValue(mockUser);
-
-    // Since agent is always null in current implementation, this will call notFound
-    await EditAgent({
+    // Render the component
+    await EditAgentPage({
       params: Promise.resolve({ slug: "test-agent" }),
     });
 
-    // The function should be defined and callable
-    expect(EditAgent).toBeDefined();
-    expect(typeof EditAgent).toBe("function");
+    // Verify redirect was called with agent page path
+    expect(redirect).toHaveBeenCalledWith("/agents/agent/test-agent");
+
+    // Verify that notFound was not called
+    expect(notFound).not.toHaveBeenCalled();
   });
 
-  test("Handles slug parameter correctly", async () => {
-    // Mock the current user
+  test("Handles authorId with :: separator correctly", async () => {
+    // Mock authenticated user
+    (fetchCurrentAuthUser as jest.Mock).mockResolvedValue({
+      id: "user-123",
+      guest: false,
+    });
+
+    // Mock agent with authorId containing :: separator
+    (fetchAgentBySlug as jest.Mock).mockResolvedValue({
+      id: "agent-123",
+      name: "Test Agent",
+      slug: "test-agent",
+      authorId: "user-123::some-additional-info",
+    });
+
+    // Render the component
+    const result = await EditAgentPage({
+      params: Promise.resolve({ slug: "test-agent" }),
+    });
+    render(result);
+
+    // Verify the form is rendered (user should be authorized)
+    expect(screen.getByTestId("agent-form")).toBeInTheDocument();
+    expect(screen.getByTestId("agent-name")).toHaveTextContent("Test Agent");
+
+    // Verify that redirect was not called
+    expect(redirect).not.toHaveBeenCalled();
+    expect(notFound).not.toHaveBeenCalled();
+  });
+
+  test("Renders the agent form when user is the author", async () => {
+    // Mock authenticated user
     const mockUser = {
-      id: "user123",
-      username: "testuser",
-      displayName: "Test User",
+      id: "user-123",
       guest: false,
     };
-
-    // Setup mocks
     (fetchCurrentAuthUser as jest.Mock).mockResolvedValue(mockUser);
 
-    // Test with different slug values
-    await EditAgent({
-      params: Promise.resolve({ slug: "test-agent-1" }),
-    });
+    // Mock agent with same author
+    const mockAgent: Agent = {
+      id: "agent-123",
+      name: "Test Agent",
+      slug: "test-agent",
+      authorId: "user-123",
+      description: "A test agent for development",
+      prompt: "You are a helpful development assistant",
+      tools: ["fs_read", "fs_write"],
+      scope: "PUBLIC",
+    };
+    (fetchAgentBySlug as jest.Mock).mockResolvedValue(mockAgent);
 
-    await EditAgent({
-      params: Promise.resolve({ slug: "another-agent" }),
+    // Render the component
+    const result = await EditAgentPage({
+      params: Promise.resolve({ slug: "test-agent" }),
     });
+    render(result);
 
-    // Both should call notFound since agent is always null
-    expect(notFound).toHaveBeenCalledTimes(2);
+    // Verify the form is rendered with the agent data
+    expect(screen.getByTestId("agent-form")).toBeInTheDocument();
+    expect(screen.getByTestId("agent-name")).toHaveTextContent("Test Agent");
+
+    // Verify page title and description are rendered
+    expect(screen.getByText("Edit Agent")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Update your Amazon Q Developer CLI agent configuration.",
+      ),
+    ).toBeInTheDocument();
+
+    // Verify that redirect was not called
+    expect(redirect).not.toHaveBeenCalled();
+    expect(notFound).not.toHaveBeenCalled();
   });
 });

@@ -18,6 +18,7 @@ import {
   Terminal,
   Trash2,
   Bot,
+  Settings,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,6 +60,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { ToolsMultiSelect } from "@/components/forms/tools-multi-select";
+import { ToolAliasesManager } from "@/components/forms/tool-aliases-manager";
 
 interface AgentFormProps {
   agent?: Agent;
@@ -210,6 +214,152 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                     responds. Be specific about the agent's role, expertise, and
                     communication style.
                   </FormDescription>
+                </FormItem>
+              )}
+            />
+          </CardContent>
+        </Card>
+
+        {/* Tools Configuration Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Settings className="w-4 h-4" />
+              Tools Configuration
+            </CardTitle>
+            <CardDescription>
+              Configure which tools your agent can use and how they are accessed
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <FormField
+              control={form.control}
+              name="tools"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="flex items-center gap-2">
+                    <Terminal className="w-4 h-4" />
+                    Available Tools
+                  </FormLabel>
+                  <FormControl>
+                    <div>
+                      {field.value?.map((tool, index) => (
+                        <input
+                          key={index}
+                          type="hidden"
+                          name="tools"
+                          value={tool}
+                        />
+                      ))}
+                      <ToolsMultiSelect
+                        value={field.value || []}
+                        onChange={field.onChange}
+                        placeholder="Select tools your agent can use..."
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage>{state.errors?.tools}</FormMessage>
+                  <FormDescription>
+                    Select the tools that your agent is allowed to use. These
+                    tools will be available for the agent to call during
+                    conversations.
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="toolAliases"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tool Aliases</FormLabel>
+                  <FormControl>
+                    <div>
+                      {field.value &&
+                        Object.entries(field.value).map(([alias, tool]) => (
+                          <div key={alias}>
+                            <input
+                              type="hidden"
+                              name={`toolAliases.${alias}`}
+                              value={tool}
+                            />
+                          </div>
+                        ))}
+                      <ToolAliasesManager
+                        value={field.value || {}}
+                        onChange={field.onChange}
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage>{state.errors?.toolAliases}</FormMessage>
+                  <FormDescription>
+                    Create shortcuts for tools by defining aliases. For example,
+                    you can alias "read" to "fs_read" for easier use.
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="allowedTools"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Allowed Tools (Restriction)</FormLabel>
+                  <FormControl>
+                    <div>
+                      {field.value?.map((tool, index) => (
+                        <input
+                          key={index}
+                          type="hidden"
+                          name="allowedTools"
+                          value={tool}
+                        />
+                      ))}
+                      <ToolsMultiSelect
+                        value={field.value || []}
+                        onChange={field.onChange}
+                        placeholder="Optionally restrict to specific tools..."
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage>{state.errors?.allowedTools}</FormMessage>
+                  <FormDescription>
+                    Optional: Restrict the agent to only use these specific
+                    tools. If empty, all configured tools are allowed.
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="useLegacyMcpJson"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border border-gray-700 p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">
+                      Legacy MCP JSON Support
+                    </FormLabel>
+                    <FormDescription>
+                      Enable support for legacy MCP JSON format. Only enable
+                      this if you need compatibility with older MCP servers.
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <div>
+                      <Switch
+                        checked={field.value || false}
+                        onCheckedChange={field.onChange}
+                      />
+                      <input
+                        type="hidden"
+                        name="useLegacyMcpJson"
+                        value={field.value ? "true" : "false"}
+                      />
+                    </div>
+                  </FormControl>
                 </FormItem>
               )}
             />

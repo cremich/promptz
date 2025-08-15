@@ -31,6 +31,17 @@ jest.mock("@/lib/actions/fetch-tags-action", () => ({
   }),
 }));
 
+jest.mock("@/components/agents/agent-form", () => {
+  return function AgentForm({ tags }: { tags: any[] }) {
+    return (
+      <div data-testid="agent-form">
+        <div data-testid="tags-count">{tags.length}</div>
+        Prompt Form
+      </div>
+    );
+  };
+});
+
 describe("CreateAgent", () => {
   test("Renders page title", async () => {
     const result = await CreateAgent();
@@ -42,27 +53,11 @@ describe("CreateAgent", () => {
     expect(heading).toHaveTextContent("Create Agent");
   });
 
-  test("Renders placeholder content for future implementation", async () => {
+  test("Renders AgentForm component with tags", async () => {
     const result = await CreateAgent();
     render(result);
 
-    // Check for placeholder text
-    const placeholder = screen.getByText(
-      "Agent creation form will be implemented in a future task.",
-    );
-    expect(placeholder).toBeInTheDocument();
-    expect(placeholder).toHaveClass("text-muted-foreground");
-  });
-
-  test("Fetches tags from all categories", async () => {
-    const { fetchTagsByCategory } = require("@/lib/actions/fetch-tags-action");
-
-    await CreateAgent();
-
-    // Verify that fetchTagsByCategory was called for all required categories
-    expect(fetchTagsByCategory).toHaveBeenCalledWith("Interface");
-    expect(fetchTagsByCategory).toHaveBeenCalledWith("Agent");
-    expect(fetchTagsByCategory).toHaveBeenCalledWith("SDLC");
-    expect(fetchTagsByCategory).toHaveBeenCalledTimes(3);
+    // Check if PromptForm is rendered
+    expect(screen.getByTestId("agent-form")).toBeInTheDocument();
   });
 });

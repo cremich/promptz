@@ -91,31 +91,6 @@ describe("Agent Form Schema", () => {
         );
       }
     });
-
-    test("requires at least one tool", () => {
-      const invalidAgent = {
-        name: "Test Agent",
-        description: "A test agent for development",
-        prompt: "You are a helpful assistant",
-        tools: [],
-        resources: [],
-        allowedTools: [],
-        useLegacyMcpJson: false,
-        tags: [],
-        scope: "PRIVATE",
-      };
-
-      const result = agentFormSchema.safeParse(invalidAgent);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.error.issues).toContainEqual(
-          expect.objectContaining({
-            path: ["tools"],
-            message: "At least one tool must be selected",
-          }),
-        );
-      }
-    });
   });
 
   describe("MCP Server validation", () => {

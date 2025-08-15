@@ -185,12 +185,35 @@
     - Integration with agent creation and edit pages
     - **Unit Tests:** Created comprehensive test suite with 15 test cases covering all form sections, user interactions, pre-population, and accessibility features
 
-- [ ] **2.2.3** Create tools configuration section
-  - Tools selection with autocomplete
+- [x] **2.2.3** Create tools configuration section
+  - Tools selection with autocomplete for built-in tools of Amazon Q CLI
   - Tool aliases configuration
   - Allowed tools management
   - Legacy MCP support toggle
   - **Expected Outcome:** Tools configuration interface
+  - **Status:** ✅ COMPLETED - Created comprehensive tools configuration section with:
+    - **Amazon Q CLI Tools Constants:** Created `lib/constants/amazon-q-tools.ts` with comprehensive list of 70+ Amazon Q CLI tools organized by categories (File System, Browser Automation, GitHub Operations, Documentation, Other)
+    - **ToolsMultiSelect Component:** Built `components/forms/tools-multi-select.tsx` with autocomplete functionality, categorized tool display, multi-selection with badges, search filtering, and keyboard navigation support
+    - **ToolAliasesManager Component:** Created `components/forms/tool-aliases-manager.tsx` for managing tool aliases with add/remove functionality, input validation, and real-time updates
+    - **Agent Form Integration:** Added complete tools configuration section to AgentForm with:
+      - Available Tools multi-select with Amazon Q CLI tools autocomplete
+      - Tool Aliases manager for creating shortcuts (e.g., "read" → "fs_read")
+      - Allowed Tools restriction field for limiting tool access
+      - Legacy MCP JSON Support toggle with proper description
+      - Proper form field integration with hidden inputs for form submission
+      - Pre-population support for editing existing agents
+    - **Comprehensive Testing:** Created unit tests for all new components:
+      - `__tests__/components/forms/tools-multi-select.test.tsx` - 12 test cases covering selection, filtering, categorization, and user interactions
+      - `__tests__/components/forms/tool-aliases-manager.test.tsx` - 11 test cases covering alias management, validation, and edge cases
+      - Updated `__tests__/components/agents/agent-form.test.tsx` with 8 additional test cases for tools configuration section
+      - All tests passing with proper mocking and accessibility considerations
+    - **User Experience Features:**
+      - Intuitive multi-select interface with visual feedback
+      - Categorized tool display for better organization
+      - Search functionality for quick tool discovery
+      - Clear descriptions and helpful guidance text
+      - Proper validation and error handling
+      - Responsive design with dark theme consistency
 
 - [ ] **2.2.4** Implement MCP servers configuration
   - Dynamic server configuration forms

@@ -5,6 +5,48 @@ import AgentForm from "@/components/agents/agent-form";
 import { Agent } from "@/lib/models/agent-model";
 import { Tag } from "@/lib/models/tags-model";
 
+// Mock the new components
+jest.mock("@/components/forms/tools-multi-select", () => ({
+  ToolsMultiSelect: ({ value, onChange, placeholder }: any) => (
+    <div data-testid="tools-multi-select">
+      <span>{placeholder}</span>
+      <div data-testid="selected-tools">
+        {value?.map((tool: string) => (
+          <span key={tool} data-testid={`tool-${tool}`}>
+            {tool}
+          </span>
+        ))}
+      </div>
+      <button
+        onClick={() => onChange([...value, "test_tool"])}
+        data-testid="add-tool"
+      >
+        Add Tool
+      </button>
+    </div>
+  ),
+}));
+
+jest.mock("@/components/forms/tool-aliases-manager", () => ({
+  ToolAliasesManager: ({ value, onChange }: any) => (
+    <div data-testid="tool-aliases-manager">
+      <div data-testid="aliases">
+        {Object.entries(value || {}).map(([alias, tool]: [string, any]) => (
+          <div key={alias} data-testid={`alias-${alias}`}>
+            {alias} → {tool}
+          </div>
+        ))}
+      </div>
+      <button
+        onClick={() => onChange({ ...value, test_alias: "test_tool" })}
+        data-testid="add-alias"
+      >
+        Add Alias
+      </button>
+    </div>
+  ),
+}));
+
 // Mock the server actions
 jest.mock("@/lib/actions/submit-agent-action", () => ({
   onSubmitAction: jest.fn(),
@@ -161,6 +203,117 @@ describe("AgentForm", () => {
       expect(nameInput).toHaveValue("My Test Agent");
       expect(descriptionInput).toHaveValue("This is a test agent");
       expect(promptInput).toHaveValue("You are a test assistant");
+    });
+  });
+
+  describe("Tools Configuration Section", () => {
+    test("renders tools configuration form fields", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      // Check for Tools Configuration section
+      expect(screen.getByText("Tools Configuration")).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "Configure which tools your agent can use and how they are accessed",
+        ),
+      ).toBeInTheDocument();
+
+      // Check for form fields
+      expect(screen.getByText("Available Tools")).toBeInTheDocument();
+      expect(screen.getByText("Tool Aliases")).toBeInTheDocument();
+      expect(
+        screen.getByText("Allowed Tools (Restriction)"),
+      ).toBeInTheDocument();
+      expect(screen.getByText("Legacy MCP JSON Support")).toBeInTheDocument();
+    });
+
+    test("displays proper placeholders for tools fields", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      expect(
+        screen.getByText("Select tools your agent can use..."),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText("Optionally restrict to specific tools..."),
+      ).toBeInTheDocument();
+    });
+
+    test("shows helpful descriptions for tools fields", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      expect(
+        screen.getByText(
+          "Select the tools that your agent is allowed to use. These tools will be available for the agent to call during conversations.",
+        ),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Create shortcuts for tools by defining aliases. For example, you can alias "read" to "fs_read" for easier use.',
+        ),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "Optional: Restrict the agent to only use these specific tools. If empty, all configured tools are allowed.",
+        ),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "Enable support for legacy MCP JSON format. Only enable this if you need compatibility with older MCP servers.",
+        ),
+      ).toBeInTheDocument();
+    });
+
+    test("renders tools multi-select components", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      const toolsSelects = screen.getAllByTestId("tools-multi-select");
+      expect(toolsSelects).toHaveLength(2); // Available Tools and Allowed Tools
+    });
+
+    test("renders tool aliases manager", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      expect(screen.getByTestId("tool-aliases-manager")).toBeInTheDocument();
+    });
+
+    test("renders legacy MCP JSON toggle", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      const toggle = screen.getByRole("switch");
+      expect(toggle).toBeInTheDocument();
+    });
+
+    test("pre-populates tools configuration when agent is provided", () => {
+      render(<AgentForm agent={mockAgent} tags={mockTags} />);
+
+      // Check that tools are displayed (there will be multiple instances due to Available Tools and Allowed Tools)
+      expect(screen.getAllByTestId("tool-git")).toHaveLength(2);
+      expect(screen.getAllByTestId("tool-npm")).toHaveLength(2);
+
+      // Check that aliases are displayed
+      expect(screen.getByTestId("alias-g")).toBeInTheDocument();
+    });
+
+    test("allows interaction with tools configuration", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      const addToolButton = screen.getAllByTestId("add-tool")[0];
+      const addAliasButton = screen.getByTestId("add-alias");
+      const legacyToggle = screen.getByRole("switch");
+
+      // Test adding a tool
+      fireEvent.click(addToolButton);
+
+      // Test adding an alias
+      fireEvent.click(addAliasButton);
+
+      // Test toggling legacy MCP support
+      fireEvent.click(legacyToggle);
+
+      // These interactions should not throw errors
+      expect(addToolButton).toBeInTheDocument();
+      expect(addAliasButton).toBeInTheDocument();
+      expect(legacyToggle).toBeInTheDocument();
     });
   });
 
