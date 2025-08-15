@@ -19,6 +19,7 @@ import {
   Trash2,
   Bot,
   Settings,
+  Server,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -63,6 +64,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { ToolsMultiSelect } from "@/components/forms/tools-multi-select";
 import { ToolAliasesManager } from "@/components/forms/tool-aliases-manager";
+import { McpServersManager } from "@/components/forms/mcp-servers-manager";
 
 interface AgentFormProps {
   agent?: Agent;
@@ -355,6 +357,51 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                       />
                     </div>
                   </FormControl>
+                </FormItem>
+              )}
+            />
+          </CardContent>
+        </Card>
+
+        {/* MCP Servers Configuration Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Server className="w-4 h-4" />
+              MCP Servers Configuration
+            </CardTitle>
+            <CardDescription>
+              Configure Model Context Protocol (MCP) servers to extend your
+              agent's capabilities with external data sources and tools
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <FormField
+              control={form.control}
+              name="mcpServers"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>MCP Servers</FormLabel>
+                  <FormControl>
+                    <div>
+                      <input
+                        type="hidden"
+                        name="mcpServers"
+                        value={JSON.stringify(field.value || {})}
+                      />
+                      <McpServersManager
+                        value={field.value || {}}
+                        onChange={field.onChange}
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage>{state.errors?.mcpServers}</FormMessage>
+                  <FormDescription>
+                    MCP servers provide your agent with access to external tools
+                    and data sources. Each server runs as a separate process and
+                    communicates with your agent through the Model Context
+                    Protocol.
+                  </FormDescription>
                 </FormItem>
               )}
             />

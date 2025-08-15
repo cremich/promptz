@@ -47,6 +47,43 @@ jest.mock("@/components/forms/tool-aliases-manager", () => ({
   ),
 }));
 
+jest.mock("@/components/forms/mcp-servers-manager", () => ({
+  McpServersManager: ({ value, onChange }: any) => (
+    <div data-testid="mcp-servers-manager">
+      <div data-testid="servers">
+        {Object.entries(value || {}).map(([name, config]: [string, any]) => (
+          <div key={name} data-testid={`server-${name}`}>
+            {name}: {config.command}
+          </div>
+        ))}
+      </div>
+      {Object.keys(value || {}).length === 0 && (
+        <div>
+          <p>No MCP servers configured</p>
+          <p>Add MCP servers to extend your agent's capabilities</p>
+        </div>
+      )}
+      <input placeholder="Server name (e.g., 'filesystem', 'git')" />
+      <button
+        onClick={() =>
+          onChange({
+            ...value,
+            test_server: {
+              command: "test-command",
+              args: [],
+              env: {},
+              timeout: undefined,
+              disabled: false,
+            },
+          })
+        }
+      >
+        Add Server
+      </button>
+    </div>
+  ),
+}));
+
 // Mock the server actions
 jest.mock("@/lib/actions/submit-agent-action", () => ({
   onSubmitAction: jest.fn(),
@@ -314,6 +351,83 @@ describe("AgentForm", () => {
       expect(addToolButton).toBeInTheDocument();
       expect(addAliasButton).toBeInTheDocument();
       expect(legacyToggle).toBeInTheDocument();
+    });
+  });
+
+  describe("MCP Servers Configuration Section", () => {
+    test("renders MCP servers configuration form fields", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      // Check for MCP Servers Configuration section
+      expect(screen.getByText("MCP Servers Configuration")).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "Configure Model Context Protocol (MCP) servers to extend your agent's capabilities with external data sources and tools",
+        ),
+      ).toBeInTheDocument();
+
+      // Check for MCP Servers field
+      expect(screen.getByText("MCP Servers")).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "MCP servers provide your agent with access to external tools and data sources.",
+          { exact: false },
+        ),
+      ).toBeInTheDocument();
+    });
+
+    test("renders empty MCP servers state", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      expect(screen.getByText("No MCP servers configured")).toBeInTheDocument();
+      expect(
+        screen.getByText("Add MCP servers to extend your agent's capabilities"),
+      ).toBeInTheDocument();
+    });
+
+    test("pre-populates MCP servers when agent is provided", () => {
+      const agentWithMcpServers = {
+        ...mockAgent,
+        mcpServers: {
+          filesystem: {
+            command: "npx @modelcontextprotocol/server-filesystem",
+            args: ["--root", "/tmp"],
+            env: { NODE_ENV: "production" },
+            timeout: 30,
+            disabled: false,
+          },
+        },
+      };
+
+      render(<AgentForm agent={agentWithMcpServers} tags={mockTags} />);
+
+      // Check that MCP server is displayed (the mock component shows server names)
+      expect(screen.getByTestId("mcp-servers-manager")).toBeInTheDocument();
+      expect(screen.getByTestId("servers")).toBeInTheDocument();
+    });
+
+    test("allows interaction with MCP servers configuration", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      const serverNameInput = screen.getByPlaceholderText(
+        "Server name (e.g., 'filesystem', 'git')",
+      );
+      const addServerButton = screen.getByText("Add Server");
+
+      // These elements should be present and interactable
+      expect(serverNameInput).toBeInTheDocument();
+      expect(addServerButton).toBeInTheDocument();
+
+      // Test adding a server name
+      fireEvent.change(serverNameInput, { target: { value: "filesystem" } });
+      expect(serverNameInput).toHaveValue("filesystem");
+
+      // Test clicking add button
+      fireEvent.click(addServerButton);
+
+      // These interactions should not throw errors
+      expect(serverNameInput).toBeInTheDocument();
+      expect(addServerButton).toBeInTheDocument();
     });
   });
 

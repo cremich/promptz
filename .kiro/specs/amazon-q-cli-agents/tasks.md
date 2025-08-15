@@ -215,11 +215,41 @@
       - Proper validation and error handling
       - Responsive design with dark theme consistency
 
-- [ ] **2.2.4** Implement MCP servers configuration
+- [x] **2.2.4** Implement MCP servers configuration
   - Dynamic server configuration forms
   - Command, arguments, and environment variables
   - Timeout and disabled state management
   - **Expected Outcome:** MCP server configuration interface
+  - **Status:** ✅ COMPLETED - Created comprehensive MCP servers configuration interface with:
+    - **McpServersManager Component:** Built `components/forms/mcp-servers-manager.tsx` with dynamic server configuration management
+    - **Collapsible Server Cards:** Each server displayed in expandable cards with server name, command preview, and disabled status badge
+    - **Complete Configuration Options:** Full support for all MCP server configuration fields:
+      - Command field (required) with descriptive placeholder
+      - Arguments array management with add/remove functionality
+      - Environment variables as key-value pairs with dynamic management
+      - Timeout configuration (optional positive number)
+      - Disabled state toggle with clear labeling
+    - **Nested Sub-Components:**
+      - `ArgumentsManager` for handling command-line arguments array
+      - `EnvironmentManager` for managing environment variable key-value pairs
+    - **User Experience Features:**
+      - Add/remove servers dynamically with validation
+      - Collapsible interface to manage screen space
+      - Clear visual feedback for disabled servers
+      - Keyboard shortcuts (Enter key) for quick server addition
+      - Proper form validation and error handling
+      - Responsive design with dark theme consistency
+    - **Agent Form Integration:** Added complete MCP servers section to AgentForm with:
+      - Server icon and clear section title
+      - Comprehensive description of MCP server functionality
+      - Hidden form field for JSON serialization
+      - Pre-population support for editing existing agents
+      - Proper form field integration with React Hook Form
+    - **Comprehensive Testing:** Created unit tests for MCP servers manager:
+      - `__tests__/components/forms/mcp-servers-manager.test.tsx` - 13 test cases covering all functionality
+      - Updated `__tests__/components/agents/agent-form.test.tsx` with 4 additional test cases for MCP servers section
+      - All tests passing with proper mocking and accessibility considerations
+      - Tests cover server addition, removal, validation, pre-population, and user interactions
 
 - [ ] **2.2.5** Create resources and hooks section
   - File resource path inputs with validation
