@@ -82,6 +82,8 @@ export async function onSubmitAction(
     toolsSettings: JSON.stringify(parsed.data.toolsSettings),
     toolAliases: JSON.stringify(parsed.data.toolAliases),
     mcpServers: JSON.stringify(parsed.data.mcpServers),
+    resources: parsed.data.resources,
+    hooks: JSON.stringify(parsed.data.hooks),
     allowedTools: parsed.data.allowedTools,
     useLegacyMcpJson: parsed.data.useLegacyMcpJson,
     tags: parsed.data.tags,

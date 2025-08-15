@@ -65,6 +65,8 @@ import { Switch } from "@/components/ui/switch";
 import { ToolsMultiSelect } from "@/components/forms/tools-multi-select";
 import { ToolAliasesManager } from "@/components/forms/tool-aliases-manager";
 import { McpServersManager } from "@/components/forms/mcp-servers-manager";
+import { ResourcesManager } from "@/components/forms/resources-manager";
+import { HooksManager } from "@/components/forms/hooks-manager";
 
 interface AgentFormProps {
   agent?: Agent;
@@ -401,6 +403,81 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                     and data sources. Each server runs as a separate process and
                     communicates with your agent through the Model Context
                     Protocol.
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+          </CardContent>
+        </Card>
+
+        {/* Resources and Hooks Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="w-4 h-4" />
+              Resources & Lifecycle Hooks
+            </CardTitle>
+            <CardDescription>
+              Configure file resources your agent can access and lifecycle hooks
+              for custom behavior at specific execution points
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <FormField
+              control={form.control}
+              name="resources"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>File Resources</FormLabel>
+                  <FormControl>
+                    <div>
+                      {field.value?.map((resource, index) => (
+                        <input
+                          key={index}
+                          type="hidden"
+                          name="resources"
+                          value={resource}
+                        />
+                      ))}
+                      <ResourcesManager
+                        value={field.value || []}
+                        onChange={field.onChange}
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage>{state.errors?.resources}</FormMessage>
+                  <FormDescription>
+                    Specify file paths that your agent should have access to.
+                    These can be configuration files, documentation, or any
+                    other resources your agent needs to function effectively.
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="hooks"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Lifecycle Hooks</FormLabel>
+                  <FormControl>
+                    <div>
+                      <input
+                        type="hidden"
+                        name="hooks"
+                        value={JSON.stringify(field.value || {})}
+                      />
+                      <HooksManager
+                        value={field.value || {}}
+                        onChange={field.onChange}
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage>{state.errors?.hooks}</FormMessage>
+                  <FormDescription>
+                    Configure commands to run at specific points in your agent's
+                    lifecycle. Use agentSpawn for initialization tasks and
+                    userPromptSubmit for pre-processing user inputs.
                   </FormDescription>
                 </FormItem>
               )}

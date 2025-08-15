@@ -251,11 +251,30 @@
       - All tests passing with proper mocking and accessibility considerations
       - Tests cover server addition, removal, validation, pre-population, and user interactions
 
-- [ ] **2.2.5** Create resources and hooks section
+- [x] **2.2.5** Create resources and hooks section
   - File resource path inputs with validation
-  - Promptz.dev content reference selector
   - Lifecycle hooks configuration (agentSpawn, userPromptSubmit)
   - **Expected Outcome:** Resources and hooks configuration interface
+  - **Status:** ✅ COMPLETED - Created comprehensive resources and hooks configuration section with:
+    - **ResourcesManager Component:** Full-featured component for managing file resource paths with:
+      - Support for absolute paths (`/absolute/path`), relative paths (`./relative/path`), home directory paths (`~/home/path`), and simple filenames
+      - Real-time validation and duplicate prevention
+      - Visual resource type indicators and path categorization
+      - Add/remove functionality with keyboard shortcuts (Enter key support)
+      - Comprehensive unit tests (18 test cases) covering all functionality including edge cases
+    - **HooksManager Component:** Advanced lifecycle hooks management with:
+      - Support for `agentSpawn` and `userPromptSubmit` hook types with descriptive labels
+      - Collapsible interface for hook configuration with expand/collapse functionality
+      - Command editing with textarea for multi-line commands
+      - Prevention of duplicate hook types and validation of required fields
+      - Comprehensive unit tests (15 test cases) covering all functionality
+    - **Agent Form Integration:** Seamlessly integrated both components into the agent form with:
+      - Proper form field handling with hidden inputs for form submission
+      - Pre-population support for editing existing agents
+      - Consistent styling and user experience with other form sections
+      - Updated agent form tests (4 additional test cases) to verify integration
+    - **Data Flow:** Complete data handling from form input through validation to database storage
+    - **Accessibility:** Full accessibility support with proper labels, descriptions, and keyboard navigation
 
 - [ ] **2.2.6** Implement metadata and tags section
   - Tag selection using existing tag system

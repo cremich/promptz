@@ -84,6 +84,68 @@ jest.mock("@/components/forms/mcp-servers-manager", () => ({
   ),
 }));
 
+jest.mock("@/components/forms/resources-manager", () => ({
+  ResourcesManager: ({ value, onChange }: any) => (
+    <div data-testid="resources-manager">
+      <div data-testid="resources">
+        {(value || []).map((resource: string, index: number) => (
+          <div key={index} data-testid={`resource-${index}`}>
+            {resource}
+          </div>
+        ))}
+      </div>
+      <input
+        placeholder="Enter file path (e.g., ./src/components, ~/documents/config.json)"
+        data-testid="resource-input"
+      />
+      <button
+        onClick={() => onChange([...(value || []), "./new/resource.txt"])}
+        data-testid="add-resource"
+      >
+        Add Resource
+      </button>
+    </div>
+  ),
+}));
+
+jest.mock("@/components/forms/hooks-manager", () => ({
+  HooksManager: ({ value, onChange }: any) => (
+    <div data-testid="hooks-manager">
+      <div data-testid="hooks">
+        {Object.entries(value || {}).map(
+          ([hookType, hookConfig]: [string, any]) => (
+            <div key={hookType} data-testid={`hook-${hookType}`}>
+              <span>
+                {hookType === "agentSpawn"
+                  ? "Agent Spawn"
+                  : hookType === "userPromptSubmit"
+                    ? "User Prompt Submit"
+                    : hookType}
+              </span>
+              <span>: {hookConfig.command}</span>
+            </div>
+          ),
+        )}
+      </div>
+      <div data-testid="add-hook-section">
+        <span>Add Lifecycle Hook</span>
+        <span>Select hook type</span>
+        <button
+          onClick={() =>
+            onChange({
+              ...value,
+              agentSpawn: { command: "test command" },
+            })
+          }
+          data-testid="add-hook"
+        >
+          Add Hook
+        </button>
+      </div>
+    </div>
+  ),
+}));
+
 // Mock the server actions
 jest.mock("@/lib/actions/submit-agent-action", () => ({
   onSubmitAction: jest.fn(),
@@ -428,6 +490,67 @@ describe("AgentForm", () => {
       // These interactions should not throw errors
       expect(serverNameInput).toBeInTheDocument();
       expect(addServerButton).toBeInTheDocument();
+    });
+  });
+
+  describe("Resources & Lifecycle Hooks Section", () => {
+    test("renders resources and hooks configuration form fields", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      // Check for Resources & Lifecycle Hooks section
+      expect(
+        screen.getByText("Resources & Lifecycle Hooks"),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "Configure file resources your agent can access and lifecycle hooks for custom behavior at specific execution points",
+        ),
+      ).toBeInTheDocument();
+
+      // Check for form fields
+      expect(screen.getByText("File Resources")).toBeInTheDocument();
+      expect(screen.getByText("Lifecycle Hooks")).toBeInTheDocument();
+    });
+
+    test("renders resources manager component", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      // Check that resources manager is rendered
+      expect(
+        screen.getByPlaceholderText(/Enter file path/),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /Add Resource/ }),
+      ).toBeInTheDocument();
+    });
+
+    test("renders hooks manager component", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      // Check that hooks manager is rendered
+      expect(screen.getByText("Add Lifecycle Hook")).toBeInTheDocument();
+      expect(screen.getByText("Select hook type")).toBeInTheDocument();
+    });
+
+    test("pre-populates resources and hooks when editing existing agent", () => {
+      const agentWithResourcesAndHooks = {
+        ...mockAgent,
+        resources: ["./src/config.json", "/absolute/path/file.txt"],
+        hooks: {
+          agentSpawn: { command: "npm install" },
+          userPromptSubmit: { command: "echo 'Processing prompt'" },
+        },
+      };
+
+      render(<AgentForm agent={agentWithResourcesAndHooks} tags={mockTags} />);
+
+      // Resources should be pre-populated
+      expect(screen.getByText("./src/config.json")).toBeInTheDocument();
+      expect(screen.getByText("/absolute/path/file.txt")).toBeInTheDocument();
+
+      // Hooks should be pre-populated
+      expect(screen.getByText("Agent Spawn")).toBeInTheDocument();
+      expect(screen.getByText("User Prompt Submit")).toBeInTheDocument();
     });
   });
 
