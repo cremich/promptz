@@ -25,6 +25,7 @@ const dynamoClient = DynamoDBDocumentClient.from(new DynamoDBClient({}));
 // Environment variables for table names - these will be set by Amplify
 const PROMPT_TAG_TABLE = process.env.PROMPT_TAG_TABLE || "promptTag";
 const RULE_TAG_TABLE = process.env.RULE_TAG_TABLE || "ruleTag";
+const AGENT_TAG_TABLE = process.env.AGENT_TAG_TABLE || "agentTag";
 
 /**
  * Extracts tags from a DynamoDB record image
@@ -40,17 +41,32 @@ function extractTags(image: any): string[] {
 /**
  * Determines the item type based on the event source ARN
  */
-function getItemType(eventSourceArn: string): "prompt" | "projectRule" | null {
+function getItemType(
+  eventSourceArn: string,
+): "prompt" | "projectRule" | "agent" | null {
   if (eventSourceArn.includes("prompt")) return "prompt";
   if (eventSourceArn.includes("projectRule")) return "projectRule";
-  return null;
+  if (eventSourceArn.includes("agent")) return "agent";
+  throw new Error(`Unknown event source ARN: ${eventSourceArn}`);
 }
 
 /**
  * Gets the appropriate join table name based on item type
  */
-function getJoinTableName(itemType: "prompt" | "projectRule"): string {
-  return itemType === "prompt" ? PROMPT_TAG_TABLE : RULE_TAG_TABLE;
+function getJoinTableName(
+  itemType: "prompt" | "projectRule" | "agent",
+): string {
+  if (itemType === "agent") return AGENT_TAG_TABLE;
+  if (itemType === "prompt") return PROMPT_TAG_TABLE;
+  if (itemType === "projectRule") return RULE_TAG_TABLE;
+  throw new Error(`Unknown item type: ${itemType}`);
+}
+
+function getKeyAttribute(itemType: "prompt" | "projectRule" | "agent"): string {
+  if (itemType === "prompt") return "promptId";
+  if (itemType === "projectRule") return "ruleId";
+  if (itemType === "agent") return "agentId";
+  throw new Error(`Unknown item type: ${itemType}`);
 }
 
 /**
@@ -58,10 +74,10 @@ function getJoinTableName(itemType: "prompt" | "projectRule"): string {
  */
 async function removeAllTagRelationships(
   itemId: string,
-  itemType: "prompt" | "projectRule",
+  itemType: "prompt" | "projectRule" | "agent",
 ): Promise<void> {
   const tableName = getJoinTableName(itemType);
-  const keyAttribute = itemType === "prompt" ? "promptId" : "ruleId";
+  const keyAttribute = getKeyAttribute(itemType);
 
   try {
     // Query existing relationships
@@ -132,7 +148,7 @@ async function removeAllTagRelationships(
 async function createTagRelationships(
   itemId: string,
   tags: string[],
-  itemType: "prompt" | "projectRule",
+  itemType: "prompt" | "projectRule" | "agent",
 ): Promise<void> {
   if (tags.length === 0) {
     logger.debug("No tags to create relationships for", { itemId, itemType });
@@ -150,7 +166,7 @@ async function createTagRelationships(
       const putRequests = batch.map((tagName) => ({
         PutRequest: {
           Item: {
-            [itemType === "prompt" ? "promptId" : "ruleId"]: itemId,
+            [getKeyAttribute(itemType)]: itemId,
             tagName: tagName,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
@@ -197,7 +213,7 @@ async function createTagRelationships(
 async function overwriteTagRelationships(
   itemId: string,
   tags: string[],
-  itemType: "prompt" | "projectRule",
+  itemType: "prompt" | "projectRule" | "agent",
 ): Promise<void> {
   logger.info("Overwriting tag relationships", {
     itemId,
