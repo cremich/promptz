@@ -116,24 +116,19 @@ export const agentFormSchema = z.object({
   sourceURL: sourceURLSchema,
   name: titleSchema,
   description: descriptionSchema,
-  howto: z
-    .string()
-    .trim()
-    .max(4000, "How to must be less than 4000 characters")
-    .optional(),
   prompt: z
     .string()
     .trim()
     .min(10, "System prompt must be more than 10 characters")
     .max(4000, "System prompt must be less than 4000 characters"),
-  tools: z.array(z.string()).min(1, "At least one tool must be selected"),
+  tools: z.array(z.string()).optional(),
   mcpServers: z.record(z.string(), mcpServerConfigSchema).optional(),
-  resources: z.array(resourceSchema).default([]),
+  resources: z.array(resourceSchema).default([]).optional(),
   hooks: hooksSchema,
   toolsSettings: z.record(z.string(), z.any()).optional(),
   toolAliases: toolAliasesSchema,
-  allowedTools: z.array(z.string()).default([]),
-  useLegacyMcpJson: z.boolean().default(false),
+  allowedTools: z.array(z.string()).default([]).optional(),
+  useLegacyMcpJson: z.boolean().default(false).optional(),
   tags: tagSchema,
   scope: scopeSchema,
 });

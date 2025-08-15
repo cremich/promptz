@@ -1,15 +1,15 @@
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { fetchTagsByCategory } from "@/lib/actions/fetch-tags-action";
+import { fetchAgentBySlug } from "@/lib/actions/fetch-agents-action";
 import { notFound, redirect } from "next/navigation";
+import AgentForm from "@/components/agents/agent-form";
 
 export default async function EditAgent(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
 
-  // TODO: Implement fetchAgentBySlug action
-  // const agent = await fetchAgentBySlug(params.slug);
-  const agent = null; // Placeholder until action is implemented
+  const agent = await fetchAgentBySlug(params.slug);
 
   if (!agent) {
     return notFound();
@@ -29,10 +29,12 @@ export default async function EditAgent(props: {
 
   return (
     <main className="py-8">
-      <h1 className="text-3xl font-bold mb-6">Edit Agent</h1>
-      {/* TODO: Implement AgentForm component with agent prop */}
-      <div className="text-muted-foreground">
-        Agent editing form will be implemented in a future task.
+      <div className="max-w-4xl mx-auto px-4">
+        <h1 className="text-3xl font-bold mb-6">Edit Agent</h1>
+        <p className="text-muted-foreground mb-8">
+          Update your Amazon Q Developer CLI agent configuration.
+        </p>
+        <AgentForm agent={agent} tags={tags} />
       </div>
     </main>
   );
