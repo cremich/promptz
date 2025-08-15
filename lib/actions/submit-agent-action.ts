@@ -6,6 +6,7 @@ import outputs from "../../amplify_outputs.json";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { agentFormSchema } from "@/lib/models/agent-model";
+import tags from "@/components/common/tags";
 
 export type FormState = {
   errors?: {
@@ -82,7 +83,9 @@ export async function onSubmitAction(
     toolsSettings: JSON.stringify(parsed.data.toolsSettings),
     toolAliases: JSON.stringify(parsed.data.toolAliases),
     mcpServers: JSON.stringify(parsed.data.mcpServers),
-    resources: parsed.data.resources,
+    resources: parsed.data.resources?.map((r) =>
+      !r.startsWith("file://") ? `file://${r}` : r,
+    ),
     hooks: JSON.stringify(parsed.data.hooks),
     allowedTools: parsed.data.allowedTools,
     useLegacyMcpJson: parsed.data.useLegacyMcpJson,
