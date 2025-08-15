@@ -5,6 +5,7 @@ export type Tag = {
   category?: string;
   promptCount?: number;
   ruleCount?: number;
+  agentCount?: number;
   createdAt?: string;
   updatedAt?: string;
 };

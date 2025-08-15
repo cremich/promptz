@@ -2,15 +2,15 @@ import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import PromptsTagPage, { generateMetadata } from "@/app/tag/[tagName]/page";
-import { getPromptsAndRulesByTag } from "@/lib/actions/fetch-tags-action";
+import { getPromptsRulesAndAgentsByTag } from "@/lib/actions/fetch-tags-action";
 
 // Mock the fetch-tags-action
 jest.mock("@/lib/actions/fetch-tags-action", () => ({
   getTag: jest.fn(),
-  getPromptsAndRulesByTag: jest.fn(),
+  getPromptsRulesAndAgentsByTag: jest.fn(),
 }));
 
-// Mock the prompt and rule card components
+// Mock the prompt, rule, and agent card components
 jest.mock("@/components/prompt/prompt-card", () => {
   return function MockPromptCard({ prompt }: { prompt: any }) {
     return (
@@ -28,6 +28,17 @@ jest.mock("@/components/rules/project-rule-card", () => {
       <div data-testid="rule-card">
         <h3>{projectRule.title}</h3>
         <p>{projectRule.description}</p>
+      </div>
+    );
+  };
+});
+
+jest.mock("@/components/agents/agent-card", () => {
+  return function MockAgentCard({ agent }: { agent: any }) {
+    return (
+      <div data-testid="agent-card">
+        <h3>{agent.name}</h3>
+        <p>{agent.description}</p>
       </div>
     );
   };
@@ -57,7 +68,7 @@ jest.mock("next/navigation", () => ({
 describe("PromptsTagPage", () => {
   const mockTag = {
     name: "TypeScript",
-    description: "TypeScript related prompts and rules",
+    description: "TypeScript related prompts, rules, and agents",
     category: "Technology",
   };
 
@@ -97,15 +108,32 @@ describe("PromptsTagPage", () => {
     },
   ];
 
+  const mockAgents = [
+    {
+      id: "1",
+      name: "TypeScript Assistant",
+      description: "AI assistant for TypeScript development",
+      tags: ["TypeScript", "Assistant"],
+      slug: "typescript-assistant",
+      tools: ["fs_read", "fs_write"],
+      author: "Test Author",
+      createdAt: "2023-01-01T12:00:00Z",
+      updatedAt: "2023-01-01T12:00:00Z",
+      copyCount: 5,
+      downloadCount: 10,
+    },
+  ];
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test("Renders tag page with prompts and rules", async () => {
-    jest.mocked(getPromptsAndRulesByTag).mockResolvedValue({
+  test("Renders tag page with prompts, rules, and agents", async () => {
+    jest.mocked(getPromptsRulesAndAgentsByTag).mockResolvedValue({
       tag: mockTag,
       prompts: mockPrompts,
       rules: mockRules,
+      agents: mockAgents,
     });
 
     const props = {
@@ -117,13 +145,14 @@ describe("PromptsTagPage", () => {
     // Check if tag header is rendered
     expect(screen.getByText("TypeScript")).toBeInTheDocument();
     expect(
-      screen.getByText("TypeScript related prompts and rules"),
+      screen.getByText("TypeScript related prompts, rules, and agents"),
     ).toBeInTheDocument();
     expect(screen.getByText("Technology")).toBeInTheDocument();
 
     // Check if stats are displayed
     expect(screen.getByText("2 prompts")).toBeInTheDocument();
     expect(screen.getByText("1 project rules")).toBeInTheDocument();
+    expect(screen.getByText("1 agents")).toBeInTheDocument();
 
     // Check if prompts section is rendered
     expect(screen.getByText("Related Prompts")).toBeInTheDocument();
@@ -132,13 +161,18 @@ describe("PromptsTagPage", () => {
     // Check if rules section is rendered
     expect(screen.getByText("Related Project Rules")).toBeInTheDocument();
     expect(screen.getAllByTestId("rule-card")).toHaveLength(1);
+
+    // Check if agents section is rendered
+    expect(screen.getByText("Related Agents")).toBeInTheDocument();
+    expect(screen.getAllByTestId("agent-card")).toHaveLength(1);
   });
 
   test("Renders empty state when no content is found", async () => {
-    jest.mocked(getPromptsAndRulesByTag).mockResolvedValue({
+    jest.mocked(getPromptsRulesAndAgentsByTag).mockResolvedValue({
       tag: mockTag,
       prompts: [],
       rules: [],
+      agents: [],
     });
 
     const props = {
@@ -150,16 +184,20 @@ describe("PromptsTagPage", () => {
     // Check if empty state is rendered
     expect(screen.getByText("No content found")).toBeInTheDocument();
     expect(
-      screen.getByText(/There are no prompts or project rules tagged with/),
+      screen.getByText(
+        /There are no prompts, project rules, or agents tagged with/,
+      ),
     ).toBeInTheDocument();
-    expect(screen.getAllByTestId("create-button")).toHaveLength(2);
+    expect(screen.getAllByTestId("create-button")).toHaveLength(3);
+    expect(screen.getByText("Create Agent")).toBeInTheDocument();
   });
 
   test("Handles URL decoding correctly", async () => {
-    jest.mocked(getPromptsAndRulesByTag).mockResolvedValue({
+    jest.mocked(getPromptsRulesAndAgentsByTag).mockResolvedValue({
       tag: { ...mockTag, name: "Next.js" },
       prompts: [],
       rules: [],
+      agents: [],
     });
 
     const props = {
@@ -168,15 +206,16 @@ describe("PromptsTagPage", () => {
 
     render(await PromptsTagPage(props));
 
-    expect(getPromptsAndRulesByTag).toHaveBeenCalledWith("Next.js");
+    expect(getPromptsRulesAndAgentsByTag).toHaveBeenCalledWith("Next.js");
     expect(screen.getByText("Next.js")).toBeInTheDocument();
   });
 
-  test("Renders only prompts section when no rules exist", async () => {
-    jest.mocked(getPromptsAndRulesByTag).mockResolvedValue({
+  test("Renders only prompts section when no rules or agents exist", async () => {
+    jest.mocked(getPromptsRulesAndAgentsByTag).mockResolvedValue({
       tag: mockTag,
       prompts: mockPrompts,
       rules: [],
+      agents: [],
     });
 
     const props = {
@@ -188,13 +227,15 @@ describe("PromptsTagPage", () => {
     expect(screen.getByText("Related Prompts")).toBeInTheDocument();
     expect(screen.getAllByTestId("prompt-card")).toHaveLength(2);
     expect(screen.queryByText("Related Project Rules")).not.toBeInTheDocument();
+    expect(screen.queryByText("Related Agents")).not.toBeInTheDocument();
   });
 
-  test("Renders only rules section when no prompts exist", async () => {
-    jest.mocked(getPromptsAndRulesByTag).mockResolvedValue({
+  test("Renders only rules section when no prompts or agents exist", async () => {
+    jest.mocked(getPromptsRulesAndAgentsByTag).mockResolvedValue({
       tag: mockTag,
       prompts: [],
       rules: mockRules,
+      agents: [],
     });
 
     const props = {
@@ -206,6 +247,48 @@ describe("PromptsTagPage", () => {
     expect(screen.getByText("Related Project Rules")).toBeInTheDocument();
     expect(screen.getAllByTestId("rule-card")).toHaveLength(1);
     expect(screen.queryByText("Related Prompts")).not.toBeInTheDocument();
+    expect(screen.queryByText("Related Agents")).not.toBeInTheDocument();
+  });
+
+  test("Renders only agents section when no prompts or rules exist", async () => {
+    jest.mocked(getPromptsRulesAndAgentsByTag).mockResolvedValue({
+      tag: mockTag,
+      prompts: [],
+      rules: [],
+      agents: mockAgents,
+    });
+
+    const props = {
+      params: Promise.resolve({ tagName: "TypeScript" }),
+    };
+
+    render(await PromptsTagPage(props));
+
+    expect(screen.getByText("Related Agents")).toBeInTheDocument();
+    expect(screen.getAllByTestId("agent-card")).toHaveLength(1);
+    expect(screen.queryByText("Related Prompts")).not.toBeInTheDocument();
+    expect(screen.queryByText("Related Project Rules")).not.toBeInTheDocument();
+  });
+
+  test("Renders mixed content sections correctly", async () => {
+    jest.mocked(getPromptsRulesAndAgentsByTag).mockResolvedValue({
+      tag: mockTag,
+      prompts: mockPrompts,
+      rules: [],
+      agents: mockAgents,
+    });
+
+    const props = {
+      params: Promise.resolve({ tagName: "TypeScript" }),
+    };
+
+    render(await PromptsTagPage(props));
+
+    expect(screen.getByText("Related Prompts")).toBeInTheDocument();
+    expect(screen.getByText("Related Agents")).toBeInTheDocument();
+    expect(screen.getAllByTestId("prompt-card")).toHaveLength(2);
+    expect(screen.getAllByTestId("agent-card")).toHaveLength(1);
+    expect(screen.queryByText("Related Project Rules")).not.toBeInTheDocument();
   });
 });
 
@@ -219,7 +302,7 @@ describe("generateMetadata", () => {
   test("Generates correct metadata for existing tag", async () => {
     const mockTag = {
       name: "TypeScript",
-      description: "TypeScript related prompts and rules",
+      description: "TypeScript related prompts, rules, and agents",
       category: "Technology",
     };
 
@@ -232,18 +315,21 @@ describe("generateMetadata", () => {
     const metadata = await generateMetadata(props);
 
     expect(metadata.title).toBe(
-      "TypeScript Prompts for Amazon Q Developer - Promptz",
+      "TypeScript Prompts, Rules & Agents for Amazon Q Developer - Promptz",
     );
     expect(metadata.description).toContain(
-      "Discover TypeScript prompts for Amazon Q Developer",
+      "Discover TypeScript prompts, project rules, and agents for Amazon Q Developer",
     );
     expect(metadata.keywords).toContain("TypeScript");
     expect(metadata.keywords).toContain("Amazon Q Developer");
+    expect(metadata.keywords).toContain("prompts");
+    expect(metadata.keywords).toContain("project rules");
+    expect(metadata.keywords).toContain("agents");
     expect(metadata.openGraph?.title).toBe(
-      "TypeScript Prompts for Amazon Q Developer - Promptz",
+      "TypeScript Prompts, Rules & Agents for Amazon Q Developer - Promptz",
     );
     expect(metadata.alternates?.canonical).toBe(
-      "https://promptz.dev/prompts/tag/TypeScript",
+      "https://promptz.dev/tag/TypeScript",
     );
   });
 
@@ -275,7 +361,7 @@ describe("generateMetadata", () => {
     const metadata = await generateMetadata(props);
 
     expect(metadata.description).toContain(
-      "Browse prompts tagged with TestTag",
+      "Browse prompts, project rules, and agents tagged with TestTag",
     );
     expect(metadata.description).not.toContain("undefined");
   });
@@ -283,7 +369,7 @@ describe("generateMetadata", () => {
   test("Handles URL encoding in metadata generation", async () => {
     const mockTag = {
       name: "Next.js",
-      description: "Next.js framework prompts",
+      description: "Next.js framework prompts, rules, and agents",
     };
 
     getTag.mockResolvedValue(mockTag);
@@ -295,11 +381,9 @@ describe("generateMetadata", () => {
     const metadata = await generateMetadata(props);
 
     expect(metadata.alternates?.canonical).toBe(
-      "https://promptz.dev/prompts/tag/Next.js",
+      "https://promptz.dev/tag/Next.js",
     );
-    expect(metadata.openGraph?.url).toBe(
-      "https://promptz.dev/prompts/tag/Next.js",
-    );
+    expect(metadata.openGraph?.url).toBe("https://promptz.dev/tag/Next.js");
   });
 
   test("Handles errors gracefully in metadata generation", async () => {
@@ -312,6 +396,8 @@ describe("generateMetadata", () => {
     const metadata = await generateMetadata(props);
 
     expect(metadata.title).toBe("Tag - Promptz");
-    expect(metadata.description).toBe("Browse prompts by tag on Promptz.");
+    expect(metadata.description).toBe(
+      "Browse prompts, project rules, and agents by tag on Promptz.",
+    );
   });
 });

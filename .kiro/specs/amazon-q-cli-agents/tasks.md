@@ -324,11 +324,30 @@
 
 **Subtasks:**
 
-- [ ] **3.1.1** Update tag pages to include agents
+- [x] **3.1.1** Update tag pages to include agents
   - Modify tag/[tagName] pages to show agents
   - Add agent filtering options
   - Maintain consistent UI with prompts and rules
   - **Expected Outcome:** Agents visible on tag-specific pages
+  - **Status:** ✅ COMPLETED - Updated tag pages to include agents with comprehensive functionality:
+    - **Enhanced Data Fetching:** Created `getPromptsRulesAndAgentsByTag()` function in `fetch-tags-action.ts` to fetch agents alongside prompts and rules from tag relationships
+    - **Updated GraphQL Queries:** Extended tag queries to include agent relationships with proper filtering for public agents only
+    - **Enhanced Tag Model:** Added `agentCount` field to Tag model for comprehensive statistics
+    - **Updated Tag Page UI:** Modified `/app/tag/[tagName]/page.tsx` to display agents section with:
+      - Agent statistics in header (prompts, rules, agents counts)
+      - Related Agents section with AgentCard components
+      - Updated empty state to include agent creation option
+      - Bot icon for agent statistics display
+    - **Improved Metadata:** Updated SEO metadata to include agents in titles, descriptions, and keywords
+    - **Backward Compatibility:** Maintained existing `getPromptsAndRulesByTag()` function for backward compatibility
+    - **Comprehensive Testing:** Updated test suite with 16 test cases covering:
+      - Agent display functionality
+      - Mixed content scenarios (prompts + agents, rules + agents, etc.)
+      - Empty state with agent creation option
+      - Metadata generation with agent-inclusive content
+      - URL handling and error scenarios
+    - **Consistent UI Design:** Agents displayed with same card-based layout as prompts and rules, maintaining visual consistency
+    - **Complete Integration:** Agents now fully integrated into tag-based browsing experience with proper filtering and display
 
 - [x] **3.1.2** Extend search functionality for agents
   - Update search components to handle agent content type

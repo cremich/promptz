@@ -1,13 +1,14 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Tag as TagIcon, Terminal, Scale } from "lucide-react";
+import { Tag as TagIcon, Terminal, Scale, Bot } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   getTag,
-  getPromptsAndRulesByTag,
+  getPromptsRulesAndAgentsByTag,
 } from "@/lib/actions/fetch-tags-action";
 import PromptCard from "@/components/prompt/prompt-card";
 import ProjectRuleCard from "@/components/rules/project-rule-card";
+import AgentCard from "@/components/agents/agent-card";
 import CreateButton from "@/components/common/create-button";
 
 export async function generateMetadata(props: {
@@ -26,10 +27,10 @@ export async function generateMetadata(props: {
       };
     }
 
-    const title = `${tag.name} Prompts for Amazon Q Developer - Promptz`;
+    const title = `${tag.name} Prompts, Rules & Agents for Amazon Q Developer - Promptz`;
     const description = tag.description
-      ? `Discover ${tag.name} prompts for Amazon Q Developer. ${tag.description}`
-      : `Browse prompts tagged with ${tag.name} to enhance your Amazon Q Developer workflow.`;
+      ? `Discover ${tag.name} prompts, project rules, and agents for Amazon Q Developer. ${tag.description}`
+      : `Browse prompts, project rules, and agents tagged with ${tag.name} to enhance your Amazon Q Developer workflow.`;
 
     return {
       title,
@@ -38,6 +39,8 @@ export async function generateMetadata(props: {
         tag.name,
         "Amazon Q Developer",
         "prompts",
+        "project rules",
+        "agents",
         "AI assistant",
         "development",
       ],
@@ -45,7 +48,7 @@ export async function generateMetadata(props: {
         title,
         description,
         type: "website",
-        url: `https://promptz.dev/prompts/tag/${encodeURIComponent(tag.name)}`,
+        url: `https://promptz.dev/tag/${encodeURIComponent(tag.name)}`,
       },
       twitter: {
         card: "summary_large_image",
@@ -53,14 +56,15 @@ export async function generateMetadata(props: {
         description,
       },
       alternates: {
-        canonical: `https://promptz.dev/prompts/tag/${encodeURIComponent(tag.name)}`,
+        canonical: `https://promptz.dev/tag/${encodeURIComponent(tag.name)}`,
       },
     };
   } catch (error) {
     console.error("Error generating metadata for tag page:", error);
     return {
       title: "Tag - Promptz",
-      description: "Browse prompts by tag on Promptz.",
+      description:
+        "Browse prompts, project rules, and agents by tag on Promptz.",
     };
   }
 }
@@ -72,7 +76,7 @@ export default async function PromptsTagPage(props: {
   const tagName = decodeURIComponent(params.tagName);
 
   // Fetch tag information and associated content
-  const contentData = await getPromptsAndRulesByTag(tagName); // 20 prompts, 5 rules for preview
+  const contentData = await getPromptsRulesAndAgentsByTag(tagName);
   if (!contentData.tag) {
     notFound();
   }
@@ -114,6 +118,10 @@ export default async function PromptsTagPage(props: {
               <Scale className="h-4 w-4" />
               <span>{contentData.rules?.length} project rules</span>
             </div>
+            <div className="flex items-center gap-2">
+              <Bot className="h-4 w-4" />
+              <span>{contentData.agents?.length} agents</span>
+            </div>
           </div>
         </div>
 
@@ -151,13 +159,29 @@ export default async function PromptsTagPage(props: {
             </section>
           )}
 
+          {/* Related Agents Section */}
+          {contentData.agents.length > 0 && (
+            <section>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-semibold">Related Agents</h2>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-1">
+                {contentData.agents.map((a) => (
+                  <AgentCard agent={a} key={a.id} />
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Empty State */}
           {contentData.prompts.length === 0 &&
-            contentData.rules.length === 0 && (
+            contentData.rules.length === 0 &&
+            contentData.agents.length === 0 && (
               <div className=" py-12">
                 <h3 className="text-lg font-semibold mb-2">No content found</h3>
                 <p className="text-muted-foreground mb-4">
-                  There are no prompts or project rules tagged with
+                  There are no prompts, project rules, or agents tagged with{" "}
                   {contentData.tag.name} yet.
                 </p>
                 <div className="flex gap-4 ">
@@ -166,6 +190,7 @@ export default async function PromptsTagPage(props: {
                     href="/rules/create"
                     name="Create Project Rule"
                   />
+                  <CreateButton href="/agents/create" name="Create Agent" />
                 </div>
               </div>
             )}

@@ -7,6 +7,7 @@ import { Tag } from "@/lib/models/tags-model";
 import { GraphQLResult } from "aws-amplify/api";
 import { Prompt } from "@/lib/models/prompt-model";
 import { ProjectRule } from "@/lib/models/project-rule-model";
+import { Agent } from "@/lib/models/agent-model";
 
 interface TagsByCategoryResponse {
   listTagsByCategory: {
@@ -35,6 +36,13 @@ interface TagWithCountResponse {
       items: [
         {
           ruleId: string;
+        },
+      ];
+    };
+    agents: {
+      items: [
+        {
+          agentId: string;
         },
       ];
     };
@@ -80,6 +88,30 @@ interface TagWithRelationsResponse {
             downloadCount: number;
             slug: string;
             sourceURL: string;
+          };
+        },
+      ];
+    };
+    agents: {
+      items: [
+        {
+          agent: {
+            name: string;
+            scope: string;
+            description: string;
+            tags: string[];
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            copyCount: number;
+            downloadCount: number;
+            slug: string;
+            sourceURL: string;
+            tools: string[];
+            author: {
+              id?: string;
+              displayName?: string;
+            };
           };
         },
       ];
@@ -154,6 +186,11 @@ export async function getTag(name: string): Promise<Tag | undefined> {
           ruleId
         }
       }
+      agents {
+        items {
+          agentId
+        }
+      }
     }
   }
 `;
@@ -176,6 +213,7 @@ export async function getTag(name: string): Promise<Tag | undefined> {
     // Calculate counts from the response
     const promptCount = tag.prompts?.items?.length || 0;
     const ruleCount = tag.rules?.items.length || 0;
+    const agentCount = tag.agents?.items?.length || 0;
 
     return {
       name: tag.name,
@@ -183,6 +221,7 @@ export async function getTag(name: string): Promise<Tag | undefined> {
       description: tag.description,
       promptCount,
       ruleCount,
+      agentCount,
     } as Tag;
   } catch (error) {
     console.error("Error fetching tag with counts:", error);
@@ -191,13 +230,14 @@ export async function getTag(name: string): Promise<Tag | undefined> {
 }
 
 /**
- * Fetches prompts and rules associated with a specific tag
+ * Fetches prompts, rules, and agents associated with a specific tag
  * @param tagName - Name of the tag to filter by
- * @returns Promise containing prompts, rules and tags
+ * @returns Promise containing prompts, rules, agents and tags
  */
-export async function getPromptsAndRulesByTag(tagName: string): Promise<{
+export async function getPromptsRulesAndAgentsByTag(tagName: string): Promise<{
   prompts: Prompt[];
   rules: ProjectRule[];
+  agents: Agent[];
   tag?: Tag;
 }> {
   const GET_TAG_WITH_RELATIONS = `
@@ -239,7 +279,29 @@ export async function getPromptsAndRulesByTag(tagName: string): Promise<{
             sourceURL
           }
         }
-      }  
+      }
+      agents {
+        items {
+          agent {
+            name
+            scope
+            description
+            tags
+            id
+            createdAt
+            updatedAt
+            copyCount
+            downloadCount
+            slug
+            sourceURL
+            tools
+            author {
+              id
+              displayName
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -260,6 +322,7 @@ export async function getPromptsAndRulesByTag(tagName: string): Promise<{
       return {
         prompts: [],
         rules: [],
+        agents: [],
         tag: undefined,
       };
     }
@@ -302,6 +365,27 @@ export async function getPromptsAndRulesByTag(tagName: string): Promise<{
         } as ProjectRule;
       });
 
+    const agents = tag.agents.items
+      .filter((a) => a.agent.scope === "PUBLIC")
+      .map((a) => {
+        return {
+          name: a.agent.name,
+          scope: a.agent.scope,
+          description: a.agent.description,
+          tags: a.agent.tags,
+          id: a.agent.id,
+          createdAt: a.agent.createdAt,
+          updatedAt: a.agent.updatedAt,
+          copyCount: a.agent.copyCount,
+          downloadCount: a.agent.downloadCount,
+          slug: a.agent.slug,
+          sourceURL: a.agent.sourceURL,
+          tools: a.agent.tools,
+          author: a.agent.author ? a.agent.author.displayName : "",
+          authorId: a.agent.author ? a.agent.author.id : "",
+        } as Agent;
+      });
+
     return {
       tag: {
         name: tag.name || "",
@@ -309,11 +393,30 @@ export async function getPromptsAndRulesByTag(tagName: string): Promise<{
       },
       prompts: prompts,
       rules: rules,
+      agents: agents,
     };
   } catch (error) {
-    console.error("Error fetching prompts by tag:", error);
+    console.error("Error fetching content by tag:", error);
     throw error;
   }
+}
+
+/**
+ * Fetches prompts and rules associated with a specific tag (backward compatibility)
+ * @param tagName - Name of the tag to filter by
+ * @returns Promise containing prompts, rules and tags
+ */
+export async function getPromptsAndRulesByTag(tagName: string): Promise<{
+  prompts: Prompt[];
+  rules: ProjectRule[];
+  tag?: Tag;
+}> {
+  const result = await getPromptsRulesAndAgentsByTag(tagName);
+  return {
+    prompts: result.prompts,
+    rules: result.rules,
+    tag: result.tag,
+  };
 }
 
 /**

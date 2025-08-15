@@ -79,6 +79,15 @@ export function configureDynamoDB(
     }),
   );
 
+  tagRelationsLambdaFunction.addEventSource(
+    new lambdaEventSources.DynamoEventSource(agentTable, {
+      startingPosition: lambda.StartingPosition.LATEST,
+      batchSize: 10, // Process records in smaller batches for better error handling
+      retryAttempts: 3, // Retry failed batches up to 3 times
+      reportBatchItemFailures: true, // Enable partial batch failure reporting
+    }),
+  );
+
   if (process.env["PROMPTZ_ENV"] !== "sandbox") {
     for (const table of Object.values(
       backend.data.resources.cfnResources.amplifyDynamoDbTables,
