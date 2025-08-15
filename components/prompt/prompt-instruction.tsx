@@ -2,6 +2,7 @@ import { ModelType } from "@/lib/forms/schema-definitions";
 import CopyClipBoardButton from "@/components/common/copy-clipboard";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface PromptInstructionProps {
   promptId: string;
@@ -31,7 +32,9 @@ export default function PromptInstruction({
         />
       </CardHeader>
       <CardContent>
-        <pre className="text-gray-400">{text}</pre>
+        <ScrollArea className="h-96">
+          <pre className="text-gray-400">{text}</pre>
+        </ScrollArea>
       </CardContent>
     </Card>
   );
