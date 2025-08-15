@@ -3,6 +3,7 @@ import { z } from "zod";
 export enum ModelType {
   PROMPT = "Prompt",
   RULE = "Rule",
+  AGENT = "Agent",
 }
 
 const ALLOWED_DOMAINS = [

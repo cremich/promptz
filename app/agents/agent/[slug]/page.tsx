@@ -1,4 +1,6 @@
+import AgentDetail from "@/components/agents/agent-detail";
 import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
+import { fetchAgentBySlug } from "@/lib/actions/fetch-agents-action";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -8,10 +10,8 @@ export async function generateMetadata(props: {
   // Get agent slug from params
   const params = await props.params;
 
-  // TODO: Implement fetchAgentBySlug action
-  // const agent = await fetchAgentBySlug(params.slug);
-  const agent = null; // Placeholder until action is implemented
-
+  // Fetch agent data
+  const agent = await fetchAgentBySlug(params.slug);
   if (!agent) {
     return {
       title: "Agent Not Found",
@@ -32,10 +32,7 @@ export default async function AgentDetailPage(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
-
-  // TODO: Implement fetchAgentBySlug action
-  // const agent = await fetchAgentBySlug(params.slug);
-  const agent = null; // Placeholder until action is implemented
+  const agent = await fetchAgentBySlug(params.slug);
 
   if (!agent) {
     return notFound();
@@ -48,10 +45,7 @@ export default async function AgentDetailPage(props: {
 
   return (
     <main className="py-8">
-      {/* TODO: Implement AgentDetail component */}
-      <div className="text-muted-foreground">
-        Agent detail view will be implemented in a future task.
-      </div>
+      <AgentDetail agent={agent} isOwner={isOwner} />
     </main>
   );
 }
