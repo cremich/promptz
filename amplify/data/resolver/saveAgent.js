@@ -61,7 +61,6 @@ export function request(ctx) {
     id,
     name,
     description,
-    howto,
     prompt,
     tools,
     mcpServers,
@@ -108,7 +107,6 @@ export function request(ctx) {
       tags: tags || [],
       scope,
       sourceURL: sourceURL || null,
-      howto: howto || null,
       owner: username,
       copyCount: 0,
       downloadCount: 0,
@@ -136,7 +134,7 @@ export function request(ctx) {
       key: util.dynamodb.toMapValues({ id: itemId }),
       update: {
         expression:
-          "SET #name = :name, #slug = :slug, #description = :description, #prompt = :prompt, #tools = :tools, #mcpServers = :mcpServers, #resources = :resources, #hooks = :hooks, #toolsSettings = :toolsSettings, #toolAliases = :toolAliases, #allowedTools = :allowedTools, #useLegacyMcpJson = :useLegacyMcpJson, #tags = :tags, #scope = :scope, #sourceURL = :sourceURL, #howto = :howto, #updatedAt = :updatedAt",
+          "SET #name = :name, #slug = :slug, #description = :description, #prompt = :prompt, #tools = :tools, #mcpServers = :mcpServers, #resources = :resources, #hooks = :hooks, #toolsSettings = :toolsSettings, #toolAliases = :toolAliases, #allowedTools = :allowedTools, #useLegacyMcpJson = :useLegacyMcpJson, #tags = :tags, #scope = :scope, #sourceURL = :sourceURL, #updatedAt = :updatedAt",
         expressionNames: {
           "#name": "name",
           "#slug": "slug",
@@ -153,7 +151,6 @@ export function request(ctx) {
           "#tags": "tags",
           "#scope": "scope",
           "#sourceURL": "sourceURL",
-          "#howto": "howto",
           "#updatedAt": "updatedAt",
         },
         expressionValues: util.dynamodb.toMapValues({
@@ -172,7 +169,6 @@ export function request(ctx) {
           ":tags": tags || [],
           ":scope": scope,
           ":sourceURL": sourceURL || null,
-          ":howto": howto || null,
           ":updatedAt": util.time.nowISO8601(),
         }),
       },
