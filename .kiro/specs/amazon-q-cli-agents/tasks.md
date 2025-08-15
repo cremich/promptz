@@ -387,7 +387,7 @@
 
 **Subtasks:**
 
-- [ ] **4.1.1** Create agent creation E2E tests
+- [x] **4.1.1** Create agent creation E2E tests
   - Test authenticated user agent creation
   - Test form validation and error handling
   - Test successful agent publication
