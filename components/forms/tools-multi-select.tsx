@@ -67,7 +67,7 @@ export function ToolsMultiSelect({
   const groupedTools = Object.entries(TOOL_CATEGORIES).reduce(
     (acc, [category, tools]) => {
       const categoryTools = tools.filter((tool) =>
-        filteredTools.includes(tool as any),
+        filteredTools.includes(tool),
       );
       if (categoryTools.length > 0) {
         acc[category] = categoryTools;

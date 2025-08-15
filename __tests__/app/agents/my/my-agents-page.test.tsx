@@ -71,17 +71,6 @@ describe("MyAgents", () => {
     expect(searchResults).toHaveTextContent("0 agents found");
   });
 
-  test("Calls fetchCurrentAuthUser on render", async () => {
-    const {
-      fetchCurrentAuthUser,
-    } = require("@/lib/actions/cognito-auth-action");
-
-    await MyAgents();
-
-    // Verify that fetchCurrentAuthUser was called
-    expect(fetchCurrentAuthUser).toHaveBeenCalled();
-  });
-
   test("Renders loading suspense boundary", async () => {
     render(await MyAgents());
 

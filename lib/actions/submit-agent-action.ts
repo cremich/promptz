@@ -6,7 +6,6 @@ import outputs from "../../amplify_outputs.json";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { agentFormSchema } from "@/lib/models/agent-model";
-import tags from "@/components/common/tags";
 
 export type FormState = {
   errors?: {

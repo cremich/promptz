@@ -17,15 +17,14 @@ interface AgentBySlugResponse {
       tags?: string[];
       prompt?: string;
       tools?: string[];
-      mcpServers?: any;
+      mcpServers?: string;
       resources?: string[];
-      hooks?: any;
-      toolsSettings?: any;
-      toolAliases?: any;
+      hooks?: string;
+      toolsSettings?: string;
+      toolAliases?: string;
       allowedTools?: string[];
       useLegacyMcpJson?: boolean;
       sourceURL?: string;
-      howto?: string;
       scope?: string;
       author: {
         id?: string;
@@ -115,7 +114,6 @@ export async function fetchAgentBySlug(slug: string) {
     allowedTools: agent.allowedTools,
     useLegacyMcpJson: agent.useLegacyMcpJson,
     sourceURL: agent.sourceURL,
-    howto: agent.howto,
     scope: agent.scope,
     author: agent.author ? agent.author.displayName : "",
     authorId: agent.author ? agent.author.id : "",

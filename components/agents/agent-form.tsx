@@ -168,7 +168,8 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                   <FormMessage>{state.errors?.name}</FormMessage>
                   <FormDescription>
                     Choose a name that clearly describes what your agent does
-                    (e.g., "Frontend Developer", "DevOps Assistant")
+                    (e.g., &ldquo;Frontend Developer&rdquo;, &ldquo;DevOps
+                    Assistant&rdquo;)
                   </FormDescription>
                 </FormItem>
               )}
@@ -215,8 +216,8 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                   <FormMessage>{state.errors?.prompt}</FormMessage>
                   <FormDescription>
                     The system prompt defines how your agent behaves and
-                    responds. Be specific about the agent's role, expertise, and
-                    communication style.
+                    responds. Be specific about the agent&apos;s role,
+                    expertise, and communication style.
                   </FormDescription>
                 </FormItem>
               )}
@@ -294,7 +295,8 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                   <FormMessage>{state.errors?.toolAliases}</FormMessage>
                   <FormDescription>
                     Create shortcuts for tools by defining aliases. For example,
-                    you can alias "read" to "fs_read" for easier use.
+                    you can alias &ldquo;read&rdquo; to &ldquo;fs_read&rdquo;
+                    for easier use.
                   </FormDescription>
                 </FormItem>
               )}
@@ -374,7 +376,7 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
             </CardTitle>
             <CardDescription>
               Configure Model Context Protocol (MCP) servers to extend your
-              agent's capabilities with external data sources and tools
+              agent&apos;s capabilities with external data sources and tools
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -475,9 +477,9 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                   </FormControl>
                   <FormMessage>{state.errors?.hooks}</FormMessage>
                   <FormDescription>
-                    Configure commands to run at specific points in your agent's
-                    lifecycle. Use agentSpawn for initialization tasks and
-                    userPromptSubmit for pre-processing user inputs.
+                    Configure commands to run at specific points in your
+                    agent&apos;s lifecycle. Use agentSpawn for initialization
+                    tasks and userPromptSubmit for pre-processing user inputs.
                   </FormDescription>
                 </FormItem>
               )}
@@ -527,7 +529,8 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                   </FormControl>
                   <FormDescription>
                     Add relevant tags to help others discover your agent (e.g.,
-                    "frontend", "testing", "deployment")
+                    &ldquo;frontend&rdquo;, &ldquo;testing&rdquo;,
+                    &ldquo;deployment&rdquo;)
                   </FormDescription>
                 </FormItem>
               )}

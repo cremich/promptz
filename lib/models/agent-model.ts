@@ -18,7 +18,7 @@ export type Agent = {
   mcpServers?: Record<string, McpServerConfig>;
   resources?: string[];
   hooks?: Record<string, HookCommand>;
-  toolsSettings?: Record<string, any>;
+  toolsSettings?: Record<string, unknown>;
   toolAliases?: Record<string, string>;
   allowedTools?: string[];
   useLegacyMcpJson?: boolean;
@@ -71,7 +71,7 @@ const hooksSchema = z
     (hooks) => {
       if (!hooks) return true;
       return Object.keys(hooks).every((key) =>
-        validHookTypes.includes(key as any),
+        validHookTypes.includes(key as (typeof validHookTypes)[number]),
       );
     },
     {

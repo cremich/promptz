@@ -1,14 +1,13 @@
 import { Suspense } from "react";
 import SearchResults from "@/components/search/search-result";
 import CreateButton from "@/components/common/create-button";
-import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
+import { Agent } from "@/lib/models/agent-model";
 
 export default async function MyAgents() {
-  const user = await fetchCurrentAuthUser();
-
   // TODO: Implement fetchMyAgents action
+  // const user = await fetchCurrentAuthUser();
   // const agents = await fetchMyAgents(user.id);
-  const agents: any[] = []; // Placeholder until action is implemented
+  const agents: Agent[] = []; // Placeholder until action is implemented
 
   return (
     <main className="py-8">

@@ -268,9 +268,11 @@ describe("AgentForm", () => {
       render(<AgentForm tags={mockTags} />);
 
       expect(
-        screen.getByText(
-          'Choose a name that clearly describes what your agent does (e.g., "Frontend Developer", "DevOps Assistant")',
-        ),
+        screen.getByText((content, element) => {
+          return content.includes(
+            "Choose a name that clearly describes what your agent does",
+          );
+        }),
       ).toBeInTheDocument();
       expect(
         screen.getByText(
@@ -346,9 +348,11 @@ describe("AgentForm", () => {
         ),
       ).toBeInTheDocument();
       expect(
-        screen.getByText(
-          'Create shortcuts for tools by defining aliases. For example, you can alias "read" to "fs_read" for easier use.',
-        ),
+        screen.getByText((content, element) => {
+          return content.includes(
+            "Create shortcuts for tools by defining aliases",
+          );
+        }),
       ).toBeInTheDocument();
       expect(
         screen.getByText(
@@ -586,9 +590,11 @@ describe("AgentForm", () => {
       render(<AgentForm tags={mockTags} />);
 
       expect(
-        screen.getByText(
-          'Add relevant tags to help others discover your agent (e.g., "frontend", "testing", "deployment")',
-        ),
+        screen.getByText((content, element) => {
+          return content.includes(
+            "Add relevant tags to help others discover your agent",
+          );
+        }),
       ).toBeInTheDocument();
       expect(
         screen.getByText(

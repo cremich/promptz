@@ -9,8 +9,6 @@ export const AMAZON_Q_CLI_TOOLS = [
   "use_aws",
 ] as const;
 
-export type AmazonQCliTool = (typeof AMAZON_Q_CLI_TOOLS)[number];
-
 // Tool categories for better organization
 export const TOOL_CATEGORIES = {
   "Built-In Tools": [

@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Collapsible,
   CollapsibleContent,
@@ -289,7 +288,7 @@ export function McpServersManager({
             <Settings className="h-8 w-8 mx-auto mb-2 opacity-50" />
             <p className="text-sm">No MCP servers configured</p>
             <p className="text-xs mt-1">
-              Add MCP servers to extend your agent's capabilities
+              Add MCP servers to extend your agent&apos;s capabilities
             </p>
           </div>
         )}
