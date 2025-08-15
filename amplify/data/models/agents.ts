@@ -7,19 +7,6 @@ import {
   createSaveAgentMutation,
 } from "../mutations";
 
-// TypeScript interfaces for complex agent configuration objects
-export interface McpServerConfig {
-  command: string;
-  args?: string[];
-  env?: Record<string, string>;
-  timeout?: number;
-  disabled?: boolean;
-}
-
-export interface HookCommand {
-  command: string;
-}
-
 export const agentModel = {
   agent: a
     .model({

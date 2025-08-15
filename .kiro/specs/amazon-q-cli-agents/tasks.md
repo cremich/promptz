@@ -151,11 +151,21 @@
 
 **Subtasks:**
 
-- [ ] **2.2.1** Design agent form schema with Zod
+- [x] **2.2.1** Design agent form schema with Zod
   - Create comprehensive validation schema
   - Define proper error messages for each field
   - Handle complex nested objects (mcpServers, hooks, etc.)
   - **Expected Outcome:** Complete Zod schema for agent validation
+  - **Status:** ✅ COMPLETED - Created comprehensive agent form schema with detailed validation for all fields including:
+    - Basic fields: name, description, system prompt with proper length constraints
+    - Tools array validation requiring at least one tool
+    - MCP servers configuration with nested object validation (command required, optional args, env, timeout, disabled)
+    - Hooks validation with known hook types (agentSpawn, userPromptSubmit) and command requirement
+    - Tool settings as flexible JSON objects
+    - Tool aliases as string-to-string mapping with validation
+    - Resources validation supporting file paths and promptz.dev URLs
+    - Comprehensive error messages for all validation scenarios
+    - **Unit Tests:** Created 23 comprehensive unit tests covering all validation scenarios with 100% pass rate
 
 - [ ] **2.2.2** Implement basic information section
   - Name, description, and system prompt fields
