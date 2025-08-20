@@ -46,6 +46,9 @@ test.describe("Create Agent with Tool Configuration", () => {
     });
 
     await test.step("Configure available tools (fs_read and fs_write)", async () => {
+      // First expand the Tools Configuration section
+      await page.getByText("Tools Configuration").click();
+
       // Click on the Available Tools combobox
       const availableToolsCombobox = page
         .getByRole("combobox")

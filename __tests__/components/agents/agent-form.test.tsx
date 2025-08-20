@@ -319,6 +319,12 @@ describe("AgentForm", () => {
         ),
       ).toBeInTheDocument();
 
+      // First expand the tools configuration section to access form fields
+      const toolsHeader = screen
+        .getByText("Tools Configuration")
+        .closest("[data-state]");
+      fireEvent.click(toolsHeader!);
+
       // Check for form fields
       expect(screen.getByText("Available Tools")).toBeInTheDocument();
       expect(screen.getByText("Tool Aliases")).toBeInTheDocument();
@@ -331,6 +337,12 @@ describe("AgentForm", () => {
     test("displays proper placeholders for tools fields", () => {
       render(<AgentForm tags={mockTags} />);
 
+      // First expand the tools configuration section
+      const toolsHeader = screen
+        .getByText("Tools Configuration")
+        .closest("[data-state]");
+      fireEvent.click(toolsHeader!);
+
       expect(
         screen.getByText("Select tools your agent can use..."),
       ).toBeInTheDocument();
@@ -341,6 +353,12 @@ describe("AgentForm", () => {
 
     test("shows helpful descriptions for tools fields", () => {
       render(<AgentForm tags={mockTags} />);
+
+      // First expand the tools configuration section
+      const toolsHeader = screen
+        .getByText("Tools Configuration")
+        .closest("[data-state]");
+      fireEvent.click(toolsHeader!);
 
       expect(
         screen.getByText(
@@ -369,6 +387,12 @@ describe("AgentForm", () => {
     test("renders tools multi-select components", () => {
       render(<AgentForm tags={mockTags} />);
 
+      // First expand the tools configuration section
+      const toolsHeader = screen
+        .getByText("Tools Configuration")
+        .closest("[data-state]");
+      fireEvent.click(toolsHeader!);
+
       const toolsSelects = screen.getAllByTestId("tools-multi-select");
       expect(toolsSelects).toHaveLength(2); // Available Tools and Allowed Tools
     });
@@ -376,11 +400,23 @@ describe("AgentForm", () => {
     test("renders tool aliases manager", () => {
       render(<AgentForm tags={mockTags} />);
 
+      // First expand the tools configuration section
+      const toolsHeader = screen
+        .getByText("Tools Configuration")
+        .closest("[data-state]");
+      fireEvent.click(toolsHeader!);
+
       expect(screen.getByTestId("tool-aliases-manager")).toBeInTheDocument();
     });
 
     test("renders legacy MCP JSON toggle", () => {
       render(<AgentForm tags={mockTags} />);
+
+      // First expand the tools configuration section
+      const toolsHeader = screen
+        .getByText("Tools Configuration")
+        .closest("[data-state]");
+      fireEvent.click(toolsHeader!);
 
       const toggle = screen.getByRole("switch");
       expect(toggle).toBeInTheDocument();
@@ -388,6 +424,12 @@ describe("AgentForm", () => {
 
     test("pre-populates tools configuration when agent is provided", () => {
       render(<AgentForm agent={mockAgent} tags={mockTags} />);
+
+      // First expand the tools configuration section
+      const toolsHeader = screen
+        .getByText("Tools Configuration")
+        .closest("[data-state]");
+      fireEvent.click(toolsHeader!);
 
       // Check that tools are displayed (there will be multiple instances due to Available Tools and Allowed Tools)
       expect(screen.getAllByTestId("tool-git")).toHaveLength(2);
@@ -399,6 +441,12 @@ describe("AgentForm", () => {
 
     test("allows interaction with tools configuration", () => {
       render(<AgentForm tags={mockTags} />);
+
+      // First expand the tools configuration section
+      const toolsHeader = screen
+        .getByText("Tools Configuration")
+        .closest("[data-state]");
+      fireEvent.click(toolsHeader!);
 
       const addToolButton = screen.getAllByTestId("add-tool")[0];
       const addAliasButton = screen.getByTestId("add-alias");
@@ -432,6 +480,12 @@ describe("AgentForm", () => {
         ),
       ).toBeInTheDocument();
 
+      // First expand the MCP servers section to access form fields
+      const mcpHeader = screen
+        .getByText("MCP Servers Configuration")
+        .closest("[data-state]");
+      fireEvent.click(mcpHeader!);
+
       // Check for MCP Servers field
       expect(screen.getByText("MCP Servers")).toBeInTheDocument();
       expect(
@@ -444,6 +498,12 @@ describe("AgentForm", () => {
 
     test("renders empty MCP servers state", () => {
       render(<AgentForm tags={mockTags} />);
+
+      // First expand the MCP servers section
+      const mcpHeader = screen
+        .getByText("MCP Servers Configuration")
+        .closest("[data-state]");
+      fireEvent.click(mcpHeader!);
 
       expect(screen.getByText("No MCP servers configured")).toBeInTheDocument();
       expect(
@@ -467,6 +527,12 @@ describe("AgentForm", () => {
 
       render(<AgentForm agent={agentWithMcpServers} tags={mockTags} />);
 
+      // First expand the MCP servers section
+      const mcpHeader = screen
+        .getByText("MCP Servers Configuration")
+        .closest("[data-state]");
+      fireEvent.click(mcpHeader!);
+
       // Check that MCP server is displayed (the mock component shows server names)
       expect(screen.getByTestId("mcp-servers-manager")).toBeInTheDocument();
       expect(screen.getByTestId("servers")).toBeInTheDocument();
@@ -474,6 +540,12 @@ describe("AgentForm", () => {
 
     test("allows interaction with MCP servers configuration", () => {
       render(<AgentForm tags={mockTags} />);
+
+      // First expand the MCP servers section
+      const mcpHeader = screen
+        .getByText("MCP Servers Configuration")
+        .closest("[data-state]");
+      fireEvent.click(mcpHeader!);
 
       const serverNameInput = screen.getByPlaceholderText(
         "Server name (e.g., 'filesystem', 'git')",
@@ -502,7 +574,7 @@ describe("AgentForm", () => {
       render(<AgentForm tags={mockTags} />);
 
       // Check for File Resources section as separate card
-      expect(screen.getAllByText("File Resources")).toHaveLength(2); // Card title and form label
+      expect(screen.getByText("File Resources")).toBeInTheDocument(); // Card title
       expect(
         screen.getByText(
           "Configure file resources your agent can access for context and functionality",
@@ -512,6 +584,12 @@ describe("AgentForm", () => {
 
     test("renders resources manager component in file resources section", () => {
       render(<AgentForm tags={mockTags} />);
+
+      // First expand the file resources section
+      const resourcesHeader = screen
+        .getByText("File Resources")
+        .closest("[data-state]");
+      fireEvent.click(resourcesHeader!);
 
       // Check that resources manager is rendered in its own section
       expect(
@@ -524,6 +602,12 @@ describe("AgentForm", () => {
 
     test("shows helpful description for file resources", () => {
       render(<AgentForm tags={mockTags} />);
+
+      // First expand the file resources section
+      const resourcesHeader = screen
+        .getByText("File Resources")
+        .closest("[data-state]");
+      fireEvent.click(resourcesHeader!);
 
       expect(
         screen.getByText(
@@ -540,6 +624,12 @@ describe("AgentForm", () => {
 
       render(<AgentForm agent={agentWithResources} tags={mockTags} />);
 
+      // First expand the file resources section
+      const resourcesHeader = screen
+        .getByText("File Resources")
+        .closest("[data-state]");
+      fireEvent.click(resourcesHeader!);
+
       // Resources should be pre-populated
       expect(screen.getByText("./src/config.json")).toBeInTheDocument();
       expect(screen.getByText("/absolute/path/file.txt")).toBeInTheDocument();
@@ -551,7 +641,7 @@ describe("AgentForm", () => {
       render(<AgentForm tags={mockTags} />);
 
       // Check for Lifecycle Hooks section as separate card
-      expect(screen.getAllByText("Lifecycle Hooks")).toHaveLength(2); // Card title and form label
+      expect(screen.getByText("Lifecycle Hooks")).toBeInTheDocument(); // Card title
       expect(
         screen.getByText(
           "Configure commands to run at specific points in your agent's lifecycle",
@@ -562,6 +652,12 @@ describe("AgentForm", () => {
     test("renders hooks manager component in lifecycle hooks section", () => {
       render(<AgentForm tags={mockTags} />);
 
+      // First expand the lifecycle hooks section
+      const hooksHeader = screen
+        .getByText("Lifecycle Hooks")
+        .closest("[data-state]");
+      fireEvent.click(hooksHeader!);
+
       // Check that hooks manager is rendered in its own section
       expect(screen.getByText("Add Lifecycle Hook")).toBeInTheDocument();
       expect(screen.getByText("Select hook type")).toBeInTheDocument();
@@ -569,6 +665,12 @@ describe("AgentForm", () => {
 
     test("shows helpful description for lifecycle hooks", () => {
       render(<AgentForm tags={mockTags} />);
+
+      // First expand the lifecycle hooks section
+      const hooksHeader = screen
+        .getByText("Lifecycle Hooks")
+        .closest("[data-state]");
+      fireEvent.click(hooksHeader!);
 
       expect(
         screen.getByText(
@@ -587,6 +689,12 @@ describe("AgentForm", () => {
       };
 
       render(<AgentForm agent={agentWithHooks} tags={mockTags} />);
+
+      // First expand the lifecycle hooks section
+      const hooksHeader = screen
+        .getByText("Lifecycle Hooks")
+        .closest("[data-state]");
+      fireEvent.click(hooksHeader!);
 
       // Hooks should be pre-populated
       expect(screen.getByText("Agent Spawn")).toBeInTheDocument();
@@ -708,6 +816,169 @@ describe("AgentForm", () => {
       expect(
         screen.getByDisplayValue("https://example.com/agent"),
       ).toBeInTheDocument();
+    });
+  });
+
+  describe("Collapsible Sections", () => {
+    test("renders advanced sections as collapsed by default", () => {
+      // Suppress console errors for this test due to known Radix UI issue
+      const originalError = console.error;
+      console.error = jest.fn();
+
+      render(<AgentForm tags={mockTags} />);
+
+      // Check that collapsible sections are collapsed by default
+      expect(screen.getByText("Tools Configuration")).toBeInTheDocument();
+      expect(screen.getByText("MCP Servers Configuration")).toBeInTheDocument();
+      expect(screen.getByText("File Resources")).toBeInTheDocument();
+      expect(screen.getByText("Lifecycle Hooks")).toBeInTheDocument();
+
+      // Check that content is not visible by default (collapsed state)
+      expect(screen.queryByText("Available Tools")).not.toBeInTheDocument();
+      expect(screen.queryByText("MCP Servers")).not.toBeInTheDocument();
+      expect(screen.queryByText("File Resources")).toBeInTheDocument(); // This appears in both title and content
+      expect(screen.queryByText("Enter file path")).not.toBeInTheDocument();
+      expect(screen.queryByText("Add Lifecycle Hook")).not.toBeInTheDocument();
+
+      // Restore console.error
+      console.error = originalError;
+    });
+
+    test("allows expanding and collapsing tools configuration section", () => {
+      // Suppress console errors for this test due to known Radix UI issue
+      const originalError = console.error;
+      console.error = jest.fn();
+
+      render(<AgentForm tags={mockTags} />);
+
+      // Find and click the tools configuration header to expand
+      const toolsHeader = screen
+        .getByText("Tools Configuration")
+        .closest("[data-state]");
+      expect(toolsHeader).toBeInTheDocument();
+      fireEvent.click(toolsHeader!);
+
+      // Check that content is now visible
+      expect(screen.getByText("Available Tools")).toBeInTheDocument();
+      expect(screen.getByText("Tool Aliases")).toBeInTheDocument();
+      expect(screen.getByText("Legacy MCP JSON Support")).toBeInTheDocument();
+
+      // Click again to collapse
+      fireEvent.click(toolsHeader!);
+
+      // Content should be hidden again
+      expect(screen.queryByText("Available Tools")).not.toBeInTheDocument();
+
+      // Restore console.error
+      console.error = originalError;
+    });
+
+    test("allows expanding and collapsing MCP servers configuration section", () => {
+      // Suppress console errors for this test due to known Radix UI issue
+      const originalError = console.error;
+      console.error = jest.fn();
+
+      render(<AgentForm tags={mockTags} />);
+
+      // Find and click the MCP servers header to expand
+      const mcpHeader = screen
+        .getByText("MCP Servers Configuration")
+        .closest("[data-state]");
+      expect(mcpHeader).toBeInTheDocument();
+      fireEvent.click(mcpHeader!);
+
+      // Check that content is now visible
+      expect(screen.getByText("MCP Servers")).toBeInTheDocument();
+      expect(screen.getByText("No MCP servers configured")).toBeInTheDocument();
+
+      // Click again to collapse
+      fireEvent.click(mcpHeader!);
+
+      // Content should be hidden again
+      expect(
+        screen.queryByText("No MCP servers configured"),
+      ).not.toBeInTheDocument();
+
+      // Restore console.error
+      console.error = originalError;
+    });
+
+    test("allows expanding and collapsing file resources section", () => {
+      // Suppress console errors for this test due to known Radix UI issue
+      const originalError = console.error;
+      console.error = jest.fn();
+
+      render(<AgentForm tags={mockTags} />);
+
+      // Find and click the file resources header to expand
+      const resourcesHeader = screen
+        .getByText("File Resources")
+        .closest("[data-state]");
+      expect(resourcesHeader).toBeInTheDocument();
+      fireEvent.click(resourcesHeader!);
+
+      // Check that content is now visible
+      expect(
+        screen.getByPlaceholderText(/Enter file path/),
+      ).toBeInTheDocument();
+      expect(screen.getByText("Add Resource")).toBeInTheDocument();
+
+      // Click again to collapse
+      fireEvent.click(resourcesHeader!);
+
+      // Content should be hidden again
+      expect(
+        screen.queryByPlaceholderText(/Enter file path/),
+      ).not.toBeInTheDocument();
+
+      // Restore console.error
+      console.error = originalError;
+    });
+
+    test("allows expanding and collapsing lifecycle hooks section", () => {
+      // Suppress console errors for this test due to known Radix UI issue
+      const originalError = console.error;
+      console.error = jest.fn();
+
+      render(<AgentForm tags={mockTags} />);
+
+      // Find and click the lifecycle hooks header to expand
+      const hooksHeader = screen
+        .getByText("Lifecycle Hooks")
+        .closest("[data-state]");
+      expect(hooksHeader).toBeInTheDocument();
+      fireEvent.click(hooksHeader!);
+
+      // Check that content is now visible
+      expect(screen.getByText("Add Lifecycle Hook")).toBeInTheDocument();
+      expect(screen.getByText("Select hook type")).toBeInTheDocument();
+
+      // Click again to collapse
+      fireEvent.click(hooksHeader!);
+
+      // Content should be hidden again
+      expect(screen.queryByText("Add Lifecycle Hook")).not.toBeInTheDocument();
+
+      // Restore console.error
+      console.error = originalError;
+    });
+
+    test("basic information and metadata sections remain always visible", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      // These sections should always be visible and not collapsible
+      expect(screen.getByText("Basic Information")).toBeInTheDocument();
+      expect(screen.getByLabelText("Agent Name")).toBeInTheDocument();
+      expect(screen.getByText("Metadata & Settings")).toBeInTheDocument();
+      expect(screen.getByText("Tags")).toBeInTheDocument();
+
+      // These should not have collapsible behavior (no button role for headers)
+      expect(
+        screen.queryByRole("button", { name: /basic information/i }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: /metadata & settings/i }),
+      ).not.toBeInTheDocument();
     });
   });
 

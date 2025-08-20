@@ -21,13 +21,15 @@ import {
   Settings,
   Server,
   Zap,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -47,6 +49,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 import Tags from "@/components/common/tags";
 import { toast } from "sonner";
@@ -81,6 +88,12 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
     message: "",
     success: true,
   });
+
+  // State for collapsible sections (closed by default)
+  const [isToolsOpen, setIsToolsOpen] = useState(false);
+  const [isMcpServersOpen, setIsMcpServersOpen] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const [isHooksOpen, setIsHooksOpen] = useState(false);
 
   useEffect(() => {
     if (state.success && state.message) {
@@ -227,283 +240,330 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
         </Card>
 
         {/* Tools Configuration Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Settings className="w-4 h-4" />
-              Tools Configuration
-            </CardTitle>
-            <CardDescription>
-              Configure which tools your agent can use and how they are accessed
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <FormField
-              control={form.control}
-              name="tools"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4" />
-                    Available Tools
-                  </FormLabel>
-                  <FormControl>
-                    <div>
-                      {field.value?.map((tool, index) => (
-                        <input
-                          key={index}
-                          type="hidden"
-                          name="tools"
-                          value={tool}
-                        />
-                      ))}
-                      <ToolsMultiSelect
-                        value={field.value || []}
-                        onChange={field.onChange}
-                        placeholder="Select tools your agent can use..."
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage>{state.errors?.tools}</FormMessage>
-                  <FormDescription>
-                    Select the tools that your agent is allowed to use. These
-                    tools will be available for the agent to call during
-                    conversations.
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
+        <Collapsible open={isToolsOpen} onOpenChange={setIsToolsOpen}>
+          <Card>
+            <CollapsibleTrigger asChild>
+              <CardHeader className="cursor-pointer hover:bg-gray-800/50 transition-colors">
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="w-4 h-4" />
+                  Tools Configuration
+                  {isToolsOpen ? (
+                    <ChevronDown className="w-4 h-4 ml-auto" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 ml-auto" />
+                  )}
+                </CardTitle>
+                <CardDescription>
+                  Configure which tools your agent can use and how they are
+                  accessed
+                </CardDescription>
+              </CardHeader>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <CardContent className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="tools"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2">
+                        <Terminal className="w-4 h-4" />
+                        Available Tools
+                      </FormLabel>
+                      <FormControl>
+                        <div>
+                          {field.value?.map((tool, index) => (
+                            <input
+                              key={index}
+                              type="hidden"
+                              name="tools"
+                              value={tool}
+                            />
+                          ))}
+                          <ToolsMultiSelect
+                            value={field.value || []}
+                            onChange={field.onChange}
+                            placeholder="Select tools your agent can use..."
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage>{state.errors?.tools}</FormMessage>
+                      <FormDescription>
+                        Select the tools that your agent is allowed to use.
+                        These tools will be available for the agent to call
+                        during conversations.
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="toolAliases"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tool Aliases</FormLabel>
-                  <FormControl>
-                    <div>
-                      <input
-                        type="hidden"
-                        name="toolAliases"
-                        value={JSON.stringify(field.value || {})}
-                      />
-                      <ToolAliasesManager
-                        value={field.value || {}}
-                        onChange={field.onChange}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage>{state.errors?.toolAliases}</FormMessage>
-                  <FormDescription>
-                    Create shortcuts for tools by defining aliases. For example,
-                    you can alias &ldquo;read&rdquo; to &ldquo;fs_read&rdquo;
-                    for easier use.
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="toolAliases"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Tool Aliases</FormLabel>
+                      <FormControl>
+                        <div>
+                          <input
+                            type="hidden"
+                            name="toolAliases"
+                            value={JSON.stringify(field.value || {})}
+                          />
+                          <ToolAliasesManager
+                            value={field.value || {}}
+                            onChange={field.onChange}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage>{state.errors?.toolAliases}</FormMessage>
+                      <FormDescription>
+                        Create shortcuts for tools by defining aliases. For
+                        example, you can alias &ldquo;read&rdquo; to
+                        &ldquo;fs_read&rdquo; for easier use.
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="allowedTools"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Allowed Tools (Restriction)</FormLabel>
-                  <FormControl>
-                    <div>
-                      {field.value?.map((tool, index) => (
-                        <input
-                          key={index}
-                          type="hidden"
-                          name="allowedTools"
-                          value={tool}
-                        />
-                      ))}
-                      <ToolsMultiSelect
-                        value={field.value || []}
-                        onChange={field.onChange}
-                        placeholder="Optionally restrict to specific tools..."
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage>{state.errors?.allowedTools}</FormMessage>
-                  <FormDescription>
-                    Optional: Restrict the agent to only use these specific
-                    tools. If empty, all configured tools are allowed.
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="allowedTools"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Allowed Tools (Restriction)</FormLabel>
+                      <FormControl>
+                        <div>
+                          {field.value?.map((tool, index) => (
+                            <input
+                              key={index}
+                              type="hidden"
+                              name="allowedTools"
+                              value={tool}
+                            />
+                          ))}
+                          <ToolsMultiSelect
+                            value={field.value || []}
+                            onChange={field.onChange}
+                            placeholder="Optionally restrict to specific tools..."
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage>{state.errors?.allowedTools}</FormMessage>
+                      <FormDescription>
+                        Optional: Restrict the agent to only use these specific
+                        tools. If empty, all configured tools are allowed.
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="useLegacyMcpJson"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border border-gray-700 p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel className="text-base">
-                      Legacy MCP JSON Support
-                    </FormLabel>
-                    <FormDescription>
-                      Enable support for legacy MCP JSON format. Only enable
-                      this if you need compatibility with older MCP servers.
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <div>
-                      <Switch
-                        checked={field.value || false}
-                        onCheckedChange={field.onChange}
-                        className="border-gray-700"
-                      />
-                      <input
-                        type="hidden"
-                        name="useLegacyMcpJson"
-                        value={field.value ? "true" : "false"}
-                      />
-                    </div>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
+                <FormField
+                  control={form.control}
+                  name="useLegacyMcpJson"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border border-gray-700 p-4">
+                      <div className="space-y-0.5">
+                        <FormLabel className="text-base">
+                          Legacy MCP JSON Support
+                        </FormLabel>
+                        <FormDescription>
+                          Enable support for legacy MCP JSON format. Only enable
+                          this if you need compatibility with older MCP servers.
+                        </FormDescription>
+                      </div>
+                      <FormControl>
+                        <div>
+                          <Switch
+                            checked={field.value || false}
+                            onCheckedChange={field.onChange}
+                            className="border-gray-700"
+                          />
+                          <input
+                            type="hidden"
+                            name="useLegacyMcpJson"
+                            value={field.value ? "true" : "false"}
+                          />
+                        </div>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </CollapsibleContent>
+          </Card>
+        </Collapsible>
 
         {/* MCP Servers Configuration Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Server className="w-4 h-4" />
-              MCP Servers Configuration
-            </CardTitle>
-            <CardDescription>
-              Configure Model Context Protocol (MCP) servers to extend your
-              agent&apos;s capabilities with external data sources and tools
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <FormField
-              control={form.control}
-              name="mcpServers"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>MCP Servers</FormLabel>
-                  <FormControl>
-                    <div>
-                      <input
-                        type="hidden"
-                        name="mcpServers"
-                        value={JSON.stringify(field.value || {})}
-                      />
-                      <McpServersManager
-                        value={field.value || {}}
-                        onChange={field.onChange}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage>{state.errors?.mcpServers}</FormMessage>
-                  <FormDescription>
-                    MCP servers provide your agent with access to external tools
-                    and data sources. Each server runs as a separate process and
-                    communicates with your agent through the Model Context
-                    Protocol.
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
+        <Collapsible open={isMcpServersOpen} onOpenChange={setIsMcpServersOpen}>
+          <Card>
+            <CollapsibleTrigger asChild>
+              <CardHeader className="cursor-pointer hover:bg-gray-800/50 transition-colors">
+                <CardTitle className="flex items-center gap-2">
+                  <Server className="w-4 h-4" />
+                  MCP Servers Configuration
+                  {isMcpServersOpen ? (
+                    <ChevronDown className="w-4 h-4 ml-auto" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 ml-auto" />
+                  )}
+                </CardTitle>
+                <CardDescription>
+                  Configure Model Context Protocol (MCP) servers to extend your
+                  agent&apos;s capabilities with external data sources and tools
+                </CardDescription>
+              </CardHeader>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <CardContent className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="mcpServers"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>MCP Servers</FormLabel>
+                      <FormControl>
+                        <div>
+                          <input
+                            type="hidden"
+                            name="mcpServers"
+                            value={JSON.stringify(field.value || {})}
+                          />
+                          <McpServersManager
+                            value={field.value || {}}
+                            onChange={field.onChange}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage>{state.errors?.mcpServers}</FormMessage>
+                      <FormDescription>
+                        MCP servers provide your agent with access to external
+                        tools and data sources. Each server runs as a separate
+                        process and communicates with your agent through the
+                        Model Context Protocol.
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </CollapsibleContent>
+          </Card>
+        </Collapsible>
 
         {/* File Resources Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="w-4 h-4" />
-              File Resources
-            </CardTitle>
-            <CardDescription>
-              Configure file resources your agent can access for context and
-              functionality
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <FormField
-              control={form.control}
-              name="resources"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>File Resources</FormLabel>
-                  <FormControl>
-                    <div>
-                      {field.value?.map((resource, index) => (
-                        <input
-                          key={index}
-                          type="hidden"
-                          name="resources"
-                          value={resource}
-                        />
-                      ))}
-                      <ResourcesManager
-                        value={field.value || []}
-                        onChange={field.onChange}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage>{state.errors?.resources}</FormMessage>
-                  <FormDescription>
-                    Specify file paths that your agent should have access to.
-                    These can be configuration files, documentation, or any
-                    other resources your agent needs to function effectively.
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
+        <Collapsible open={isResourcesOpen} onOpenChange={setIsResourcesOpen}>
+          <Card>
+            <CollapsibleTrigger asChild>
+              <CardHeader className="cursor-pointer hover:bg-gray-800/50 transition-colors">
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="w-4 h-4" />
+                  File Resources
+                  {isResourcesOpen ? (
+                    <ChevronDown className="w-4 h-4 ml-auto" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 ml-auto" />
+                  )}
+                </CardTitle>
+                <CardDescription>
+                  Configure file resources your agent can access for context and
+                  functionality
+                </CardDescription>
+              </CardHeader>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <CardContent className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="resources"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>File Resources</FormLabel>
+                      <FormControl>
+                        <div>
+                          {field.value?.map((resource, index) => (
+                            <input
+                              key={index}
+                              type="hidden"
+                              name="resources"
+                              value={resource}
+                            />
+                          ))}
+                          <ResourcesManager
+                            value={field.value || []}
+                            onChange={field.onChange}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage>{state.errors?.resources}</FormMessage>
+                      <FormDescription>
+                        Specify file paths that your agent should have access
+                        to. These can be configuration files, documentation, or
+                        any other resources your agent needs to function
+                        effectively.
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </CollapsibleContent>
+          </Card>
+        </Collapsible>
 
         {/* Lifecycle Hooks Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Zap className="w-4 h-4" />
-              Lifecycle Hooks
-            </CardTitle>
-            <CardDescription>
-              Configure commands to run at specific points in your agent's
-              lifecycle
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <FormField
-              control={form.control}
-              name="hooks"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Lifecycle Hooks</FormLabel>
-                  <FormControl>
-                    <div>
-                      <input
-                        type="hidden"
-                        name="hooks"
-                        value={JSON.stringify(field.value || {})}
-                      />
-                      <HooksManager
-                        value={field.value || {}}
-                        onChange={field.onChange}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage>{state.errors?.hooks}</FormMessage>
-                  <FormDescription>
-                    Configure commands to run at specific points in your
-                    agent&apos;s lifecycle. Use agentSpawn for initialization
-                    tasks and userPromptSubmit for pre-processing user inputs.
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
+        <Collapsible open={isHooksOpen} onOpenChange={setIsHooksOpen}>
+          <Card>
+            <CollapsibleTrigger asChild>
+              <CardHeader className="cursor-pointer hover:bg-gray-800/50 transition-colors">
+                <CardTitle className="flex items-center gap-2">
+                  <Zap className="w-4 h-4" />
+                  Lifecycle Hooks
+                  {isHooksOpen ? (
+                    <ChevronDown className="w-4 h-4 ml-auto" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 ml-auto" />
+                  )}
+                </CardTitle>
+                <CardDescription>
+                  Configure commands to run at specific points in your agent's
+                  lifecycle
+                </CardDescription>
+              </CardHeader>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <CardContent className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="hooks"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Lifecycle Hooks</FormLabel>
+                      <FormControl>
+                        <div>
+                          <input
+                            type="hidden"
+                            name="hooks"
+                            value={JSON.stringify(field.value || {})}
+                          />
+                          <HooksManager
+                            value={field.value || {}}
+                            onChange={field.onChange}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage>{state.errors?.hooks}</FormMessage>
+                      <FormDescription>
+                        Configure commands to run at specific points in your
+                        agent&apos;s lifecycle. Use agentSpawn for
+                        initialization tasks and userPromptSubmit for
+                        pre-processing user inputs.
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </CollapsibleContent>
+          </Card>
+        </Collapsible>
 
         {/* Metadata Section */}
         <Card>

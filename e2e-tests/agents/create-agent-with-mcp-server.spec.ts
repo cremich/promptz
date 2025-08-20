@@ -59,26 +59,26 @@ test.describe("Create Agent with MCP Server Configuration", () => {
     });
 
     await test.step("Configure Git MCP server", async () => {
+      // First expand the MCP Servers Configuration section
+      await page.getByText("MCP Servers Configuration").click();
+
       // Add a new MCP server
       const serverNameInput = page.getByRole("textbox", {
         name: "Server name (e.g., 'filesystem', 'git')",
       });
       await serverNameInput.fill("git");
 
-      // Click the add button to add the server - the button is in the same container as the input
-      // Wait for the button to be enabled after typing the server name
-      await page.waitForTimeout(500); // Small delay to ensure the button is enabled
-
+      // Click the add button to add the server
       const addServerButton = page
+        .getByRole("main")
         .getByRole("button")
-        .filter({ hasText: /^$/ }) // Button with only an icon, no text
-        .nth(1); // Second button with no text (first is likely disabled)
+        .filter({ hasText: /^$/ });
       await addServerButton.click();
 
-      // Verify the server was added and is expanded
+      // Verify the server was added and the command field is now available
       await expect(page.getByText("git").first()).toBeVisible();
 
-      // Configure the command for the git server
+      // Configure the command for the git server (no need to expand, it's expanded by default)
       const commandInput = page.getByRole("textbox", { name: "Command *" });
       await commandInput.fill("npx @modelcontextprotocol/server-git");
       await expect(commandInput).toHaveValue(

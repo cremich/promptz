@@ -31,6 +31,9 @@ test.describe("Agent Creation with Resources and Lifecycle Hooks", () => {
     });
 
     await test.step("Configure file resources", async () => {
+      // First expand the File Resources section using a more specific locator
+      await page.getByText("File ResourcesConfigure file").click();
+
       // Add first resource
       await page
         .getByRole("textbox", { name: "Enter file path (e.g., ./src/" })
@@ -54,6 +57,9 @@ test.describe("Agent Creation with Resources and Lifecycle Hooks", () => {
     });
 
     await test.step("Configure lifecycle hooks", async () => {
+      // First expand the Lifecycle Hooks section using a more specific locator
+      await page.getByText("Lifecycle HooksConfigure").click();
+
       // Select hook type
       await page
         .getByRole("combobox")

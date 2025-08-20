@@ -4,7 +4,16 @@ module.exports = {
     "scope-enum": [
       2,
       "always",
-      ["amplify", "nextjs", "q", "project-intelligence", "config"],
+      [
+        "amplify",
+        "nextjs",
+        "q",
+        "project-intelligence",
+        "config",
+        "prompts",
+        "agents",
+        "rules",
+      ],
     ],
   },
 };
