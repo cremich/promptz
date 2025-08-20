@@ -149,9 +149,7 @@ describe("AgentDetail", () => {
   test("Shows agent configuration section", () => {
     render(<AgentDetail agent={mockAgent} isOwner={false} />);
 
-    expect(screen.getByTestId("agent-configuration")).toHaveTextContent(
-      "Agent Configuration",
-    );
+    expect(screen.getByText("Agent Configuration")).toBeInTheDocument();
   });
 
   test("Shows source URL when provided", () => {
@@ -222,5 +220,58 @@ describe("AgentDetail", () => {
     expect(screen.getByTestId("submitted-date")).toHaveTextContent(
       "Submitted on Unknown date",
     );
+  });
+
+  test("Renders modern hero section with gradient background", () => {
+    render(<AgentDetail agent={mockAgent} isOwner={false} />);
+
+    const heroSection = screen.getByTestId("agent-hero-section");
+    expect(heroSection).toBeInTheDocument();
+    expect(heroSection).toHaveClass("bg-gradient-to-br");
+  });
+
+  test("Displays agent stats in hero section", () => {
+    render(<AgentDetail agent={mockAgent} isOwner={false} />);
+
+    expect(screen.getByTestId("copy-count")).toHaveTextContent("5");
+    expect(screen.getByTestId("download-count")).toHaveTextContent("10");
+  });
+
+  test("Shows enhanced configuration cards", () => {
+    const agentWithConfig = {
+      ...mockAgent,
+      tools: ["tool1", "tool2"],
+      allowedTools: ["allowed1", "allowed2"],
+      resources: ["file://resource1.txt"],
+      mcpServers: { server1: { command: "test" } },
+    };
+    render(<AgentDetail agent={agentWithConfig} isOwner={false} />);
+
+    expect(screen.getByTestId("tools-card")).toBeInTheDocument();
+    expect(screen.getByTestId("resources-card")).toBeInTheDocument();
+    expect(screen.getByTestId("mcp-servers-card")).toBeInTheDocument();
+  });
+
+  test("Hides configuration sections when no data is available", () => {
+    const minimalAgent = {
+      ...mockAgent,
+      tools: undefined,
+      allowedTools: undefined,
+      resources: undefined,
+      mcpServers: undefined,
+    };
+    render(<AgentDetail agent={minimalAgent} isOwner={false} />);
+
+    expect(screen.queryByTestId("tools-card")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("resources-card")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("mcp-servers-card")).not.toBeInTheDocument();
+  });
+
+  test("Shows system prompt with enhanced styling", () => {
+    render(<AgentDetail agent={mockAgent} isOwner={false} />);
+
+    const promptSection = screen.getByTestId("system-prompt-section");
+    expect(promptSection).toBeInTheDocument();
+    expect(promptSection).toHaveClass("bg-gradient-to-r");
   });
 });
