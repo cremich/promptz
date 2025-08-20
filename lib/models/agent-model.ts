@@ -87,27 +87,18 @@ const toolAliasesSchema = z
 // Resource validation schema
 const resourceSchema = z.string().refine(
   (resource) => {
-    // Allow file paths (absolute, relative, or home directory)
-    if (
-      resource.startsWith("/") ||
-      resource.startsWith("./") ||
-      resource.startsWith("../") ||
-      resource.startsWith("~/")
-    ) {
-      return true;
-    }
-
-    // Allow promptz.dev URLs
-    try {
-      const url = new URL(resource);
-      return url.hostname === "promptz.dev" && url.protocol === "https:";
-    } catch {
+    // All file resources must start with file://
+    if (!resource.startsWith("file://")) {
       return false;
     }
+
+    // Must have a path after file://
+    const path = resource.slice(7); // Remove "file://" prefix
+    return path.length > 0;
   },
   {
     message:
-      "Invalid resource. Must be a file path or a promptz.dev URL (https://promptz.dev/...)",
+      "Invalid resource. File resources must start with file:// and specify a path (e.g., file://README.md, file://.amazonq/rules/**/*.md)",
   },
 );
 

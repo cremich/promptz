@@ -366,8 +366,54 @@ describe("Agent Form Schema", () => {
   });
 
   describe("Resources validation", () => {
-    test("validates file path resources", () => {
+    test("validates file:// prefixed resources", () => {
       const validAgent = {
+        name: "Test Agent",
+        description: "A test agent for development",
+        prompt: "You are a helpful assistant",
+        tools: ["@aws/q-developer-cli-chat"],
+        resources: [
+          "file://AmazonQ.md",
+          "file://README.md",
+          "file://.amazonq/rules/**/*.md",
+          "file:///absolute/path/to/file.txt",
+          "file://./relative/path.md",
+          "file://~/home/file.json",
+        ],
+        allowedTools: [],
+        useLegacyMcpJson: false,
+        tags: [],
+        scope: "PRIVATE",
+      };
+
+      const result = agentFormSchema.safeParse(validAgent);
+      expect(result.success).toBe(true);
+    });
+
+    test("validates file:// resources with glob patterns", () => {
+      const validAgent = {
+        name: "Test Agent",
+        description: "A test agent for development",
+        prompt: "You are a helpful assistant",
+        tools: ["@aws/q-developer-cli-chat"],
+        resources: [
+          "file://.amazonq/rules/**/*.md",
+          "file://src/**/*.ts",
+          "file://docs/*.md",
+          "file://**/*.json",
+        ],
+        allowedTools: [],
+        useLegacyMcpJson: false,
+        tags: [],
+        scope: "PRIVATE",
+      };
+
+      const result = agentFormSchema.safeParse(validAgent);
+      expect(result.success).toBe(true);
+    });
+
+    test("rejects resources without file:// prefix", () => {
+      const invalidAgent = {
         name: "Test Agent",
         description: "A test agent for development",
         prompt: "You are a helpful assistant",
@@ -376,6 +422,7 @@ describe("Agent Form Schema", () => {
           "/path/to/file.txt",
           "./relative/path.md",
           "~/home/file.json",
+          "README.md",
         ],
         allowedTools: [],
         useLegacyMcpJson: false,
@@ -383,37 +430,30 @@ describe("Agent Form Schema", () => {
         scope: "PRIVATE",
       };
 
-      const result = agentFormSchema.safeParse(validAgent);
-      expect(result.success).toBe(true);
+      const result = agentFormSchema.safeParse(invalidAgent);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        // Check that all resources are rejected with the correct message
+        const resourceErrors = result.error.issues.filter(
+          (issue) =>
+            issue.path[0] === "resources" && typeof issue.path[1] === "number",
+        );
+        expect(resourceErrors.length).toBe(4);
+        resourceErrors.forEach((error) => {
+          expect(error.message).toContain(
+            "File resources must start with file://",
+          );
+        });
+      }
     });
 
-    test("validates promptz.dev URLs as resources", () => {
-      const validAgent = {
-        name: "Test Agent",
-        description: "A test agent for development",
-        prompt: "You are a helpful assistant",
-        tools: ["@aws/q-developer-cli-chat"],
-        resources: [
-          "https://promptz.dev/prompts/test-prompt",
-          "https://promptz.dev/rules/test-rule",
-        ],
-        allowedTools: [],
-        useLegacyMcpJson: false,
-        tags: [],
-        scope: "PRIVATE",
-      };
-
-      const result = agentFormSchema.safeParse(validAgent);
-      expect(result.success).toBe(true);
-    });
-
-    test("rejects invalid resource URLs", () => {
+    test("rejects empty file:// resources", () => {
       const invalidAgent = {
         name: "Test Agent",
         description: "A test agent for development",
         prompt: "You are a helpful assistant",
         tools: ["@aws/q-developer-cli-chat"],
-        resources: ["https://example.com/invalid"],
+        resources: ["file://"],
         allowedTools: [],
         useLegacyMcpJson: false,
         tags: [],
@@ -426,7 +466,47 @@ describe("Agent Form Schema", () => {
         expect(result.error.issues).toContainEqual(
           expect.objectContaining({
             path: ["resources", 0],
-            message: expect.stringContaining("Invalid resource"),
+            message: expect.stringContaining(
+              "File resources must start with file://",
+            ),
+          }),
+        );
+      }
+    });
+
+    test("rejects invalid resource URLs", () => {
+      const invalidAgent = {
+        name: "Test Agent",
+        description: "A test agent for development",
+        prompt: "You are a helpful assistant",
+        tools: ["@aws/q-developer-cli-chat"],
+        resources: [
+          "https://example.com/invalid",
+          "https://promptz.dev/prompts/test",
+        ],
+        allowedTools: [],
+        useLegacyMcpJson: false,
+        tags: [],
+        scope: "PRIVATE",
+      };
+
+      const result = agentFormSchema.safeParse(invalidAgent);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues).toContainEqual(
+          expect.objectContaining({
+            path: ["resources", 0],
+            message: expect.stringContaining(
+              "File resources must start with file://",
+            ),
+          }),
+        );
+        expect(result.error.issues).toContainEqual(
+          expect.objectContaining({
+            path: ["resources", 1],
+            message: expect.stringContaining(
+              "File resources must start with file://",
+            ),
           }),
         );
       }

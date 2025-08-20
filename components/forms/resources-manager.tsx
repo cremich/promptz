@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Trash2, File, FolderOpen } from "lucide-react";
+import { Plus, Trash2, File, FolderOpen, Asterisk } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,11 +16,21 @@ export function ResourcesManager({ value, onChange }: ResourcesManagerProps) {
   const [newResource, setNewResource] = useState("");
 
   const addResource = () => {
-    if (newResource.trim() && !value.includes(newResource.trim())) {
-      const updatedResources = [...value, newResource.trim()];
-      onChange(updatedResources);
-      setNewResource("");
+    if (!newResource.trim()) return;
+
+    let resourcePath = newResource.trim();
+
+    // Automatically add file:// prefix if not present
+    if (!resourcePath.startsWith("file://")) {
+      resourcePath = `file://${resourcePath}`;
     }
+
+    // Check for duplicates
+    if (value.includes(resourcePath)) return;
+
+    const updatedResources = [...value, resourcePath];
+    onChange(updatedResources);
+    setNewResource("");
   };
 
   const removeResource = (index: number) => {
@@ -36,22 +46,42 @@ export function ResourcesManager({ value, onChange }: ResourcesManagerProps) {
   };
 
   const getResourceIcon = (resource: string) => {
-    if (
-      resource.includes("/") ||
-      resource.startsWith("./") ||
-      resource.startsWith("~/")
-    ) {
+    const path = resource.startsWith("file://") ? resource.slice(7) : resource;
+
+    if (path.includes("*")) {
+      return <Asterisk className="w-4 h-4 text-purple-400" />;
+    }
+    if (path.includes("/") || path.startsWith("./") || path.startsWith("~/")) {
       return <FolderOpen className="w-4 h-4 text-blue-400" />;
     }
     return <File className="w-4 h-4 text-green-400" />;
   };
 
   const getResourceType = (resource: string) => {
-    if (resource.startsWith("/")) return "Absolute path";
-    if (resource.startsWith("./")) return "Relative path";
-    if (resource.startsWith("~/")) return "Home directory";
-    if (resource.includes("/")) return "Directory path";
-    return "File name";
+    const path = resource.startsWith("file://") ? resource.slice(7) : resource;
+
+    if (path.includes("*")) return "Glob pattern";
+    if (path.startsWith("/")) return "Absolute path";
+    if (path.startsWith("./")) return "Relative path";
+    if (path.startsWith("~/")) return "Home directory";
+    if (path.includes("/")) return "Directory path";
+    return "File";
+  };
+
+  const isAddDisabled = () => {
+    const trimmed = newResource.trim();
+    if (!trimmed) return true;
+
+    // Check if it would be a duplicate after adding file:// prefix
+    const resourcePath = trimmed.startsWith("file://")
+      ? trimmed
+      : `file://${trimmed}`;
+    if (value.includes(resourcePath)) return true;
+
+    // Check if it's just "file://" without a path
+    if (trimmed === "file://") return true;
+
+    return false;
   };
 
   return (
@@ -59,7 +89,7 @@ export function ResourcesManager({ value, onChange }: ResourcesManagerProps) {
       <div className="flex gap-2">
         <div className="flex-1">
           <Input
-            placeholder="Enter file path (e.g., ./src/components, ~/documents/config.json)"
+            placeholder="Enter file path (e.g., file://README.md, file://.amazonq/rules/**/*.md)"
             value={newResource}
             onChange={(e) => setNewResource(e.target.value)}
             onKeyDown={handleKeyPress}
@@ -70,7 +100,7 @@ export function ResourcesManager({ value, onChange }: ResourcesManagerProps) {
           type="button"
           variant="outline"
           onClick={addResource}
-          disabled={!newResource.trim() || value.includes(newResource.trim())}
+          disabled={isAddDisabled()}
           className="shrink-0 border-green-600 text-green-400 hover:bg-green-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Add Resource"
         >
@@ -135,27 +165,33 @@ export function ResourcesManager({ value, onChange }: ResourcesManagerProps) {
         <ul className="list-disc list-inside space-y-1 ml-2">
           <li>
             <code className="bg-transparent! text-orange-600">
-              /absolute/path/to/file
+              file://README.md
+            </code>{" "}
+            - Specific files
+          </li>
+          <li>
+            <code className="bg-transparent! text-orange-600 ">
+              file://.amazonq/rules/**/*.md
+            </code>{" "}
+            - Glob patterns for multiple files
+          </li>
+          <li>
+            <code className="bg-transparent! text-orange-600">
+              file:///absolute/path/to/file
             </code>{" "}
             - Absolute file paths
           </li>
           <li>
-            <code className="bg-transparent! text-orange-600 ">
-              ./relative/path
+            <code className="bg-transparent! text-orange-600">
+              file://./relative/path
             </code>{" "}
             - Relative to agent directory
           </li>
           <li>
             <code className="bg-transparent! text-orange-600">
-              ~/home/directory
+              file://~/home/directory
             </code>{" "}
             - Home directory paths
-          </li>
-          <li>
-            <code className="bg-transparent! text-orange-600">
-              filename.ext
-            </code>{" "}
-            - Files in current directory
           </li>
         </ul>
       </div>
