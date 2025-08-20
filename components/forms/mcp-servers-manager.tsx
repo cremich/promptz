@@ -67,7 +67,9 @@ export function McpServersManager({
         ...value,
         [newServerName.trim()]: newServer,
       });
-      setExpandedServers(new Set([...expandedServers, newServerName.trim()]));
+      setExpandedServers(
+        new Set(Array.from(expandedServers).concat(newServerName.trim())),
+      );
       setNewServerName("");
     }
   };
