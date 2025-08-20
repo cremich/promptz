@@ -596,8 +596,8 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                   )}
                 </CardTitle>
                 <CardDescription>
-                  Configure commands to run at specific points in your agent's
-                  lifecycle
+                  Configure commands to run at specific points in your
+                  agent&apos;s lifecycle
                 </CardDescription>
               </CardHeader>
             </CollapsibleTrigger>
