@@ -21,6 +21,7 @@ jobs:
       AWS_REGION: ${{ vars.AWS_REGION }}
       AMPLIFY_APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
       AMPLIFY_WEBHOOK: ${{ secrets.AMPLIFY_INCOMING_WEBHOOK }}
+      NODE_VERSION: ${{ vars.NODE_VERSION }}
 
     steps:
       - name: Checkout repository
