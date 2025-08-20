@@ -41,9 +41,13 @@ export default function AgentDetail(props: AgentProps) {
               <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent mb-3">
                 {props.agent.name}
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-muted-foreground leading-relaxed mb-4">
                 {props.agent.description}
               </p>
+              {/* Tags positioned below description */}
+              {props.agent.tags && props.agent.tags.length > 0 && (
+                <Tags tags={props.agent.tags} />
+              )}
             </div>
 
             <div className="flex items-center gap-3">
@@ -90,23 +94,18 @@ export default function AgentDetail(props: AgentProps) {
             </div>
 
             {/* Tags and metadata */}
-            <div className="flex flex-col gap-3">
-              {props.agent.tags && props.agent.tags.length > 0 && (
-                <Tags tags={props.agent.tags} />
-              )}
-              <div className="flex items-center gap-3">
-                {props.agent.author && <Author name={props.agent.author} />}
-                <Badge
-                  variant="secondary"
-                  className="border-dashed border-violet-500 hover:bg-neutral-600"
-                >
-                  {props.agent.scope === "PUBLIC" ? "Public" : "Private"}
-                </Badge>
-                <SubmittedDate
-                  createdAt={props.agent.createdAt}
-                  updatedAt={props.agent.updatedAt}
-                />
-              </div>
+            <div className="flex items-center gap-3">
+              {props.agent.author && <Author name={props.agent.author} />}
+              <Badge
+                variant="secondary"
+                className="border-dashed border-violet-500 hover:bg-neutral-600"
+              >
+                {props.agent.scope === "PUBLIC" ? "Public" : "Private"}
+              </Badge>
+              <SubmittedDate
+                createdAt={props.agent.createdAt}
+                updatedAt={props.agent.updatedAt}
+              />
             </div>
           </div>
         </div>
