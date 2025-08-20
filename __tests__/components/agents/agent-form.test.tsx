@@ -844,6 +844,56 @@ describe("AgentForm", () => {
       console.error = originalError;
     });
 
+    test("preserves form data from collapsed sections when submitting", () => {
+      // This test reproduces the bug where tool configuration is lost
+      // when the tools section is collapsed during form submission
+      const agentWithToolsConfig = {
+        ...mockAgent,
+        tools: ["git", "npm", "docker"],
+        toolAliases: { g: "git", n: "npm" },
+        allowedTools: ["git", "npm"],
+        useLegacyMcpJson: true,
+      };
+
+      render(<AgentForm agent={agentWithToolsConfig} tags={mockTags} />);
+
+      // Verify that tools configuration is pre-populated
+      // First expand the tools section to verify data is there
+      const toolsHeader = screen
+        .getByText("Tools Configuration")
+        .closest("[data-state]");
+      fireEvent.click(toolsHeader!);
+
+      // Verify the data is displayed in the UI components (use getAllByTestId for duplicates)
+      expect(screen.getAllByTestId("tool-git")).toHaveLength(2); // Available Tools and Allowed Tools
+      expect(screen.getAllByTestId("tool-npm")).toHaveLength(2);
+      expect(screen.getByTestId("tool-docker")).toBeInTheDocument(); // Only in Available Tools
+      expect(screen.getByTestId("alias-g")).toBeInTheDocument();
+      expect(screen.getByTestId("alias-n")).toBeInTheDocument();
+
+      // Now collapse the tools section (simulating user behavior)
+      fireEvent.click(toolsHeader!);
+
+      // Verify the tools section is collapsed
+      expect(screen.queryByText("Available Tools")).not.toBeInTheDocument();
+
+      // Submit the form
+      const form = screen.getByTestId("agent-form");
+      expect(form).toBeInTheDocument();
+
+      // Create a FormData object to simulate form submission
+      const formData = new FormData(form as HTMLFormElement);
+
+      // The bug: hidden inputs should still be present even when section is collapsed
+      // These assertions will FAIL initially, demonstrating the bug
+      expect(formData.getAll("tools")).toEqual(["git", "npm", "docker"]);
+      expect(formData.get("toolAliases")).toBe(
+        JSON.stringify({ g: "git", n: "npm" }),
+      );
+      expect(formData.getAll("allowedTools")).toEqual(["git", "npm"]);
+      expect(formData.get("useLegacyMcpJson")).toBe("true");
+    });
+
     test("allows expanding and collapsing tools configuration section", () => {
       // Suppress console errors for this test due to known Radix UI issue
       const originalError = console.error;

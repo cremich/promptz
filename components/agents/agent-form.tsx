@@ -142,12 +142,127 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
 
   return (
     <Form {...form}>
-      <form className="space-y-8" action={formAction}>
+      <form className="space-y-8" action={formAction} data-testid="agent-form">
         <FormField
           control={form.control}
           name="id"
           render={({ field }) => (
             <input type="hidden" {...field} value={field.value || ""} />
+          )}
+        />
+
+        {/* Hidden inputs for all collapsible sections - always present in DOM */}
+        <FormField
+          control={form.control}
+          name="tools"
+          render={({ field }) => (
+            <div>
+              {field.value?.map((tool, index) => (
+                <input key={index} type="hidden" name="tools" value={tool} />
+              ))}
+            </div>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="toolAliases"
+          render={({ field }) => (
+            <input
+              type="hidden"
+              name="toolAliases"
+              value={JSON.stringify(field.value || {})}
+            />
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="allowedTools"
+          render={({ field }) => (
+            <div>
+              {field.value?.map((tool, index) => (
+                <input
+                  key={index}
+                  type="hidden"
+                  name="allowedTools"
+                  value={tool}
+                />
+              ))}
+            </div>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="useLegacyMcpJson"
+          render={({ field }) => (
+            <input
+              type="hidden"
+              name="useLegacyMcpJson"
+              value={field.value ? "true" : "false"}
+            />
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="mcpServers"
+          render={({ field }) => (
+            <input
+              type="hidden"
+              name="mcpServers"
+              value={JSON.stringify(field.value || {})}
+            />
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="resources"
+          render={({ field }) => (
+            <div>
+              {field.value?.map((resource, index) => (
+                <input
+                  key={index}
+                  type="hidden"
+                  name="resources"
+                  value={resource}
+                />
+              ))}
+            </div>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="hooks"
+          render={({ field }) => (
+            <input
+              type="hidden"
+              name="hooks"
+              value={JSON.stringify(field.value || {})}
+            />
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="tags"
+          render={(field) => (
+            <div>
+              {field.field.value?.map((tag, index) => (
+                <input key={index} type="hidden" name={`tags`} value={tag} />
+              ))}
+            </div>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="scope"
+          render={({ field }) => (
+            <input type="hidden" name="scope" value={`${field.value}`} />
           )}
         />
 
@@ -272,14 +387,6 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                       </FormLabel>
                       <FormControl>
                         <div>
-                          {field.value?.map((tool, index) => (
-                            <input
-                              key={index}
-                              type="hidden"
-                              name="tools"
-                              value={tool}
-                            />
-                          ))}
                           <ToolsMultiSelect
                             value={field.value || []}
                             onChange={field.onChange}
@@ -305,11 +412,6 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                       <FormLabel>Tool Aliases</FormLabel>
                       <FormControl>
                         <div>
-                          <input
-                            type="hidden"
-                            name="toolAliases"
-                            value={JSON.stringify(field.value || {})}
-                          />
                           <ToolAliasesManager
                             value={field.value || {}}
                             onChange={field.onChange}
@@ -334,14 +436,6 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                       <FormLabel>Allowed Tools (Restriction)</FormLabel>
                       <FormControl>
                         <div>
-                          {field.value?.map((tool, index) => (
-                            <input
-                              key={index}
-                              type="hidden"
-                              name="allowedTools"
-                              value={tool}
-                            />
-                          ))}
                           <ToolsMultiSelect
                             value={field.value || []}
                             onChange={field.onChange}
@@ -378,11 +472,6 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                             checked={field.value || false}
                             onCheckedChange={field.onChange}
                             className="border-gray-700"
-                          />
-                          <input
-                            type="hidden"
-                            name="useLegacyMcpJson"
-                            value={field.value ? "true" : "false"}
                           />
                         </div>
                       </FormControl>
@@ -423,17 +512,10 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                     <FormItem>
                       <FormLabel>MCP Servers</FormLabel>
                       <FormControl>
-                        <div>
-                          <input
-                            type="hidden"
-                            name="mcpServers"
-                            value={JSON.stringify(field.value || {})}
-                          />
-                          <McpServersManager
-                            value={field.value || {}}
-                            onChange={field.onChange}
-                          />
-                        </div>
+                        <McpServersManager
+                          value={field.value || {}}
+                          onChange={field.onChange}
+                        />
                       </FormControl>
                       <FormMessage>{state.errors?.mcpServers}</FormMessage>
                       <FormDescription>
@@ -479,20 +561,10 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                     <FormItem>
                       <FormLabel>File Resources</FormLabel>
                       <FormControl>
-                        <div>
-                          {field.value?.map((resource, index) => (
-                            <input
-                              key={index}
-                              type="hidden"
-                              name="resources"
-                              value={resource}
-                            />
-                          ))}
-                          <ResourcesManager
-                            value={field.value || []}
-                            onChange={field.onChange}
-                          />
-                        </div>
+                        <ResourcesManager
+                          value={field.value || []}
+                          onChange={field.onChange}
+                        />
                       </FormControl>
                       <FormMessage>{state.errors?.resources}</FormMessage>
                       <FormDescription>
@@ -538,17 +610,10 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                     <FormItem>
                       <FormLabel>Lifecycle Hooks</FormLabel>
                       <FormControl>
-                        <div>
-                          <input
-                            type="hidden"
-                            name="hooks"
-                            value={JSON.stringify(field.value || {})}
-                          />
-                          <HooksManager
-                            value={field.value || {}}
-                            onChange={field.onChange}
-                          />
-                        </div>
+                        <HooksManager
+                          value={field.value || {}}
+                          onChange={field.onChange}
+                        />
                       </FormControl>
                       <FormMessage>{state.errors?.hooks}</FormMessage>
                       <FormDescription>
@@ -588,14 +653,6 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                   </FormLabel>
                   <FormControl>
                     <div className="flex flex-wrap gap-2">
-                      {field.field.value?.map((tag, index) => (
-                        <input
-                          key={index}
-                          type="hidden"
-                          name={`tags`}
-                          value={tag}
-                        />
-                      ))}
                       <Tags tags={field.field.value || []}></Tags>
                       <TagSheet
                         onTagSelect={selectTag}
@@ -663,11 +720,6 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                       can still be shared via URL but will not be listed on
                       promptz.dev.
                     </FormDescription>
-                    <input
-                      type="hidden"
-                      name="scope"
-                      value={`${field.value}`}
-                    />
                   </div>
                 </FormItem>
               )}
