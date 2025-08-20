@@ -170,4 +170,36 @@ describe("AgentDetail", () => {
 
     expect(screen.queryByTestId("author")).not.toBeInTheDocument();
   });
+
+  test("Shows formatted creation date", () => {
+    render(<AgentDetail agent={mockAgent} isOwner={false} />);
+
+    expect(
+      screen.getByText("Submitted on January 1, 2024"),
+    ).toBeInTheDocument();
+  });
+
+  test("Shows formatted updated date when available", () => {
+    const agentWithUpdatedDate = {
+      ...mockAgent,
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-02-15T00:00:00Z",
+    };
+    render(<AgentDetail agent={agentWithUpdatedDate} isOwner={false} />);
+
+    expect(
+      screen.getByText("Submitted on February 15, 2024"),
+    ).toBeInTheDocument();
+  });
+
+  test("Shows unknown date when no creation date is available", () => {
+    const agentWithoutDate = {
+      ...mockAgent,
+      createdAt: undefined,
+      updatedAt: undefined,
+    };
+    render(<AgentDetail agent={agentWithoutDate} isOwner={false} />);
+
+    expect(screen.getByText("Submitted on Unknown date")).toBeInTheDocument();
+  });
 });

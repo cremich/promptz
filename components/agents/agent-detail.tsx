@@ -16,6 +16,17 @@ interface AgentProps {
 }
 
 export default function AgentDetail(props: AgentProps) {
+  // Format the creation date
+  const formattedDate = props.agent.createdAt
+    ? new Date(
+        props.agent.updatedAt || props.agent.createdAt,
+      ).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "Unknown date";
+
   return (
     <div>
       <div className="flex items-start justify-between">
@@ -47,7 +58,7 @@ export default function AgentDetail(props: AgentProps) {
           {props.agent.author && <Author name={props.agent.author} />}
           {props.agent.tags && <Tags tags={props.agent.tags} />}
         </div>
-        <div className="mt-4">
+        <div className="mt-4 flex flex-col items-end gap-2">
           <Badge
             key="visibility"
             variant="secondary"
@@ -55,6 +66,9 @@ export default function AgentDetail(props: AgentProps) {
           >
             {props.agent.scope === "PUBLIC" ? "Public" : "Private"}
           </Badge>
+          <div className="text-sm text-muted-foreground">
+            Submitted on {formattedDate}
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
