@@ -36,24 +36,27 @@ test.describe("Agent Creation with Resources and Lifecycle Hooks", () => {
 
       // Add first resource
       await page
-        .getByRole("textbox", { name: "Enter file path (e.g., ./src/" })
-        .fill("./docker-compose.yml");
+        .getByRole("textbox", {
+          name: "Enter file path (e.g., file://README.md, file://.amazonq/rules/**/*.md)",
+        })
+        .fill("file://docker-compose.yml");
       await page.getByRole("button", { name: "Add Resource" }).click();
 
       // Verify first resource was added
       await expect(page.getByText("Configured Resources (1)")).toBeVisible();
-      await expect(page.getByText("./docker-compose.yml")).toBeVisible();
-      await expect(page.getByText("Relative path")).toBeVisible();
+      await expect(page.getByText("file://docker-compose.yml")).toBeVisible();
 
       // Add second resource
       await page
-        .getByRole("textbox", { name: "Enter file path (e.g., ./src/" })
-        .fill("./Dockerfile");
+        .getByRole("textbox", {
+          name: "Enter file path (e.g., file://README.md, file://.amazonq/rules/**/*.md)",
+        })
+        .fill("file://Dockerfile");
       await page.getByRole("button", { name: "Add Resource" }).click();
 
       // Verify second resource was added
       await expect(page.getByText("Configured Resources (2)")).toBeVisible();
-      await expect(page.getByText("./Dockerfile")).toBeVisible();
+      await expect(page.getByText("file://Dockerfile")).toBeVisible();
     });
 
     await test.step("Configure lifecycle hooks", async () => {

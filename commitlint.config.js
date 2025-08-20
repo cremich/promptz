@@ -13,6 +13,8 @@ module.exports = {
         "prompts",
         "agents",
         "rules",
+        "e2e-test",
+        "unit-test",
       ],
     ],
   },
