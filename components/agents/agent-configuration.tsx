@@ -27,9 +27,7 @@ export default function AgentConfiguration({
             <h3 className="text-lg font-medium mb-3">Tools</h3>
             <div className="flex flex-wrap gap-2">
               {agent.tools.map((tool, index) => (
-                <Badge key={index} variant="secondary">
-                  {tool}
-                </Badge>
+                <Badge key={index}>{tool}</Badge>
               ))}
             </div>
           </div>
@@ -41,7 +39,7 @@ export default function AgentConfiguration({
             <h3 className="text-lg font-medium mb-3">Allowed Tools</h3>
             <div className="flex flex-wrap gap-2">
               {agent.allowedTools.map((tool, index) => (
-                <Badge key={index} variant="outline">
+                <Badge key={index} variant="default">
                   {tool}
                 </Badge>
               ))}
@@ -116,7 +114,7 @@ export default function AgentConfiguration({
           <div>
             <h3 className="text-lg font-medium mb-3">Configuration Options</h3>
             <div className="flex items-center gap-2">
-              <Badge variant={agent.useLegacyMcpJson ? "default" : "secondary"}>
+              <Badge>
                 Legacy MCP JSON:{" "}
                 {agent.useLegacyMcpJson ? "Enabled" : "Disabled"}
               </Badge>
