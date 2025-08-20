@@ -18,54 +18,66 @@ interface AgentProps {
 
 export default function AgentDetail(props: AgentProps) {
   return (
-    <div>
-      <div className="flex items-start justify-between">
-        <div>
+    <div className="flex flex-col space-y-6 mx-auto">
+      {/* Header section with title, description, and actions */}
+      <div className="flex flex-col space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <h1 className="text-3xl font-bold tracking-tight">
             {props.agent.name}
           </h1>
-          <p className="text-muted-foreground">{props.agent.description}</p>
+
+          <div className="flex items-center gap-2">
+            {/* Show edit button only if the user is the owner */}
+            {props.agent.slug && props.isOwner && (
+              <EditButton
+                href={`/agents/agent/${props.agent.slug}/edit`}
+                name="Edit Agent"
+              />
+            )}
+            {props.agent.id && props.agent.name && (
+              <DownloadButton
+                content={props.agent}
+                modelType={ModelType.AGENT}
+                id={props.agent.id}
+                filename={props.agent.name}
+              />
+            )}
+          </div>
         </div>
-        <div className="flex gap-2">
-          {props.agent.slug && props.isOwner && (
-            <EditButton
-              href={`/agents/agent/${props.agent.slug}/edit`}
-              name="Edit Agent"
+
+        {/* Description */}
+        <p className="text-muted-foreground">{props.agent.description}</p>
+
+        {/* Tags */}
+        {props.agent.tags && props.agent.tags.length > 0 && (
+          <Tags tags={props.agent.tags} />
+        )}
+
+        {/* Metadata - Author, visibility, and date */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+          <div className="flex items-center">
+            {props.agent.author && <Author name={props.agent.author} />}
+          </div>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+            <Badge
+              key="visibility"
+              variant="secondary"
+              className="border-dashed border-violet-500 hover:bg-neutral-600"
+            >
+              {props.agent.scope === "PUBLIC" ? "Public" : "Private"}
+            </Badge>
+            <SubmittedDate
+              createdAt={props.agent.createdAt}
+              updatedAt={props.agent.updatedAt}
             />
-          )}
-          {props.agent.id && props.agent.name && (
-            <DownloadButton
-              content={props.agent}
-              modelType={ModelType.AGENT}
-              id={props.agent.id}
-              filename={props.agent.name}
-            />
-          )}
-        </div>
-      </div>
-      <div className="flex items-start justify-between mb-8">
-        <div className="mt-4 flex items-center gap-4">
-          {props.agent.author && <Author name={props.agent.author} />}
-          {props.agent.tags && <Tags tags={props.agent.tags} />}
-        </div>
-        <div className="mt-4 flex flex-col items-end gap-2">
-          <Badge
-            key="visibility"
-            variant="secondary"
-            className=" border-dashed border-violet-500 hover:bg-neutral-600"
-          >
-            {props.agent.scope === "PUBLIC" ? "Public" : "Private"}
-          </Badge>
-          <SubmittedDate
-            createdAt={props.agent.createdAt}
-            updatedAt={props.agent.updatedAt}
-          />
+          </div>
         </div>
       </div>
 
+      {/* Agent content sections */}
       {props.agent.prompt && (
-        <div className="grid grid-cols-1">
-          <div className={`overflow-hidden gap-4 lg:col-span-3}`}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="overflow-hidden gap-4 lg:col-span-3">
             <PromptInstruction
               title="System Prompt"
               promptId={props.agent.id!}
@@ -75,6 +87,7 @@ export default function AgentDetail(props: AgentProps) {
           </div>
         </div>
       )}
+
       {/* Agent Configuration Section */}
       <div className="mt-8">
         <AgentConfiguration
