@@ -62,8 +62,9 @@ export default function AgentDetail(props: AgentProps) {
           />
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {props.agent.prompt && (
+
+      {props.agent.prompt && (
+        <div className="grid grid-cols-1">
           <div className={`overflow-hidden gap-4 lg:col-span-3}`}>
             <PromptInstruction
               title="System Prompt"
@@ -72,9 +73,8 @@ export default function AgentDetail(props: AgentProps) {
               text={props.agent.prompt!}
             />
           </div>
-        )}
-      </div>
-
+        </div>
+      )}
       {/* Agent Configuration Section */}
       <div className="mt-8">
         <AgentConfiguration
