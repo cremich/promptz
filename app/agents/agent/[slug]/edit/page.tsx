@@ -29,13 +29,11 @@ export default async function EditAgent(props: {
 
   return (
     <main className="py-8">
-      <div className="max-w-4xl mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-6">Edit Agent</h1>
-        <p className="text-muted-foreground mb-8">
-          Update your Amazon Q Developer CLI agent configuration.
-        </p>
-        <AgentForm agent={agent} tags={tags} />
-      </div>
+      <h1 className="text-3xl font-bold mb-6">Edit Agent</h1>
+      <p className="text-muted-foreground mb-8">
+        Update your Amazon Q Developer CLI agent configuration.
+      </p>
+      <AgentForm agent={agent} tags={tags} />
     </main>
   );
 }

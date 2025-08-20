@@ -353,6 +353,7 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                       <Switch
                         checked={field.value || false}
                         onCheckedChange={field.onChange}
+                        className="border-gray-700"
                       />
                       <input
                         type="hidden"

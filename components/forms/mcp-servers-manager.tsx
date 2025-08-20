@@ -239,6 +239,7 @@ export function McpServersManager({
                             onCheckedChange={(disabled) =>
                               handleUpdateServer(serverName, { disabled })
                             }
+                            className="border-gray-700"
                           />
                           <Label
                             htmlFor={`${serverName}-disabled`}

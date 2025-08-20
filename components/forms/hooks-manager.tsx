@@ -138,30 +138,32 @@ export function HooksManager({ value, onChange }: HooksManagerProps) {
                   </SelectContent>
                 </Select>
               </div>
-              <div>
-                <Label className="text-xs">Command</Label>
-                <Input
-                  placeholder="Enter command to execute"
-                  value={newCommand}
-                  onChange={(e) => setNewCommand(e.target.value)}
-                  className="text-white placeholder-white placeholder-opacity-50"
-                />
+              <div className="flex gap-2 items-end">
+                <div className="flex-1">
+                  <Label className="text-xs">Command</Label>
+                  <Input
+                    placeholder="Enter command to execute"
+                    value={newCommand}
+                    onChange={(e) => setNewCommand(e.target.value)}
+                    className="text-white placeholder-white placeholder-opacity-50"
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={addHook}
+                  disabled={
+                    !selectedHookType ||
+                    !newCommand.trim() ||
+                    !!value[selectedHookType]
+                  }
+                  size="sm"
+                  className="shrink-0 border-green-600 text-green-400 hover:bg-green-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Plus className="w-4 h-4" />
+                </Button>
               </div>
             </div>
-            <Button
-              type="button"
-              onClick={addHook}
-              disabled={
-                !selectedHookType ||
-                !newCommand.trim() ||
-                !!value[selectedHookType]
-              }
-              size="sm"
-              className="w-full"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Hook
-            </Button>
           </CardContent>
         </Card>
       )}

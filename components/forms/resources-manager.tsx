@@ -68,12 +68,12 @@ export function ResourcesManager({ value, onChange }: ResourcesManagerProps) {
         </div>
         <Button
           type="button"
+          variant="outline"
           onClick={addResource}
           disabled={!newResource.trim() || value.includes(newResource.trim())}
-          className="shrink-0"
+          className="shrink-0 border-green-600 text-green-400 hover:bg-green-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Plus className="w-4 h-4 mr-2" />
-          Add Resource
+          <Plus className="w-4 h-4" />
         </Button>
       </div>
 
@@ -133,16 +133,28 @@ export function ResourcesManager({ value, onChange }: ResourcesManagerProps) {
         </p>
         <ul className="list-disc list-inside space-y-1 ml-2">
           <li>
-            <code>/absolute/path/to/file</code> - Absolute file paths
+            <code className="bg-transparent! text-orange-600">
+              /absolute/path/to/file
+            </code>{" "}
+            - Absolute file paths
           </li>
           <li>
-            <code>./relative/path</code> - Relative to agent directory
+            <code className="bg-transparent! text-orange-600 ">
+              ./relative/path
+            </code>{" "}
+            - Relative to agent directory
           </li>
           <li>
-            <code>~/home/directory</code> - Home directory paths
+            <code className="bg-transparent! text-orange-600">
+              ~/home/directory
+            </code>{" "}
+            - Home directory paths
           </li>
           <li>
-            <code>filename.ext</code> - Files in current directory
+            <code className="bg-transparent! text-orange-600">
+              filename.ext
+            </code>{" "}
+            - Files in current directory
           </li>
         </ul>
       </div>
