@@ -1,6 +1,5 @@
 import { ModelType } from "@/lib/forms/schema-definitions";
 import CopyClipBoardButton from "@/components/common/copy-clipboard";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -18,8 +17,12 @@ export default function PromptInstruction({
   icon: Icon,
 }: PromptInstructionProps) {
   return (
-    <Card className="mb-8">
-      <CardHeader className="flex flex-row items-center justify-between">
+    <div
+      className="bg-gradient-to-r from-slate-900/50 to-gray-900/50 rounded-xl border border-slate-700/50"
+      data-testid="prompt-instruction-container"
+    >
+      {/* Header Section */}
+      <div className="flex flex-row items-center justify-between p-6 pb-3">
         <div className="flex items-center gap-2">
           <Icon className="h-6 w-6 text-violet-400" />
           <h2 className="text-xl font-semibold">{title}</h2>
@@ -30,12 +33,16 @@ export default function PromptInstruction({
           text={text}
           showButtonText={true}
         />
-      </CardHeader>
-      <CardContent>
+      </div>
+
+      {/* Content Section */}
+      <div className="p-6 pt-0">
         <ScrollArea className="h-96">
-          <pre className="text-gray-400">{text}</pre>
+          <pre className="text-gray-300 whitespace-pre-wrap font-mono text-sm leading-relaxed">
+            {text}
+          </pre>
         </ScrollArea>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
