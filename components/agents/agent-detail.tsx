@@ -1,4 +1,3 @@
-import Author from "@/components/common/author";
 import Tags from "@/components/common/tags";
 import {
   Terminal,
@@ -18,7 +17,7 @@ import EditButton from "@/components/common/edit-button";
 import { Agent } from "@/lib/models/agent-model";
 import { DownloadButton } from "@/components/common/download-button";
 import PromptInstruction from "@/components/prompt/prompt-instruction";
-import SubmittedDate from "@/components/common/submitted-date";
+import Submission from "@/components/common/submission";
 
 interface AgentProps {
   agent: Agent;
@@ -94,19 +93,12 @@ export default function AgentDetail(props: AgentProps) {
             </div>
 
             {/* Tags and metadata */}
-            <div className="flex items-center gap-3">
-              {props.agent.author && <Author name={props.agent.author} />}
-              <Badge
-                variant="secondary"
-                className="border-dashed border-violet-500 hover:bg-neutral-600"
-              >
-                {props.agent.scope === "PUBLIC" ? "Public" : "Private"}
-              </Badge>
-              <SubmittedDate
-                createdAt={props.agent.createdAt}
-                updatedAt={props.agent.updatedAt}
-              />
-            </div>
+            <Submission
+              createdAt={props.agent.createdAt}
+              updatedAt={props.agent.updatedAt}
+              author={props.agent.author}
+              scope={props.agent.scope}
+            />
           </div>
         </div>
       </div>

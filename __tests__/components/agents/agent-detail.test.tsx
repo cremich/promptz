@@ -4,12 +4,7 @@ import "@testing-library/jest-dom";
 import AgentDetail from "@/components/agents/agent-detail";
 import { Agent } from "@/lib/models/agent-model";
 
-// Mock child components
-jest.mock("@/components/common/author", () => {
-  return function MockAuthor({ name }: { name: string }) {
-    return <div data-testid="author">Author: {name}</div>;
-  };
-});
+// Mock child components - Author component is no longer used, replaced by Submission component
 
 jest.mock("@/components/common/tags", () => {
   return function MockTags({ tags }: { tags: string[] }) {
@@ -51,13 +46,17 @@ jest.mock("@/components/common/source-url", () => ({
   },
 }));
 
-jest.mock("@/components/common/submitted-date", () => {
-  return function MockSubmittedDate({
+jest.mock("@/components/common/submission", () => {
+  return function MockSubmission({
     createdAt,
     updatedAt,
+    author,
+    scope,
   }: {
     createdAt?: string;
     updatedAt?: string;
+    author?: string;
+    scope?: string;
   }) {
     const formattedDate = createdAt
       ? new Date(updatedAt || createdAt).toLocaleDateString("en-US", {
@@ -66,7 +65,17 @@ jest.mock("@/components/common/submitted-date", () => {
           day: "numeric",
         })
       : "Unknown date";
-    return <div data-testid="submitted-date">Submitted on {formattedDate}</div>;
+    const authorText = author ? `by @${author}` : ``;
+    return (
+      <div className="flex items-center gap-3">
+        <div data-testid="submitted-date">
+          Submitted on {formattedDate} {authorText}
+        </div>
+        {scope !== undefined && (
+          <div>{scope === "PUBLIC" ? "Public" : "Private"}</div>
+        )}
+      </div>
+    );
   };
 });
 
@@ -106,7 +115,9 @@ describe("AgentDetail", () => {
 
     expect(screen.getByText("Test Agent")).toBeInTheDocument();
     expect(screen.getByText("A test agent for testing")).toBeInTheDocument();
-    expect(screen.getByTestId("author")).toHaveTextContent("Author: Test User");
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
+      "Submitted on January 1, 2024 by @Test User",
+    );
     expect(screen.getByTestId("tags")).toHaveTextContent("Tags: test, agent");
     expect(screen.getByText("Public")).toBeInTheDocument();
   });
@@ -185,7 +196,10 @@ describe("AgentDetail", () => {
     const agentWithoutAuthor = { ...mockAgent, author: undefined };
     render(<AgentDetail agent={agentWithoutAuthor} isOwner={false} />);
 
-    expect(screen.queryByTestId("author")).not.toBeInTheDocument();
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
+      "Submitted on January 1, 2024",
+    );
+    expect(screen.getByTestId("submitted-date")).not.toHaveTextContent("by @");
   });
 
   test("Shows formatted creation date", () => {

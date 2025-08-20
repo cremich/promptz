@@ -64,13 +64,17 @@ jest.mock("@/components/common/download-button", () => {
   };
 });
 
-jest.mock("@/components/common/submitted-date", () => {
-  return function MockSubmittedDate({
+jest.mock("@/components/common/submission", () => {
+  return function MockSubmission({
     createdAt,
     updatedAt,
+    author,
+    scope,
   }: {
     createdAt?: string;
     updatedAt?: string;
+    author?: string;
+    scope?: string;
   }) {
     const formattedDate = createdAt
       ? new Date(updatedAt || createdAt).toLocaleDateString("en-US", {
@@ -79,7 +83,17 @@ jest.mock("@/components/common/submitted-date", () => {
           day: "numeric",
         })
       : "Unknown date";
-    return <div data-testid="submitted-date">Submitted on {formattedDate}</div>;
+    const authorText = author ? `by @${author}` : ``;
+    return (
+      <div className="flex items-center gap-3">
+        <div data-testid="submitted-date">
+          Submitted on {formattedDate} {authorText}
+        </div>
+        {scope !== undefined && (
+          <div>{scope === "PUBLIC" ? "Public" : "Private"}</div>
+        )}
+      </div>
+    );
   };
 });
 

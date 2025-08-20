@@ -1,15 +1,13 @@
-import Author from "@/components/common/author";
 import Tags from "@/components/common/tags";
 import { HelpCircle, Terminal } from "lucide-react";
 import PromptInstruction from "@/components/prompt/prompt-instruction";
 import CopyClipBoardButton from "@/components/common/copy-clipboard";
-import { Badge } from "@/components/ui/badge";
 import { SourceURL } from "@/components/common/source-url";
 import { ModelType } from "@/lib/forms/schema-definitions";
 import PromptHowTo from "@/components/prompt/prompt-howto";
 import EditButton from "@/components/common/edit-button";
 import { Prompt } from "@/lib/models/prompt-model";
-import SubmittedDate from "@/components/common/submitted-date";
+import Submission from "@/components/common/submission";
 
 interface PromptProps {
   prompt: Prompt;
@@ -44,20 +42,14 @@ export default async function PromptDetail(props: PromptProps) {
       </div>
       <div className="flex items-start justify-between mb-8">
         <div className="mt-4 flex items-center gap-4">
-          {props.prompt.author && <Author name={props.prompt.author} />}
           {props.prompt.tags && <Tags tags={props.prompt.tags} />}
         </div>
         <div className="mt-4 flex flex-col items-end gap-2">
-          <Badge
-            key="visibility"
-            variant="secondary"
-            className=" border-dashed border-violet-500 hover:bg-neutral-600"
-          >
-            {props.prompt.scope === "PUBLIC" ? "Public" : "Private"}
-          </Badge>
-          <SubmittedDate
+          <Submission
             createdAt={props.prompt.createdAt}
             updatedAt={props.prompt.updatedAt}
+            scope={props.prompt.scope}
+            author={props.prompt.author}
           />
         </div>
       </div>

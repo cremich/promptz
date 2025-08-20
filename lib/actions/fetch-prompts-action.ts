@@ -91,5 +91,7 @@ export async function fetchPromptBySlug(slug: string) {
     scope: prompt.scope,
     author: prompt.author ? prompt.author.displayName : "",
     authorId: prompt.author ? prompt.author.id : "",
+    createdAt: prompt.createdAt,
+    updatedAt: prompt.updatedAt,
   } as Prompt;
 }

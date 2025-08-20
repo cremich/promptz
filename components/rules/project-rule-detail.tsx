@@ -7,7 +7,7 @@ import CopyClipBoardButton from "@/components/common/copy-clipboard";
 import { DownloadButton } from "@/components/common/download-button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import EditButton from "@/components/common/edit-button";
-import SubmittedDate from "@/components/common/submitted-date";
+import Submission from "@/components/common/submission";
 
 // Define the props for the component
 interface ProjectRuleDetailProps {
@@ -73,7 +73,7 @@ export default function ProjectRuleDetail({
           <div className="flex items-center">
             {projectRule.author && <Author name={projectRule.author} />}
           </div>
-          <SubmittedDate
+          <Submission
             createdAt={projectRule.createdAt}
             updatedAt={projectRule.updatedAt}
           />
