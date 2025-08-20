@@ -120,6 +120,8 @@ describe("PromptDetail", () => {
     author: "Test Author",
     scope: "PUBLIC",
     sourceURL: "https://example.com",
+    copyCount: 5,
+    downloadCount: 10,
   };
 
   test("Renders prompt details with all information", async () => {
@@ -229,5 +231,53 @@ describe("PromptDetail", () => {
     expect(screen.getByTestId("submitted-date")).toHaveTextContent(
       "Submitted on Unknown date",
     );
+  });
+
+  test("Renders hero section with gradient background", async () => {
+    render(await PromptDetail({ prompt: mockPrompt, isOwner: true }));
+
+    // Check if hero section is rendered with proper styling
+    const heroSection = screen.getByTestId("prompt-hero-section");
+    expect(heroSection).toBeInTheDocument();
+    expect(heroSection).toHaveClass("bg-gradient-to-br");
+    expect(heroSection).toHaveClass("from-violet-900/20");
+    expect(heroSection).toHaveClass("via-purple-900/10");
+    expect(heroSection).toHaveClass("to-indigo-900/20");
+  });
+
+  test("Displays copy and download counts in hero section", async () => {
+    render(await PromptDetail({ prompt: mockPrompt, isOwner: true }));
+
+    // Check if copy count is displayed
+    expect(screen.getByTestId("copy-count")).toHaveTextContent("5");
+    expect(screen.getByText("copies")).toBeInTheDocument();
+
+    // Check if download count is displayed
+    expect(screen.getByTestId("download-count")).toHaveTextContent("10");
+    expect(screen.getByText("downloads")).toBeInTheDocument();
+  });
+
+  test("Displays zero counts when copy and download counts are not provided", async () => {
+    const promptWithoutCounts = {
+      ...mockPrompt,
+      copyCount: undefined,
+      downloadCount: undefined,
+    };
+    render(await PromptDetail({ prompt: promptWithoutCounts, isOwner: true }));
+
+    // Check if zero counts are displayed
+    expect(screen.getByTestId("copy-count")).toHaveTextContent("0");
+    expect(screen.getByTestId("download-count")).toHaveTextContent("0");
+  });
+
+  test("Renders title with gradient text styling", async () => {
+    render(await PromptDetail({ prompt: mockPrompt, isOwner: true }));
+
+    const title = screen.getByRole("heading", { level: 1 });
+    expect(title).toHaveClass("bg-gradient-to-r");
+    expect(title).toHaveClass("from-white");
+    expect(title).toHaveClass("to-gray-300");
+    expect(title).toHaveClass("bg-clip-text");
+    expect(title).toHaveClass("text-transparent");
   });
 });
