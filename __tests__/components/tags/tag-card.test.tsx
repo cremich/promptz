@@ -109,16 +109,82 @@ describe("TagCard", () => {
     expect(link).toHaveAttribute("href", "/browse?tags[]=Test%20%26%20Special");
   });
 
-  test("calculates total count correctly for aria-label", () => {
+  test("renders agent count badge when agents are present", () => {
+    const tagWithAgents: Tag = {
+      name: "TypeScript",
+      description: "TypeScript development resources",
+      promptCount: 5,
+      ruleCount: 3,
+      agentCount: 2,
+    };
+
+    render(<TagCard tag={tagWithAgents} />);
+
+    expect(screen.getByText("5 Prompts")).toBeInTheDocument();
+    expect(screen.getByText("3 Rules")).toBeInTheDocument();
+    expect(screen.getByText("2 Agents")).toBeInTheDocument();
+    expect(screen.getByLabelText("2 agents")).toBeInTheDocument();
+  });
+
+  test("handles singular agent count label correctly", () => {
+    const singleAgentTag: Tag = {
+      name: "Test",
+      description: "Test description",
+      promptCount: 1,
+      ruleCount: 1,
+      agentCount: 1,
+    };
+
+    render(<TagCard tag={singleAgentTag} />);
+
+    expect(screen.getByText("1 Prompt")).toBeInTheDocument();
+    expect(screen.getByText("1 Rule")).toBeInTheDocument();
+    expect(screen.getByText("1 Agent")).toBeInTheDocument();
+  });
+
+  test("includes agent count in total count for aria-label", () => {
     const tag: Tag = {
       name: "Test",
       promptCount: 7,
       ruleCount: 3,
+      agentCount: 2,
     };
 
     render(<TagCard tag={tag} />);
 
     const link = screen.getByRole("link");
-    expect(link).toHaveAttribute("aria-label", "Browse Test tag with 10 items");
+    expect(link).toHaveAttribute("aria-label", "Browse Test tag with 12 items");
+  });
+
+  test("renders agent badge even when agent count is zero", () => {
+    const tagWithoutAgents: Tag = {
+      name: "Test",
+      promptCount: 5,
+      ruleCount: 3,
+      agentCount: 0,
+    };
+
+    render(<TagCard tag={tagWithoutAgents} />);
+
+    expect(screen.getByText("5 Prompts")).toBeInTheDocument();
+    expect(screen.getByText("3 Rules")).toBeInTheDocument();
+    expect(screen.getByText("0 Agents")).toBeInTheDocument();
+    expect(screen.getByLabelText("0 agents")).toBeInTheDocument();
+  });
+
+  test("renders agent badge with 0 when agent count is undefined", () => {
+    const tagWithUndefinedAgents: Tag = {
+      name: "Test",
+      promptCount: 2,
+      ruleCount: 1,
+      // agentCount is undefined
+    };
+
+    render(<TagCard tag={tagWithUndefinedAgents} />);
+
+    expect(screen.getByText("2 Prompts")).toBeInTheDocument();
+    expect(screen.getByText("1 Rule")).toBeInTheDocument();
+    expect(screen.getByText("0 Agents")).toBeInTheDocument();
+    expect(screen.getByLabelText("0 agents")).toBeInTheDocument();
   });
 });

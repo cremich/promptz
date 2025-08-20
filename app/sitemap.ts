@@ -15,8 +15,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const prompts = [];
   const projectRules = [];
+  const agents = [];
   let cursor: string | undefined | null;
   let hasMorePages: boolean = true;
+
+  // Fetch all prompts
   do {
     const { data: searchResults } = await appsync.queries.searchPrompts({
       nextToken: cursor,
@@ -32,6 +35,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   } while (hasMorePages);
 
+  // Reset pagination for project rules
+  cursor = undefined;
+  hasMorePages = true;
+
+  // Fetch all project rules
   do {
     const { data: rulesResults } = await appsync.queries.searchProjectRules({
       nextToken: cursor,
@@ -47,10 +55,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   } while (hasMorePages);
 
+  // Reset pagination for agents
+  cursor = undefined;
+  hasMorePages = true;
+
+  // Fetch all agents
+  do {
+    const { data: agentsResults } = await appsync.queries.searchAgents({
+      nextToken: cursor,
+    });
+    if (agentsResults?.results) {
+      agents.push(...agentsResults?.results);
+    }
+
+    if (agentsResults?.nextToken) {
+      cursor = agentsResults.nextToken;
+    } else {
+      hasMorePages = false;
+    }
+  } while (hasMorePages);
+
   const tags = await getAllTags();
 
   // Generate sitemap entries for static pages changing on a weekly bases
-  const routes = ["", "/prompts"].map((route) => ({
+  const routes = ["", "/prompts", "/agents"].map((route) => ({
     url: `${baseUrl}${route}`,
     changeFrequency: "weekly" as const,
     priority: 0.7,
@@ -75,6 +103,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     }));
 
+  // Add entries for each agent
+  const agentRoutes = agents
+    .filter((a) => a != null)
+    .map((agent) => ({
+      url: `${baseUrl}/agents/agent/${agent.slug}`,
+      lastModified: agent.updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 1,
+    }));
+
   //Add entries for each tag
   const tagRoutes = tags.map((t) => ({
     url: `${baseUrl}/tag/${t}`,
@@ -93,6 +131,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...routes,
     ...promptRoutes,
     ...rulesRoutes,
+    ...agentRoutes,
     ...tagRoutes,
     ...monthlyRoutes,
   ];

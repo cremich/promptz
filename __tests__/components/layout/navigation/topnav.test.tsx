@@ -8,6 +8,7 @@ jest.mock("@/lib/navigation", () => ({
   links: [
     { name: "Prompts", href: "/prompts" },
     { name: "Rules", href: "/rules" },
+    { name: "Agents", href: "/agents" },
     { name: "MCP Server", href: "/mcp" },
   ],
 }));
@@ -56,6 +57,10 @@ describe("TopNavigation", () => {
     const rulesLink = screen.getByRole("link", { name: "Rules" });
     expect(rulesLink).toBeInTheDocument();
     expect(rulesLink).toHaveAttribute("href", "/rules");
+
+    const agentsLink = screen.getByRole("link", { name: "Agents" });
+    expect(agentsLink).toBeInTheDocument();
+    expect(agentsLink).toHaveAttribute("href", "/agents");
 
     const mcpServerLink = screen.getByRole("link", { name: "MCP Server" });
     expect(mcpServerLink).toBeInTheDocument();

@@ -23,6 +23,7 @@ export type Prompt = {
   createdAt?: string;
   updatedAt?: string;
   copyCount?: number;
+  downloadCount?: number;
   starCount?: number;
   popularityScore?: number;
 };

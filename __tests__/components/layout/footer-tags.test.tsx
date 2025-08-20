@@ -48,7 +48,7 @@ describe("FooterTags", () => {
     expect(screen.getByText("Explore by Tags")).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Discover prompts and project rules organized by technology, framework, and use case",
+        "Discover prompts, project rules, and tags organized by technology, framework, and use case",
       ),
     ).toBeInTheDocument();
 

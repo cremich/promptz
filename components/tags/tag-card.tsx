@@ -8,7 +8,8 @@ interface TagCardProps {
 }
 
 export default function TagCard({ tag }: TagCardProps) {
-  const totalCount = (tag.promptCount || 0) + (tag.ruleCount || 0);
+  const totalCount =
+    (tag.promptCount || 0) + (tag.ruleCount || 0) + (tag.agentCount || 0);
 
   return (
     <Link
@@ -48,7 +49,14 @@ export default function TagCard({ tag }: TagCardProps) {
             >
               {tag.ruleCount} {tag.ruleCount === 1 ? "Rule" : "Rules"}
             </Badge>
-            {/* )} */}
+            <Badge
+              variant="secondary"
+              className="bg-blue-600/20 text-blue-300 border-blue-500/30 hover:bg-blue-600/30 transition-colors"
+              aria-label={`${tag.agentCount || 0} agents`}
+            >
+              {tag.agentCount || 0}{" "}
+              {(tag.agentCount || 0) === 1 ? "Agent" : "Agents"}
+            </Badge>
           </div>
         </CardContent>
       </Card>

@@ -23,14 +23,14 @@ jest.mock("@/components/benefits/benefits-grid", () => {
 });
 
 describe("Home Page", () => {
-  test("Renders headline", () => {
+  test("Renders headline promoting prompts, rules, and agents", () => {
     render(<App />);
 
     const heading = screen.getByRole("heading", { level: 1 });
 
     expect(heading).toBeInTheDocument();
     expect(heading).toHaveTextContent(
-      "Simplify promptingfor Amazon Q Developer",
+      "Discover prompts, rules & agentsfor Amazon Q Developer",
     );
   });
 

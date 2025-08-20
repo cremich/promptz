@@ -16,29 +16,29 @@ export default function BenefitsGrid() {
           </div>
         </div>
         <p className="mt-4  mx-auto text-zinc-400 mb-12">
-          PROMPTZ is your ultimate resource for Amazon Q Developer prompt
-          engineering. Discover, create, and share high-quality prompts to
+          PROMPTZ is your ultimate resource for Amazon Q Developer. Discover,
+          create, and share high-quality prompts, project rules, and agents to
           tackle real-world software development challenges. From generating AWS
           architecture blueprints to automating workflows and beyond, PROMPTZ
           empowers developers to get the most out of Amazon Q Developer with a
-          rich library of prompt templates and community contributions.
+          rich library of templates and community contributions.
         </p>
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           <BenefitCard
             icon={Code}
             title="Ready-to-Use Solutions"
-            content=" Simplify software development with our curated collection of
-              production-ready prompt templates"
+            content="Simplify software development with our curated collection of
+              production-ready prompts, project rules, and agents"
           />
           <BenefitCard
             icon={Users}
             title="Community Collaboration"
-            content="Join a vibrant community to refine and share your prompt engineering ideas"
+            content="Join a vibrant community to refine and share your prompts, rules, and agents"
           />
           <BenefitCard
             icon={BookOpen}
             title="Best Practices"
-            content="Learn prompt engineering best practices for every stage of the
+            content="Learn best practices for prompts, project rules, and agents for every stage of the
               software development lifecycle"
           />
         </div>

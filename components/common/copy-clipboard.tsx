@@ -31,6 +31,10 @@ export default function CopyClipBoardButton({
         apiPromise = api.mutations.copyProjectRule({
           id,
         });
+      } else if (type === ModelType.AGENT) {
+        apiPromise = api.mutations.copyAgent({
+          id,
+        });
       }
       Promise.allSettled([clipboardPromise, apiPromise]);
       toast("Copied.", {

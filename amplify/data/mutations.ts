@@ -86,3 +86,37 @@ export function createIncrementDownloadMutation(modelName: string) {
       }),
     ]);
 }
+
+export function createSaveAgentMutation() {
+  return a
+    .mutation()
+    .arguments({
+      id: a.id(),
+      name: a.string().required(),
+      description: a.string().required(),
+      prompt: a.string(),
+      tools: a.string().array(),
+      mcpServers: a.json(),
+      resources: a.string().array(),
+      hooks: a.json(),
+      toolsSettings: a.json(),
+      toolAliases: a.json(),
+      allowedTools: a.string().array(),
+      useLegacyMcpJson: a.boolean(),
+      tags: a.string().array(),
+      scope: a.string().required(),
+      sourceURL: a.string(),
+    })
+    .returns(a.ref("agent"))
+    .authorization((allow) => [allow.authenticated()])
+    .handler([
+      a.handler.custom({
+        dataSource: a.ref("agent"),
+        entry: "./resolver/saveAgent.js",
+      }),
+      a.handler.custom({
+        dataSource: "PromptzEventBusDataSource",
+        entry: `./resolver/putEvent.js`,
+      }),
+    ]);
+}

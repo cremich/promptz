@@ -28,8 +28,10 @@ export function configureDynamoDB(
   // Get table references
   const promptTable = backend.data.resources.tables["prompt"];
   const rulesTable = backend.data.resources.tables["projectRule"];
+  const agentTable = backend.data.resources.tables["agent"];
   const promptTagJoinTable = backend.data.resources.tables["promptTag"];
   const ruleTagJoinTable = backend.data.resources.tables["ruleTag"];
+  const agentTagJoinTable = backend.data.resources.tables["agentTag"];
   const tagTable = backend.data.resources.tables["tag"];
 
   const tagRelationsLambdaFunction =
@@ -38,8 +40,10 @@ export function configureDynamoDB(
   // Grant necessary permissions
   promptTable.grantStreamRead(tagRelationsLambdaFunction);
   rulesTable.grantStreamRead(tagRelationsLambdaFunction);
+  agentTable.grantStreamRead(tagRelationsLambdaFunction);
   promptTagJoinTable.grantReadWriteData(tagRelationsLambdaFunction);
   ruleTagJoinTable.grantReadWriteData(tagRelationsLambdaFunction);
+  agentTagJoinTable.grantReadWriteData(tagRelationsLambdaFunction);
   tagTable.grantReadData(tagRelationsLambdaFunction); // For validation if needed
 
   // Set environment variables with actual table names
@@ -50,6 +54,10 @@ export function configureDynamoDB(
   backend.tagRelationsFunction.addEnvironment(
     "RULE_TAG_TABLE",
     ruleTagJoinTable.tableName,
+  );
+  backend.tagRelationsFunction.addEnvironment(
+    "AGENT_TAG_TABLE",
+    agentTagJoinTable.tableName,
   );
 
   // Configure DynamoDB stream event sources with error handling
@@ -64,6 +72,15 @@ export function configureDynamoDB(
 
   tagRelationsLambdaFunction.addEventSource(
     new lambdaEventSources.DynamoEventSource(rulesTable, {
+      startingPosition: lambda.StartingPosition.LATEST,
+      batchSize: 10, // Process records in smaller batches for better error handling
+      retryAttempts: 3, // Retry failed batches up to 3 times
+      reportBatchItemFailures: true, // Enable partial batch failure reporting
+    }),
+  );
+
+  tagRelationsLambdaFunction.addEventSource(
+    new lambdaEventSources.DynamoEventSource(agentTable, {
       startingPosition: lambda.StartingPosition.LATEST,
       batchSize: 10, // Process records in smaller batches for better error handling
       retryAttempts: 3, // Retry failed batches up to 3 times

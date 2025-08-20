@@ -2,6 +2,7 @@ import { describe, expect, test } from "@jest/globals";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { DownloadButton } from "@/components/common/download-button";
+import { ModelType } from "@/lib/forms/schema-definitions";
 
 // Mock the generateClient and its mutations
 // Mock dependencies
@@ -25,7 +26,12 @@ describe("DownloadButton", () => {
 
   test("renders with default props", () => {
     render(
-      <DownloadButton id="1" content={mockContent} filename={mockFilename} />,
+      <DownloadButton
+        id="1"
+        content={mockContent}
+        filename={mockFilename}
+        modelType={ModelType.RULE}
+      />,
     );
 
     const button = screen.getByRole("button");
@@ -40,6 +46,7 @@ describe("DownloadButton", () => {
         content={mockContent}
         filename={mockFilename}
         label="Custom Label"
+        modelType={ModelType.RULE}
       />,
     );
 
@@ -52,7 +59,12 @@ describe("DownloadButton", () => {
     const removeChildSpy = jest.spyOn(document.body, "removeChild");
 
     render(
-      <DownloadButton id="1" content={mockContent} filename={mockFilename} />,
+      <DownloadButton
+        id="1"
+        content={mockContent}
+        filename={mockFilename}
+        modelType={ModelType.RULE}
+      />,
     );
 
     fireEvent.click(screen.getByRole("button"));

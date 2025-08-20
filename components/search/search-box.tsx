@@ -23,7 +23,7 @@ export default function SearchBox({ placeholder }: { placeholder: string }) {
 
       router.replace(`${pathname}?${params.toString()}`);
     }, 300),
-    [pathname, searchParams],
+    [pathname, searchParams, router],
   );
 
   return (

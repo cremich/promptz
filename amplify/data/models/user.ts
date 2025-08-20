@@ -7,6 +7,7 @@ export const userModel = {
       displayName: a.string(),
       prompts: a.hasMany("prompt", "owner"),
       projectRules: a.hasMany("projectRule", "owner"),
+      agents: a.hasMany("agent", "owner"),
     })
     .disableOperations(["subscriptions", "update", "delete"])
     .authorization((allow) => [

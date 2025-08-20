@@ -35,7 +35,7 @@ describe("TagBrowseSection", () => {
     expect(screen.getByText("Browse by Interface")).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Discover prompts and project rules tailored for your preferred Amazon Q Developer interface",
+        "Discover prompts, project rules, and agents tailored for your preferred Amazon Q Developer interface",
       ),
     ).toBeInTheDocument();
 
@@ -48,7 +48,7 @@ describe("TagBrowseSection", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Find the perfect prompts for every stage of your software development lifecycle",
+        "Find the perfect prompts, rules, and agents for every stage of your software development lifecycle",
       ),
     ).toBeInTheDocument();
   });

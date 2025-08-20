@@ -12,12 +12,6 @@ jest.mock("@/components/common/tags", () => {
   };
 });
 
-jest.mock("@/components/common/author", () => {
-  return function MockAuthor({ name }: { name: string }) {
-    return <div data-testid="author-mock">{name}</div>;
-  };
-});
-
 jest.mock("@/components/common/edit-button", () => {
   return function MockEditRuleButton({ href }: { href: string }) {
     return <button data-testid="edit-button-mock">Edit {href}</button>;
@@ -64,6 +58,39 @@ jest.mock("@/components/common/download-button", () => {
   };
 });
 
+jest.mock("@/components/common/submission", () => {
+  return function MockSubmission({
+    createdAt,
+    updatedAt,
+    author,
+    scope,
+  }: {
+    createdAt?: string;
+    updatedAt?: string;
+    author?: string;
+    scope?: string;
+  }) {
+    const formattedDate = createdAt
+      ? new Date(updatedAt || createdAt).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : "Unknown date";
+    const authorText = author ? `by @${author}` : ``;
+    return (
+      <div className="flex items-center gap-3">
+        <div data-testid="submitted-date">
+          Submitted on {formattedDate} {authorText}
+        </div>
+        {scope !== undefined && (
+          <div>{scope === "PUBLIC" ? "Public" : "Private"}</div>
+        )}
+      </div>
+    );
+  };
+});
+
 describe("ProjectRuleDetail", () => {
   // Sample project rule data for testing
   const mockProjectRule: ProjectRule = {
@@ -97,13 +124,9 @@ describe("ProjectRuleDetail", () => {
     const tags = screen.getByTestId("tags-mock");
     expect(tags).toHaveTextContent("test, rule, example");
 
-    // Check if author is rendered
-    const author = screen.getByTestId("author-mock");
-    expect(author).toHaveTextContent("Test Author");
-
-    // Check if date is rendered
-    expect(screen.getByText(/Submitted on/)).toHaveTextContent(
-      "Submitted on January 2, 2023",
+    // Check if date is rendered (author is now part of the submission component)
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
+      "Submitted on January 2, 2023 by @Test Author",
     );
 
     // Check if content is rendered
@@ -152,7 +175,6 @@ describe("ProjectRuleDetail", () => {
 
     // Check that optional elements are not rendered
     expect(screen.queryByTestId("tags-mock")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("author-mock")).not.toBeInTheDocument();
     expect(screen.queryByTestId("source-url-mock")).not.toBeInTheDocument();
     expect(screen.queryByTestId("copy-button-mock")).not.toBeInTheDocument();
     expect(
@@ -161,7 +183,14 @@ describe("ProjectRuleDetail", () => {
     expect(screen.queryByTestId("edit-button-mock")).not.toBeInTheDocument();
 
     // Check that date shows as unknown when createdAt is missing
-    expect(screen.getByText("Submitted on Unknown date")).toBeInTheDocument();
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
+      "Submitted on Unknown date",
+    );
+
+    // Check that content section is not rendered when content is missing
+    expect(
+      screen.queryByTestId("project-rule-content-section"),
+    ).not.toBeInTheDocument();
   });
 
   test("Uses updatedAt date when available", () => {
@@ -176,8 +205,63 @@ describe("ProjectRuleDetail", () => {
     );
 
     // Check if the displayed date is the updated date
-    expect(screen.getByText(/Submitted on/)).toHaveTextContent(
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
       "Submitted on February 15, 2023",
     );
+  });
+
+  test("Renders hero section with proper structure", () => {
+    render(<ProjectRuleDetail projectRule={mockProjectRule} isOwner={false} />);
+
+    // Check if hero section is rendered
+    const heroSection = screen.getByTestId("project-rule-hero-section");
+    expect(heroSection).toBeInTheDocument();
+  });
+
+  test("Displays copy and download counts in hero section", () => {
+    const projectRuleWithCounts: ProjectRule = {
+      ...mockProjectRule,
+      copyCount: 15,
+      downloadCount: 25,
+    };
+
+    render(
+      <ProjectRuleDetail projectRule={projectRuleWithCounts} isOwner={false} />,
+    );
+
+    // Check if copy count is displayed
+    expect(screen.getByTestId("copy-count")).toHaveTextContent("15");
+    expect(screen.getByText("copies")).toBeInTheDocument();
+
+    // Check if download count is displayed
+    expect(screen.getByTestId("download-count")).toHaveTextContent("25");
+    expect(screen.getByText("downloads")).toBeInTheDocument();
+  });
+
+  test("Displays zero counts when copy and download counts are not provided", () => {
+    const projectRuleWithoutCounts: ProjectRule = {
+      ...mockProjectRule,
+      copyCount: undefined,
+      downloadCount: undefined,
+    };
+
+    render(
+      <ProjectRuleDetail
+        projectRule={projectRuleWithoutCounts}
+        isOwner={false}
+      />,
+    );
+
+    // Check if zero counts are displayed
+    expect(screen.getByTestId("copy-count")).toHaveTextContent("0");
+    expect(screen.getByTestId("download-count")).toHaveTextContent("0");
+  });
+
+  test("Renders content section with proper structure", () => {
+    render(<ProjectRuleDetail projectRule={mockProjectRule} isOwner={false} />);
+
+    // Check if content section is rendered
+    const contentSection = screen.getByTestId("project-rule-content-section");
+    expect(contentSection).toBeInTheDocument();
   });
 });

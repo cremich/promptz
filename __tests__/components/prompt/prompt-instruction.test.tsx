@@ -70,4 +70,18 @@ describe("PromptInstruction", () => {
     // Assert
     expect(screen.getByText(customTitle)).toBeInTheDocument();
   });
+
+  test("Renders with modern gradient styling aligned with agent detail page", () => {
+    render(<PromptInstruction {...defaultProps} />);
+
+    const container = screen.getByTestId("prompt-instruction-container");
+    expect(container).toHaveClass(
+      "bg-gradient-to-r",
+      "from-slate-900/50",
+      "to-gray-900/50",
+      "rounded-xl",
+      "border",
+      "border-slate-700/50",
+    );
+  });
 });

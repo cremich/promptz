@@ -56,6 +56,7 @@ Follow these rules when you write code:
 - Use interfaces to define component properties.
 - Use `components/ui` for Shadcn UI components.
 - Use `app/ui/` to organized custom components by feature.
+- Avoid handling authentication releated redirects in components. Use the middleware.ts instead.
 
 ### Server Actions
 

@@ -12,7 +12,7 @@ import {
 import { Tag } from "@/lib/models/tags-model";
 
 interface TagSheetProps {
-  submission: "prompt" | "project rule";
+  submission: "prompt" | "project rule" | "agent";
   onTagSelect: (tag: string) => void;
   selectedTags?: string[];
   tags: Tag[];

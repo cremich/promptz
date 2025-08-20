@@ -5,12 +5,14 @@ import { tagModel } from "./models/tags";
 import { searchSchema } from "./models/search";
 import { promptModel } from "./models/prompts";
 import { projectRuleModel } from "./models/rules";
+import { agentModel } from "./models/agents";
 const schema = a
   .schema({
     ...searchSchema,
     ...tagModel,
     ...promptModel,
     ...projectRuleModel,
+    ...agentModel,
     ...userModel,
   })
   .authorization((allow) => [allow.resource(postAuthenticationFunction)]);
