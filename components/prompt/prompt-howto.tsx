@@ -25,7 +25,7 @@ export default function PromptHowTo({
 
       {/* Content Section */}
       <div className="p-6 pt-0">
-        <ScrollArea className="h-96">
+        <ScrollArea className="max-h-96">
           <div className="text-gray-300 whitespace-pre-wrap text-sm leading-relaxed">
             {text}
           </div>
