@@ -5,13 +5,13 @@ export default function TagBrowseSection() {
     <div className="space-y-16 py-16">
       <TagSection
         title="Browse by Interface"
-        description="Discover prompts and project rules tailored for your preferred Amazon Q Developer interface"
+        description="Discover prompts, project rules, and agents tailored for your preferred Amazon Q Developer interface"
         tagNames={["IDE", "CLI", "Management Console"]}
       />
 
       <TagSection
         title="Browse by Development Activity"
-        description="Find the perfect prompts for every stage of your software development lifecycle"
+        description="Find the perfect prompts, rules, and agents for every stage of your software development lifecycle"
         tagNames={["Design", "Implement", "Test"]}
       />
     </div>

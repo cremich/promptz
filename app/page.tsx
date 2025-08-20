@@ -7,7 +7,7 @@ export default function App() {
     <div>
       <div className="mx-auto pt-32 sm:pt-40 text-center">
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6">
-          Simplify prompting
+          Discover prompts, rules & agents
           <br />
           for <span className="text-violet-600">Amazon Q Developer</span>
         </h1>
