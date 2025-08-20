@@ -497,29 +497,23 @@ describe("AgentForm", () => {
     });
   });
 
-  describe("Resources & Lifecycle Hooks Section", () => {
-    test("renders resources and hooks configuration form fields", () => {
+  describe("File Resources Section", () => {
+    test("renders file resources configuration as separate card", () => {
       render(<AgentForm tags={mockTags} />);
 
-      // Check for Resources & Lifecycle Hooks section
-      expect(
-        screen.getByText("Resources & Lifecycle Hooks"),
-      ).toBeInTheDocument();
+      // Check for File Resources section as separate card
+      expect(screen.getAllByText("File Resources")).toHaveLength(2); // Card title and form label
       expect(
         screen.getByText(
-          "Configure file resources your agent can access and lifecycle hooks for custom behavior at specific execution points",
+          "Configure file resources your agent can access for context and functionality",
         ),
       ).toBeInTheDocument();
-
-      // Check for form fields
-      expect(screen.getByText("File Resources")).toBeInTheDocument();
-      expect(screen.getByText("Lifecycle Hooks")).toBeInTheDocument();
     });
 
-    test("renders resources manager component", () => {
+    test("renders resources manager component in file resources section", () => {
       render(<AgentForm tags={mockTags} />);
 
-      // Check that resources manager is rendered
+      // Check that resources manager is rendered in its own section
       expect(
         screen.getByPlaceholderText(/Enter file path/),
       ).toBeInTheDocument();
@@ -528,29 +522,71 @@ describe("AgentForm", () => {
       ).toBeInTheDocument();
     });
 
-    test("renders hooks manager component", () => {
+    test("shows helpful description for file resources", () => {
       render(<AgentForm tags={mockTags} />);
 
-      // Check that hooks manager is rendered
+      expect(
+        screen.getByText(
+          "Specify file paths that your agent should have access to. These can be configuration files, documentation, or any other resources your agent needs to function effectively.",
+        ),
+      ).toBeInTheDocument();
+    });
+
+    test("pre-populates file resources when editing existing agent", () => {
+      const agentWithResources = {
+        ...mockAgent,
+        resources: ["./src/config.json", "/absolute/path/file.txt"],
+      };
+
+      render(<AgentForm agent={agentWithResources} tags={mockTags} />);
+
+      // Resources should be pre-populated
+      expect(screen.getByText("./src/config.json")).toBeInTheDocument();
+      expect(screen.getByText("/absolute/path/file.txt")).toBeInTheDocument();
+    });
+  });
+
+  describe("Lifecycle Hooks Section", () => {
+    test("renders lifecycle hooks configuration as separate card", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      // Check for Lifecycle Hooks section as separate card
+      expect(screen.getAllByText("Lifecycle Hooks")).toHaveLength(2); // Card title and form label
+      expect(
+        screen.getByText(
+          "Configure commands to run at specific points in your agent's lifecycle",
+        ),
+      ).toBeInTheDocument();
+    });
+
+    test("renders hooks manager component in lifecycle hooks section", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      // Check that hooks manager is rendered in its own section
       expect(screen.getByText("Add Lifecycle Hook")).toBeInTheDocument();
       expect(screen.getByText("Select hook type")).toBeInTheDocument();
     });
 
-    test("pre-populates resources and hooks when editing existing agent", () => {
-      const agentWithResourcesAndHooks = {
+    test("shows helpful description for lifecycle hooks", () => {
+      render(<AgentForm tags={mockTags} />);
+
+      expect(
+        screen.getByText(
+          "Configure commands to run at specific points in your agent's lifecycle. Use agentSpawn for initialization tasks and userPromptSubmit for pre-processing user inputs.",
+        ),
+      ).toBeInTheDocument();
+    });
+
+    test("pre-populates lifecycle hooks when editing existing agent", () => {
+      const agentWithHooks = {
         ...mockAgent,
-        resources: ["./src/config.json", "/absolute/path/file.txt"],
         hooks: {
           agentSpawn: { command: "npm install" },
           userPromptSubmit: { command: "echo 'Processing prompt'" },
         },
       };
 
-      render(<AgentForm agent={agentWithResourcesAndHooks} tags={mockTags} />);
-
-      // Resources should be pre-populated
-      expect(screen.getByText("./src/config.json")).toBeInTheDocument();
-      expect(screen.getByText("/absolute/path/file.txt")).toBeInTheDocument();
+      render(<AgentForm agent={agentWithHooks} tags={mockTags} />);
 
       // Hooks should be pre-populated
       expect(screen.getByText("Agent Spawn")).toBeInTheDocument();

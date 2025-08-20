@@ -20,6 +20,7 @@ import {
   Bot,
   Settings,
   Server,
+  Zap,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -413,19 +414,19 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
           </CardContent>
         </Card>
 
-        {/* Resources and Hooks Section */}
+        {/* File Resources Section */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
-              Resources & Lifecycle Hooks
+              File Resources
             </CardTitle>
             <CardDescription>
-              Configure file resources your agent can access and lifecycle hooks
-              for custom behavior at specific execution points
+              Configure file resources your agent can access for context and
+              functionality
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-4">
             <FormField
               control={form.control}
               name="resources"
@@ -457,6 +458,22 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                 </FormItem>
               )}
             />
+          </CardContent>
+        </Card>
+
+        {/* Lifecycle Hooks Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Zap className="w-4 h-4" />
+              Lifecycle Hooks
+            </CardTitle>
+            <CardDescription>
+              Configure commands to run at specific points in your agent's
+              lifecycle
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
             <FormField
               control={form.control}
               name="hooks"

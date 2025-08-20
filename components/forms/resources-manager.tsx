@@ -72,6 +72,7 @@ export function ResourcesManager({ value, onChange }: ResourcesManagerProps) {
           onClick={addResource}
           disabled={!newResource.trim() || value.includes(newResource.trim())}
           className="shrink-0 border-green-600 text-green-400 hover:bg-green-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Add Resource"
         >
           <Plus className="w-4 h-4" />
         </Button>
