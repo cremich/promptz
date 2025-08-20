@@ -7,6 +7,7 @@ import CopyClipBoardButton from "@/components/common/copy-clipboard";
 import { DownloadButton } from "@/components/common/download-button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import EditButton from "@/components/common/edit-button";
+import SubmittedDate from "@/components/common/submitted-date";
 
 // Define the props for the component
 interface ProjectRuleDetailProps {
@@ -23,17 +24,6 @@ export default function ProjectRuleDetail({
   projectRule,
   isOwner,
 }: ProjectRuleDetailProps) {
-  // Format the creation date
-  const formattedDate = projectRule.createdAt
-    ? new Date(
-        projectRule.updatedAt || projectRule.createdAt,
-      ).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : "Unknown date";
-
   return (
     <div className="flex flex-col space-y-6  mx-auto">
       {/* Header section with title, description, and actions */}
@@ -83,9 +73,10 @@ export default function ProjectRuleDetail({
           <div className="flex items-center">
             {projectRule.author && <Author name={projectRule.author} />}
           </div>
-          <div className="text-sm text-muted-foreground">
-            Submitted on {formattedDate}
-          </div>
+          <SubmittedDate
+            createdAt={projectRule.createdAt}
+            updatedAt={projectRule.updatedAt}
+          />
         </div>
       </div>
 

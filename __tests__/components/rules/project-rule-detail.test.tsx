@@ -64,6 +64,25 @@ jest.mock("@/components/common/download-button", () => {
   };
 });
 
+jest.mock("@/components/common/submitted-date", () => {
+  return function MockSubmittedDate({
+    createdAt,
+    updatedAt,
+  }: {
+    createdAt?: string;
+    updatedAt?: string;
+  }) {
+    const formattedDate = createdAt
+      ? new Date(updatedAt || createdAt).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : "Unknown date";
+    return <div data-testid="submitted-date">Submitted on {formattedDate}</div>;
+  };
+});
+
 describe("ProjectRuleDetail", () => {
   // Sample project rule data for testing
   const mockProjectRule: ProjectRule = {
@@ -102,7 +121,7 @@ describe("ProjectRuleDetail", () => {
     expect(author).toHaveTextContent("Test Author");
 
     // Check if date is rendered
-    expect(screen.getByText(/Submitted on/)).toHaveTextContent(
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
       "Submitted on January 2, 2023",
     );
 
@@ -161,7 +180,9 @@ describe("ProjectRuleDetail", () => {
     expect(screen.queryByTestId("edit-button-mock")).not.toBeInTheDocument();
 
     // Check that date shows as unknown when createdAt is missing
-    expect(screen.getByText("Submitted on Unknown date")).toBeInTheDocument();
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
+      "Submitted on Unknown date",
+    );
   });
 
   test("Uses updatedAt date when available", () => {
@@ -176,7 +197,7 @@ describe("ProjectRuleDetail", () => {
     );
 
     // Check if the displayed date is the updated date
-    expect(screen.getByText(/Submitted on/)).toHaveTextContent(
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
       "Submitted on February 15, 2023",
     );
   });

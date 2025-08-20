@@ -49,6 +49,25 @@ jest.mock("@/components/common/source-url", () => {
   };
 });
 
+jest.mock("@/components/common/submitted-date", () => {
+  return function MockSubmittedDate({
+    createdAt,
+    updatedAt,
+  }: {
+    createdAt?: string;
+    updatedAt?: string;
+  }) {
+    const formattedDate = createdAt
+      ? new Date(updatedAt || createdAt).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : "Unknown date";
+    return <div data-testid="submitted-date">Submitted on {formattedDate}</div>;
+  };
+});
+
 describe("PromptDetail", () => {
   const mockPrompt: Prompt = {
     id: "123",
@@ -130,5 +149,45 @@ describe("PromptDetail", () => {
 
     // Source URL should not be rendered
     expect(screen.queryByTestId("source-url")).not.toBeInTheDocument();
+  });
+
+  test("Shows formatted creation date", async () => {
+    const promptWithDate = {
+      ...mockPrompt,
+      createdAt: "2024-01-01T00:00:00Z",
+    };
+    render(await PromptDetail({ prompt: promptWithDate, isOwner: false }));
+
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
+      "Submitted on January 1, 2024",
+    );
+  });
+
+  test("Shows formatted updated date when available", async () => {
+    const promptWithUpdatedDate = {
+      ...mockPrompt,
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-02-15T00:00:00Z",
+    };
+    render(
+      await PromptDetail({ prompt: promptWithUpdatedDate, isOwner: false }),
+    );
+
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
+      "Submitted on February 15, 2024",
+    );
+  });
+
+  test("Shows unknown date when no creation date is available", async () => {
+    const promptWithoutDate = {
+      ...mockPrompt,
+      createdAt: undefined,
+      updatedAt: undefined,
+    };
+    render(await PromptDetail({ prompt: promptWithoutDate, isOwner: false }));
+
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
+      "Submitted on Unknown date",
+    );
   });
 });

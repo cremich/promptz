@@ -51,6 +51,25 @@ jest.mock("@/components/common/source-url", () => ({
   },
 }));
 
+jest.mock("@/components/common/submitted-date", () => {
+  return function MockSubmittedDate({
+    createdAt,
+    updatedAt,
+  }: {
+    createdAt?: string;
+    updatedAt?: string;
+  }) {
+    const formattedDate = createdAt
+      ? new Date(updatedAt || createdAt).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : "Unknown date";
+    return <div data-testid="submitted-date">Submitted on {formattedDate}</div>;
+  };
+});
+
 jest.mock("@/components/prompt/prompt-instruction", () => {
   return function PromptInstruction({ text }: { text: string }) {
     return <div data-testid="prompt-instruction">{text}</div>;
@@ -174,9 +193,9 @@ describe("AgentDetail", () => {
   test("Shows formatted creation date", () => {
     render(<AgentDetail agent={mockAgent} isOwner={false} />);
 
-    expect(
-      screen.getByText("Submitted on January 1, 2024"),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
+      "Submitted on January 1, 2024",
+    );
   });
 
   test("Shows formatted updated date when available", () => {
@@ -187,9 +206,9 @@ describe("AgentDetail", () => {
     };
     render(<AgentDetail agent={agentWithUpdatedDate} isOwner={false} />);
 
-    expect(
-      screen.getByText("Submitted on February 15, 2024"),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
+      "Submitted on February 15, 2024",
+    );
   });
 
   test("Shows unknown date when no creation date is available", () => {
@@ -200,6 +219,8 @@ describe("AgentDetail", () => {
     };
     render(<AgentDetail agent={agentWithoutDate} isOwner={false} />);
 
-    expect(screen.getByText("Submitted on Unknown date")).toBeInTheDocument();
+    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
+      "Submitted on Unknown date",
+    );
   });
 });

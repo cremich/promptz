@@ -9,6 +9,7 @@ import { ModelType } from "@/lib/forms/schema-definitions";
 import PromptHowTo from "@/components/prompt/prompt-howto";
 import EditButton from "@/components/common/edit-button";
 import { Prompt } from "@/lib/models/prompt-model";
+import SubmittedDate from "@/components/common/submitted-date";
 
 interface PromptProps {
   prompt: Prompt;
@@ -46,7 +47,7 @@ export default async function PromptDetail(props: PromptProps) {
           {props.prompt.author && <Author name={props.prompt.author} />}
           {props.prompt.tags && <Tags tags={props.prompt.tags} />}
         </div>
-        <div className="mt-4">
+        <div className="mt-4 flex flex-col items-end gap-2">
           <Badge
             key="visibility"
             variant="secondary"
@@ -54,6 +55,10 @@ export default async function PromptDetail(props: PromptProps) {
           >
             {props.prompt.scope === "PUBLIC" ? "Public" : "Private"}
           </Badge>
+          <SubmittedDate
+            createdAt={props.prompt.createdAt}
+            updatedAt={props.prompt.updatedAt}
+          />
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

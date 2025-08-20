@@ -9,6 +9,7 @@ import { Agent } from "@/lib/models/agent-model";
 import AgentConfiguration from "@/components/agents/agent-configuration";
 import { DownloadButton } from "@/components/common/download-button";
 import PromptInstruction from "@/components/prompt/prompt-instruction";
+import SubmittedDate from "@/components/common/submitted-date";
 
 interface AgentProps {
   agent: Agent;
@@ -16,17 +17,6 @@ interface AgentProps {
 }
 
 export default function AgentDetail(props: AgentProps) {
-  // Format the creation date
-  const formattedDate = props.agent.createdAt
-    ? new Date(
-        props.agent.updatedAt || props.agent.createdAt,
-      ).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : "Unknown date";
-
   return (
     <div>
       <div className="flex items-start justify-between">
@@ -66,9 +56,10 @@ export default function AgentDetail(props: AgentProps) {
           >
             {props.agent.scope === "PUBLIC" ? "Public" : "Private"}
           </Badge>
-          <div className="text-sm text-muted-foreground">
-            Submitted on {formattedDate}
-          </div>
+          <SubmittedDate
+            createdAt={props.agent.createdAt}
+            updatedAt={props.agent.updatedAt}
+          />
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
