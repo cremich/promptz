@@ -46,7 +46,7 @@ describe("TagCard", () => {
     render(<TagCard tag={mockTag} />);
 
     const link = screen.getByRole("link");
-    expect(link).toHaveAttribute("href", "/browse?tags[]=IDE");
+    expect(link).toHaveAttribute("href", "/tag/IDE");
   });
 
   test("renders with proper accessibility attributes", () => {
@@ -106,7 +106,7 @@ describe("TagCard", () => {
     render(<TagCard tag={specialCharTag} />);
 
     const link = screen.getByRole("link");
-    expect(link).toHaveAttribute("href", "/browse?tags[]=Test%20%26%20Special");
+    expect(link).toHaveAttribute("href", "/tag/Test%20%26%20Special");
   });
 
   test("renders agent count badge when agents are present", () => {

@@ -13,7 +13,7 @@ export default function TagCard({ tag }: TagCardProps) {
 
   return (
     <Link
-      href={`/browse?tags[]=${encodeURIComponent(tag.name)}`}
+      href={`/tag/${encodeURIComponent(tag.name)}`}
       className="group block transition-transform hover:scale-105 focus:scale-105 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-black rounded-lg"
       aria-label={`Browse ${tag.name} tag with ${totalCount} items`}
     >
