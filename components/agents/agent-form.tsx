@@ -354,6 +354,55 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
           </CardContent>
         </Card>
 
+        {/* MCP Servers Configuration Section */}
+        <Collapsible open={isMcpServersOpen} onOpenChange={setIsMcpServersOpen}>
+          <Card>
+            <CollapsibleTrigger asChild>
+              <CardHeader className="cursor-pointer hover:bg-gray-800/50 transition-colors">
+                <CardTitle className="flex items-center gap-2">
+                  <Server className="w-4 h-4" />
+                  MCP Servers Configuration
+                  {isMcpServersOpen ? (
+                    <ChevronDown className="w-4 h-4 ml-auto" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 ml-auto" />
+                  )}
+                </CardTitle>
+                <CardDescription>
+                  Configure Model Context Protocol (MCP) servers to extend your
+                  agent&apos;s capabilities with external data sources and tools
+                </CardDescription>
+              </CardHeader>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <CardContent className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="mcpServers"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>MCP Servers</FormLabel>
+                      <FormControl>
+                        <McpServersManager
+                          value={field.value || {}}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage>{state.errors?.mcpServers}</FormMessage>
+                      <FormDescription>
+                        MCP servers provide your agent with access to external
+                        tools and data sources. Each server runs as a separate
+                        process and communicates with your agent through the
+                        Model Context Protocol.
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </CollapsibleContent>
+          </Card>
+        </Collapsible>
+
         {/* Tools Configuration Section */}
         <Collapsible open={isToolsOpen} onOpenChange={setIsToolsOpen}>
           <Card>
@@ -477,55 +526,6 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                           />
                         </div>
                       </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </CardContent>
-            </CollapsibleContent>
-          </Card>
-        </Collapsible>
-
-        {/* MCP Servers Configuration Section */}
-        <Collapsible open={isMcpServersOpen} onOpenChange={setIsMcpServersOpen}>
-          <Card>
-            <CollapsibleTrigger asChild>
-              <CardHeader className="cursor-pointer hover:bg-gray-800/50 transition-colors">
-                <CardTitle className="flex items-center gap-2">
-                  <Server className="w-4 h-4" />
-                  MCP Servers Configuration
-                  {isMcpServersOpen ? (
-                    <ChevronDown className="w-4 h-4 ml-auto" />
-                  ) : (
-                    <ChevronRight className="w-4 h-4 ml-auto" />
-                  )}
-                </CardTitle>
-                <CardDescription>
-                  Configure Model Context Protocol (MCP) servers to extend your
-                  agent&apos;s capabilities with external data sources and tools
-                </CardDescription>
-              </CardHeader>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <CardContent className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="mcpServers"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>MCP Servers</FormLabel>
-                      <FormControl>
-                        <McpServersManager
-                          value={field.value || {}}
-                          onChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormMessage>{state.errors?.mcpServers}</FormMessage>
-                      <FormDescription>
-                        MCP servers provide your agent with access to external
-                        tools and data sources. Each server runs as a separate
-                        process and communicates with your agent through the
-                        Model Context Protocol.
-                      </FormDescription>
                     </FormItem>
                   )}
                 />
