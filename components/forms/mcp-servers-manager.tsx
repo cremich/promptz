@@ -177,7 +177,7 @@ export function McpServersManager({
                         </Label>
                         <Input
                           id={`${serverName}-command`}
-                          placeholder="e.g., npx @modelcontextprotocol/server-filesystem"
+                          placeholder="e.g., npx, uvx, docker"
                           value={config.command}
                           onChange={(e) =>
                             handleUpdateServer(serverName, {

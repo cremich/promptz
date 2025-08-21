@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { Check, ChevronsUpDown, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -21,13 +21,16 @@ import { Badge } from "@/components/ui/badge";
 import {
   AMAZON_Q_CLI_TOOLS,
   TOOL_CATEGORIES,
+  MCP_SERVER_SPECIAL_TOOLS,
 } from "@/lib/constants/amazon-q-tools";
+import { McpServerConfig } from "@/lib/models/agent-model";
 
 interface ToolsMultiSelectProps {
   value: string[];
   onChange: (value: string[]) => void;
   placeholder?: string;
   className?: string;
+  mcpServers?: Record<string, McpServerConfig>;
 }
 
 export function ToolsMultiSelect({
@@ -35,10 +38,43 @@ export function ToolsMultiSelect({
   onChange,
   placeholder = "Select tools...",
   className,
+  mcpServers = {},
 }: ToolsMultiSelectProps) {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Generate MCP server tools based on configured servers
+  const mcpServerTools = useMemo(() => {
+    const enabledServers = Object.entries(mcpServers).filter(
+      ([, config]) => !config.disabled,
+    );
+
+    return enabledServers.map(([serverName]) => `@${serverName}`);
+  }, [mcpServers]);
+
+  // Combine all available tools
+  const allTools = useMemo(() => {
+    return [
+      ...AMAZON_Q_CLI_TOOLS,
+      ...MCP_SERVER_SPECIAL_TOOLS,
+      ...mcpServerTools,
+    ];
+  }, [mcpServerTools]);
+
+  // Generate dynamic tool categories
+  const toolCategories = useMemo(() => {
+    const categories = { ...TOOL_CATEGORIES };
+
+    if (mcpServerTools.length > 0 || MCP_SERVER_SPECIAL_TOOLS.length > 0) {
+      categories["MCP Server Tools"] = [
+        ...MCP_SERVER_SPECIAL_TOOLS,
+        ...mcpServerTools,
+      ];
+    }
+
+    return categories;
+  }, [mcpServerTools]);
 
   const handleSelect = (tool: string) => {
     if (value.includes(tool)) {
@@ -59,12 +95,12 @@ export function ToolsMultiSelect({
   };
 
   // Filter tools based on input
-  const filteredTools = AMAZON_Q_CLI_TOOLS.filter((tool) =>
+  const filteredTools = allTools.filter((tool) =>
     tool.toLowerCase().includes(inputValue.toLowerCase()),
   );
 
   // Group filtered tools by category
-  const groupedTools = Object.entries(TOOL_CATEGORIES).reduce(
+  const groupedTools = Object.entries(toolCategories).reduce(
     (acc, [category, tools]) => {
       const categoryTools = tools.filter((tool) =>
         filteredTools.includes(tool),
@@ -98,8 +134,8 @@ export function ToolsMultiSelect({
                     className="bg-gray-800 text-white hover:bg-gray-700"
                   >
                     {tool}
-                    <button
-                      className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                    <span
+                      className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           handleRemove(tool);
@@ -109,10 +145,17 @@ export function ToolsMultiSelect({
                         e.preventDefault();
                         e.stopPropagation();
                       }}
-                      onClick={() => handleRemove(tool)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleRemove(tool);
+                      }}
+                      tabIndex={0}
+                      role="button"
+                      aria-label={`Remove ${tool}`}
                     >
                       <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
-                    </button>
+                    </span>
                   </Badge>
                 ))
               )}

@@ -391,6 +391,7 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                             value={field.value || []}
                             onChange={field.onChange}
                             placeholder="Select tools your agent can use..."
+                            mcpServers={form.watch("mcpServers") || {}}
                           />
                         </div>
                       </FormControl>
@@ -440,6 +441,7 @@ export default function AgentForm({ agent, tags }: AgentFormProps) {
                             value={field.value || []}
                             onChange={field.onChange}
                             placeholder="Optionally restrict to specific tools..."
+                            mcpServers={form.watch("mcpServers") || {}}
                           />
                         </div>
                       </FormControl>
