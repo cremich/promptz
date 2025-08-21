@@ -121,7 +121,7 @@ export default function ProjectRuleDetail({
               <FileText className="h-5 w-5 text-violet-400" />
               <h2 className="text-xl font-semibold">Project Rule</h2>
             </div>
-            <ScrollArea className="max-h-96">
+            <ScrollArea className="h-96">
               <pre className="whitespace-pre-wrap text-sm text-gray-300">
                 {projectRule.content}
               </pre>

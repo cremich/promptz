@@ -24,9 +24,10 @@ export const TOOL_CATEGORIES = {
     "knowledge",
     "thinking",
     "use_aws",
-  ],
+  ] as const,
   "MCP Server Tools": [
-    ...MCP_SERVER_SPECIAL_TOOLS,
+    "*",
+    "@builtin",
     // Dynamic MCP server tools will be added here based on configuration
-  ],
+  ] as readonly string[],
 } as const;

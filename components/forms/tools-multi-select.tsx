@@ -64,13 +64,15 @@ export function ToolsMultiSelect({
 
   // Generate dynamic tool categories
   const toolCategories = useMemo(() => {
-    const categories = { ...TOOL_CATEGORIES };
+    const categories: Record<string, readonly string[]> = {
+      ...TOOL_CATEGORIES,
+    };
 
     if (mcpServerTools.length > 0 || MCP_SERVER_SPECIAL_TOOLS.length > 0) {
       categories["MCP Server Tools"] = [
         ...MCP_SERVER_SPECIAL_TOOLS,
         ...mcpServerTools,
-      ];
+      ] as readonly string[];
     }
 
     return categories;
