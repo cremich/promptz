@@ -66,7 +66,7 @@ export default function ProjectRuleDetail({
                   <DownloadButton
                     id={projectRule.id!}
                     content={projectRule.content}
-                    filename={`promptz-rule-${projectRule.slug}.md`}
+                    filename={`promptz-rule-${projectRule.slug}`}
                     label="Download"
                     modelType={ModelType.RULE}
                   />
