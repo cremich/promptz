@@ -35,6 +35,34 @@ WHEN a user submits a form with invalid data
 THE SYSTEM SHALL display validation errors next to the relevant fields
 ```
 
+This is how the `requirements.md` file is structured:
+
+```
+# Requirements Document
+
+## Introduction
+
+Summary / Overview
+
+## Requirements
+
+### Requirements 1:
+**User Story:** As <persona>, I want ..., so that I...
+
+### Acceptance Criteria
+1. WHEN [condition/event] THE SYSTEM SHALL [expected behavior]
+2. WHEN [condition/event] THE SYSTEM SHALL [expected behavior]
+...
+
+### Requirements 2:
+**User Story:** As <persona>, I want ..., so that I...
+
+### Acceptance Criteria
+1. WHEN [condition/event] THE SYSTEM SHALL [expected behavior]
+2. WHEN [condition/event] THE SYSTEM SHALL [expected behavior]
+
+```
+
 ### Design
 
 The `design.md` file is where technical architecture, sequence diagrams, and implementation considerations are documented. It captures the big picture of how the system will work, including the components and their interactions.
@@ -42,3 +70,21 @@ The `design.md` file is where technical architecture, sequence diagrams, and imp
 ### Implementation Plan
 
 The `tasks.md` file provides a detailed implementation plan with discrete, trackable tasks and sub-tasks. Each task is clearly defined, with a clear description, expected outcome, and any necessary resources or dependencies. Engineering teams and AI assistants that make use of specs, will use this file to track progress.
+
+This is how the `tasks.md` file is structured:
+
+```
+# Implementation Plan
+
+- [ ] 1. description of task 1
+    - implementation step 1
+    - implementation step 2
+    - implementation step n
+    - _Requirements: 1.1, 1.5, 3.1, 3.2_ (comma separated list of related requirements)
+- [ ] 1. description of task 2
+    - implementation step 1
+    - implementation step 2
+    - implementation step n
+    - _Requirements: 1.1, 1.5, 2,2, 4.3_ (comma separated list of related requirements)
+...
+```
