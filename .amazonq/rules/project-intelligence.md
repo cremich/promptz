@@ -3,7 +3,6 @@
 ## Guidelines
 
 - Before writing the documentation, ask all relevant questions to understand the context of this codebase.
-- You must use the tools provided to you.
 - The documentation must be specific with a focus on simplicity and clearance.
 - Write documentation in prose.
 - Prevent repetitions and ambiguity in the documentation.

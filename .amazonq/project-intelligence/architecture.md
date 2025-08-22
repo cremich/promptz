@@ -83,7 +83,7 @@ The **Business Logic Layer** contains pipeline resolvers that handle complex bus
 
 The **Messaging Layer** manages the required messaging infrastructure to support communication between components.
 
-- **Amazon EventBridge**: Custom event bus that receives domain events from AppSync pipeline resolvers. Events include "prompt.saved", "prompt.deleted", "prompt.copied", "prompt.downloaded", "projectrule.saved", "projectrule.deleted", "projectrule.copied", and "projectrule.downloaded".
+- **Amazon EventBridge**: Custom event bus that receives domain events from AppSync pipeline resolvers. Events include "prompt.saved", "prompt.deleted", "prompt.copied", "prompt.downloaded", "projectrule.saved", "projectrule.deleted", "projectrule.copied", "projectrule.downloaded", "agent.saved", "agent.deleted", "agent.copied", and "agent.downloaded".
 - **EventBridge Archive**: Automatically captures and stores all events published to the custom event bus for replay and audit capabilities. Configured with environment-specific retention periods (infinite retention for production, 7 days for sandbox) to support analytics, compliance, and debugging scenarios.
 - **Event-Driven Architecture**: Enables loose coupling between components and supports future integrations like analytics, notifications, or third-party webhooks.
 - **Pipeline Integration**: Seamlessly integrated with AppSync mutations through pipeline resolvers that first perform data operations, then emit corresponding events.
@@ -93,7 +93,7 @@ The **Messaging Layer** manages the required messaging infrastructure to support
 
 The **Data Layer** manages persistent storage and data streaming:
 
-- **Amazon DynamoDB**: NoSQL database storing all application data with optimized access patterns. Tables include `prompt`, `projectRule`, `user`, `tag`, `promptTag`, and `ruleTag` with appropriate secondary indexes.
+- **Amazon DynamoDB**: NoSQL database storing all application data with optimized access patterns. Tables include `prompt`, `projectRule`, `agent`, `user`, `tag`, `promptTag`, `ruleTag`, and `agentTag` with appropriate secondary indexes.
 - **DynamoDB Streams**: Capture data changes in real-time to trigger Lambda functions for maintaining data consistency and analytics. Configured with batch processing and error handling.
 - **CDC Functions**: Change Data Capture functions that process DynamoDB streams to maintain data consistency, particularly for tag relationships and analytics.
 - **Tag Relations Function**: Specialized Lambda function that processes stream events from prompt and project rule tables to automatically maintain many-to-many tag relationships in join tables.
@@ -129,9 +129,11 @@ The architecture implements a multi-layered security approach:
 erDiagram
     User ||--o{ Prompt : creates
     User ||--o{ ProjectRule : creates
+    User ||--o{ Agent : creates
 
     Tag }o--o{ Prompt : "tagged with"
     Tag }o--o{ ProjectRule : "tagged with"
+    Tag }o--o{ Agent : "tagged with"
 
 
     User {
@@ -164,6 +166,30 @@ erDiagram
         string slug
         string description
         string content
+        string sourceURL
+        string owner FK
+        enum scope "PRIVATE | PUBLIC"
+        array tags
+        integer copyCount
+        integer downloadCount
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    Agent {
+        string id PK
+        string name
+        string slug
+        string description
+        string prompt
+        array tools
+        json mcpServers
+        array resources
+        json hooks
+        json toolsSettings
+        json toolAliases
+        array allowedTools
+        boolean useLegacyMcpJson
         string sourceURL
         string owner FK
         enum scope "PRIVATE | PUBLIC"

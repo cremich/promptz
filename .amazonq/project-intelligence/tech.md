@@ -89,6 +89,7 @@ promptz/
 │   └── backend.ts               # Backend configuration
 ├── app/                         # Next.js App Router pages
 │   ├── (auth)/                  # Authentication pages
+│   ├── agents/                  # Agent-related pages
 │   ├── mcp/                     # MCP integration page
 │   ├── prompts/                 # Prompt-related pages
 │   ├── rules/                   # Project rules pages
@@ -99,6 +100,7 @@ promptz/
 │   ├── robots.ts                # SEO robots configuration
 │   └── sitemap.ts               # Dynamic sitemap generation
 ├── components/                  # React components
+│   ├── agents/                  # Agent-specific components
 │   ├── auth/                    # Authentication components
 │   ├── benefits/                # Feature benefit components
 │   ├── common/                  # Shared components
@@ -110,6 +112,7 @@ promptz/
 │   ├── tags/                    # Tag management components
 │   └── ui/                      # shadcn/ui components
 ├── e2e-tests/                   # End-to-end tests
+│   ├── agents/                  # Agent feature tests
 │   ├── authentication/          # Auth flow tests
 │   ├── helpers/                 # Test utilities
 │   ├── prompts/                 # Prompt feature tests
