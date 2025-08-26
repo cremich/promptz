@@ -67,6 +67,14 @@ jest.mock("@/components/common/edit-button", () => {
   };
 });
 
+jest.mock("@/components/common/download-button", () => {
+  return {
+    DownloadButton: function DownloadButton() {
+      return <div data-testid="download-button">Download Button</div>;
+    },
+  };
+});
+
 jest.mock("@/components/common/source-url", () => {
   return {
     SourceURL: function SourceURL() {
@@ -141,9 +149,10 @@ describe("PromptDetail", () => {
     expect(screen.getByTestId("prompt-instruction")).toBeInTheDocument();
     expect(screen.getByTestId("prompt-howto")).toBeInTheDocument();
 
-    // Check if edit and copy buttons are rendered
+    // Check if edit, copy and download buttons are rendered
     expect(screen.getByTestId("edit-button")).toBeInTheDocument();
     expect(screen.getByTestId("copy-button")).toBeInTheDocument();
+    expect(screen.getByTestId("download-button")).toBeInTheDocument();
 
     // Check if source URL is rendered
     expect(screen.getByTestId("source-url")).toBeInTheDocument();
