@@ -48,6 +48,17 @@ describe("PromptCard", () => {
     );
   });
 
+  test("Shows download count when downloadCount is greater than 0", () => {
+    const promptWithDownloads = { ...basePrompt, downloadCount: 25 };
+    render(<PromptCard prompt={promptWithDownloads} />);
+
+    expect(screen.getByText("25 downloads")).toBeInTheDocument();
+    expect(screen.getByText("25 downloads").closest("div")).toHaveClass(
+      "flex",
+      "items-center",
+    );
+  });
+
   test("Shows copy count even when copyCount is 0", () => {
     const promptWithZeroCopies = { ...basePrompt, copyCount: 0 };
     render(<PromptCard prompt={promptWithZeroCopies} />);
@@ -57,6 +68,17 @@ describe("PromptCard", () => {
     // The copy icon should be present - check by looking for the SVG with the lucide-copy class
     const copyIcon = document.querySelector(".lucide-copy");
     expect(copyIcon).toBeInTheDocument();
+  });
+
+  test("Shows download count even when downloadCount is 0", () => {
+    const promptWithZeroDownload = { ...basePrompt, downloadCount: 0 };
+    render(<PromptCard prompt={promptWithZeroDownload} />);
+
+    // Should show download count even when it's 0
+    expect(screen.getByText("0 downloads")).toBeInTheDocument();
+    // The download icon should be present - check by looking for the SVG with the lucide-download class
+    const downloadIcon = document.querySelector(".lucide-download");
+    expect(downloadIcon).toBeInTheDocument();
   });
 
   test("Shows 'Trending' badge for prompts with 50-99 copies", () => {
@@ -147,5 +169,17 @@ describe("PromptCard", () => {
     expect(screen.queryByText(/times copied/)).not.toBeInTheDocument();
     const copyIcon = document.querySelector(".lucide-copy");
     expect(copyIcon).not.toBeInTheDocument();
+  });
+
+  test("Does not show download count when download Count is undefined", () => {
+    const promptWithoutDownloadCount = {
+      ...basePrompt,
+      downloadCount: undefined,
+    };
+    render(<PromptCard prompt={promptWithoutDownloadCount} />);
+
+    expect(screen.queryByText(/downloads/)).not.toBeInTheDocument();
+    const downloadIcon = document.querySelector(".lucide-download");
+    expect(downloadIcon).not.toBeInTheDocument();
   });
 });
