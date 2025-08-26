@@ -19,6 +19,8 @@ interface PromptBySlugResponse {
       sourceURL?: string;
       howto?: string;
       scope?: string;
+      copyCount?: number;
+      downloadCount?: number;
       author: {
         id?: string;
         displayName?: string;
@@ -49,6 +51,8 @@ export async function fetchPromptBySlug(slug: string) {
         sourceURL
         howto
         scope
+        copyCount
+        downloadCount
         author {
           id
           displayName
@@ -89,6 +93,8 @@ export async function fetchPromptBySlug(slug: string) {
     sourceURL: prompt.sourceURL,
     howto: prompt.howto,
     scope: prompt.scope,
+    copyCount: prompt.copyCount,
+    downloadCount: prompt.downloadCount,
     author: prompt.author ? prompt.author.displayName : "",
     authorId: prompt.author ? prompt.author.id : "",
     createdAt: prompt.createdAt,
