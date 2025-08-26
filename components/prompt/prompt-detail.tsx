@@ -58,7 +58,7 @@ export default async function PromptDetail(props: PromptProps) {
                   <DownloadButton
                     id={props.prompt.id!}
                     content={props.prompt.content}
-                    filename={`promptz-prompts-${props.prompt.slug}`}
+                    filename={`promptz-prompt-${props.prompt.slug}`}
                     label="Download"
                     modelType={ModelType.PROMPT}
                   />
