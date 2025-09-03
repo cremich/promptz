@@ -8,6 +8,7 @@ import PromptHowTo from "@/components/prompt/prompt-howto";
 import EditButton from "@/components/common/edit-button";
 import { Prompt } from "@/lib/models/prompt-model";
 import Submission from "@/components/common/submission";
+import { DownloadButton } from "@/components/common/download-button";
 
 interface PromptProps {
   prompt: Prompt;
@@ -48,11 +49,20 @@ export default async function PromptDetail(props: PromptProps) {
                 />
               )}
               {props.prompt.content && (
-                <CopyClipBoardButton
-                  id={props.prompt.id!}
-                  type={ModelType.PROMPT}
-                  text={props.prompt.content}
-                />
+                <>
+                  <CopyClipBoardButton
+                    id={props.prompt.id!}
+                    type={ModelType.PROMPT}
+                    text={props.prompt.content}
+                  />
+                  <DownloadButton
+                    id={props.prompt.id!}
+                    content={props.prompt.content}
+                    filename={`promptz-prompt-${props.prompt.slug}`}
+                    label="Download"
+                    modelType={ModelType.PROMPT}
+                  />
+                </>
               )}
             </div>
           </div>

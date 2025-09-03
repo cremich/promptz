@@ -1,7 +1,7 @@
 import { Prompt } from "@/lib/models/prompt-model";
 import Author from "@/components/common/author";
 import Tags from "@/components/common/tags";
-import { Flame, Copy } from "lucide-react";
+import { Flame, Copy, Download } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -58,12 +58,20 @@ export default function PromptCard({ prompt }: PromptCardProps) {
         </CardContent>
         <CardFooter className="flex justify-between items-center">
           {prompt.author && <Author name={prompt.author} />}
-          {prompt.copyCount !== undefined && (
-            <div className="flex items-center text-muted-foreground text-sm">
-              <Copy className="w-4 h-4 mr-1" />
-              <span>{prompt.copyCount.toLocaleString()} times copied</span>
-            </div>
-          )}
+          <div className="flex items-center gap-4 text-muted-foreground text-sm">
+            {prompt.copyCount !== undefined && (
+              <div className="flex items-center">
+                <Copy className="w-4 h-4 mr-1" />
+                <span>{prompt.copyCount.toLocaleString()} times copied</span>
+              </div>
+            )}
+            {prompt.downloadCount !== undefined && (
+              <div className="flex items-center">
+                <Download className="w-4 h-4 mr-1" />
+                <span>{prompt.downloadCount.toLocaleString()} downloads</span>
+              </div>
+            )}
+          </div>
         </CardFooter>
       </Card>
     </Link>

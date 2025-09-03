@@ -60,6 +60,7 @@ export async function searchPrompts(
           createdAt: p.createdAt || "",
           updatedAt: p.updatedAt || "",
           copyCount: p.copyCount || 0,
+          downloadCount: p.downloadCount || 0,
         } as Prompt;
       });
 
