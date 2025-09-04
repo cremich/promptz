@@ -38,6 +38,8 @@ export async function fetchMyPrompts(userId: string): Promise<Prompt[]> {
       description: p.description,
       author: data.displayName || "",
       authorId: p.owner || "",
+      copyCount: p.copyCount || 0,
+      downloadCount: p.downloadCount || 0,
       tags: (p.tags || []).filter((tag): tag is string => tag !== null),
       slug: p.slug || "",
       content: p.content,
