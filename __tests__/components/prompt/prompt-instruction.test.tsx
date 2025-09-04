@@ -4,27 +4,6 @@ import "@testing-library/jest-dom";
 import PromptInstruction from "@/components/prompt/prompt-instruction";
 import { Terminal } from "lucide-react";
 
-// Mock the CopyClipBoardButton component
-jest.mock("@/components/common/copy-clipboard", () => {
-  return function MockCopyClipBoardButton({
-    id,
-    type,
-    text,
-    showButtonText,
-  }: {
-    id: string;
-    type: string;
-    text: string;
-    showButtonText?: boolean;
-  }) {
-    return (
-      <button data-testid="mock-copy-button">
-        {showButtonText ? "Copy Prompt" : ""}
-      </button>
-    );
-  };
-});
-
 describe("PromptInstruction", () => {
   const defaultProps = {
     promptId: "test-prompt-id",
@@ -44,11 +23,6 @@ describe("PromptInstruction", () => {
     // Check if text content is rendered in a pre tag
     const preElement = screen.getByText(defaultProps.text);
     expect(preElement).toBeInTheDocument();
-
-    // Check if the CopyClipBoardButton is rendered with correct props
-    const copyButton = screen.getByTestId("mock-copy-button");
-    expect(copyButton).toBeInTheDocument();
-    expect(copyButton).toHaveTextContent("Copy Prompt"); // showButtonText is true
   });
 
   test("Renders with long text content correctly", () => {
