@@ -6,7 +6,6 @@ import { Terminal } from "lucide-react";
 
 describe("PromptInstruction", () => {
   const defaultProps = {
-    promptId: "test-prompt-id",
     title: "Test Prompt Title",
     text: "This is a test prompt instruction text",
     icon: Terminal,

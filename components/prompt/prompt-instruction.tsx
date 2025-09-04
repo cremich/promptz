@@ -2,14 +2,12 @@ import { LucideIcon } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface PromptInstructionProps {
-  promptId: string;
   title: string;
   text: string;
   icon: LucideIcon;
 }
 
 export default function PromptInstruction({
-  promptId,
   title,
   text,
   icon: Icon,
