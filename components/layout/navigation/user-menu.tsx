@@ -73,6 +73,15 @@ export default function UserMenu() {
                 <span>My Rules</span>
               </Link>
             </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link
+                href="/agents/my"
+                className="flex items-center w-full cursor-pointer"
+              >
+                <FileText className="mr-2 h-4 w-4" />
+                <span>My Agents</span>
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <LogoutButton />
