@@ -111,7 +111,6 @@ export default function AgentDetail(props: AgentProps) {
         >
           <PromptInstruction
             title="System Prompt"
-            promptId={props.agent.id!}
             icon={Terminal}
             text={props.agent.prompt!}
           />

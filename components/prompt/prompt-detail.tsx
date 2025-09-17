@@ -110,7 +110,6 @@ export default async function PromptDetail(props: PromptProps) {
         >
           <PromptInstruction
             title="Prompt"
-            promptId={props.prompt.id!}
             icon={Terminal}
             text={props.prompt.content!}
           />
