@@ -38,7 +38,7 @@ export const agentModel = {
       index("scope").queryField("listAgentByScope").name("scopeIndex"),
       index("owner").queryField("listAgentByUser").name("ownerIndex"),
     ])
-    .disableOperations(["subscriptions", "mutations", "queries"])
+    .disableOperations(["subscriptions", "mutations", "list"])
     .authorization((allow) => [
       allow.publicApiKey().to(["read"]),
       allow.authenticated().to(["read"]),

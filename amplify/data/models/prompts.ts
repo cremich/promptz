@@ -20,7 +20,7 @@ export const promptModel = {
       index("scope").queryField("listPromptByScope").name("scopeIndex"),
       index("owner").queryField("listPromptByUser").name("userIdIndex"),
     ])
-    .disableOperations(["subscriptions", "mutations", "queries"])
+    .disableOperations(["subscriptions", "mutations", "list"])
     .authorization((allow) => [
       allow.publicApiKey().to(["read"]),
       allow.authenticated().to(["read"]),
