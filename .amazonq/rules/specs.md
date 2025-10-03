@@ -1,6 +1,6 @@
 # Specification-Driven Development Guidelines
 
-This document describes guidelines on how to leverage the specs concept of Kiro. Specs are structured markdown files that formalize the development process for complex features. They provide a systematic approach to transform high-level ideas into detailed implementation plans with clear tracking and accountability.
+This document describes guidelines on how to leverage specification driven development using specs. Specs are structured markdown files that formalize the development process for complex features. They provide a systematic approach to transform high-level ideas into detailed implementation plans with clear tracking and accountability.
 
 ## Core Concept
 
@@ -12,7 +12,7 @@ Specs consist of three key files that form the foundation of each specification:
 
 ### Workflow
 
-Specs can be either created by Kiro itself of by Amazon Q Developer. The workflow to create and use specs consists of the following phases:
+The workflow to create and use specs consists of the following phases:
 
 1. Requirements Phase: Define user stories and acceptance criteria in structured EARS notation
 2. Design Phase: Document the technical architecture, sequence diagrams, and implementation considerations
