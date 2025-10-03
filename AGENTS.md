@@ -23,6 +23,10 @@ The user will provide you with severel software engineering tasks to develop and
 
 Use the `gh` CLI to interact with GitHub.
 
+## MEMORY:
+
+You have access to the project documentation in `.amazonq/project-intelligence`. Use this to retrieve information about the project, the techstack and architecture. The project-intelligence is your long-term memory.
+
 ## Core Philosophy
 
 **TEST-DRIVEN DEVELOPMENT IS NON-NEGOTIABLE.** Every single line of production code must be written in response to a failing test. No exceptions. This is not a suggestion or a preference - it is the fundamental practice that enables all other principles in this document. Follow the TDD Red-Green-Refactor phases strictly:

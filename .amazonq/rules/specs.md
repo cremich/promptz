@@ -10,6 +10,8 @@ Specs consist of three key files that form the foundation of each specification:
 - design.md - Documents technical architecture, sequence diagrams, and implementation considerations
 - tasks.md - Provides a detailed implementation plan with discrete, trackable tasks
 
+Specs are stored in the docs/specs folder.
+
 ### Workflow
 
 The workflow to create and use specs consists of the following phases:
