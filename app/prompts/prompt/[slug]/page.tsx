@@ -3,6 +3,13 @@ import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import promptIndex from "@/data/prompt-index.json";
+
+export async function generateStaticParams() {
+  return promptIndex.prompts.map((prompt) => ({
+    slug: prompt.slug,
+  }));
+}
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;

@@ -30,7 +30,7 @@
   - Ensure existing PromptCard and PromptPage components work with markdown data
   - _Requirements: 8.1, 8.2, 8.3, 8.4_
 
-- [ ] 5. Update prompt pages to render markdown content
+- [x] 5. Update prompt pages to render markdown content
   - Modify `app/prompts/prompt/[slug]/page.tsx` to handle markdown prompts
   - Implement `generateStaticParams` for markdown-based prompts
   - Add metadata generation for SEO with proper title tags and meta descriptions
