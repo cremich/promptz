@@ -2,16 +2,16 @@
 
 ## Architecture Overview
 
-The markdown-based prompt rendering system will replace the current API-driven approach with a static site generation model. This design leverages Next.js's build-time file system operations to process markdown files and generate static pages.
+The markdown-based prompt rendering system will migrate the existing content management for prompts to include static markdown files rather than API-based data fetching. This design leverages Next.js's build-time processing to create a prompt index used for searching and data access patterns.
 
 ## System Components
 
 ### 1. Content Processing Pipeline
 
 ```
-content/prompts/*.md → Frontmatter Parser → Content Processor → Static Pages
+content/prompts/*.md → Frontmatter Parser → Prompt Model → Build Index → Static Pages
                     ↓
-                 Metadata Index → Search Index → Browse Pages
+                Index → Search/Browse → Existing Components
 ```
 
 ### 2. Directory Structure
@@ -76,18 +76,40 @@ promptz/
 
 1. **File Discovery**: Scan `content/prompts/` recursively for `.md` files
 2. **Frontmatter Parsing**: Extract metadata using gray-matter
-3. **Content Processing**: Parse markdown content into structured sections
-4. **API Sync**: Create/update API records for interaction tracking
-5. **Validation**: Ensure required fields and proper structure
-6. **Index Generation**: Create searchable metadata index
-7. **Static Generation**: Generate individual prompt pages
+3. **Content Processing**: Parse markdown content into existing Prompt model
+4. **Validation**: Ensure required fields are present
+5. **Index Generation**: Create search index from markdown prompts
+6. **Static Generation**: Generate individual prompt pages using existing components
+
+#### Build Time Index Structure
+
+```typescript
+interface PromptIndex {
+  prompts: Prompt[]; // All markdown prompts
+  searchIndex: {
+    byTitle: Map<string, Prompt[]>;
+    byDescription: Map<string, Prompt[]>;
+    byContent: Map<string, Prompt[]>;
+    byAuthor: Map<string, Prompt[]>;
+    byTags: Map<string, Prompt[]>;
+    byCategory: Map<string, Prompt[]>;
+  };
+  tagIndex: Map<string, Prompt[]>;
+  categoryIndex: Map<string, Prompt[]>;
+  metadata: {
+    totalCount: number;
+    lastBuildTime: string;
+  };
+}
+```
 
 #### Runtime Rendering
 
-1. **Page Requests**: Serve pre-generated static pages
-2. **Interaction Tracking**: Use existing API mutations for downloads/copies
-3. **Search Queries**: Query pre-built search index with API interaction data
-4. **Navigation**: Use file-based routing for categories
+1. **Page Requests**: Use existing prompt pages and components
+2. **Data Sources**: Serve from markdown-based index
+3. **Search Queries**: Use pre-built search index for fast client-side search
+4. **Interaction Tracking**: Use existing API mutations for downloads/copies
+5. **Search/Browse**: Use markdown index for all prompt discovery
 
 ## Technical Implementation
 
@@ -96,7 +118,6 @@ promptz/
 ```typescript
 interface PromptFrontmatter {
   title: string; // Required: Display name
-  slug?: string; // Optional: Auto-generated from title
   description: string; // Required: Brief description
   author: string; // Required: Content creator
   tags?: string[]; // Optional: Additional tags
@@ -128,26 +149,152 @@ Step-by-step instructions for using this prompt effectively:
 3. Apply to your Amazon Q Developer session
 ```
 
-### 3. File Processing Logic
+### 3. Unified Prompt Model (Existing)
+
+The markdown processing will convert frontmatter and content directly to the existing `Prompt` type:
 
 ```typescript
-interface ProcessedPrompt {
-  metadata: PromptFrontmatter;
-  content: string; // Main prompt content
-  howto?: string; // How-to section content
-  category: string; // Derived from directory
-  slug: string; // Final slug for URL
-  filePath: string; // Source file path
+// Use existing Prompt type from lib/models/prompt-model.ts
+type Prompt = {
+  id?: string;
+  name?: string; // maps to frontmatter.title
+  description?: string; // maps to frontmatter.description
+  tags?: string[]; // combined directory + frontmatter tags
+  content?: string; // main prompt content
+  howto?: string; // "How to Use" section content
+  author?: string; // maps to frontmatter.author
+  authorId?: string; // not used for markdown prompts
+  slug?: string; // derived from filename
+  sourceURL?: string; // maps to frontmatter.sourceURL
+  createdAt?: string; // from git history
+  updatedAt?: string; // from git history
+  copyCount?: number; // from API interaction tracking
+  downloadCount?: number; // from API interaction tracking
+  starCount?: number; // from API interaction tracking
+  popularityScore?: number; // calculated from interactions
+};
+```
+
+### 4. Markdown to Prompt Conversion
+
+```typescript
+function convertMarkdownToPrompt(
+  frontmatter: PromptFrontmatter,
+  content: string,
+  howto: string,
+  category: string,
+  filePath: string,
+): Prompt {
+  const filename = path.basename(filePath, ".md");
+
+  return {
+    id: generateId(filePath),
+    slug: filename, // Derived from filename
+    name: frontmatter.title,
+    description: frontmatter.description,
+    tags: [category, ...(frontmatter.tags || [])],
+    content,
+    howto,
+    author: frontmatter.author,
+    sourceURL: frontmatter.sourceURL,
+    createdAt: getGitCreatedDate(filePath),
+    updatedAt: getGitModifiedDate(filePath),
+    // Interaction data populated from API client-side
+    downloadCount: 0,
+    popularityScore: 0,
+  };
 }
 ```
 
-### 4. URL Structure
+### 4. URL Structure (Unchanged)
 
-- **Individual Prompts**: `/prompts/prompt/{slug}` (maintains existing SEO structure)
-- **Tag Pages**: `/tag/{tagName}` (maintains existing SEO structure for tag-based browsing)
+- **Individual Prompts**: `/prompts/prompt/{slug}`
+- **Tag Pages**: `/tag/{tagName}`
 - **Category Browse**: `/prompts?category={category}`
 - **Search Results**: `/prompts?query={search}`
-- **Tag Filter**: `/prompts?tags[]={tag}`
+
+## Search System Integration
+
+### 1. Build-Time Search Index Generation
+
+```typescript
+interface SearchIndexBuilder {
+  // Process all prompts (markdown-only) into searchable structures
+  buildSearchIndex(prompts: Prompt[]): SearchIndex;
+
+  // Create inverted indexes for fast lookup
+  createInvertedIndex(
+    prompts: Prompt[],
+    field: keyof Prompt,
+  ): Map<string, Prompt[]>;
+
+  // Generate search metadata for filtering
+  extractSearchableTerms(prompt: Prompt): string[];
+}
+
+interface SearchIndex {
+  // Full-text search indexes
+  titleIndex: Map<string, Prompt[]>; // Searchable by title words
+  descriptionIndex: Map<string, Prompt[]>; // Searchable by description words
+  contentIndex: Map<string, Prompt[]>; // Searchable by prompt content
+  authorIndex: Map<string, Prompt[]>; // Searchable by author
+
+  // Categorical indexes
+  tagIndex: Map<string, Prompt[]>; // Filter by tags
+  categoryIndex: Map<string, Prompt[]>; // Filter by directory category
+
+  // Combined search terms for fuzzy matching
+  allTermsIndex: Map<string, Prompt[]>; // All searchable text combined
+}
+```
+
+### 2. Search Query Processing
+
+```typescript
+interface SearchProcessor {
+  // Main search function used by existing search actions
+  searchPrompts(query: string, filters?: SearchFilters): Prompt[];
+
+  // Filter prompts by category (directory-based)
+  filterByCategory(prompts: Prompt[], category: string): Prompt[];
+
+  // Filter prompts by tags (combined directory + frontmatter)
+  filterByTags(prompts: Prompt[], tags: string[]): Prompt[];
+
+  // Sort results by relevance, popularity, date
+  sortResults(
+    prompts: Prompt[],
+    sortBy: "relevance" | "popularity" | "date",
+  ): Prompt[];
+}
+
+interface SearchFilters {
+  categories?: string[]; // Filter by directory categories
+  tags?: string[]; // Filter by specific tags
+  authors?: string[]; // Filter by authors
+  sortBy?: "relevance" | "popularity" | "date";
+}
+```
+
+### 3. Integration with Existing Search
+
+```typescript
+// Existing search actions will be updated to use markdown index
+// lib/actions/search-prompts-action.ts (example)
+export async function searchPrompts(
+  query: string,
+  filters?: SearchFilters,
+): Promise<Prompt[]> {
+  // Before: API call
+  // const results = await amplifyClient.graphql({ query: searchPromptsQuery });
+
+  // After: Use build-time generated index
+  const promptIndex = await getPromptIndex();
+  const searchProcessor = new SearchProcessor(promptIndex.searchIndex);
+
+  return searchProcessor.searchPrompts(query, filters);
+}
+```
 
 ## Tag System Integration
 
@@ -157,122 +304,108 @@ interface ProcessedPrompt {
 - **Frontmatter Tags**: Additional tags specified in markdown frontmatter to preserve existing tag ecosystem
 - **Tag Merging**: Combine directory and frontmatter tags for comprehensive tagging while maintaining backward compatibility
 
-### 2. Tag Page Compatibility
+### 2. Tag Merging Process
 
-- **Existing Tag Pages**: Maintain `/tag/{tagName}` URL structure for SEO
-- **Mixed Content**: Tag pages will display both API-based and markdown-based prompts during transition
-- **Tag Index**: Update tag indexing to include markdown-based prompts
-- **Tag Counts**: Ensure tag counts include markdown prompts
-
-### 3. Tag Processing Pipeline
+Tags are simply combined during the markdown-to-prompt conversion:
 
 ```typescript
-interface TaggedPrompt {
-  // ... other fields
-  allTags: string[]; // Combined directory + frontmatter tags
-  primaryTag: string; // Directory-based purpose tag
-  additionalTags: string[]; // Frontmatter-specified tags
-}
+// In convertMarkdownToPrompt function
+tags: [category, ...(frontmatter.tags || [])];
 ```
 
-## SEO and Discoverability
+This creates a single `tags` array containing:
 
-### 1. URL Structure Preservation
+- Directory-based category (e.g., "architecture", "testing")
+- Additional frontmatter tags (e.g., ["IDE", "Chat", "Optimize"])
 
-- **Maintain existing URLs**: `/prompts/prompt/{slug}` to preserve SEO rankings
-- **Redirect handling**: Ensure any category-based URLs redirect to maintain link equity
-- **Canonical URLs**: Set proper canonical tags for all prompt pages
+Result: `["architecture", "IDE", "Chat", "Optimize"]`
 
-### 2. Sitemap Integration
+## Component Architecture (Reuse Existing)
 
-- **Dynamic sitemap generation**: Include all markdown-based prompts in `sitemap.ts`
-- **Tag page sitemap**: Include tag pages that contain markdown-based prompts
-- **Build-time sitemap**: Generate sitemap entries during static generation
-- **Metadata inclusion**: Include lastModified dates from git history
-- **Priority settings**: Set appropriate priority levels for prompt and tag pages
-
-### 3. Metadata Optimization
-
-- **Title tags**: Use prompt title with site branding
-- **Meta descriptions**: Use prompt description for search snippets
-- **Open Graph**: Generate OG tags for social media sharing
-- **JSON-LD**: Include structured data for rich snippets
-
-## Component Architecture
-
-### 1. Core Processing Components
-
-- **`MarkdownProcessor`**: Main orchestrator for file processing
-- **`FrontmatterParser`**: Extracts and validates metadata
-- **`ContentParser`**: Processes markdown content into sections
-- **`SlugGenerator`**: Creates URL-safe slugs from titles
-- **`IndexBuilder`**: Generates search and browse indexes
-
-#### Slug Generation Logic
-
-```typescript
-function generateSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
-    .trim()
-    .replace(/\s+/g, "-") // Spaces to hyphens
-    .replace(/-+/g, "-"); // Multiple hyphens to single
-}
-
-// Priority: frontmatter slug > auto-generated from title > filename
-// Build-time validation ensures no duplicate slugs across all prompts
-```
-
-### 2. Page Components
+### 1. Existing Components (No Changes)
 
 - **`PromptPage`**: Individual prompt display
 - **`PromptBrowser`**: Category and search listing
-- **`TagPage`**: Tag-based prompt listing (existing component to be updated)
+- **`TagPage`**: Tag-based prompt listing
 - **`PromptCard`**: Reusable prompt preview component
 
-### 3. Utility Components
+### 2. New Processing Components
 
-- **`MarkdownRenderer`**: Renders processed markdown content
-- **`TagManager`**: Handles tag merging and display
-- **`SearchProvider`**: Client-side search functionality
+- **`MarkdownProcessor`**: Build-time file processing
+- **`UnifiedIndex`**: Combines API + markdown data
+- **`BuildTimeValidator`**: Validates markdown content
+
+### 3. Data Layer Updates
+
+- **Extend existing actions**: Update search/browse actions to use unified index
+- **Remove prompt form**: Delete create/edit prompt functionality
+- **Update sitemap**: Generate from unified index instead of API
+- **Maintain existing data contracts**: All components receive standard `Prompt[]` arrays
 
 ## Implementation Approach
 
-### Phase 1: Infrastructure Setup
+### Phase 1: Build-Time Processing
 
-1. Create content directory structure
-2. Implement markdown processing pipeline
-3. Build template system
+1. Create markdown processing utilities
+2. Build unified prompt index at build time
+3. Validate markdown content and prevent slug collisions
 
 ### Phase 2: Integration
 
-1. Implement static page generation for markdown prompts
-2. Update search and filtering to include markdown content
-3. Integrate with existing tag system
-4. Update sitemap generation
+1. Update existing data actions to use unified index
+2. Update sitemap generation
+3. Remove prompt form components
 
-### Phase 3: Testing and Documentation
+### Phase 3: Testing
 
-1. Comprehensive testing suite
-2. Update documentation
-3. Deploy to production
+1. Test existing components with markdown data
+2. Verify interaction tracking still works
+3. Test search and filtering with unified data
 
 ## Performance Considerations
 
 ### Build Time Optimizations
 
 - **Parallel Processing**: Process markdown files concurrently
-- **Incremental Builds**: Only reprocess changed files
-- **Caching**: Cache processed content between builds
 - **Validation**: Fail fast on invalid content
+- **Caching**: Cache processed content between builds
+- **Index Serialization**: Serialize search indexes to JSON for fast runtime loading
+- **Incremental Processing**: Only reprocess changed markdown files
 
 ### Runtime Optimizations
 
 - **Static Generation**: All pages pre-generated at build time
-- **Search Index**: Pre-built client-side search index
-- **Image Optimization**: Optimize any embedded images
-- **Code Splitting**: Lazy load non-critical components
+- **Unified Index**: Single data source for all prompt operations
+- **Pre-built Search Index**: Client-side search using pre-computed indexes
+- **Existing Optimizations**: Leverage all current performance features
+
+### Build Time Process Flow
+
+```typescript
+// Build-time processing pipeline
+async function buildPromptIndex(): Promise<PromptIndex> {
+  // 1. Process markdown files
+  const markdownPrompts = await processMarkdownFiles();
+
+  // 2. Build search indexes
+  const searchIndex = buildSearchIndex(markdownPrompts);
+
+  // 3. Generate category/tag indexes
+  const tagIndex = buildTagIndex(markdownPrompts);
+  const categoryIndex = buildCategoryIndex(markdownPrompts);
+
+  return {
+    prompts: markdownPrompts,
+    searchIndex,
+    tagIndex,
+    categoryIndex,
+    metadata: {
+      totalCount: markdownPrompts.length,
+      lastBuildTime: new Date().toISOString(),
+    },
+  };
+}
+```
 
 ## Error Handling
 
@@ -280,26 +413,8 @@ function generateSlug(title: string): string {
 
 - **Invalid Frontmatter**: Clear error messages with file location
 - **Missing Required Fields**: Specific field validation errors
-- **Duplicate Slugs**: Conflict detection and resolution
 - **Malformed Markdown**: Graceful handling with warnings
 
 ### Runtime Errors
 
-- **Missing Pages**: 404 handling with suggestions
-- **Search Failures**: Fallback to basic filtering
-- **Rendering Errors**: Error boundaries with recovery options
-
-## Security Considerations
-
-### Content Security
-
-- **Markdown Sanitization**: Prevent XSS in user content
-- **URL Validation**: Validate external links in sourceURL
-- **File Path Security**: Prevent directory traversal attacks
-- **Content Validation**: Ensure only valid markdown files are processed
-
-### Access Control
-
-- **Public Content**: All markdown-based prompts are public
-- **Author Attribution**: Maintain author information for accountability
-- **Source Tracking**: Track content origin through git history
+- **Existing Error Handling**: Reuse all current error boundaries and handling
