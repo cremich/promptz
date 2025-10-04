@@ -37,7 +37,7 @@
   - Ensure interaction tracking (downloads/copies) works for markdown prompts
   - _Requirements: 4.3, 5.2, 5.3, 6.1, 6.2, 7.2, 7.3_
 
-- [ ] 6. Update tag system integration
+- [x] 6. Update tag system integration
   - Modify existing tag pages to include markdown-based prompts
   - Update tag indexing to include markdown prompts with combined directory + frontmatter tags
   - Ensure tag counts include markdown-based prompts

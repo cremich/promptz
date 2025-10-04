@@ -8,6 +8,7 @@ import { GraphQLResult } from "aws-amplify/api";
 import { Prompt } from "@/lib/models/prompt-model";
 import { ProjectRule } from "@/lib/models/project-rule-model";
 import { Agent } from "@/lib/models/agent-model";
+import promptIndex from "@/data/prompt-index.json";
 
 interface TagsByCategoryResponse {
   listTagsByCategory: {
@@ -176,11 +177,6 @@ export async function getTag(name: string): Promise<Tag | undefined> {
       category
       description
       name
-      prompts {
-        items {
-          promptId
-        }
-      }
       rules {
         items {
           ruleId
@@ -211,7 +207,10 @@ export async function getTag(name: string): Promise<Tag | undefined> {
     }
 
     // Calculate counts from the response
-    const promptCount = tag.prompts?.items?.length || 0;
+    const promptCount =
+      promptIndex.prompts.filter((prompt) =>
+        prompt.tags?.some((tag) => tag.toLowerCase() === name.toLowerCase()),
+      ).length || 0;
     const ruleCount = tag.rules?.items.length || 0;
     const agentCount = tag.agents?.items?.length || 0;
 
@@ -246,23 +245,6 @@ export async function getPromptsRulesAndAgentsByTag(tagName: string): Promise<{
       category
       description
       name
-      prompts {
-        items {
-          prompt {
-            name
-            scope
-            description
-            tags
-            id
-            createdAt
-            updatedAt
-            copyCount
-            downloadCount
-            slug
-            sourceURL
-          }
-        }
-      }
       rules {
         items {
            rule {
@@ -318,7 +300,7 @@ export async function getPromptsRulesAndAgentsByTag(tagName: string): Promise<{
       throw new Error(result.errors[0].message);
     }
 
-    if (!result.data) {
+    if (!result.data || !result.data.getTag) {
       return {
         prompts: [],
         rules: [],
@@ -329,23 +311,32 @@ export async function getPromptsRulesAndAgentsByTag(tagName: string): Promise<{
 
     const tag = result.data.getTag;
 
-    const prompts = tag.prompts.items
-      .filter((p) => p.prompt.scope === "PUBLIC")
-      .map((p) => {
-        return {
-          name: p.prompt.name,
-          scope: p.prompt.scope,
-          description: p.prompt.description,
-          tags: p.prompt.tags,
-          id: p.prompt.id,
-          createdAt: p.prompt.createdAt,
-          updatedAt: p.prompt.updatedAt,
-          copyCount: p.prompt.copyCount || 0,
-          downloadCount: p.prompt.downloadCount || 0,
-          slug: p.prompt.slug,
-          sourceURL: p.prompt.sourceURL,
-        } as Prompt;
-      });
+    // Get markdown prompts that match the tag (case insensitive)
+    const markdownPrompts = promptIndex.prompts
+      .filter((prompt) =>
+        prompt.tags?.some((tag) => tag.toLowerCase() === tagName.toLowerCase()),
+      )
+      .map(
+        (prompt) =>
+          ({
+            id: prompt.id,
+            name: prompt.name,
+            slug: prompt.slug,
+            description: prompt.description,
+            tags: prompt.tags,
+            content: prompt.content,
+            howto: prompt.howto,
+            author: prompt.author,
+            sourceURL: prompt.sourceURL,
+            scope: prompt.scope,
+            createdAt: prompt.createdAt,
+            updatedAt: prompt.updatedAt,
+            copyCount: prompt.copyCount,
+            downloadCount: prompt.downloadCount,
+            starCount: prompt.starCount,
+            popularityScore: prompt.popularityScore,
+          }) as Prompt,
+      );
 
     const rules = tag.rules.items
       .filter((r) => r.rule.scope === "PUBLIC")
@@ -391,7 +382,7 @@ export async function getPromptsRulesAndAgentsByTag(tagName: string): Promise<{
         name: tag.name || "",
         description: tag.description || "",
       },
-      prompts: prompts,
+      prompts: markdownPrompts,
       rules: rules,
       agents: agents,
     };
@@ -399,24 +390,6 @@ export async function getPromptsRulesAndAgentsByTag(tagName: string): Promise<{
     console.error("Error fetching content by tag:", error);
     throw error;
   }
-}
-
-/**
- * Fetches prompts and rules associated with a specific tag (backward compatibility)
- * @param tagName - Name of the tag to filter by
- * @returns Promise containing prompts, rules and tags
- */
-export async function getPromptsAndRulesByTag(tagName: string): Promise<{
-  prompts: Prompt[];
-  rules: ProjectRule[];
-  tag?: Tag;
-}> {
-  const result = await getPromptsRulesAndAgentsByTag(tagName);
-  return {
-    prompts: result.prompts,
-    rules: result.rules,
-    tag: result.tag,
-  };
 }
 
 /**
