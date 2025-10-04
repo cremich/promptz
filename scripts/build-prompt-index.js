@@ -75,6 +75,8 @@ function convertMarkdownToPrompt(
 ) {
   const slug = generateSlugFromFilename(path.basename(filePath));
 
+  const stats = fs.statSync(filePath);
+
   return {
     id: generateId(filePath),
     slug,
@@ -86,8 +88,8 @@ function convertMarkdownToPrompt(
     author: frontmatter.author,
     sourceURL: frontmatter.sourceURL || "",
     scope: "PUBLIC",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    createdAt: stats.birthtime.toISOString(),
+    updatedAt: stats.mtime.toISOString(),
     copyCount: 0,
     downloadCount: 0,
     starCount: 0,

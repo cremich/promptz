@@ -23,7 +23,7 @@
   - Add content validation with clear error messages for missing required fields
   - _Requirements: 1.4, 2.3, 2.4, 3.3, 3.4, 6.3, 6.4_
 
-- [ ] 4. Update existing data actions to use markdown index
+- [x] 4. Update existing data actions to use markdown index
   - Modify existing prompt fetching actions to use markdown index instead of API
   - Update search functionality to work with markdown data source
   - Update filtering and browsing to include markdown prompts
