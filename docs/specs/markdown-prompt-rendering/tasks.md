@@ -1,7 +1,7 @@
 # Implementation Plan
 
-- [ ] 1. Setup content directory structure and templates
-  - Create `content/prompts/` directory with category subdirectories (`aws/`, `nextjs/`, `general/`)
+- [x] 1. Setup content directory structure and templates
+  - Create `content/prompts/` directory with purpose-based subdirectories (`architecture/`, `code-generation/`, `documentation/`, `testing/`, `analysis/`, `aws/`, `scaffolding/`, `spec-driven-development/`, `solutions/`, `persona/`, `general/`)
   - Create `templates/prompt-template.md` with example frontmatter and content structure
   - Add `.gitkeep` files to maintain empty directories
   - Update `.gitignore` to include content directory in version control
@@ -19,11 +19,18 @@
   - Implement file system scanning for `.md` files in content directory
   - Create build-time content processing pipeline
   - Generate searchable metadata index from processed prompts
-  - Implement category tag auto-assignment from directory structure
+  - Implement purpose category tag auto-assignment from directory structure
   - Add content validation with clear error messages for missing required fields
   - _Requirements: 1.4, 2.3, 2.4, 3.3, 3.4, 6.3, 6.4_
 
-- [ ] 4. Implement API integration for interaction tracking
+- [ ] 4. Update prompt rendering
+  - Implement `generateStaticParams` for prompt pages using processed markdown files
+  - Update existing prompt page component with markdown rendering
+  - Implement proper content section display (prompt content and how-to sections)
+  - Add metadata generation for SEO with proper title tags and meta descriptions
+  - _Requirements: 4.3, 5.2, 5.3, 6.1, 6.2_
+
+- [ ] 5. Implement API integration for interaction tracking
   - Create API sync logic to create/update prompt records using slug as identifier
   - Implement build-time API record synchronization for markdown prompts
   - Add interaction tracking integration (download/copy mutations)
@@ -31,21 +38,14 @@
   - Combine markdown metadata with API interaction data for display
   - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
 
-- [ ] 5. Implement tag system integration
+- [ ] 6. Implement tag system integration
   - Create tag merging logic to combine directory tags with frontmatter tags
   - Update tag indexing to include markdown-based prompts
   - Modify tag page data sources to include markdown prompts
   - Ensure tag counts include markdown-based prompts
   - Maintain existing `/tag/{tagName}` URL structure compatibility
+  - Map existing tags (IDE, Chat, CLI, Dev Agent) to purpose directories for migration
   - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5_
-
-- [ ] 6. Create static page generation for individual prompts
-  - Implement `generateStaticParams` for prompt pages using processed markdown files
-  - Create dynamic route `app/prompts/prompt/[slug]/page.tsx` (maintaining existing URL structure)
-  - Build prompt page component with markdown rendering
-  - Implement proper content section display (prompt content and how-to sections)
-  - Add metadata generation for SEO with proper title tags and meta descriptions
-  - _Requirements: 4.3, 5.2, 5.3, 6.1, 6.2_
 
 - [ ] 7. Update sitemap generation for SEO
   - Modify `app/sitemap.ts` to include markdown-based prompts

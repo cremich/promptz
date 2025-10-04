@@ -8,14 +8,15 @@ This specification defines the implementation of markdown-based prompt rendering
 
 ### Requirement 1: Content Directory Structure
 
-**User Story:** As a developer, I want to organize prompts in a structured directory hierarchy, so that content is easily discoverable and maintainable.
+**User Story:** As a developer, I want to organize prompts in a structured directory hierarchy based on purpose and functionality, so that content is easily discoverable and maintainable.
 
 #### Acceptance Criteria
 
 1. WHEN the application starts THE SYSTEM SHALL read prompts from a `content/prompts/` directory at the repository root
-2. WHEN organizing prompts THE SYSTEM SHALL support category subdirectories (e.g., `aws/`, `nextjs/`, `general/`)
+2. WHEN organizing prompts THE SYSTEM SHALL support purpose-based subdirectories (`architecture/`, `code-generation/`, `documentation/`, `testing/`, `analysis/`, `aws/`, `scaffolding/`, `spec-driven-development/`, `solutions/`, `persona/`, `general/`)
 3. WHEN a prompt file exists in a category directory THE SYSTEM SHALL automatically assign the directory name as a primary tag
 4. WHEN the content directory structure is modified THE SYSTEM SHALL reflect changes after rebuild
+5. WHEN users contribute prompts THE SYSTEM SHALL provide clear guidance on directory selection based on prompt purpose and functionality
 
 ### Requirement 2: Markdown File Processing
 
@@ -30,14 +31,15 @@ This specification defines the implementation of markdown-based prompt rendering
 
 ### Requirement 3: Frontmatter Schema
 
-**User Story:** As a content creator, I want a simple but comprehensive metadata schema, so that I can provide necessary information without complexity.
+**User Story:** As a content creator, I want a comprehensive metadata schema that preserves existing tag patterns, so that I can provide necessary information while maintaining backward compatibility.
 
 #### Acceptance Criteria
 
 1. WHEN defining prompt metadata THE SYSTEM SHALL require `title`, `description`, and `author` fields
 2. WHEN `slug` is not provided THE SYSTEM SHALL auto-generate it from the title
-3. WHEN `tags` are provided THE SYSTEM SHALL merge them with the auto-generated category tag
+3. WHEN `tags` are provided THE SYSTEM SHALL merge them with the auto-generated purpose category tag
 4. WHEN `sourceURL` is provided THE SYSTEM SHALL validate it as a proper URL
+5. WHEN migrating existing prompts THE SYSTEM SHALL preserve existing tag formats for backward compatibility
 
 ### Requirement 4: Markdown Content Structure
 

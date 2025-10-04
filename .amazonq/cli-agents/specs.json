@@ -6,6 +6,7 @@
     "fs_read",
     "fs_write",
     "execute_bash",
+    "use_aws",
     "@context7",
     "@awslabs.aws-documentation-mcp-server",
     "@fetch"

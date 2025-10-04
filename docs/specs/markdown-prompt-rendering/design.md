@@ -20,14 +20,47 @@ content/prompts/*.md → Frontmatter Parser → Content Processor → Static Pag
 promptz/
 ├── content/
 │   └── prompts/
+│       ├── architecture/
+│       │   ├── aws-architecture-blueprint.md
+│       │   ├── generate-mermaid-diagrams.md
+│       │   └── solution-design-patterns.md
+│       ├── code-generation/
+│       │   ├── build-ui-components.md
+│       │   ├── python-lambda-layers.md
+│       │   └── cdk-infrastructure.md
+│       ├── documentation/
+│       │   ├── adr-creation.md
+│       │   ├── project-specifications.md
+│       │   └── code-documentation.md
+│       ├── testing/
+│       │   ├── unit-test-generation.md
+│       │   ├── cypress-testing.md
+│       │   └── junit-patterns.md
+│       ├── analysis/
+│       │   ├── code-review-automation.md
+│       │   ├── security-analysis.md
+│       │   └── refactoring-guidance.md
 │       ├── aws/
-│       │   ├── lambda-best-practices.md
-│       │   └── s3-optimization.md
-│       ├── nextjs/
-│       │   ├── routing-patterns.md
-│       │   └── performance-tips.md
+│       │   ├── eks-cluster-setup.md
+│       │   ├── monitoring-alarms.md
+│       │   └── terraform-best-practices.md
+│       ├── scaffolding/
+│       │   ├── flask-app-bootstrap.md
+│       │   ├── workspace-setup.md
+│       │   └── ci-cd-workflows.md
+│       ├── spec-driven-development/
+│       │   ├── specification-creation.md
+│       │   └── implementation-planning.md
+│       ├── solutions/
+│       │   ├── complete-applications.md
+│       │   ├── data-pipelines.md
+│       │   └── api-solutions.md
+│       ├── persona/
+│       │   ├── senior-engineer-roles.md
+│       │   ├── expert-advisors.md
+│       │   └── specialized-coaches.md
 │       └── general/
-│           └── code-review-checklist.md
+│           └── git-workflows.md
 ├── templates/
 │   └── prompt-template.md
 └── lib/
@@ -78,7 +111,7 @@ interface PromptFrontmatter {
 title: "AWS Lambda Best Practices"
 description: "Essential patterns for serverless development"
 author: "john-doe"
-tags: ["serverless", "performance"]
+tags: ["IDE", "Chat", "Optimize"]
 sourceURL: "https://github.com/example/repo"
 ---
 
@@ -120,9 +153,9 @@ interface ProcessedPrompt {
 
 ### 1. Tag Sources
 
-- **Directory Tags**: Automatically assigned from content directory structure (e.g., `aws/`, `nextjs/`)
-- **Frontmatter Tags**: Additional tags specified in markdown frontmatter
-- **Tag Merging**: Combine directory and frontmatter tags for comprehensive tagging
+- **Directory Tags**: Automatically assigned from purpose-based directory structure (e.g., `architecture/`, `code-generation/`, `testing/`, `analysis/`, `aws/`, `scaffolding/`, `spec-driven-development/`, `solutions/`, `persona/`, `general/`)
+- **Frontmatter Tags**: Additional tags specified in markdown frontmatter to preserve existing tag ecosystem
+- **Tag Merging**: Combine directory and frontmatter tags for comprehensive tagging while maintaining backward compatibility
 
 ### 2. Tag Page Compatibility
 
@@ -137,7 +170,7 @@ interface ProcessedPrompt {
 interface TaggedPrompt {
   // ... other fields
   allTags: string[]; // Combined directory + frontmatter tags
-  primaryTag: string; // Directory-based category tag
+  primaryTag: string; // Directory-based purpose tag
   additionalTags: string[]; // Frontmatter-specified tags
 }
 ```
