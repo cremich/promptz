@@ -13,6 +13,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:index": "node scripts/build-prompt-index.js",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",

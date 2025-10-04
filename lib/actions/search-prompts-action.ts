@@ -1,11 +1,7 @@
 "use server";
-import { cookies } from "next/headers";
-import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
-import { type Schema } from "../../amplify/data/resource";
-import outputs from "../../amplify_outputs.json";
 import { z } from "zod";
-import { normalizeTags } from "../utils";
 import { Prompt, promptSearchParamsSchema } from "@/lib/models/prompt-model";
+import promptIndex from "@/data/prompt-index.json";
 
 interface FetchPromptsResult {
   prompts: Prompt[];
@@ -14,11 +10,6 @@ interface FetchPromptsResult {
 
 type SearchSchema = z.output<typeof promptSearchParamsSchema>;
 
-const appsync = generateServerClientUsingCookies<Schema>({
-  config: outputs,
-  cookies,
-});
-
 export async function searchPrompts(
   params: SearchSchema,
 ): Promise<FetchPromptsResult> {
@@ -26,49 +17,40 @@ export async function searchPrompts(
     // Validate search params
     const validatedParams = promptSearchParamsSchema.parse(params);
 
-    // Normalize tags to always be an array or undefined
-    const normalizedTags = normalizeTags(validatedParams.tags || []);
+    let filteredPrompts = promptIndex.prompts as Prompt[];
 
-    const { data: searchResults, errors } = await appsync.queries.searchPrompts(
-      {
-        query: validatedParams.query,
-        tags: normalizedTags,
-      },
-    );
-
-    if (errors && errors.length > 0) {
-      throw new Error(errors[0].message);
+    // Filter by query (search in title, description, content)
+    if (validatedParams.query) {
+      const query = validatedParams.query.toLowerCase();
+      filteredPrompts = filteredPrompts.filter(
+        (prompt) =>
+          prompt.name?.toLowerCase().includes(query) ||
+          prompt.description?.toLowerCase().includes(query) ||
+          prompt.content?.toLowerCase().includes(query),
+      );
     }
 
-    if (!searchResults?.results) {
-      return {
-        prompts: [],
-        nextToken: undefined,
-      };
+    // Filter by tags
+    if (validatedParams.tags && validatedParams.tags.length > 0) {
+      const normalizedTags = Array.isArray(validatedParams.tags)
+        ? validatedParams.tags
+        : [validatedParams.tags];
+
+      filteredPrompts = filteredPrompts.filter((prompt) =>
+        normalizedTags.some((tag) =>
+          prompt.tags?.some(
+            (promptTag) => promptTag.toLowerCase() === tag.toLowerCase(),
+          ),
+        ),
+      );
     }
 
-    // Map the prompts to our frontend model
-    let promptList = searchResults?.results
-      ?.filter((p) => p != null)
-      .map((p) => {
-        return {
-          id: p.id || "",
-          name: p.name || "",
-          description: p.description || "",
-          slug: p.slug || "",
-          tags: p.tags,
-          createdAt: p.createdAt || "",
-          updatedAt: p.updatedAt || "",
-          copyCount: p.copyCount || 0,
-          downloadCount: p.downloadCount || 0,
-        } as Prompt;
-      });
-
+    // Sort results
     const sortParam = validatedParams.sort || "created_at:desc";
     const [sortField, sortDirection] = sortParam.split(":");
 
     if (sortField === "created_at") {
-      promptList = promptList.sort((a, b) => {
+      filteredPrompts = filteredPrompts.sort((a, b) => {
         const aDate = new Date(a.createdAt || "").getTime();
         const bDate = new Date(b.createdAt || "").getTime();
         return sortDirection === "asc" ? aDate - bDate : bDate - aDate;
@@ -76,7 +58,7 @@ export async function searchPrompts(
     }
 
     if (sortField === "trending") {
-      promptList = promptList.sort((a, b) => {
+      filteredPrompts = filteredPrompts.sort((a, b) => {
         const aCount = a.copyCount || 0;
         const bCount = b.copyCount || 0;
         return bCount - aCount;
@@ -84,11 +66,11 @@ export async function searchPrompts(
     }
 
     return {
-      prompts: promptList,
-      nextToken: searchResults.nextToken,
+      prompts: filteredPrompts,
+      nextToken: undefined, // No pagination for markdown-based prompts
     };
   } catch (error) {
-    console.error("Error fetching prompts:", error);
+    console.error("Error searching prompts:", error);
     throw error;
   }
 }
