@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import { v4 as uuidv4 } from "uuid";
 import { parseMarkdownFile } from "./parser";
 import { extractContentSections, generateSlugFromFilename } from "./processor";
 import type { PromptFrontmatter } from "./types";
@@ -46,6 +45,15 @@ export async function scanMarkdownFiles(contentDir: string): Promise<string[]> {
   return files;
 }
 
+function generateId(filePath: string): string {
+  // Create deterministic ID from file path
+  // Remove content/prompts/ prefix and .md suffix, replace slashes with dashes
+  const relativePath = filePath
+    .replace(/^.*content\/prompts\//, "")
+    .replace(/\.md$/, "");
+  return relativePath.replace(/\//g, "-");
+}
+
 export function convertMarkdownToPrompt(
   frontmatter: PromptFrontmatter,
   content: string,
@@ -56,7 +64,7 @@ export function convertMarkdownToPrompt(
   const slug = generateSlugFromFilename(path.basename(filePath));
 
   return {
-    id: uuidv4(),
+    id: generateId(filePath),
     slug,
     name: frontmatter.title,
     description: frontmatter.description,

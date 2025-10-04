@@ -84,7 +84,7 @@ describe("convertMarkdownToPrompt", () => {
     expect(prompt.sourceURL).toBeUndefined();
   });
 
-  test("should generate unique ID from file path", () => {
+  test("should generate deterministic ID from file path", () => {
     const frontmatter: PromptFrontmatter = {
       title: "Test",
       description: "Test",
@@ -96,19 +96,28 @@ describe("convertMarkdownToPrompt", () => {
       "",
       "",
       "general",
-      "file1.md",
+      "content/prompts/general/file1.md",
     );
     const prompt2 = convertMarkdownToPrompt(
       frontmatter,
       "",
       "",
-      "general",
-      "file2.md",
+      "architecture",
+      "content/prompts/architecture/file2.md",
     );
 
-    expect(prompt1.id).toBeDefined();
-    expect(prompt2.id).toBeDefined();
-    expect(prompt1.id).not.toBe(prompt2.id);
+    expect(prompt1.id).toBe("general-file1");
+    expect(prompt2.id).toBe("architecture-file2");
+
+    // Same file path should generate same ID
+    const prompt1Again = convertMarkdownToPrompt(
+      frontmatter,
+      "",
+      "",
+      "general",
+      "content/prompts/general/file1.md",
+    );
+    expect(prompt1Again.id).toBe(prompt1.id);
   });
 
   test("should assign category from directory structure", () => {
