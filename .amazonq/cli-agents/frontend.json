@@ -38,6 +38,7 @@
     "file://README.md",
     "file://AGENTS.md",
     "file://.amazonq/rules/nextjs.md",
+    "file://.amazonq/rules/conversations.md",
     "file://.amazonq/project-intelligence/*.md"
   ],
   "hooks": {
