@@ -320,6 +320,220 @@ This creates a single `tags` array containing:
 
 Result: `["architecture", "IDE", "Chat", "Optimize"]`
 
+## Content Creation Workflow
+
+### 1. Pull Request Templates
+
+Create multiple PR templates in `.github/PULL_REQUEST_TEMPLATE/`:
+
+#### `.github/PULL_REQUEST_TEMPLATE/new_prompt.md`:
+
+```markdown
+## New Prompt Submission
+
+### Prompt Information
+
+- **Category**: <!-- Select: architecture, code-generation, documentation, testing, analysis, aws, scaffolding, spec-driven-development, solutions, persona, general -->
+- **Title**: <!-- Brief, descriptive title -->
+- **Description**: <!-- What does this prompt accomplish? -->
+
+### Checklist
+
+- [ ] I have placed the markdown file in the appropriate category directory
+- [ ] I have filled out all required frontmatter fields (title, description, author)
+- [ ] I have included a "How to Use" section with clear instructions
+- [ ] I have followed the naming convention (lowercase-with-hyphens.md)
+- [ ] I have reviewed the [prompt template](templates/prompt-template.md) for guidance
+
+### Content Guidelines
+
+Please ensure your prompt:
+
+- Has a clear, descriptive title
+- Includes step-by-step usage instructions
+- Is appropriate for public sharing
+- Does not contain sensitive information
+- Follows the markdown structure in `templates/prompt-template.md`
+
+**Directory Selection Guide:**
+
+- `architecture/` - Diagrams, system design, blueprints
+- `code-generation/` - Generate code, scaffolding, boilerplate
+- `documentation/` - ADRs, specs, project docs
+- `testing/` - Unit tests, test generation, QA
+- `analysis/` - Code review, security, optimization
+- `aws/` - AWS-specific infrastructure and services
+- `scaffolding/` - Project setup, environment configuration
+- `spec-driven-development/` - Specification creation and planning
+- `solutions/` - Complete applications and services
+- `persona/` - AI behavior and role-setting prompts
+- `general/` - Miscellaneous utilities
+```
+
+#### Template Selection
+
+Contributors will select the appropriate template when creating a PR:
+
+- `new_prompt.md` - For new prompt submissions
+- `bug_report.md` - For existing bug reports (already exists)
+- `feature_request.md` - For feature requests (already exists)
+
+### 2. GitHub Workflow Validation
+
+Create `.github/workflows/validate-prompts.yml`:
+
+```yaml
+name: Validate New Prompts
+
+on:
+  pull_request:
+    paths:
+      - "content/prompts/**/*.md"
+
+jobs:
+  validate-prompts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate modified prompts
+        run: npm run validate:prompts
+
+      - name: Run prompt build tests
+        run: npm run test:prompts
+
+      - name: Test full build process
+        run: npm run build
+```
+
+### 3. Validation Requirements
+
+#### Frontmatter Validation
+
+```typescript
+interface PromptValidation {
+  // Required fields
+  title: string; // 1-100 characters
+  description: string; // 10-500 characters
+  author: string; // 1-50 characters
+
+  // Optional fields
+  tags?: string[]; // Max 10 tags, each 1-30 characters
+  sourceURL?: string; // Valid URL format
+}
+```
+
+#### Content Validation
+
+- **File naming**: `lowercase-with-hyphens.md` pattern
+- **Content length**: 10-4000 characters for main prompt
+- **How-to section**: Present and non-empty
+- **Security checks**:
+  - No suspicious Unicode characters
+  - No base64 encoded content
+  - No image data URLs
+  - No script tags or HTML injection
+
+#### File Structure Validation
+
+```typescript
+interface ValidationChecks {
+  frontmatterValid: boolean;
+  requiredFieldsPresent: boolean;
+  contentLengthValid: boolean;
+  fileNamingValid: boolean;
+  securityChecksPass: boolean;
+  markdownParsingSucceeds: boolean;
+}
+```
+
+### 4. Automated Testing
+
+#### Unit Tests for New Prompts
+
+```typescript
+describe("New Prompt Validation", () => {
+  test("should parse frontmatter correctly", () => {
+    // Test frontmatter extraction from submitted files
+  });
+
+  test("should generate valid Prompt object", () => {
+    // Test conversion to Prompt model
+  });
+
+  test("should include in search index", () => {
+    // Test search index generation
+  });
+
+  test("should generate static page", () => {
+    // Test page generation
+  });
+});
+```
+
+#### Integration Tests
+
+```typescript
+describe("Full Build Process", () => {
+  test("should build successfully with new prompts", () => {
+    // Test complete build pipeline
+  });
+
+  test("should generate valid sitemap", () => {
+    // Test sitemap includes new prompts
+  });
+
+  test("should update tag indexes", () => {
+    // Test tag system integration
+  });
+});
+```
+
+### 5. Approval Process
+
+#### Automated Approval Criteria
+
+- [ ] All validation checks pass
+- [ ] Unit tests pass
+- [ ] Integration tests pass
+- [ ] Build process succeeds
+- [ ] No security violations detected
+
+#### Manual Review Triggers
+
+- First-time contributors
+- Prompts with external URLs
+- Prompts in sensitive categories (aws, security)
+- Large content changes
+
+### 6. Contributor Guidance
+
+#### Getting Started
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b add-prompt-{prompt-name}`
+3. Copy `templates/prompt-template.md` to appropriate category directory
+4. Fill out frontmatter and content
+5. Test locally: `npm run validate:prompts`
+6. Create pull request using "New Prompt" template
+
+#### Best Practices
+
+- Use descriptive, SEO-friendly filenames
+- Include comprehensive "How to Use" sections
+- Test prompts before submission
+- Reference existing prompts for inspiration
+- Follow community guidelines
+
 ## Component Architecture (Reuse Existing)
 
 ### 1. Existing Components (No Changes)
