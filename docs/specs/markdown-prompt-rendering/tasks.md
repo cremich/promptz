@@ -15,7 +15,7 @@
   - Add slug generation utility (derive from filename)
   - _Requirements: 2.1, 2.2, 3.1, 3.2, 4.1, 4.2, 5.1_
 
-- [ ] 3. Build prompt index at build time
+- [x] 3. Build prompt index at build time
   - Implement file system scanning for `.md` files in content directory
   - Create build-time content processing pipeline that converts markdown to existing Prompt model
   - Generate search index from markdown prompts only
