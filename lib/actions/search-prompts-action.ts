@@ -57,14 +57,6 @@ export async function searchPrompts(
       });
     }
 
-    if (sortField === "trending") {
-      filteredPrompts = filteredPrompts.sort((a, b) => {
-        const aCount = a.copyCount || 0;
-        const bCount = b.copyCount || 0;
-        return bCount - aCount;
-      });
-    }
-
     return {
       prompts: filteredPrompts,
       nextToken: undefined, // No pagination for markdown-based prompts

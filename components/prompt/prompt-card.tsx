@@ -25,10 +25,6 @@ function GetPopularityBadge(copyCount: number) {
 }
 
 export default function PromptCard({ prompt }: PromptCardProps) {
-  const popularityBadge = prompt.copyCount
-    ? GetPopularityBadge(prompt.copyCount)
-    : null;
-
   return (
     <Link
       href={`/prompts/prompt/${prompt.slug}`}
@@ -41,12 +37,6 @@ export default function PromptCard({ prompt }: PromptCardProps) {
       >
         <CardHeader className="pb-1">
           <div className="space-y-4">
-            {popularityBadge && (
-              <Badge className={`${popularityBadge.color} text-white text-xs`}>
-                <Flame className="w-3 h-3 mr-1" />
-                {popularityBadge.label}
-              </Badge>
-            )}
             {prompt.tags && <Tags tags={prompt.tags} />}
             <CardTitle className="text-lg font-semibold text-white group-hover:text-violet-300 transition-colors">
               {prompt.name}
@@ -58,20 +48,6 @@ export default function PromptCard({ prompt }: PromptCardProps) {
         </CardContent>
         <CardFooter className="flex justify-between items-center">
           {prompt.author && <Author name={prompt.author} />}
-          <div className="flex items-center gap-4 text-muted-foreground text-sm">
-            {prompt.copyCount !== undefined && (
-              <div className="flex items-center">
-                <Copy className="w-4 h-4 mr-1" />
-                <span>{prompt.copyCount.toLocaleString()} times copied</span>
-              </div>
-            )}
-            {prompt.downloadCount !== undefined && (
-              <div className="flex items-center">
-                <Download className="w-4 h-4 mr-1" />
-                <span>{prompt.downloadCount.toLocaleString()} downloads</span>
-              </div>
-            )}
-          </div>
         </CardFooter>
       </Card>
     </Link>

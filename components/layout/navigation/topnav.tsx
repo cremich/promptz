@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { links } from "@/lib/navigation";
-import UserMenu from "@/components/layout/navigation/user-menu";
 import MobileMenu from "@/components/layout/navigation/mobile-menu";
 
 export default async function TopNavigation() {
@@ -36,14 +35,6 @@ export default async function TopNavigation() {
           </div>
         </div>
 
-        {/* Desktop navigation links */}
-
-        {/* User menu dropdown */}
-        <div className="hidden md:flex items-center">
-          <UserMenu />
-        </div>
-
-        {/* Mobile menu button */}
         <MobileMenu />
       </div>
     </nav>

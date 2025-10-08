@@ -1,7 +1,6 @@
 import { Agent } from "@/lib/models/agent-model";
 import Author from "@/components/common/author";
 import Tags from "@/components/common/tags";
-import { Flame, Copy, Download } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -16,18 +15,7 @@ interface AgentCardProps {
   agent: Agent;
 }
 
-function GetPopularityBadge(totalUsage: number) {
-  if (totalUsage >= 100)
-    return { label: "Hot", color: "bg-red-500 hover:bg-red-600" };
-  if (totalUsage >= 50)
-    return { label: "Trending", color: "bg-orange-500 hover:bg-orange-600" };
-  return null;
-}
-
 export default function AgentCard({ agent }: AgentCardProps) {
-  const totalUsage = (agent.copyCount || 0) + (agent.downloadCount || 0);
-  const popularityBadge = GetPopularityBadge(totalUsage);
-
   return (
     <Link
       href={`/agents/agent/${agent.slug}`}
@@ -40,12 +28,6 @@ export default function AgentCard({ agent }: AgentCardProps) {
       >
         <CardHeader className="pb-1">
           <div className="space-y-4">
-            {popularityBadge && (
-              <Badge className={`${popularityBadge.color} text-white text-xs`}>
-                <Flame className="w-3 h-3 mr-1" />
-                {popularityBadge.label}
-              </Badge>
-            )}
             {agent.tags && <Tags tags={agent.tags} />}
             <CardTitle className="text-lg font-semibold text-white group-hover:text-violet-300 transition-colors">
               {agent.name}
@@ -78,20 +60,6 @@ export default function AgentCard({ agent }: AgentCardProps) {
         </CardContent>
         <CardFooter className="flex justify-between items-center">
           {agent.author && <Author name={agent.author} />}
-          <div className="flex items-center gap-4 text-muted-foreground text-sm">
-            {agent.copyCount !== undefined && agent.copyCount > 0 && (
-              <div className="flex items-center">
-                <Copy className="w-4 h-4 mr-1" />
-                <span>{agent.copyCount.toLocaleString()}</span>
-              </div>
-            )}
-            {agent.downloadCount !== undefined && agent.downloadCount > 0 && (
-              <div className="flex items-center">
-                <Download className="w-4 h-4 mr-1" />
-                <span>{agent.downloadCount.toLocaleString()}</span>
-              </div>
-            )}
-          </div>
         </CardFooter>
       </Card>
     </Link>

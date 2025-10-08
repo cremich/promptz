@@ -13,13 +13,6 @@ jest.mock("@/lib/navigation", () => ({
   ],
 }));
 
-// Mock the UserMenu component
-jest.mock("@/components/layout/navigation/user-menu", () => {
-  return function UserMenu() {
-    return <div data-testid="user-menu-mock">User Menu Mock</div>;
-  };
-});
-
 // Mock the MobileMenu component
 jest.mock("@/components/layout/navigation/mobile-menu", () => {
   return function MobileMenu() {
@@ -65,14 +58,6 @@ describe("TopNavigation", () => {
     const mcpServerLink = screen.getByRole("link", { name: "MCP Server" });
     expect(mcpServerLink).toBeInTheDocument();
     expect(mcpServerLink).toHaveAttribute("href", "/mcp");
-  });
-
-  test("Renders UserMenu component", async () => {
-    render(await TopNavigation());
-
-    // Check if UserMenu component is rendered
-    const userMenu = screen.getByTestId("user-menu-mock");
-    expect(userMenu).toBeInTheDocument();
   });
 
   test("Renders MobileMenu component", async () => {

@@ -9,7 +9,6 @@ describe("fetchPromptBySlug", () => {
     expect(result?.slug).toBe("12-factor-refactoring-dac01c8d");
     expect(result?.name).toBe("12-factor refactoring");
     expect(result?.author).toBe("cremich");
-    expect(result?.scope).toBe("PUBLIC");
     expect(result?.tags).toContain("analysis");
   });
 
@@ -33,6 +32,5 @@ describe("fetchPromptBySlug", () => {
     expect(result).toHaveProperty("scope");
     expect(result).toHaveProperty("createdAt");
     expect(result).toHaveProperty("updatedAt");
-    expect(result?.authorId).toBeUndefined(); // Should be undefined for markdown prompts
   });
 });

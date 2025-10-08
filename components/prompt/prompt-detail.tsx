@@ -1,18 +1,14 @@
 import Tags from "@/components/common/tags";
-import { HelpCircle, Terminal, Copy, Download } from "lucide-react";
+import { HelpCircle, Terminal } from "lucide-react";
 import PromptInstruction from "@/components/prompt/prompt-instruction";
 import CopyClipBoardButton from "@/components/common/copy-clipboard";
 import { SourceURL } from "@/components/common/source-url";
-import { ModelType } from "@/lib/forms/schema-definitions";
 import PromptHowTo from "@/components/prompt/prompt-howto";
-import EditButton from "@/components/common/edit-button";
 import { Prompt } from "@/lib/models/prompt-model";
 import Submission from "@/components/common/submission";
-import { DownloadButton } from "@/components/common/download-button";
 
 interface PromptProps {
   prompt: Prompt;
-  isOwner: boolean;
 }
 
 export default async function PromptDetail(props: PromptProps) {
@@ -41,27 +37,9 @@ export default async function PromptDetail(props: PromptProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              {/* Show edit button only if the user is the owner */}
-              {props.prompt.slug && props.isOwner && (
-                <EditButton
-                  href={`/prompts/prompt/${props.prompt.slug}/edit`}
-                  name="Edit Prompt"
-                />
-              )}
               {props.prompt.content && (
                 <>
-                  <CopyClipBoardButton
-                    id={props.prompt.id!}
-                    type={ModelType.PROMPT}
-                    text={props.prompt.content}
-                  />
-                  <DownloadButton
-                    id={props.prompt.id!}
-                    content={props.prompt.content}
-                    filename={`promptz-prompt-${props.prompt.slug}`}
-                    label="Download"
-                    modelType={ModelType.PROMPT}
-                  />
+                  <CopyClipBoardButton text={props.prompt.content} />
                 </>
               )}
             </div>
@@ -69,34 +47,11 @@ export default async function PromptDetail(props: PromptProps) {
 
           {/* Stats and metadata */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            {/* Prompt stats */}
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
-                <Copy className="h-4 w-4 text-violet-400" />
-                <span className="text-sm font-medium">
-                  <span data-testid="copy-count">
-                    {props.prompt.copyCount || 0}
-                  </span>{" "}
-                  copies
-                </span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
-                <Download className="h-4 w-4 text-violet-400" />
-                <span className="text-sm font-medium">
-                  <span data-testid="download-count">
-                    {props.prompt.downloadCount || 0}
-                  </span>{" "}
-                  downloads
-                </span>
-              </div>
-            </div>
-
             {/* Tags and metadata */}
             <Submission
               createdAt={props.prompt.createdAt}
               updatedAt={props.prompt.updatedAt}
               author={props.prompt.author}
-              scope={props.prompt.scope}
             />
           </div>
         </div>

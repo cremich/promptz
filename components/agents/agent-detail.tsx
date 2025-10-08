@@ -2,8 +2,6 @@ import Tags from "@/components/common/tags";
 import {
   Terminal,
   Settings,
-  Copy,
-  Download,
   Wrench,
   Server,
   FileText,
@@ -12,16 +10,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { SourceURL } from "@/components/common/source-url";
-import { ModelType } from "@/lib/forms/schema-definitions";
-import EditButton from "@/components/common/edit-button";
 import { Agent } from "@/lib/models/agent-model";
-import { DownloadButton } from "@/components/common/download-button";
 import PromptInstruction from "@/components/prompt/prompt-instruction";
 import Submission from "@/components/common/submission";
 
 interface AgentProps {
   agent: Agent;
-  isOwner: boolean;
 }
 
 export default function AgentDetail(props: AgentProps) {
@@ -48,56 +42,15 @@ export default function AgentDetail(props: AgentProps) {
                 <Tags tags={props.agent.tags} />
               )}
             </div>
-
-            <div className="flex items-center gap-3">
-              {/* Show edit button only if the user is the owner */}
-              {props.agent.slug && props.isOwner && (
-                <EditButton
-                  href={`/agents/agent/${props.agent.slug}/edit`}
-                  name="Edit Agent"
-                />
-              )}
-              {props.agent.id && props.agent.name && (
-                <DownloadButton
-                  content={props.agent}
-                  modelType={ModelType.AGENT}
-                  id={props.agent.id}
-                  filename={props.agent.name}
-                />
-              )}
-            </div>
           </div>
 
           {/* Stats and metadata */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            {/* Agent stats */}
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
-                <Copy className="h-4 w-4 text-violet-400" />
-                <span className="text-sm font-medium">
-                  <span data-testid="copy-count">
-                    {props.agent.copyCount || 0}
-                  </span>{" "}
-                  copies
-                </span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
-                <Download className="h-4 w-4 text-violet-400" />
-                <span className="text-sm font-medium">
-                  <span data-testid="download-count">
-                    {props.agent.downloadCount || 0}
-                  </span>{" "}
-                  downloads
-                </span>
-              </div>
-            </div>
-
             {/* Tags and metadata */}
             <Submission
               createdAt={props.agent.createdAt}
               updatedAt={props.agent.updatedAt}
               author={props.agent.author}
-              scope={props.agent.scope}
             />
           </div>
         </div>

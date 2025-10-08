@@ -27,8 +27,6 @@ describe("AgentCard", () => {
     tags: ["development", "testing"],
     tools: ["git", "npm", "docker"],
     author: "Test Author",
-    copyCount: 25,
-    downloadCount: 15,
     createdAt: "2024-01-01T00:00:00Z",
     updatedAt: "2024-01-01T00:00:00Z",
   };
@@ -52,37 +50,6 @@ describe("AgentCard", () => {
     expect(screen.getByText("git")).toBeInTheDocument();
     expect(screen.getByText("npm")).toBeInTheDocument();
     expect(screen.getByText("docker")).toBeInTheDocument();
-  });
-
-  test("renders agent card with usage statistics", () => {
-    render(<AgentCard agent={mockAgent} />);
-
-    expect(screen.getByText("25")).toBeInTheDocument();
-    expect(screen.getByText("15")).toBeInTheDocument();
-  });
-
-  test("renders trending badge for popular agents", () => {
-    const popularAgent: Agent = {
-      ...mockAgent,
-      copyCount: 30,
-      downloadCount: 25,
-    };
-
-    render(<AgentCard agent={popularAgent} />);
-
-    expect(screen.getByText("Trending")).toBeInTheDocument();
-  });
-
-  test("renders hot badge for very popular agents", () => {
-    const hotAgent: Agent = {
-      ...mockAgent,
-      copyCount: 60,
-      downloadCount: 50,
-    };
-
-    render(<AgentCard agent={hotAgent} />);
-
-    expect(screen.getByText("Hot")).toBeInTheDocument();
   });
 
   test("renders agent card with many tools showing overflow", () => {
@@ -125,38 +92,10 @@ describe("AgentCard", () => {
   test("does not show usage statistics when counts are zero", () => {
     const agentWithZeroCounts: Agent = {
       ...mockAgent,
-      copyCount: 0,
-      downloadCount: 0,
     };
 
     render(<AgentCard agent={agentWithZeroCounts} />);
 
-    expect(screen.queryByText("0")).not.toBeInTheDocument();
-  });
-
-  test("shows only copy count when download count is zero", () => {
-    const agentWithOnlyCopies: Agent = {
-      ...mockAgent,
-      copyCount: 10,
-      downloadCount: 0,
-    };
-
-    render(<AgentCard agent={agentWithOnlyCopies} />);
-
-    expect(screen.getByText("10")).toBeInTheDocument();
-    expect(screen.queryByText("0")).not.toBeInTheDocument();
-  });
-
-  test("shows only download count when copy count is zero", () => {
-    const agentWithOnlyDownloads: Agent = {
-      ...mockAgent,
-      copyCount: 0,
-      downloadCount: 8,
-    };
-
-    render(<AgentCard agent={agentWithOnlyDownloads} />);
-
-    expect(screen.getByText("8")).toBeInTheDocument();
     expect(screen.queryByText("0")).not.toBeInTheDocument();
   });
 });

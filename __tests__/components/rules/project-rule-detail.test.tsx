@@ -3,18 +3,11 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ProjectRuleDetail from "@/components/rules/project-rule-detail";
 import { ProjectRule } from "@/lib/models/project-rule-model";
-import { ModelType } from "@/lib/forms/schema-definitions";
 
 // Mock the child components
 jest.mock("@/components/common/tags", () => {
   return function MockTags({ tags }: { tags: string[] }) {
     return <div data-testid="tags-mock">{tags.join(", ")}</div>;
-  };
-});
-
-jest.mock("@/components/common/edit-button", () => {
-  return function MockEditRuleButton({ href }: { href: string }) {
-    return <button data-testid="edit-button-mock">Edit {href}</button>;
   };
 });
 
@@ -26,66 +19,19 @@ jest.mock("@/components/common/source-url", () => {
   };
 });
 
-jest.mock("@/components/common/copy-clipboard", () => {
-  return function MockCopyClipBoardButton({
-    id,
-    type,
-    text,
-  }: {
-    id: string;
-    type: ModelType;
-    text: string;
-  }) {
-    return <button data-testid="copy-button-mock">Copy</button>;
-  };
-});
-
-jest.mock("@/components/common/download-button", () => {
-  return {
-    DownloadButton: function MockDownloadButton({
-      id,
-      content,
-      filename,
-      label,
-    }: {
-      id: string;
-      content: string;
-      filename: string;
-      label: string;
-    }) {
-      return <button data-testid="download-button-mock">{label}</button>;
-    },
-  };
-});
-
 jest.mock("@/components/common/submission", () => {
   return function MockSubmission({
     createdAt,
     updatedAt,
     author,
-    scope,
   }: {
     createdAt?: string;
     updatedAt?: string;
     author?: string;
-    scope?: string;
   }) {
-    const formattedDate = createdAt
-      ? new Date(updatedAt || createdAt).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
-      : "Unknown date";
-    const authorText = author ? `by @${author}` : ``;
     return (
-      <div className="flex items-center gap-3">
-        <div data-testid="submitted-date">
-          Submitted on {formattedDate} {authorText}
-        </div>
-        {scope !== undefined && (
-          <div>{scope === "PUBLIC" ? "Public" : "Private"}</div>
-        )}
+      <div data-testid="mock-submission">
+        {createdAt} {updatedAt} {author}
       </div>
     );
   };
@@ -108,7 +54,7 @@ describe("ProjectRuleDetail", () => {
   };
 
   test("Renders the project rule details correctly", () => {
-    render(<ProjectRuleDetail projectRule={mockProjectRule} isOwner={false} />);
+    render(<ProjectRuleDetail projectRule={mockProjectRule} />);
 
     // Check if title is rendered
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
@@ -124,11 +70,6 @@ describe("ProjectRuleDetail", () => {
     const tags = screen.getByTestId("tags-mock");
     expect(tags).toHaveTextContent("test, rule, example");
 
-    // Check if date is rendered (author is now part of the submission component)
-    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
-      "Submitted on January 2, 2023 by @Test Author",
-    );
-
     // Check if content is rendered
     expect(
       screen.getByText(
@@ -140,20 +81,8 @@ describe("ProjectRuleDetail", () => {
     const sourceUrl = screen.getByTestId("source-url-mock");
     expect(sourceUrl).toHaveTextContent("https://github.com/example/repo");
 
-    // Check if copy and download buttons are rendered
-    expect(screen.getByTestId("copy-button-mock")).toBeInTheDocument();
-    expect(screen.getByTestId("download-button-mock")).toBeInTheDocument();
-
     // Check that edit button is not rendered for non-owners
     expect(screen.queryByTestId("edit-button-mock")).not.toBeInTheDocument();
-  });
-
-  test("Shows edit button when user is the owner", () => {
-    render(<ProjectRuleDetail projectRule={mockProjectRule} isOwner={true} />);
-
-    // Check if edit button is rendered for owners
-    const editButton = screen.getByTestId("edit-button-mock");
-    expect(editButton).toBeInTheDocument();
   });
 
   test("Handles missing optional fields gracefully", () => {
@@ -163,9 +92,7 @@ describe("ProjectRuleDetail", () => {
       description: "Minimal description",
     };
 
-    render(
-      <ProjectRuleDetail projectRule={minimalProjectRule} isOwner={false} />,
-    );
+    render(<ProjectRuleDetail projectRule={minimalProjectRule} />);
 
     // Check if title and description are rendered
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
@@ -176,16 +103,6 @@ describe("ProjectRuleDetail", () => {
     // Check that optional elements are not rendered
     expect(screen.queryByTestId("tags-mock")).not.toBeInTheDocument();
     expect(screen.queryByTestId("source-url-mock")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("copy-button-mock")).not.toBeInTheDocument();
-    expect(
-      screen.queryByTestId("download-button-mock"),
-    ).not.toBeInTheDocument();
-    expect(screen.queryByTestId("edit-button-mock")).not.toBeInTheDocument();
-
-    // Check that date shows as unknown when createdAt is missing
-    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
-      "Submitted on Unknown date",
-    );
 
     // Check that content section is not rendered when content is missing
     expect(
@@ -193,25 +110,8 @@ describe("ProjectRuleDetail", () => {
     ).not.toBeInTheDocument();
   });
 
-  test("Uses updatedAt date when available", () => {
-    const projectRuleWithUpdate: ProjectRule = {
-      ...mockProjectRule,
-      createdAt: "2023-01-01T00:00:00.000Z",
-      updatedAt: "2023-02-15T00:00:00.000Z",
-    };
-
-    render(
-      <ProjectRuleDetail projectRule={projectRuleWithUpdate} isOwner={false} />,
-    );
-
-    // Check if the displayed date is the updated date
-    expect(screen.getByTestId("submitted-date")).toHaveTextContent(
-      "Submitted on February 15, 2023",
-    );
-  });
-
   test("Renders hero section with proper structure", () => {
-    render(<ProjectRuleDetail projectRule={mockProjectRule} isOwner={false} />);
+    render(<ProjectRuleDetail projectRule={mockProjectRule} />);
 
     // Check if hero section is rendered
     const heroSection = screen.getByTestId("project-rule-hero-section");
@@ -225,9 +125,7 @@ describe("ProjectRuleDetail", () => {
       downloadCount: 25,
     };
 
-    render(
-      <ProjectRuleDetail projectRule={projectRuleWithCounts} isOwner={false} />,
-    );
+    render(<ProjectRuleDetail projectRule={projectRuleWithCounts} />);
 
     // Check if copy count is displayed
     expect(screen.getByTestId("copy-count")).toHaveTextContent("15");
@@ -238,27 +136,8 @@ describe("ProjectRuleDetail", () => {
     expect(screen.getByText("downloads")).toBeInTheDocument();
   });
 
-  test("Displays zero counts when copy and download counts are not provided", () => {
-    const projectRuleWithoutCounts: ProjectRule = {
-      ...mockProjectRule,
-      copyCount: undefined,
-      downloadCount: undefined,
-    };
-
-    render(
-      <ProjectRuleDetail
-        projectRule={projectRuleWithoutCounts}
-        isOwner={false}
-      />,
-    );
-
-    // Check if zero counts are displayed
-    expect(screen.getByTestId("copy-count")).toHaveTextContent("0");
-    expect(screen.getByTestId("download-count")).toHaveTextContent("0");
-  });
-
   test("Renders content section with proper structure", () => {
-    render(<ProjectRuleDetail projectRule={mockProjectRule} isOwner={false} />);
+    render(<ProjectRuleDetail projectRule={mockProjectRule} />);
 
     // Check if content section is rendered
     const contentSection = screen.getByTestId("project-rule-content-section");

@@ -2,7 +2,6 @@ import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
 import { notFound } from "next/navigation";
 import ProjectRuleDetail from "@/components/rules/project-rule-detail";
 import { Metadata } from "next";
-import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 
 // Define the props for the page component
 interface ProjectRulePageProps {
@@ -49,15 +48,9 @@ export default async function ProjectRulePage(props: {
     notFound();
   }
 
-  // Fetch the current user to check if they're the owner
-  const currentUser = await fetchCurrentAuthUser();
-  const isOwner =
-    !currentUser.guest &&
-    currentUser.id === projectRule.authorId?.split("::")[0];
-
   return (
     <main className="py-8">
-      <ProjectRuleDetail projectRule={projectRule} isOwner={isOwner} />
+      <ProjectRuleDetail projectRule={projectRule} />
     </main>
   );
 }

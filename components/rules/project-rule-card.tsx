@@ -1,8 +1,7 @@
 import { ProjectRule } from "@/lib/models/project-rule-model";
 import Author from "@/components/common/author";
 import Tags from "@/components/common/tags";
-import { Flame, Copy, Download } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Copy, Download } from "lucide-react";
 import {
   Card,
   CardHeader,
@@ -16,25 +15,7 @@ interface ProjectRuleCardProps {
   projectRule: ProjectRule;
 }
 
-function GetPopularityBadge(totalPopularity: number) {
-  if (totalPopularity >= 100)
-    return { label: "Hot", color: "bg-red-500 hover:bg-red-600" };
-  if (totalPopularity >= 50)
-    return { label: "Trending", color: "bg-orange-500 hover:bg-orange-600" };
-  return null;
-}
-
-function CalculatePopularity(projectRule: ProjectRule): number {
-  const copyCount = projectRule.copyCount || 0;
-  const downloadCount = projectRule.downloadCount || 0;
-  return copyCount + downloadCount;
-}
-
 export default function ProjectRuleCard({ projectRule }: ProjectRuleCardProps) {
-  const totalPopularity = CalculatePopularity(projectRule);
-  const popularityBadge =
-    totalPopularity > 0 ? GetPopularityBadge(totalPopularity) : null;
-
   return (
     <Link
       href={`/rules/rule/${projectRule.slug}`}
@@ -47,12 +28,6 @@ export default function ProjectRuleCard({ projectRule }: ProjectRuleCardProps) {
       >
         <CardHeader className="pb-1">
           <div className="space-y-4">
-            {popularityBadge && (
-              <Badge className={`${popularityBadge.color} text-white text-xs`}>
-                <Flame className="w-3 h-3 mr-1" />
-                {popularityBadge.label}
-              </Badge>
-            )}
             {projectRule.tags && <Tags tags={projectRule.tags} />}
             <CardTitle className="text-lg font-semibold text-white group-hover:text-violet-300 transition-colors">
               {projectRule.name}

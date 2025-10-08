@@ -1,5 +1,4 @@
 import PromptDetail from "@/components/prompt/prompt-detail";
-import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -45,14 +44,9 @@ export default async function PromptDetailPage(props: {
     return notFound();
   }
 
-  // Fetch the current user to check if they're the owner
-  const currentUser = await fetchCurrentAuthUser();
-  const isOwner =
-    !currentUser.guest && currentUser.id === prompt.authorId?.split("::")[0];
-
   return (
     <main className="py-8">
-      <PromptDetail prompt={prompt} isOwner={isOwner} />
+      <PromptDetail prompt={prompt} />
     </main>
   );
 }

@@ -16,7 +16,6 @@ export type SortOption = {
 };
 
 const sortOptions: SortOption[] = [
-  { label: "Trending", value: "trending" },
   { label: "Newest", value: "created_at:desc" },
   { label: "Oldest", value: "created_at:asc" },
 ];

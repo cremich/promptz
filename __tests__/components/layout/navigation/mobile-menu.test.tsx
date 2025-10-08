@@ -13,13 +13,6 @@ jest.mock("@/lib/navigation", () => ({
   ],
 }));
 
-// Mock the UserMenu component
-jest.mock("@/components/layout/navigation/user-menu", () => {
-  return function UserMenu() {
-    return <div data-testid="user-menu-mock">User Menu Mock</div>;
-  };
-});
-
 describe("Mobile Menu", () => {
   test("Renders hamburger menu button when closed", () => {
     render(<MobileMenu />);
@@ -49,9 +42,6 @@ describe("Mobile Menu", () => {
     expect(screen.getByText("Rules")).toBeInTheDocument();
     expect(screen.getByText("Agents")).toBeInTheDocument();
     expect(screen.getByText("MCP Server")).toBeInTheDocument();
-
-    // Check if UserMenu is rendered
-    expect(screen.getByTestId("user-menu-mock")).toBeInTheDocument();
   });
 
   test("Closes menu when a navigation link is clicked", () => {

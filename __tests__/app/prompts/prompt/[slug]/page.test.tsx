@@ -4,6 +4,8 @@ import PromptDetailPage, {
   generateMetadata,
   generateStaticParams,
 } from "@/app/prompts/prompt/[slug]/page";
+import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
+import { describe } from "node:test";
 
 // Mock dependencies
 jest.mock("next/navigation", () => ({
@@ -12,10 +14,6 @@ jest.mock("next/navigation", () => ({
 
 jest.mock("@/lib/actions/fetch-prompts-action", () => ({
   fetchPromptBySlug: jest.fn(),
-}));
-
-jest.mock("@/lib/actions/cognito-auth-action", () => ({
-  fetchCurrentAuthUser: jest.fn(),
 }));
 
 jest.mock("@/components/prompt/prompt-detail", () => {
@@ -30,15 +28,10 @@ jest.mock("@/components/prompt/prompt-detail", () => {
   };
 });
 
-import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
-import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
-
 const mockFetchPromptBySlug = fetchPromptBySlug as jest.MockedFunction<
   typeof fetchPromptBySlug
 >;
-const mockFetchCurrentAuthUser = fetchCurrentAuthUser as jest.MockedFunction<
-  typeof fetchCurrentAuthUser
->;
+
 const mockNotFound = notFound as jest.MockedFunction<typeof notFound>;
 
 describe("PromptDetailPage", () => {
@@ -62,7 +55,6 @@ describe("PromptDetailPage", () => {
 
   test("should render prompt detail when prompt exists", async () => {
     mockFetchPromptBySlug.mockResolvedValue(mockPrompt);
-    mockFetchCurrentAuthUser.mockResolvedValue({ guest: true, id: "" });
 
     const params = Promise.resolve({ slug: "test-prompt" });
     const result = await PromptDetailPage({ params });
@@ -81,33 +73,6 @@ describe("PromptDetailPage", () => {
     await PromptDetailPage({ params });
 
     expect(mockNotFound).toHaveBeenCalled();
-  });
-
-  test("should identify owner correctly", async () => {
-    mockFetchPromptBySlug.mockResolvedValue(mockPrompt);
-    mockFetchCurrentAuthUser.mockResolvedValue({ guest: false, id: "user123" });
-
-    const params = Promise.resolve({ slug: "test-prompt" });
-    const result = await PromptDetailPage({ params });
-
-    render(result);
-
-    expect(screen.getByTestId("is-owner")).toHaveTextContent("owner");
-  });
-
-  test("should identify non-owner correctly", async () => {
-    mockFetchPromptBySlug.mockResolvedValue(mockPrompt);
-    mockFetchCurrentAuthUser.mockResolvedValue({
-      guest: false,
-      id: "different-user",
-    });
-
-    const params = Promise.resolve({ slug: "test-prompt" });
-    const result = await PromptDetailPage({ params });
-
-    render(result);
-
-    expect(screen.getByTestId("is-owner")).toHaveTextContent("not-owner");
   });
 });
 

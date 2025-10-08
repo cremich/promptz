@@ -87,13 +87,8 @@ function convertMarkdownToPrompt(
     howto,
     author: frontmatter.author,
     sourceURL: frontmatter.sourceURL || "",
-    scope: "PUBLIC",
     createdAt: stats.birthtime.toISOString(),
     updatedAt: stats.mtime.toISOString(),
-    copyCount: 0,
-    downloadCount: 0,
-    starCount: 0,
-    popularityScore: 0,
   };
 }
 

@@ -90,18 +90,6 @@ describe("Submission", () => {
     expect(screen.queryByText(/@/)).not.toBeInTheDocument();
   });
 
-  test("Displays public scope badge when scope is PUBLIC", () => {
-    render(<Submission createdAt="2024-01-01T00:00:00Z" scope="PUBLIC" />);
-
-    expect(screen.getByText("Public")).toBeInTheDocument();
-  });
-
-  test("Displays private scope badge when scope is PRIVATE", () => {
-    render(<Submission createdAt="2024-01-01T00:00:00Z" scope="PRIVATE" />);
-
-    expect(screen.getByText("Private")).toBeInTheDocument();
-  });
-
   test("Does not display scope badge when scope is undefined", () => {
     render(<Submission createdAt="2024-01-01T00:00:00Z" />);
 
@@ -115,7 +103,6 @@ describe("Submission", () => {
         createdAt="2024-01-01T00:00:00Z"
         updatedAt="2024-02-15T00:00:00Z"
         author="testuser"
-        scope="PUBLIC"
         className="custom-class"
       />,
     );
@@ -123,19 +110,10 @@ describe("Submission", () => {
     expect(
       screen.getByText("Submitted on February 15, 2024 by @testuser"),
     ).toBeInTheDocument();
-    expect(screen.getByText("Public")).toBeInTheDocument();
 
     const dateElement = screen.getByText(
       "Submitted on February 15, 2024 by @testuser",
     );
     expect(dateElement).toHaveClass("custom-class");
-  });
-
-  test("Renders with proper container structure", () => {
-    render(<Submission createdAt="2024-01-01T00:00:00Z" scope="PUBLIC" />);
-
-    const dateElement = screen.getByText("Submitted on January 1, 2024");
-    const container = dateElement.parentElement;
-    expect(container).toHaveClass("flex", "items-center", "gap-3");
   });
 });

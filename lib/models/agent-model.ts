@@ -1,11 +1,3 @@
-import {
-  idSchema,
-  sourceURLSchema,
-  titleSchema,
-  descriptionSchema,
-  tagSchema,
-  scopeSchema,
-} from "@/lib/forms/schema-definitions";
 import { z } from "zod";
 
 export type Agent = {
@@ -23,15 +15,10 @@ export type Agent = {
   allowedTools?: string[];
   useLegacyMcpJson?: boolean;
   author?: string;
-  authorId?: string;
-  scope?: string;
   slug?: string;
   sourceURL?: string;
   createdAt?: string;
   updatedAt?: string;
-  copyCount?: number;
-  downloadCount?: number;
-  popularityScore?: number;
 };
 
 export interface McpServerConfig {
@@ -45,84 +32,6 @@ export interface McpServerConfig {
 export interface HookCommand {
   command: string;
 }
-
-// MCP Server configuration schema
-const mcpServerConfigSchema = z.object({
-  command: z.string().min(1, "Command is required"),
-  args: z.array(z.string()).optional(),
-  env: z.record(z.string(), z.string()).optional(),
-  timeout: z.number().positive("Timeout must be a positive number").optional(),
-  disabled: z.boolean().optional(),
-});
-
-// Hook command schema
-const hookCommandSchema = z.object({
-  command: z.string().min(1, "Command is required"),
-});
-
-// Valid hook types
-const validHookTypes = ["agentSpawn", "userPromptSubmit"] as const;
-
-// Hooks schema with validation for known hook types
-const hooksSchema = z
-  .record(z.string(), hookCommandSchema)
-  .optional()
-  .refine(
-    (hooks) => {
-      if (!hooks) return true;
-      return Object.keys(hooks).every((key) =>
-        validHookTypes.includes(key as (typeof validHookTypes)[number]),
-      );
-    },
-    {
-      message: `Invalid hook type. Valid types are: ${validHookTypes.join(", ")}`,
-    },
-  );
-
-// Tool aliases schema - mapping of alias names to tool names
-const toolAliasesSchema = z
-  .record(z.string(), z.string().min(1, "Tool alias must be a string"))
-  .optional();
-
-// Resource validation schema
-const resourceSchema = z.string().refine(
-  (resource) => {
-    // All file resources must start with file://
-    if (!resource.startsWith("file://")) {
-      return false;
-    }
-
-    // Must have a path after file://
-    const path = resource.slice(7); // Remove "file://" prefix
-    return path.length > 0;
-  },
-  {
-    message:
-      "Invalid resource. File resources must start with file:// and specify a path (e.g., file://README.md, file://.amazonq/rules/**/*.md)",
-  },
-);
-
-export const agentFormSchema = z.object({
-  id: idSchema,
-  sourceURL: sourceURLSchema,
-  name: titleSchema,
-  description: descriptionSchema,
-  prompt: z
-    .string()
-    .trim()
-    .min(10, "System prompt must be more than 10 characters")
-    .max(4000, "System prompt must be less than 4000 characters"),
-  tools: z.array(z.string()).optional(),
-  mcpServers: z.record(z.string(), mcpServerConfigSchema).optional(),
-  resources: z.array(resourceSchema).default([]).optional(),
-  hooks: hooksSchema,
-  toolsSettings: z.record(z.string(), z.any()).optional(),
-  toolAliases: toolAliasesSchema,
-  allowedTools: z.array(z.string()).default([]).optional(),
-  useLegacyMcpJson: z.boolean().default(false).optional(),
-  tags: tagSchema,
-  scope: scopeSchema,
-});
 
 // Validation schema for search and filter params
 export const agentSearchParamsSchema = z.object({

@@ -1,28 +1,22 @@
-import { ModelType } from "@/lib/forms/schema-definitions";
 import { ProjectRule } from "@/lib/models/project-rule-model";
 import Tags from "@/components/common/tags";
 import { SourceURL } from "@/components/common/source-url";
 import CopyClipBoardButton from "@/components/common/copy-clipboard";
-import { DownloadButton } from "@/components/common/download-button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import EditButton from "@/components/common/edit-button";
 import Submission from "@/components/common/submission";
 import { Copy, Download, FileText } from "lucide-react";
 
 // Define the props for the component
 interface ProjectRuleDetailProps {
   projectRule: ProjectRule;
-  isOwner: boolean;
 }
 
 /**
  * Component to display the details of a project rule
  * @param projectRule - The project rule to display
- * @param isOwner - Whether the current user is the owner of the project rule
  */
 export default function ProjectRuleDetail({
   projectRule,
-  isOwner,
 }: ProjectRuleDetailProps) {
   return (
     <div className="flex flex-col space-y-8 mx-auto">
@@ -49,28 +43,8 @@ export default function ProjectRuleDetail({
             </div>
 
             <div className="flex items-center gap-3">
-              {/* Show edit button only if the user is the owner */}
-              {isOwner && projectRule.slug && (
-                <EditButton
-                  href={`/rules/rule/${projectRule.slug}/edit`}
-                  name="Edit Rule"
-                />
-              )}
               {projectRule.content && (
-                <>
-                  <CopyClipBoardButton
-                    id={projectRule.id!}
-                    type={ModelType.RULE}
-                    text={projectRule.content}
-                  />
-                  <DownloadButton
-                    id={projectRule.id!}
-                    content={projectRule.content}
-                    filename={`promptz-rule-${projectRule.slug}`}
-                    label="Download"
-                    modelType={ModelType.RULE}
-                  />
-                </>
+                <CopyClipBoardButton text={projectRule.content} />
               )}
             </div>
           </div>
@@ -104,7 +78,6 @@ export default function ProjectRuleDetail({
               createdAt={projectRule.createdAt}
               updatedAt={projectRule.updatedAt}
               author={projectRule.author}
-              scope={projectRule.scope}
             />
           </div>
         </div>
