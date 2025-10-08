@@ -52,14 +52,14 @@
   - Set appropriate priority levels for prompt and tag pages
   - _Requirements: 6.1, 6.2_
 
-- [ ] 8. Update prompt browsing and listing pages
+- [x] 8. Update prompt browsing and listing pages
   - Update `app/prompts/page.tsx` to use markdown index instead of API
   - Modify prompt listing components to display markdown-based prompt data
   - Update category filtering to use directory structure
   - Update homepage prompt counters to use markdown index
   - _Requirements: 8.1, 8.2, 8.3, 8.4_
 
-- [ ] 9. Remove prompt form functionality
+- [x] 9. Remove prompt form functionality
   - Delete `app/prompts/create/` directory and create prompt functionality
   - Remove `app/prompts/prompt/[slug]/edit/` directory and edit prompt functionality
   - Update navigation to remove "Create Prompt" links

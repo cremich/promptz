@@ -57,15 +57,6 @@ export default function UserMenu() {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuItem asChild>
               <Link
-                href="/prompts/my"
-                className="flex items-center w-full cursor-pointer"
-              >
-                <FileText className="mr-2 h-4 w-4" />
-                <span>My Prompts</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link
                 href="/rules/my"
                 className="flex items-center w-full cursor-pointer"
               >
