@@ -1,4 +1,4 @@
-import { describe, expect, test, jest, beforeEach } from "@jest/globals";
+import { describe, expect, test, beforeEach } from "@jest/globals";
 
 // Mock the dependencies
 jest.mock("next/headers", () => ({
@@ -26,38 +26,6 @@ describe("sitemap", () => {
     // Mock the appsync client with default implementations
     mockAppsync = {
       queries: {
-        searchPrompts: jest.fn().mockImplementation(({ nextToken }) => {
-          // First page of results
-          if (!nextToken) {
-            return {
-              data: {
-                results: [
-                  {
-                    slug: "test-prompt-1",
-                    updatedAt: "2023-01-01T12:00:00Z",
-                  },
-                  {
-                    slug: "test-prompt-2",
-                    updatedAt: "2023-01-02T12:00:00Z",
-                  },
-                ],
-                nextToken: "next-page-token",
-              },
-            };
-          }
-          // Second page of results (last page)
-          return {
-            data: {
-              results: [
-                {
-                  slug: "test-prompt-3",
-                  updatedAt: "2023-01-03T12:00:00Z",
-                },
-              ],
-              nextToken: null,
-            },
-          };
-        }),
         searchProjectRules: jest.fn().mockImplementation(({ nextToken }) => {
           // First page of results
           if (!nextToken) {
@@ -139,9 +107,8 @@ describe("sitemap", () => {
     const sitemap = (await import("@/app/sitemap")).default;
     const sitemapData = await sitemap();
 
-    // Check if the sitemap has the correct number of entries
-    // 3 weekly routes (home, prompts, agents) + 3 prompts + 3 rules + 3 agents + 4 tag routes + 1 monthly route = 17
-    expect(sitemapData).toHaveLength(17);
+    // Check that sitemap has a reasonable number of entries (should be > 10)
+    expect(sitemapData.length).toBeGreaterThan(10);
 
     // Check weekly routes
     const homeRoute = sitemapData.find(
@@ -165,15 +132,23 @@ describe("sitemap", () => {
     expect(agentsRoute?.changeFrequency).toBe("weekly");
     expect(agentsRoute?.priority).toBe(0.7);
 
-    // Check prompt routes
-    const promptRoute1 = sitemapData.find(
-      (route) =>
-        route.url === "https://promptz.dev/prompts/prompt/test-prompt-1",
+    // Check that prompt routes exist and have correct structure
+    const promptRoutes = sitemapData.filter((route) =>
+      route.url.includes("/prompts/prompt/"),
     );
-    expect(promptRoute1).toBeDefined();
-    expect(promptRoute1?.lastModified).toBe("2023-01-01T12:00:00Z");
-    expect(promptRoute1?.changeFrequency).toBe("monthly");
-    expect(promptRoute1?.priority).toBe(1);
+    expect(promptRoutes.length).toBeGreaterThan(0);
+
+    // Verify first prompt route has correct structure
+    expect(promptRoutes[0]).toEqual(
+      expect.objectContaining({
+        url: expect.stringMatching(
+          /^https:\/\/promptz\.dev\/prompts\/prompt\/.+/,
+        ),
+        lastModified: expect.any(String),
+        changeFrequency: "monthly",
+        priority: 1,
+      }),
+    );
 
     // Check agent routes
     const agentRoute1 = sitemapData.find(
@@ -208,18 +183,6 @@ describe("sitemap", () => {
 
   test("includes agent routes in sitemap", async () => {
     // Override mocks for this specific test
-    mockAppsync.queries.searchPrompts.mockResolvedValue({
-      data: {
-        results: [
-          {
-            slug: "test-prompt",
-            updatedAt: "2024-01-01T00:00:00Z",
-          },
-        ],
-        nextToken: null,
-      },
-    });
-
     mockAppsync.queries.searchProjectRules.mockResolvedValue({
       data: {
         results: [
@@ -265,11 +228,11 @@ describe("sitemap", () => {
     const sitemap = (await import("@/app/sitemap")).default;
     const sitemapData = await sitemap();
 
-    // Check if all prompts from both pages are included
+    // Check that prompts from markdown index are included
     const promptRoutes = sitemapData.filter((route) =>
       route.url.startsWith("https://promptz.dev/prompts/prompt/"),
     );
-    expect(promptRoutes).toHaveLength(3);
+    expect(promptRoutes.length).toBeGreaterThan(10); // Should have many prompts from markdown
 
     // Check if all rules from both pages are included
     const ruleRoutes = sitemapData.filter((route) =>
@@ -283,13 +246,19 @@ describe("sitemap", () => {
     );
     expect(agentRoutes).toHaveLength(3);
 
-    // Verify the last items from the second pages are included
-    const lastPromptRoute = sitemapData.find(
-      (route) =>
-        route.url === "https://promptz.dev/prompts/prompt/test-prompt-3",
-    );
-    expect(lastPromptRoute).toBeDefined();
-    expect(lastPromptRoute?.lastModified).toBe("2023-01-03T12:00:00Z");
+    // Verify that all prompt routes have the correct structure
+    promptRoutes.forEach((route) => {
+      expect(route).toEqual(
+        expect.objectContaining({
+          url: expect.stringMatching(
+            /^https:\/\/promptz\.dev\/prompts\/prompt\/.+/,
+          ),
+          lastModified: expect.any(String),
+          changeFrequency: "monthly",
+          priority: 1,
+        }),
+      );
+    });
 
     const lastAgentRoute = sitemapData.find(
       (route) => route.url === "https://promptz.dev/agents/agent/test-agent-3",
@@ -299,10 +268,7 @@ describe("sitemap", () => {
   });
 
   test("handles pagination for agents search", async () => {
-    // Override mocks for empty prompts and rules
-    mockAppsync.queries.searchPrompts.mockResolvedValue({
-      data: { results: [], nextToken: null },
-    });
+    // Override mocks for empty rules
     mockAppsync.queries.searchProjectRules.mockResolvedValue({
       data: { results: [], nextToken: null },
     });
@@ -363,6 +329,24 @@ describe("sitemap", () => {
     expect(mockAppsync.queries.searchAgents).toHaveBeenNthCalledWith(2, {
       nextToken: "token123",
     });
+  });
+
+  test("uses markdown prompts instead of API calls", async () => {
+    // This test verifies that the sitemap is using markdown prompts from the index
+    // rather than making API calls to searchPrompts
+    const sitemap = (await import("@/app/sitemap")).default;
+    const sitemapData = await sitemap();
+
+    // Should have prompt routes from markdown index
+    const promptRoutes = sitemapData.filter((route) =>
+      route.url.includes("/prompts/prompt/"),
+    );
+    expect(promptRoutes.length).toBeGreaterThan(0);
+
+    // Verify that searchPrompts was never called (since we removed it from mockAppsync)
+    // If the sitemap was still using API calls, this test would fail because
+    // mockAppsync.queries.searchPrompts is undefined
+    expect(mockAppsync.queries.searchPrompts).toBeUndefined();
   });
 
   test("includes all expected tag routes", async () => {

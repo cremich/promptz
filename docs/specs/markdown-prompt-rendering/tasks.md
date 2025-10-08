@@ -44,7 +44,7 @@
   - Maintain existing `/tag/{tagName}` URL structure compatibility
   - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5_
 
-- [ ] 7. Update sitemap generation
+- [x] 7. Update sitemap generation
   - Modify `app/sitemap.ts` to include markdown-based prompts instead of API prompts
   - Generate sitemap entries from markdown index during build process
   - Include tag pages that contain markdown-based prompts in sitemap

@@ -4,6 +4,7 @@ import outputs from "../amplify_outputs.json";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import { Schema } from "../amplify/data/resource";
 import { getAllTags } from "@/lib/actions/fetch-tags-action";
+import promptIndex from "@/data/prompt-index.json";
 
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
@@ -13,29 +14,14 @@ const appsync = generateServerClientUsingCookies<Schema>({
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://promptz.dev";
 
-  const prompts = [];
+  // Get prompts from markdown index
+  const prompts = promptIndex.prompts;
   const projectRules = [];
   const agents = [];
   let cursor: string | undefined | null;
   let hasMorePages: boolean = true;
 
-  // Fetch all prompts
-  do {
-    const { data: searchResults } = await appsync.queries.searchPrompts({
-      nextToken: cursor,
-    });
-    if (searchResults?.results) {
-      prompts.push(...searchResults?.results);
-    }
-
-    if (searchResults?.nextToken) {
-      cursor = searchResults.nextToken;
-    } else {
-      hasMorePages = false;
-    }
-  } while (hasMorePages);
-
-  // Reset pagination for project rules
+  // Fetch all project rules
   cursor = undefined;
   hasMorePages = true;
 
@@ -55,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   } while (hasMorePages);
 
-  // Reset pagination for agents
+  // Fetch all agents
   cursor = undefined;
   hasMorePages = true;
 
