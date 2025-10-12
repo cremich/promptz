@@ -1,0 +1,147 @@
+name: Validate Prompts
+
+on:
+  pull_request:
+    paths:
+      - "content/prompts/**/*.md"
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-prompts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get changed markdown files
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+        with:
+          files: |
+            content/prompts/**/*.md
+
+      - name: Validate changed prompts
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "Changed markdown files:"
+          echo "${{ steps.changed-files.outputs.all_changed_files }}"
+
+          exit_code=0
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "Validating: $file"
+            if ! npm run validate:prompts "$file"; then
+              exit_code=1
+            fi
+            echo "---"
+          done
+
+          exit $exit_code
+
+      - name: Validate all prompts (fallback)
+        if: steps.changed-files.outputs.any_changed == 'false'
+        run: |
+          echo "No markdown files changed, running full validation as safety check"
+          npm run validate:prompts
+
+      - name: Comment on PR failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `❌ **Prompt validation failed**
+
+            Please check the validation errors above and fix the issues in your markdown files.
+
+            **Common issues:**
+            - Missing or invalid frontmatter fields (title, description, author)
+            - Missing "How to Use" section
+            - Invalid file naming (use lowercase-with-hyphens.md)
+            - Content too short or too long
+            - Security issues (script tags, suspicious content)
+
+            **Need help?** Check the [prompt template](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/templates/prompt-template.md) for guidance.`;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('❌ Prompt validation failed')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
+
+      - name: Comment on PR success
+        if: success() && steps.changed-files.outputs.any_changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const changedFiles = '${{ steps.changed-files.outputs.all_changed_files }}';
+            const fileList = changedFiles.split(' ').map(file => `- \`${file}\``).join('\n');
+
+            const body = `✅ **Prompt validation passed**
+
+            All submitted prompts meet the validation requirements. Great work! 🎉
+
+            **Validated files:**
+            ${fileList}`;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              (comment.body.includes('✅ Prompt validation passed') || comment.body.includes('❌ Prompt validation failed'))
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
