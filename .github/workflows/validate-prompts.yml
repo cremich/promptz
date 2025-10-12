@@ -1,4 +1,4 @@
-name: Validate Prompts
+name: Prompt Submission
 
 on:
   pull_request:
@@ -13,6 +13,12 @@ permissions:
 jobs:
   validate-prompts:
     runs-on: ubuntu-latest
+    environment: staging
+
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      AMPLIFY_APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
+      NODE_VERSION: ${{ vars.NODE_VERSION }}
 
     steps:
       - name: Checkout repository
@@ -23,7 +29,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
 
       - name: Install dependencies
@@ -63,7 +69,9 @@ jobs:
         run: npm run build:index
 
       - name: Test full build process
-        run: npm run build
+        run: |
+          npx ampx generate outputs --branch main --app-id ${{ env.AMPLIFY_APP_ID }}
+          npm run build
 
       - name: Check approval criteria
         id: approval-check
