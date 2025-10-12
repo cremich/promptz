@@ -13,11 +13,9 @@ permissions:
 jobs:
   validate-prompts:
     runs-on: ubuntu-latest
-
-    env:
-      AWS_REGION: ${{ vars.AWS_REGION }}
-      AMPLIFY_APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
-      NODE_VERSION: ${{ vars.NODE_VERSION }}
+    outputs:
+      changed-files: ${{ steps.changed-files.outputs.all_changed_files }}
+      any-changed: ${{ steps.changed-files.outputs.any_changed }}
 
     steps:
       - name: Checkout repository
@@ -64,6 +62,37 @@ jobs:
           echo "No markdown files changed, running full validation as safety check"
           npm run validate:prompts
 
+      - name: Comment on validation failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commentFailure = require('./.github/scripts/comment-validation-failure.js');
+            await commentFailure({ github, context });
+
+  build:
+    runs-on: ubuntu-latest
+    needs: validate-prompts
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
       - name: Build prompt index
         run: npm run build:index
 
@@ -72,9 +101,25 @@ jobs:
           npx ampx generate outputs --branch main --app-id ${{ env.AMPLIFY_APP_ID }}
           npm run build
 
+      - name: Comment on build failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commentFailure = require('./.github/scripts/comment-validation-failure.js');
+            await commentFailure({ github, context });
+
+  approval:
+    runs-on: ubuntu-latest
+    needs: [validate-prompts, build]
+    if: needs.validate-prompts.outputs.any-changed == 'true'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Check approval criteria
         id: approval-check
-        if: success()
         uses: actions/github-script@v7
         with:
           script: |
@@ -82,7 +127,7 @@ jobs:
             return await checkCriteria({ github, context });
 
       - name: Auto-approve PR
-        if: success() && fromJSON(steps.approval-check.outputs.result).needsManualReview == false
+        if: fromJSON(steps.approval-check.outputs.result).needsManualReview == false
         uses: actions/github-script@v7
         with:
           script: |
@@ -90,11 +135,11 @@ jobs:
             await autoApprove({ 
               github, 
               context, 
-              changedFiles: '${{ steps.changed-files.outputs.all_changed_files }}' 
+              changedFiles: '${{ needs.validate-prompts.outputs.changed-files }}' 
             });
 
       - name: Request manual review
-        if: success() && fromJSON(steps.approval-check.outputs.result).needsManualReview == true
+        if: fromJSON(steps.approval-check.outputs.result).needsManualReview == true
         uses: actions/github-script@v7
         with:
           script: |
@@ -104,13 +149,5 @@ jobs:
               github, 
               context, 
               criteria,
-              changedFiles: '${{ steps.changed-files.outputs.all_changed_files }}' 
+              changedFiles: '${{ needs.validate-prompts.outputs.changed-files }}' 
             });
-
-      - name: Comment on validation/build failure
-        if: failure()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const commentFailure = require('./.github/scripts/comment-validation-failure.js');
-            await commentFailure({ github, context });
