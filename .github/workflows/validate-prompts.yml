@@ -62,12 +62,18 @@ jobs:
           echo "No markdown files changed, running full validation as safety check"
           npm run validate:prompts
 
+      - name: Build prompt index
+        run: npm run build:index
+
+      - name: Test full build process
+        run: npm run build
+
       - name: Comment on PR failure
         if: failure()
         uses: actions/github-script@v7
         with:
           script: |
-            const body = `❌ **Prompt validation failed**
+            const body = `❌ **Prompt validation or build failed**
 
             Please check the validation errors above and fix the issues in your markdown files.
 
@@ -77,6 +83,7 @@ jobs:
             - Invalid file naming (use lowercase-with-hyphens.md)
             - Content too short or too long
             - Security issues (script tags, suspicious content)
+            - Build-time processing errors
 
             **Need help?** Check the [prompt template](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/templates/prompt-template.md) for guidance.`;
 
@@ -88,7 +95,7 @@ jobs:
 
             const botComment = comments.find(comment => 
               comment.user.type === 'Bot' && 
-              comment.body.includes('❌ Prompt validation failed')
+              comment.body.includes('❌ Prompt validation')
             );
 
             if (botComment) {
@@ -115,12 +122,17 @@ jobs:
             const changedFiles = '${{ steps.changed-files.outputs.all_changed_files }}';
             const fileList = changedFiles.split(' ').map(file => `- \`${file}\``).join('\n');
 
-            const body = `✅ **Prompt validation passed**
+            const body = `✅ **Prompt validation and build successful**
 
-            All submitted prompts meet the validation requirements. Great work! 🎉
+            All submitted prompts meet the validation requirements and the site builds successfully. Great work! 🎉
 
             **Validated files:**
-            ${fileList}`;
+            ${fileList}
+
+            **Build process completed:**
+            - ✅ Prompt validation passed
+            - ✅ Prompt index generation successful
+            - ✅ Full site build successful`;
 
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
@@ -130,7 +142,7 @@ jobs:
 
             const botComment = comments.find(comment => 
               comment.user.type === 'Bot' && 
-              (comment.body.includes('✅ Prompt validation passed') || comment.body.includes('❌ Prompt validation failed'))
+              (comment.body.includes('✅ Prompt validation') || comment.body.includes('❌ Prompt validation'))
             );
 
             if (botComment) {
