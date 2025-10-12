@@ -1,0 +1,33 @@
+{
+  "tasks": [
+    {
+      "task_description": "Move validation business logic to lib/markdown/validator.ts",
+      "completed": true
+    },
+    {
+      "task_description": "Update scripts/validate-prompts.js to use the new validator module",
+      "completed": true
+    },
+    {
+      "task_description": "Create focused unit tests for validation logic in __tests__/lib/markdown/validator.test.ts",
+      "completed": true
+    },
+    {
+      "task_description": "Create integration tests for CLI script in __tests__/scripts/validate-prompts.test.ts",
+      "completed": true
+    }
+  ],
+  "description": "Refactor validation script to separate business logic from CLI interface for better testability and maintainability",
+  "context": [
+    "Created lib/markdown/validator.ts with all validation business logic separated from CLI concerns",
+    "Refactored CLI script to use the new validator module, keeping only CLI-specific logic like file scanning, result formatting, and command-line interface",
+    "Created comprehensive unit tests for validation business logic covering all validation functions with edge cases and error scenarios",
+    "Skipping integration test creation as requested by user"
+  ],
+  "modified_files": [
+    "/Users/christian.bonzelet/Workspace/cremich/promptz/lib/markdown/validator.ts",
+    "/Users/christian.bonzelet/Workspace/cremich/promptz/scripts/validate-prompts.js",
+    "/Users/christian.bonzelet/Workspace/cremich/promptz/__tests__/lib/markdown/validator.test.ts"
+  ],
+  "id": "1760282980939"
+}

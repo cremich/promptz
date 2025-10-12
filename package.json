@@ -17,8 +17,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "test:content": "jest --config jest.content.config.ts",
-    "test:content:file": "jest --config jest.content.config.ts --testNamePattern",
+    "validate:prompts": "npx tsx scripts/validate-prompts.ts",
     "pr": "npm run lint && npm run test",
     "e2e": "playwright test --grep-invert @mailslurp",
     "prepare": "husky",
@@ -100,6 +99,7 @@
     "tailwindcss": "^4.1.5",
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.6",
     "typescript": "^5.6.3",
     "whatwg-fetch": "^3.6.20"
   },
