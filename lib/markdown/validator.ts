@@ -133,7 +133,9 @@ export function extractContentSections(content: string): ContentSections {
 }
 
 // Validate frontmatter against schema
-export function validateFrontmatter(frontmatter: any): string[] {
+export function validateFrontmatter(
+  frontmatter: Record<string, unknown>,
+): string[] {
   const errors: string[] = [];
 
   const result = PromptFrontmatterSchema.safeParse(frontmatter);

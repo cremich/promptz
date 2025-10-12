@@ -1,8 +1,6 @@
 import { Prompt } from "@/lib/models/prompt-model";
 import Author from "@/components/common/author";
 import Tags from "@/components/common/tags";
-import { Flame, Copy, Download } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardHeader,
@@ -14,14 +12,6 @@ import Link from "next/link";
 
 interface PromptCardProps {
   prompt: Prompt;
-}
-
-function GetPopularityBadge(copyCount: number) {
-  if (copyCount >= 100)
-    return { label: "Hot", color: "bg-red-500 hover:bg-red-600" };
-  if (copyCount >= 50)
-    return { label: "Trending", color: "bg-orange-500 hover:bg-orange-600" };
-  return null;
 }
 
 export default function PromptCard({ prompt }: PromptCardProps) {

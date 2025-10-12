@@ -62,7 +62,6 @@ describe("convertMarkdownToPrompt", () => {
     expect(prompt.howto).toBe("Copy and paste this prompt");
     expect(prompt.slug).toBe("aws-lambda-best-practices");
     expect(prompt.sourceURL).toBe("https://example.com");
-    expect(prompt.scope).toBe("PUBLIC");
   });
 
   test("should handle minimal frontmatter", () => {

@@ -456,32 +456,6 @@ interface ValidationChecks {
 }
 ```
 
-### 4. Automated Testing
-
-#### Unit Tests for New Prompts
-
-```typescript
-describe("New Prompt Validation", () => {
-  test("should parse frontmatter correctly", () => {
-    // Test frontmatter extraction from submitted files
-  });
-
-  test("should generate valid Prompt object", () => {
-    // Test conversion to Prompt model
-  });
-
-  test("should include in search index", () => {
-    // Test search index generation
-  });
-
-  test("should generate static page", () => {
-    // Test page generation
-  });
-});
-```
-
-#### Integration Tests
-
 ```typescript
 describe("Full Build Process", () => {
   test("should build successfully with new prompts", () => {
@@ -498,7 +472,7 @@ describe("Full Build Process", () => {
 });
 ```
 
-### 5. Approval Process
+### 4. Approval Process
 
 #### Automated Approval Criteria
 
@@ -515,7 +489,7 @@ describe("Full Build Process", () => {
 - Prompts in sensitive categories (aws, security)
 - Large content changes
 
-### 6. Contributor Guidance
+### 5. Contributor Guidance
 
 #### Getting Started
 

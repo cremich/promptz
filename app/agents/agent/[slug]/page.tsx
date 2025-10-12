@@ -1,5 +1,4 @@
 import AgentDetail from "@/components/agents/agent-detail";
-import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 import { fetchAgentBySlug } from "@/lib/actions/fetch-agents-action";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -38,14 +37,9 @@ export default async function AgentDetailPage(props: {
     return notFound();
   }
 
-  // Fetch the current user to check if they're the owner
-  const currentUser = await fetchCurrentAuthUser();
-  const isOwner =
-    !currentUser.guest && currentUser.id === agent.authorId?.split("::")[0];
-
   return (
     <main className="py-8">
-      <AgentDetail agent={agent} isOwner={isOwner} />
+      <AgentDetail agent={agent} />
     </main>
   );
 }

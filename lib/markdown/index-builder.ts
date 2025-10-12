@@ -73,13 +73,8 @@ export function convertMarkdownToPrompt(
     howto,
     author: frontmatter.author,
     sourceURL: frontmatter.sourceURL,
-    scope: "PUBLIC",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    copyCount: 0,
-    downloadCount: 0,
-    starCount: 0,
-    popularityScore: 0,
   };
 }
 

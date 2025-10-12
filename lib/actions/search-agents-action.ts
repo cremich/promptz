@@ -73,14 +73,6 @@ export async function searchAgents(
       });
     }
 
-    if (sortField === "trending") {
-      agentList = agentList.sort((a, b) => {
-        const aCount = (a.copyCount || 0) + (a.downloadCount || 0);
-        const bCount = (b.copyCount || 0) + (b.downloadCount || 0);
-        return bCount - aCount;
-      });
-    }
-
     return {
       agents: agentList,
       nextToken: searchResults.nextToken,
