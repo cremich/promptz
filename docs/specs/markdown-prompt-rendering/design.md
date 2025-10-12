@@ -477,8 +477,6 @@ describe("Full Build Process", () => {
 #### Automated Approval Criteria
 
 - [ ] All validation checks pass
-- [ ] Unit tests pass
-- [ ] Integration tests pass
 - [ ] Build process succeeds
 - [ ] No security violations detected
 

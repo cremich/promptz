@@ -10,9 +10,6 @@ permissions:
   contents: read
   pull-requests: write
 
-env:
-  NODE_VERSION: ${{ vars.NODE_VERSION }}
-
 jobs:
   validate-prompts:
     runs-on: ubuntu-latest
@@ -26,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: "18"
           cache: "npm"
 
       - name: Install dependencies
@@ -68,95 +65,45 @@ jobs:
       - name: Test full build process
         run: npm run build
 
-      - name: Comment on PR failure
+      - name: Check approval criteria
+        id: approval-check
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const checkCriteria = require('./.github/scripts/check-approval-criteria.js');
+            return await checkCriteria({ github, context });
+
+      - name: Auto-approve PR
+        if: success() && fromJSON(steps.approval-check.outputs.result).needsManualReview == false
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const autoApprove = require('./.github/scripts/auto-approve.js');
+            await autoApprove({ 
+              github, 
+              context, 
+              changedFiles: '${{ steps.changed-files.outputs.all_changed_files }}' 
+            });
+
+      - name: Request manual review
+        if: success() && fromJSON(steps.approval-check.outputs.result).needsManualReview == true
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const requestReview = require('./.github/scripts/request-manual-review.js');
+            const criteria = JSON.parse('${{ steps.approval-check.outputs.result }}');
+            await requestReview({ 
+              github, 
+              context, 
+              criteria,
+              changedFiles: '${{ steps.changed-files.outputs.all_changed_files }}' 
+            });
+
+      - name: Comment on validation/build failure
         if: failure()
         uses: actions/github-script@v7
         with:
           script: |
-            const body = `❌ **Prompt validation or build failed**
-
-            Please check the validation errors above and fix the issues in your markdown files.
-
-            **Common issues:**
-            - Missing or invalid frontmatter fields (title, description, author)
-            - Missing "How to Use" section
-            - Invalid file naming (use lowercase-with-hyphens.md)
-            - Content too short or too long
-            - Security issues (script tags, suspicious content)
-            - Build-time processing errors
-
-            **Need help?** Check the [prompt template](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/templates/prompt-template.md) for guidance.`;
-
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number
-            });
-
-            const botComment = comments.find(comment => 
-              comment.user.type === 'Bot' && 
-              comment.body.includes('❌ Prompt validation')
-            );
-
-            if (botComment) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: body
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                body: body
-              });
-            }
-
-      - name: Comment on PR success
-        if: success() && steps.changed-files.outputs.any_changed == 'true'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const changedFiles = '${{ steps.changed-files.outputs.all_changed_files }}';
-            const fileList = changedFiles.split(' ').map(file => `- \`${file}\``).join('\n');
-
-            const body = `✅ **Prompt validation and build successful**
-
-            All submitted prompts meet the validation requirements and the site builds successfully. Great work! 🎉
-
-            **Validated files:**
-            ${fileList}
-
-            **Build process completed:**
-            - ✅ Prompt validation passed
-            - ✅ Prompt index generation successful
-            - ✅ Full site build successful`;
-
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number
-            });
-
-            const botComment = comments.find(comment => 
-              comment.user.type === 'Bot' && 
-              (comment.body.includes('✅ Prompt validation') || comment.body.includes('❌ Prompt validation'))
-            );
-
-            if (botComment) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: body
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                body: body
-              });
-            }
+            const commentFailure = require('./.github/scripts/comment-validation-failure.js');
+            await commentFailure({ github, context });
