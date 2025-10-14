@@ -316,27 +316,7 @@ export async function getPromptsRulesAndAgentsByTag(tagName: string): Promise<{
       .filter((prompt) =>
         prompt.tags?.some((tag) => tag.toLowerCase() === tagName.toLowerCase()),
       )
-      .map(
-        (prompt) =>
-          ({
-            id: prompt.id,
-            name: prompt.name,
-            slug: prompt.slug,
-            description: prompt.description,
-            tags: prompt.tags,
-            content: prompt.content,
-            howto: prompt.howto,
-            author: prompt.author,
-            sourceURL: prompt.sourceURL,
-            scope: prompt.scope,
-            createdAt: prompt.createdAt,
-            updatedAt: prompt.updatedAt,
-            copyCount: prompt.copyCount,
-            downloadCount: prompt.downloadCount,
-            starCount: prompt.starCount,
-            popularityScore: prompt.popularityScore,
-          }) as Prompt,
-      );
+      .map((prompt) => prompt as Prompt);
 
     const rules = tag.rules.items
       .filter((r) => r.rule.scope === "PUBLIC")
