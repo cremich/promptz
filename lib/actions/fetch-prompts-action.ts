@@ -11,23 +11,5 @@ export async function fetchPromptBySlug(
     return undefined;
   }
 
-  return {
-    id: prompt.id,
-    name: prompt.name,
-    slug: prompt.slug,
-    description: prompt.description,
-    tags: prompt.tags,
-    content: prompt.content,
-    sourceURL: prompt.sourceURL,
-    howto: prompt.howto,
-    scope: prompt.scope,
-    copyCount: prompt.copyCount,
-    downloadCount: prompt.downloadCount,
-    author: prompt.author,
-    authorId: undefined, // Not available in markdown prompts
-    createdAt: prompt.createdAt,
-    updatedAt: prompt.updatedAt,
-    starCount: prompt.starCount,
-    popularityScore: prompt.popularityScore,
-  } as Prompt;
+  return prompt as Prompt;
 }

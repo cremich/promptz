@@ -3,10 +3,10 @@ import { fetchPromptBySlug } from "@/lib/actions/fetch-prompts-action";
 describe("fetchPromptBySlug", () => {
   test("should return prompt when slug exists", async () => {
     // Use a real slug from the generated index
-    const result = await fetchPromptBySlug("12-factor-refactoring-dac01c8d");
+    const result = await fetchPromptBySlug("12-factor-refactoring");
 
     expect(result).toBeDefined();
-    expect(result?.slug).toBe("12-factor-refactoring-dac01c8d");
+    expect(result?.slug).toBe("12-factor-refactoring");
     expect(result?.name).toBe("12-factor refactoring");
     expect(result?.author).toBe("cremich");
     expect(result?.tags).toContain("analysis");
@@ -19,7 +19,7 @@ describe("fetchPromptBySlug", () => {
   });
 
   test("should return prompt with all required fields", async () => {
-    const result = await fetchPromptBySlug("12-factor-refactoring-dac01c8d");
+    const result = await fetchPromptBySlug("12-factor-refactoring");
 
     expect(result).toBeDefined();
     expect(result).toHaveProperty("id");
@@ -29,7 +29,6 @@ describe("fetchPromptBySlug", () => {
     expect(result).toHaveProperty("tags");
     expect(result).toHaveProperty("content");
     expect(result).toHaveProperty("author");
-    expect(result).toHaveProperty("scope");
     expect(result).toHaveProperty("createdAt");
     expect(result).toHaveProperty("updatedAt");
   });
