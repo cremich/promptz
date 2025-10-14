@@ -9,6 +9,7 @@ frontend:
   phases:
     build:
       commands:
+        - npm run build:index
         - npm run build
   artifacts:
     baseDirectory: .next
