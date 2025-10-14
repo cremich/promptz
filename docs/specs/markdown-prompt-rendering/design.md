@@ -399,7 +399,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
           cache: "npm"
 
       - name: Install dependencies

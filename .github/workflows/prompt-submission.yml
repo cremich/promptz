@@ -81,7 +81,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: ${{ vars.NODE_VERSION }}
           cache: "npm"
 
       - name: Install dependencies
@@ -91,14 +91,14 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Build prompt index
         run: npm run build:index
 
       - name: Test full build process
         run: |
-          npx ampx generate outputs --branch main --app-id ${{ env.AMPLIFY_APP_ID }}
+          npx ampx generate outputs --branch main --app-id ${{ secrets.AMPLIFY_APP_ID }}
           npm run build
 
       - name: Comment on build failure
