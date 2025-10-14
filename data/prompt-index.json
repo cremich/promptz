@@ -10,13 +10,8 @@
       "howto": "",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.897Z",
-      "updatedAt": "2025-10-04T19:28:38.544Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.544Z"
     },
     {
       "id": "analysis-analyze-bash-history-02cbf7de",
@@ -28,13 +23,8 @@
       "howto": "",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.927Z",
-      "updatedAt": "2025-10-04T19:28:38.551Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.551Z"
     },
     {
       "id": "analysis-automated-code-review-47b4e703",
@@ -46,13 +36,8 @@
       "howto": "Make a change in your repository and stage all files with `git add .`. Open your terminal and change directory to the root folder of your repository. Then start Q Developer with `q chat` and paste the prompt. You can apply additional code review rules based on your guidelines.",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.899Z",
-      "updatedAt": "2025-10-04T19:28:38.560Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.560Z"
     },
     {
       "id": "analysis-java-heap-dump-analysis-e546a9d6",
@@ -64,13 +49,8 @@
       "howto": "",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.891Z",
-      "updatedAt": "2025-10-04T19:28:38.565Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.565Z"
     },
     {
       "id": "analysis-refactor-like-a-pro-improve-your-java17-code-cddfe10a",
@@ -82,13 +62,8 @@
       "howto": "",
       "author": "Vinay Nadig",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.937Z",
-      "updatedAt": "2025-10-04T19:28:38.575Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.575Z"
     },
     {
       "id": "analysis-security-review-72e7cbae",
@@ -100,13 +75,8 @@
       "howto": "copy-paste to Kiro, Q IDE or Q CLI.",
       "author": "unknown",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.910Z",
-      "updatedAt": "2025-10-04T18:50:38.910Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T18:50:38.910Z"
     },
     {
       "id": "architecture-cost-calculation-b6a62a84",
@@ -125,13 +95,8 @@
       "howto": "1. Install the Cost Analysis MCP Server. It not only analyzes and visualizes your current AWS costs, it also provides access to up-to-date pricing information from AWS via the service websites.\n\n2. Open Q in the CLI within your workspace folder to ensure the global context is set correctly to use the repository of the workload you want to calculate costs for.\n\n3. Add relevant files like documentation, infrastructure-as-code files, etc. to your context using the /context commands\n\n4. Run the prompt",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.926Z",
-      "updatedAt": "2025-10-04T19:28:38.592Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.592Z"
     },
     {
       "id": "architecture-create-a-project-diagram-for-your-project-815a22a3",
@@ -143,13 +108,8 @@
       "howto": "",
       "author": "riribeir",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.900Z",
-      "updatedAt": "2025-10-04T19:28:38.597Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.597Z"
     },
     {
       "id": "architecture-create-project-c4-model-bd5a5320",
@@ -161,13 +121,8 @@
       "howto": "",
       "author": "Tuannl",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.900Z",
-      "updatedAt": "2025-10-04T19:28:38.601Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.601Z"
     },
     {
       "id": "architecture-create-user-personas-5fe8fd8b",
@@ -179,13 +134,8 @@
       "howto": "",
       "author": "unknown",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.908Z",
-      "updatedAt": "2025-10-04T19:28:38.609Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.609Z"
     },
     {
       "id": "architecture-diagrama-para-draw-io-3467695c",
@@ -197,13 +147,8 @@
       "howto": "",
       "author": "unknown",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.927Z",
-      "updatedAt": "2025-10-04T19:28:38.614Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.614Z"
     },
     {
       "id": "architecture-draw-like-a-pro-sequence-diagrams-for-a-system-flow-33ece251",
@@ -215,13 +160,8 @@
       "howto": "Copy the prompt and replace <ENTER YOUR FLOW> with the desired system flow that you would like to capture in the sequence diagram",
       "author": "Vinay Nadig",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.896Z",
-      "updatedAt": "2025-10-04T19:28:38.624Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.624Z"
     },
     {
       "id": "architecture-generate-cdk-lambda-code-from-drawio-diagram-cd26d380",
@@ -233,13 +173,8 @@
       "howto": "Your working folder should contain one drawio diagram containing the design of your app (for example an s3 bucket that triggers a lambda function)",
       "author": "olemaitre",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.937Z",
-      "updatedAt": "2025-10-04T18:50:38.937Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T18:50:38.937Z"
     },
     {
       "id": "architecture-generate-cdk-lambda-code-from-mermaid-diagram-99b8ec45",
@@ -251,13 +186,8 @@
       "howto": "The working folder (i.e your workspace) should be empty for a better result.\n\nTIP: you can generate a mermaid diagram of a sample application using 'Mermaid application diagram', 'Mermaid class diagram' or 'Mermaid sequence diagram' on promptz.dev and copy paste what is generated in the {{ Mermaid diagram as code }} place holder",
       "author": "olemaitre",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.920Z",
-      "updatedAt": "2025-10-04T19:28:38.634Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.634Z"
     },
     {
       "id": "architecture-generate-drawio-architecture-diagram-from-code-288294a8",
@@ -269,13 +199,8 @@
       "howto": "You need a folder containing your application code (python, typescript, ...) and your Infrastructure as Code templates (e.g. SAM template).\nCopy/Paste the generated code into a app.drawio file, preview your markdown file (e.g. using Draw.io Integration extension in VS Code)",
       "author": "olemaitre",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.912Z",
-      "updatedAt": "2025-10-04T19:28:38.639Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.639Z"
     },
     {
       "id": "architecture-generate-mermaid-application-flow-diagram-from-code-31f51737",
@@ -287,13 +212,8 @@
       "howto": "You need a folder containing your application code (python, typescript, ...) and/or infrastructure code\nCopy/Paste the generated code into a markdown (.md) file, preview your markdown file (e.g. using mermaid extension in VS Code)",
       "author": "olemaitre",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.895Z",
-      "updatedAt": "2025-10-04T19:28:38.644Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.644Z"
     },
     {
       "id": "architecture-generate-mermaid-class-diagram-from-code-d2b74cc1",
@@ -305,13 +225,8 @@
       "howto": "You need a folder containing your application code (python, typescript, ...) and/or infrastructure code\nCopy/Paste the generated code into a markdown (.md) file, preview your markdown file (e.g. using mermaid extension in VS Code)",
       "author": "olemaitre",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.898Z",
-      "updatedAt": "2025-10-04T19:28:38.649Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.649Z"
     },
     {
       "id": "architecture-generate-mermaid-sequence-diagram-from-code-7ee1e17e",
@@ -323,13 +238,8 @@
       "howto": "You need a folder containing your application code (python, typescript, ...) and/or infrastructure code\nCopy/Paste the generated code into a markdown (.md) file, preview your markdown file (e.g. using mermaid extension in VS Code)",
       "author": "olemaitre",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.940Z",
-      "updatedAt": "2025-10-04T19:28:38.653Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.653Z"
     },
     {
       "id": "architecture-generate-well-architected-recommendations-on-my-drawio-diagram-adcfeb01",
@@ -341,13 +251,8 @@
       "howto": "Your working folder should contain one drawio diagram containing the design of your app (for example an s3 bucket that triggers a lambda function)",
       "author": "olemaitre",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.926Z",
-      "updatedAt": "2025-10-04T18:50:38.926Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T18:50:38.926Z"
     },
     {
       "id": "architecture-solution-design-0b275af7",
@@ -359,13 +264,8 @@
       "howto": "Open a new chat and copy-paste the prompt as your first input in a blank conversation. To improve the accuracy and relevancy of the discussion with Q, ensure that documentation is added as markdown files and add them to the implicit context using the @ shortcut. Once you have done it, let the discussion flow 😉",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.909Z",
-      "updatedAt": "2025-10-04T19:28:38.665Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.665Z"
     },
     {
       "id": "architecture-well-architected-review-6f835ab5",
@@ -388,13 +288,8 @@
       "howto": "1. Create a workload in the Well-Architected Tool and copy the ARN of the workload to add it to the prompt.\n2. (optional), if you are using named profiles, add this sentence to the end of the prompt:\n   Always use AWS_REGION=<region> and AWS_PROFILE=<your-profile-name>",
       "author": "pacovk",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.941Z",
-      "updatedAt": "2025-10-04T19:28:38.672Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.672Z"
     },
     {
       "id": "aws-create-eks-cluster-using-aws-and-terraform-best-practices-3d1dbca7",
@@ -406,13 +301,8 @@
       "howto": "",
       "author": "Abhijit Karode",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.899Z",
-      "updatedAt": "2025-10-04T19:28:38.679Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.679Z"
     },
     {
       "id": "aws-identifying-metrics-alarms-related-to-aws-resources-342fe6c9",
@@ -424,13 +314,8 @@
       "howto": "{{Service1}} is the target package name, for which missing alarms and metrics need to be identified.\n{{Service2}} is the reference package name, which follows best practices for resource monitoring.\n{{ALARM_TYPE}} is the AWS resource type. E.g. AWS API Gateway.\nThe code for the reference and target packages need to be converted to a structured format and appended to the prompt.\n\nUtility to convert code packages to a structured format: packages/GenAICDKAnalyzer/blobs/mainline/--/codebase_to_text.py\nSample usage of the utility: packages/GenAICDKAnalyzer/blobs/6aec4cd1b96c975dff5f1a8950b1b0ab70be7399/--/main.py#L184",
       "author": "shudabas",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.903Z",
-      "updatedAt": "2025-10-04T19:28:38.690Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.690Z"
     },
     {
       "id": "aws-identifying-metrics-alarms-related-to-service-health-0fdb45f1",
@@ -442,13 +327,8 @@
       "howto": "{{Service1}} is the target package name, for which missing alarms and metrics need to be identified.\n{{Service2}} is the reference package name, which follows best practices for service health monitoring.\n{{ALARM_TYPE}} is the AWS resource type. E.g. File Descriptor, Garbage collection.\nThe code for the reference and target packages need to be converted to a structured format and appended to the prompt.\n\nUtility to convert code packages to a structured format: packages/GenAICDKAnalyzer/blobs/mainline/--/codebase_to_text.py\nSample usage of the utility: packages/GenAICDKAnalyzer/blobs/6aec4cd1b96c975dff5f1a8950b1b0ab70be7399/--/main.py#L184",
       "author": "shudabas",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.935Z",
-      "updatedAt": "2025-10-04T19:28:38.698Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.698Z"
     },
     {
       "id": "code-generation-python-code-for-external-libraries-9daca4df",
@@ -460,13 +340,8 @@
       "howto": "",
       "author": "ashirhs",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.930Z",
-      "updatedAt": "2025-10-04T19:28:38.705Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.705Z"
     },
     {
       "id": "documentation-adit-s-prompt-for-generating-titles-deb92450",
@@ -478,13 +353,8 @@
       "howto": "",
       "author": "Adit Modi",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.909Z",
-      "updatedAt": "2025-10-04T19:28:38.710Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.710Z"
     },
     {
       "id": "documentation-adr-creation-21a2ae00",
@@ -496,13 +366,8 @@
       "howto": "You can tune the output depending on new considerations:\n\n\"Update the above ADR that using either QuickSight capacity pricing by session or user pricing can come become cost prohibitive. It's $.50 per 30 session for capacity pricing and $15 per user per month\"",
       "author": "Wes Eklund",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.931Z",
-      "updatedAt": "2025-10-04T19:28:38.716Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.716Z"
     },
     {
       "id": "documentation-document-codeblock-04139e79",
@@ -514,13 +379,8 @@
       "howto": "From within the code you are working on, select a portion of code (typically this will be a function or class, but can also work across the entire code in a file) and then invoke inline prompt via COMMAND + I",
       "author": "Ricardo Sueiras",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.910Z",
-      "updatedAt": "2025-10-04T18:50:38.910Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T18:50:38.910Z"
     },
     {
       "id": "documentation-project-intelligence-a073774b",
@@ -532,13 +392,8 @@
       "howto": "Start Q Developer in the CLI. Copy-Paste the prompt into your chat and run it. Q might ignore the final sense check. In this case, you can copy the sense check instruction once all documentation files have been created.\n\nBenefits of this documentation system:\n\n1. Persistent Context: Amazon Q Developer can now maintain knowledge about the project across sessions\n2. Comprehensive Understanding: The documentation covers important aspects of the project\n3. Structured Information: Well-organized files make it easy to find specific details\n4. Visual Representation: Mermaid diagrams help visualize architecture and relationships\n5. Up-to-date Status: Progress tracking helps understand the current state of development",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.897Z",
-      "updatedAt": "2025-10-04T19:28:38.729Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.729Z"
     },
     {
       "id": "documentation-project-structure-q-a-9d7d5dc4",
@@ -550,13 +405,8 @@
       "howto": "",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.918Z",
-      "updatedAt": "2025-10-04T19:28:38.733Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.733Z"
     },
     {
       "id": "documentation-react-component-documentation-e23f7432",
@@ -568,13 +418,8 @@
       "howto": "Open your terminal and change directory to the root folder of your repository. Then start Q Developer with `q chat` and paste the prompt. You can apply additional documentation rules based on your requirements or guidelines.",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.899Z",
-      "updatedAt": "2025-10-04T19:28:38.739Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.739Z"
     },
     {
       "id": "general-amazon-q-project-learning-8db9c084",
@@ -586,13 +431,8 @@
       "howto": "# Amazon Q Learning Files\n\nThis document explains the standardized naming convention for Amazon Q learning files across different projects and directories.\n\n## Naming Convention\n\nAll Amazon Q learning files follow this naming pattern:\n\n```\nq-learning-{context}.md\n```\n\nWhere `{context}` is a descriptor of the project or area (e.g., \"datalake\", \"streaming\", \"general\").\n\n## File Locations\n\n| File Name                     | Location                    | Purpose                                                        |\n| ----------------------------- | --------------------------- | -------------------------------------------------------------- |\n| `q-learning-general.md`       | Home directory (~)          | General learnings and insights across all projects             |\n| `q-learning-datalake.md`      | Data Lake project directory | Learnings specific to the Data Lake project (Caspian/Khazar)   |\n| `q-learning-announcements.md` | Announcements directory     | Learnings related to announcement workflows and communications |\n| `q-learning-streaming.md`     | Streaming project directory | Learnings specific to streaming data projects                  |\n\n## Purpose\n\nThese files serve as a knowledge base for Amazon Q to:\n\n1. Better understand your work style and preferences\n2. Improve collaboration and assistance\n3. Provide more relevant and contextual help\n4. Optimize Q CLI token usage by maintaining context\n\n\nWhen working with Amazon Q in a specific project context, it will automatically reference the relevant learning file to provide more tailored assistance.\n\nYou can update these files manually or ask Amazon Q to update them with new insights from your interactions.\n\n## Format\n\nAll files use Markdown (.md) format for:\n\n- Better structure and readability\n- Support for rich formatting (headers, lists, code blocks)\n- Compatibility with version control systems\n- Easy viewing in most text editors and documentation tools\n\n## Updating Guidelines\n\nWhen updating q-learning files:\n\n- PRESERVE the existing structure and content\n- ADD new learnings to the appropriate sections rather than reformatting the entire document\n- MAINTAIN the established organization and formatting\n- EXTEND existing sections with new insights rather than replacing them\n- RESPECT the document's original structure and flow",
       "author": "unknown",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.922Z",
-      "updatedAt": "2025-10-04T19:28:38.754Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.754Z"
     },
     {
       "id": "general-configura-o-de-contexto-inteligente-amazonq-fc4a1530",
@@ -604,13 +444,8 @@
       "howto": "💡 Exemplos de Uso\n\n```\n@amazonq-config-rules-project Configure contexto inteligente do AmazonQ no meu projeto\n```",
       "author": "unknown",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.918Z",
-      "updatedAt": "2025-10-04T19:28:38.765Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.765Z"
     },
     {
       "id": "general-conventional-commit-messages-2f22f60b",
@@ -622,13 +457,8 @@
       "howto": "- Make a change in your repository and stage all files with `git add .`.\n- Open your terminal and change directory to the root folder of your repository.\n- Then start Q Developer with `q chat` and paste the prompt.",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.930Z",
-      "updatedAt": "2025-10-04T19:28:38.770Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.770Z"
     },
     {
       "id": "general-git-commit-message-7f9cf52c",
@@ -640,13 +470,8 @@
       "howto": "Stage all changes using `git add .`. Then call `q chat` and enter the prompt. While generating a response, Q uses your current git context including the staged files to suggest a commit message to you.\n\nSource of this prompt: [Streamline Your Git Commits with Amazon Q Developer CLI](https://www.youtube.com/watch?v=vRiqQqVlsyM)",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.925Z",
-      "updatedAt": "2025-10-04T19:28:38.774Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.774Z"
     },
     {
       "id": "general-github-pull-requests-38c933f9",
@@ -658,13 +483,8 @@
       "howto": "- Install the official Github MCP server.\n- Start Q Developer in the CLI.\n- If you have an existing pull request template, add it to the context via \"/context add\".\n- Run the prompt.",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.908Z",
-      "updatedAt": "2025-10-04T19:28:38.780Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.780Z"
     },
     {
       "id": "general-prompt-to-send-q-cli-chat-to-do-research-on-recent-libraries-for-you-9f8c0709",
@@ -676,13 +496,8 @@
       "howto": "Use this prompt with Amazon Q Developer CLI Chat.\nThen put the file in the context of the CLI using the command: /context add <filename>.md.\nFinally trigger a prompt to develop something given this new context.\nHere is demo blog post on this prompt: https://www.linkedin.com/posts/jeffelandreau_amazonqdeveloper-strands-generativeai-activity-7332856467667992576-A5NK.",
       "author": "JFL",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.910Z",
-      "updatedAt": "2025-10-04T19:28:38.786Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.786Z"
     },
     {
       "id": "general-read-cline-memory-bank-0983a65b",
@@ -694,13 +509,8 @@
       "howto": "Start a new chat with Amazon Q Developer and replace @folder with your memory bank folder. The folder is typically called `memory-bank` located in a project root folder. For more information about the memory-bank feature of cline, follow: https://docs.cline.bot/improving-your-prompting-skills/custom-instructions-library/cline-memory-bank",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.918Z",
-      "updatedAt": "2025-10-04T19:28:38.790Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.790Z"
     },
     {
       "id": "general-requirement-to-issue-stepfunction-efcb913e",
@@ -712,13 +522,8 @@
       "howto": "",
       "author": "Stan Fan",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.908Z",
-      "updatedAt": "2025-10-04T19:28:38.799Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.799Z"
     },
     {
       "id": "persona-frontend-engineer-54019c81",
@@ -730,13 +535,8 @@
       "howto": "",
       "author": "Juanse Mastrangelo",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.941Z",
-      "updatedAt": "2025-10-04T19:28:38.812Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.812Z"
     },
     {
       "id": "persona-independent-thought-challenger-4b1e74aa",
@@ -748,13 +548,8 @@
       "howto": "1. Begin your conversation normally\n2. Use this prompt when you want critical feedback rather than agreement\n3. Present your ideas, theories, or arguments clearly\n4. Expect the AI to challenge your thinking by questioning assumptions, offering skeptical viewpoints, checking your reasoning, and suggesting alternative perspectives\n5. Be open to having your ideas thoroughly examined and critiqued\n6. Use the feedback to refine your thinking and strengthen your arguments",
       "author": "unknown",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.920Z",
-      "updatedAt": "2025-10-04T19:28:38.816Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.816Z"
     },
     {
       "id": "persona-professional-speaking-coach-feedback-generator-bd566113",
@@ -766,13 +561,8 @@
       "howto": "**Prerequisites:**\n\n1. A video recording of your presentation (local file or YouTube URL)\n2. Basic information about your professional background (job title and years of experience)\n3. The title of your talk\n\n**Usage Instructions:**\n\n1. Provide your job title, years of experience, and talk title in the designated placeholders\n2. Have your presentation video ready (either as a local file or a public YouTube URL)\n3. Run the prompt in Amazon Q, which will scan for video files or ask you to provide a YouTube link\n4. Select the video you want analyzed from the presented menu\n5. Amazon Q will generate multiple analysis files organized in a structured folder system\n6. Review the feedback documents to identify areas for improvement\n7. Use the timestamp-specific feedback to focus your practice sessions\n8. The prompt creates a persistent markdown file so you can easily analyze additional presentations in the future\n\nThis prompt is ideal for professionals looking to improve their public speaking skills through detailed, objective feedback without requiring external coaching services.",
       "author": "unknown",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.895Z",
-      "updatedAt": "2025-10-04T19:28:38.828Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.828Z"
     },
     {
       "id": "persona-pythonexpert-diy-profile-prompt-8d99825e",
@@ -784,13 +574,8 @@
       "howto": "1. Create a \".md\" document and paste the following contents :\n   PYTHONEXPERT\n   Consider yourself as a senior python developer with over 10 years of experience.The code that you'll generate is always optimised and scalable.Whatever function that you write will have the function name ending with '\\_expert'.\n\n2. Use @workspace PYTHONEXPERT {{ your usual prompt }}",
       "author": "Proceyes",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.939Z",
-      "updatedAt": "2025-10-04T19:28:38.832Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.832Z"
     },
     {
       "id": "persona-senior-react-engineer-2b0aac66",
@@ -802,13 +587,8 @@
       "howto": "",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.909Z",
-      "updatedAt": "2025-10-04T19:28:38.838Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.838Z"
     },
     {
       "id": "scaffolding-boostrap-flask-app-in-dev-68f5b351",
@@ -820,13 +600,8 @@
       "howto": "With this file in your project workspace, code generated by /dev will adopt these norms.",
       "author": "Ricardo Sueiras",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.933Z",
-      "updatedAt": "2025-10-04T19:28:38.842Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.842Z"
     },
     {
       "id": "scaffolding-github-actions-pull-request-workflow-d748c1c3",
@@ -838,13 +613,8 @@
       "howto": "",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.909Z",
-      "updatedAt": "2025-10-04T19:28:38.845Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.845Z"
     },
     {
       "id": "scaffolding-python-lambda-layer-generator-3ad29455",
@@ -856,13 +626,8 @@
       "howto": "Open the generated html file in a browser. Enter the required Python libraries and hit the copy to clipboard button. Paste the contents in a terminal window and run it. The code should generate a zip file that you can use as a Python Lambda layer. It is assumed that you have Python and pyenv running on your machine.",
       "author": "Nathaniel Ng",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.898Z",
-      "updatedAt": "2025-10-04T18:50:38.898Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T18:50:38.898Z"
     },
     {
       "id": "scaffolding-setup-shell-from-zshrc-e38adaf1",
@@ -874,13 +639,8 @@
       "howto": "",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.941Z",
-      "updatedAt": "2025-10-04T19:28:38.850Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.850Z"
     },
     {
       "id": "scaffolding-setup-workspace-rules-a2e65a78",
@@ -908,13 +668,8 @@
       "howto": "Simply run the prompt from the IDE or CLI chat. If you will use with multiple projects, save as a Saved Prompt.",
       "author": "unknown",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.932Z",
-      "updatedAt": "2025-10-04T19:28:38.862Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.862Z"
     },
     {
       "id": "solutions-aws-architecture-blueprint-for-a-scalable-file-processing-pipeline-36142aff",
@@ -926,13 +681,8 @@
       "howto": "",
       "author": "amatore",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.919Z",
-      "updatedAt": "2025-10-04T19:28:38.869Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.869Z"
     },
     {
       "id": "solutions-aws-architecture-blueprint-for-an-api-gateway-to-sqs-pattern-8e823250",
@@ -944,13 +694,8 @@
       "howto": "",
       "author": "amatore",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.916Z",
-      "updatedAt": "2025-10-04T19:28:38.874Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.874Z"
     },
     {
       "id": "solutions-build-a-ui-for-a-votingapp-44aee1cf",
@@ -962,13 +707,8 @@
       "howto": "The prerequisite would be to create the infrastructure to run the application locally. There is a script [here](https://github.com/aws-containers/votingapp/blob/master/preparation/prepare.sh) that allows to do that. You can then run the Python application in your IDE (which requires proper IAM permissions to have the app connect to DynamoDB etc.). It's a bit of work to setup initially but for me the ROI is worth because I use this app frequently to experiment with Q. I often use this for demoing Amazon Q Developer capabilities but hopefully can inspire for other type of real usage.",
       "author": "mreferre",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.895Z",
-      "updatedAt": "2025-10-04T19:28:38.878Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.878Z"
     },
     {
       "id": "solutions-copy-data-from-dynamodb-across-accounts-aa3a0ec0",
@@ -980,13 +720,8 @@
       "howto": "Open Amazon Q Developer in the CLI via `q chat`. Copy-paste the prompt into your terminal. To improve the accuracy of the output, provide samples of how the data are structured inside your DynamoDB Tables.\n\nBefore running the script, make sure to create two named profiles for source and target accounts in your AWS CLI configuration.",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.897Z",
-      "updatedAt": "2025-10-04T19:28:38.883Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.883Z"
     },
     {
       "id": "solutions-qr-code-to-url-1a3e9ec9",
@@ -998,13 +733,8 @@
       "howto": "",
       "author": "Nathaniel Ng",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.906Z",
-      "updatedAt": "2025-10-04T19:28:38.888Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.888Z"
     },
     {
       "id": "spec-driven-development-implementation-plan-18ecdf89",
@@ -1023,13 +753,8 @@
       "howto": "1. Open a new chat inside your IDE\n2. Add the path to your specification file to the context, e.g. `/context add specs/myspec.md`\n3. Add the path to your docs folder to the context, e.g. `/context add docs/*`\n4. Copy-pase the prompt into your chat and run it",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.925Z",
-      "updatedAt": "2025-10-04T19:28:38.894Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.894Z"
     },
     {
       "id": "spec-driven-development-specifications-for-development-tasks-24b69aa8",
@@ -1049,13 +774,8 @@
       "howto": "1. Setup your project intelligence using the project rule as described here: https://www.promptz.dev/rules/rule/project-intelligence-dbd52e23\n2. Open a new chat inside your IDE\n3. Copy-pase the prompt into your chat\n4. Answer all questions as detailed and specific as possible\n5. Review and update the generated specification\n6. Once finalized, ask Q to save the specification as markdown file. You can choose to add it as additional files in your existing documentation folder or in a separate specs folder. I recommend grouping the specs separated by feature (e.g. specs/featureA/spec.md, specs/featureB/spec.md)",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.932Z",
-      "updatedAt": "2025-10-04T19:28:38.900Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.900Z"
     },
     {
       "id": "testing-add-unit-test-5ddfde3c",
@@ -1067,13 +787,8 @@
       "howto": "",
       "author": "Depa",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.917Z",
-      "updatedAt": "2025-10-04T19:28:38.907Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.907Z"
     },
     {
       "id": "testing-cdk-snapshot-tests-for-typescript-and-jest-37ad5b71",
@@ -1085,13 +800,8 @@
       "howto": "",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.929Z",
-      "updatedAt": "2025-10-04T18:59:28.151Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T18:59:28.151Z"
     },
     {
       "id": "testing-cdk-unit-tests-for-typescript-and-jest-1ad0b831",
@@ -1103,13 +813,8 @@
       "howto": "",
       "author": "cremich",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.896Z",
-      "updatedAt": "2025-10-04T19:01:31.218Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:01:31.218Z"
     },
     {
       "id": "testing-generate-rest-api-fixtures-for-cypress-testing-64c20a8c",
@@ -1121,13 +826,8 @@
       "howto": "",
       "author": "Nihit Kasabwala",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.911Z",
-      "updatedAt": "2025-10-04T19:28:38.933Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.933Z"
     },
     {
       "id": "testing-generate-ui-functional-test-using-cypress-for-a-specific-page-2cfe20d8",
@@ -1139,13 +839,8 @@
       "howto": "At this point, you already have a fixture defined and initial scaffolding for the functional test setup which includes installing cypress.io (`npm install cypress`) and the `cypress.config.ts` is already created in the project folder.",
       "author": "Nihit Kasabwala",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.919Z",
-      "updatedAt": "2025-10-04T18:50:38.919Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T18:50:38.919Z"
     },
     {
       "id": "testing-parameterize-like-a-pro-generating-junit-5-tests-d819b79b",
@@ -1157,13 +852,8 @@
       "howto": "",
       "author": "Vinay Nadig",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.910Z",
-      "updatedAt": "2025-10-04T19:28:38.949Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.949Z"
     },
     {
       "id": "testing-parameterize-like-a-pro-supercharge-your-junit-5-tests-5fb781ea",
@@ -1175,13 +865,8 @@
       "howto": "Open the Java class file for which unit tests in IntelliJ Idea and use the prompt to generate tests.",
       "author": "Vinay Nadig",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.917Z",
-      "updatedAt": "2025-10-04T18:50:38.917Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T18:50:38.917Z"
     },
     {
       "id": "testing-tdd-fishing-game-prompt-4828e648",
@@ -1193,13 +878,8 @@
       "howto": "",
       "author": "Stan Fan",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.917Z",
-      "updatedAt": "2025-10-04T19:28:38.960Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.960Z"
     },
     {
       "id": "testing-test-966e89f8",
@@ -1211,13 +891,8 @@
       "howto": "",
       "author": "Pankaj Prajapati",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.940Z",
-      "updatedAt": "2025-10-04T19:28:38.965Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.965Z"
     },
     {
       "id": "testing-unit-test-generation-b2a80311",
@@ -1229,17 +904,12 @@
       "howto": "This can be executed from the CLI or from the chat window, you can instruct Amazon Q Developer CLI to write them directly to test.md by adding: \"and write them down to test.md\"\nYou can run this commands multiple times and will create more unit tests, I also recommend adding this to your @prompts.",
       "author": "mjkubba",
       "sourceURL": "",
-      "scope": "PUBLIC",
       "createdAt": "2025-10-04T18:50:38.916Z",
-      "updatedAt": "2025-10-04T19:28:38.970Z",
-      "copyCount": 0,
-      "downloadCount": 0,
-      "starCount": 0,
-      "popularityScore": 0
+      "updatedAt": "2025-10-04T19:28:38.970Z"
     }
   ],
   "metadata": {
     "totalCount": 66,
-    "lastBuildTime": "2025-10-04T21:56:15.052Z"
+    "lastBuildTime": "2025-10-14T09:13:55.878Z"
   }
 }
