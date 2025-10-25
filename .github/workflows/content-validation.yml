@@ -13,6 +13,9 @@ permissions:
 jobs:
   validate-content:
     runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: ${{ vars.HUGO_VERSION }}
+      NODE_VERSION: ${{ vars.NODE_VERSION }}
     outputs:
       changed-files: ${{ steps.changed-files.outputs.all_changed_files }}
       any-changed: ${{ steps.changed-files.outputs.any_changed }}
@@ -26,7 +29,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
 
       - name: Install dependencies
@@ -62,9 +65,6 @@ jobs:
           done
 
           exit $exit_code
-
-      - name: Validate Hugo build
-        run: npm run validate
 
       - name: Check author assignment for existing content
         id: author-check

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - v2
   workflow_dispatch:
 
 permissions:
@@ -24,8 +23,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.152.2
-      NODE_VERSION: 18
+      HUGO_VERSION: ${{ vars.HUGO_VERSION }}
+      NODE_VERSION: ${{ vars.NODE_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
