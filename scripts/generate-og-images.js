@@ -169,7 +169,10 @@ async function generateOGImage(filePath, logoBase64) {
 
   const html = generateHTML(frontMatter, contentType, logoBase64);
 
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({
+    headless: "new",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
   const page = await browser.newPage();
 
   await page.setViewport({ width: 1200, height: 630 });
