@@ -1,0 +1,15 @@
+{{ $related := .Site.RegularPages.Related . | first 3 }}
+{{ if $related }}
+  <section
+    class="max-w-6xl mx-auto px-6 py-8 border-t border-gray-700"
+    data-pagefind-ignore
+  >
+    <h2 class="text-2xl font-bold text-white mb-6">Related Content</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {{ range $related }}
+        {{ partial "content-card.html" . }}
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

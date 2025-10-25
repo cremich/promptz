@@ -1,51 +1,32 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# Dependencies
 /node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
 
-# testing
-/coverage
+# Hugo
+/public/
+/resources/
+hugo_stats.json
+.hugo_build.lock
 
-# next.js
-/.next/
-/out/
+# Tailwind CSS
+*.css.map
 
-# production
-/build
+# Pagefind
+/static/pagefind/
 
-# misc
+# Misc
 .DS_Store
 *.pem
 
-# debug
+# Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# env files
+# Environment files
 .env*
 
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# amplify
-.amplify
-amplify_outputs*
-amplifyconfiguration*
-
-# Playwright
-/.playwright/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-
-#Amazon Q Developer
+# Amazon Q Developer
 /.amazonq/conversations/

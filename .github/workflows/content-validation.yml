@@ -1,0 +1,128 @@
+name: Content Validation
+
+on:
+  pull_request:
+    paths:
+      - "content/**/*.md"
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-content:
+    runs-on: ubuntu-latest
+    outputs:
+      changed-files: ${{ steps.changed-files.outputs.all_changed_files }}
+      any-changed: ${{ steps.changed-files.outputs.any_changed }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get changed markdown files
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+        with:
+          files: |
+            content/**/*.md
+
+      - name: Validate changed content
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "Changed markdown files:"
+          echo "${{ steps.changed-files.outputs.all_changed_files }}"
+
+          exit_code=0
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "Validating: $file"
+            
+            if [[ "$file" == content/prompts/* ]]; then
+              if ! npm run validate:prompts "$file"; then
+                exit_code=1
+              fi
+            else
+              if ! npm run lint:content "$file"; then
+                exit_code=1
+              fi
+            fi
+            echo "---"
+          done
+
+          exit $exit_code
+
+      - name: Validate Hugo build
+        run: npm run validate
+
+      - name: Check author assignment for existing content
+        id: author-check
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const matter = require('gray-matter');
+
+            const changedFiles = '${{ steps.changed-files.outputs.all_changed_files }}'.split(' ');
+            const existingContentAuthors = new Set();
+
+            for (const file of changedFiles) {
+              if (fs.existsSync(file)) {
+                try {
+                  const content = fs.readFileSync(file, 'utf8');
+                  const { data } = matter(content);
+                  if (data.author && data.author !== context.payload.pull_request.user.login) {
+                    existingContentAuthors.add(data.author);
+                  }
+                } catch (error) {
+                  console.log(`Could not parse ${file}: ${error.message}`);
+                }
+              }
+            }
+
+            return Array.from(existingContentAuthors);
+
+      - name: Request author review
+        if: steps.author-check.outputs.result != '[]'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const authors = JSON.parse('${{ steps.author-check.outputs.result }}');
+
+            await github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              reviewers: authors
+            });
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body: `🔍 **Author Review Required**\n\nThis PR modifies content originally created by: ${authors.map(a => `@${a}`).join(', ')}\n\nThe original author(s) have been requested to review these changes.`
+            });
+
+      - name: Comment on validation failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body: `❌ **Content Validation Failed**\n\nPlease check the workflow logs for details and fix the validation errors before proceeding.`
+            });

@@ -2,7 +2,7 @@
 
 ## Product Vision
 
-Promptz is the ultimate prompting hub for Amazon Q Developer, designed to help developers discover, create, and perfect their prompts, project rules, and custom agents for every step of the software development lifecycle. The platform serves as a centralized repository where developers can share, discover, and collaborate on high-quality prompts, project rules, and Amazon Q CLI agents specifically tailored for Amazon Q Developer.
+Promptz is the ultimate library for Amazon Q Developer, designed to help developers discover, create, and perfect their prompts, project rules, and custom agents for every step of the software development lifecycle. The platform serves as a centralized repository where developers can share, discover, and collaborate on high-quality prompts, project rules, and Amazon Q CLI agents specifically tailored for Amazon Q Developer.
 
 ## Core Mission
 
@@ -30,32 +30,7 @@ Simplify collaboration with Amazon Q Developer by providing a comprehensive, com
 - **Technical Content Creators** documenting and sharing prompt engineering knowledge
 - **Enterprise Development Teams** implementing consistent AI-assisted development practices
 
-## Community and Content Quality
-
-### Content Submission
-
-- **Authentication Required**: Only authenticated users can submit prompts and project rules
-- **Quality Philosophy**: Encouraging learning and iterative improvement over strict quality gates
-- **Community Feedback**: Usage analytics (copy/download counts) provide indirect feedback on content quality
-- **No Moderation Policies**: Currently no formal content moderation policies in place
-
-### User Feedback Mechanisms
-
-- **Primary Channel**: GitHub issues for bug reports and feature requests
-- **Usage Analytics**: Aggregated copy and download interactions tracked per prompt/rule
-- **Indirect Feedback**: Community usage patterns indicate content effectiveness
-- **Future Considerations**: Direct feedback mechanisms (comments, ratings) under consideration
-
-### Spam Prevention
-
-- **Authentication Barrier**: Requiring user authentication serves as primary spam prevention
-- **Community Self-Regulation**: Reliance on community usage patterns to surface quality content
-
 ## User Problems Solved
-
-### Context Switching Reduction
-
-- **Solution**: Direct integration through MCP server allows in-context prompt access
 
 ### Prompt Quality Issues
 
@@ -124,50 +99,6 @@ journey
       Benefit from custom resources: 5: User
 ```
 
-## Current Development State
-
-### Recently Completed Features
-
-- **Amazon Q Developer CLI Agent Support** (Issue #106): Complete implementation of custom agent creation, management, and sharing with comprehensive configuration options including system prompts, tools, MCP servers, resources, lifecycle hooks, and tool settings
-- **Agent Integration with Tag System**: Full integration of agents into the existing tag-based discovery system with many-to-many relationships and SEO optimization
-- **Agent E2E Testing Suite**: Comprehensive end-to-end testing coverage for agent creation workflows including minimal configuration, tool configuration, MCP server setup, and resources/hooks configuration
-- **UI/UX Consistency Improvements**: Aligned agent detail pages with existing prompt and project rule designs for consistent user experience across all content types
-- **EventBridge Archive Configuration** (Issue #118): Implemented EventBridge archive for event replay and audit capabilities with environment-specific retention policies
-- **Content Display Improvements** (Issues #111, #112): Enhanced prompt and project rule display consistency with scrollable content and timestamp information
-- **Default Sort Order Optimization** (Issue #108): Changed default sort from "Trending" to "Newest" to improve discovery of new content
-- **Context Hooks Support** (Issue #101): Added support for Amazon Q CLI context hooks to help developers discover proven context hook commands
-- **EventBridge Integration**: Implemented Amazon EventBridge custom event bus with pipeline resolvers for domain event publishing (prompt.saved, prompt.deleted, prompt.copied, projectrule.saved, projectrule.deleted, projectrule.copied, projectrule.downloaded, agent.saved, agent.deleted, agent.copied, agent.downloaded)
-- **API Refactoring and Code Organization** (Issues #90, #92, #94): Complete restructuring of server actions, model definitions, and project organization for better maintainability
-- **Pipeline Resolvers Architecture**: Refactored AppSync mutations to use two-step pipeline resolvers that combine data operations with event publishing
-- **User Data Privacy Protection**: Removed sensitive user data (email, username) from GraphQL API exposure to minimize data exposure and comply with privacy best practices
-- **Tag-Based Discoverability** (Issue #93): Enhanced tag system with many-to-many relationships, tag-specific pages, and improved SEO
-- **Project Rules Sitemap Integration** (Issue #103): Added project rules to sitemap.xml with separate sitemap files for better search engine indexing
-- **Scope Attribute Migration**: Migrated from boolean `public` attribute to enum-based `scope` attribute (PRIVATE/PUBLIC) for better data modeling
-- **UI/UX Improvements for prompt visibility** (Issue #98): Better visibility controls and user guidance for prompt/rule visibility toggles
-
-### Active Development (Open Issues)
-
-- **Enhance Login OTP Email Template** (Issue #117): Improve user experience for email-based authentication with better email template design
-- **Contributor Dashboard** (Issue #115): Add usage analytics and activity timeline for content creators to track their contributions and engagement
-- **AWS WAF Security Enhancement** (Issue #114): Enable AWS WAF for Amplify hosting to enhance security posture
-- **Prompt Optimizer with AI Analysis** (Issue #113): AI-powered analysis and suggestions for prompt improvement
-- **Download Functionality for Prompts** (Issue #110): Add download functionality to achieve feature parity with project rules
-- **Comprehensive Onboarding** (Issue #109): Add onboarding instructions for new users to improve user adoption
-- **File Upload with AI Analysis** (Issue #107): Allow file uploads with AI-powered content analysis for automated prompt/rule generation
-- **Token Calculation** (Issue #102): Implement approximate token counting for prompts and rules using Anthropic TypeScript Tokenizer
-- **MCP Server Listings** (Issue #100): Curated catalog of compatible MCP servers with filtering by use cases and vendors
-- **GitHub Integration** (Issue #88): Collaborative updates through GitHub Actions with API hooks for publishing
-
-### Technical Debt and Improvements
-
-- Enhanced search functionality optimization (pagination and caching needed for scalability beyond 20,000 requests/day)
-- Performance improvements for large content libraries
-- Mobile responsiveness enhancements
-- Accessibility compliance improvements
-- Rate limiting and usage quotas for public API
-- API versioning for GraphQL API
-- Automated monitoring alerts and operational runbooks
-
 ## Success Metrics
 
 ### Primary KPIs
@@ -183,19 +114,3 @@ journey
 - **Content Quality**: Community-driven quality through usage analytics
 - **Platform Growth**: Total prompts and rules in library
 - **Integration Adoption**: MCP server usage and API access patterns
-
-## Future Roadmap
-
-### Short-term (Next 3 months)
-
-- Complete token calculation feature (Issue #102)
-- Implement context hooks support (Issue #101)
-- Enhance MCP server catalog (Issue #100)
-
-### Long-term (6+ months)
-
-- Enhanced MCP server capabilities and features
-- GitHub integration for collaborative updates (Issue #88)
-- Advanced personalization features
-- Multi-language support
-- Additional Amazon Q Developer capability integrations

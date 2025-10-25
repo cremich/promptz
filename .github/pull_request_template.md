@@ -1,39 +1,8 @@
-## Description
+## What type of change does this PR contain?
 
-Please provide a brief description of the changes in this pull request.
+Please select the appropriate template for your pull request:
 
-## Related Issue
+- **[Code Changes](https://github.com/cremich/promptz/compare/main...HEAD?quick_pull=1&template=code_changes.md)** - For bug fixes, features, refactoring, or other code modifications
+- **[Prompt Changes](https://github.com/cremich/promptz/compare/main...HEAD?quick_pull=1&template=new_prompt.md)** - For adding or updating prompts
 
-Fixes #(issue number)
-
-## Type of change
-
-Please delete options that are not relevant.
-
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires a documentation update
-
-## How Has This Been Tested?
-
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration.
-
-- [ ] Test A
-- [ ] Test B
-
-## Checklist:
-
-Before submitting your pull request, please review the following checklist:
-
-- [ ] I have performed a self-review of my own code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
-- [ ] Any dependent changes have been merged and published in downstream modules
-
-## Additional context
-
-Add any other context or screenshots about the pull request here.
+Click on the link above that matches your change type to use the appropriate template.
