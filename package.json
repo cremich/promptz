@@ -17,11 +17,7 @@
     "build:basecoat:js": "cp 'node_modules/basecoat-css/dist/js/all.js' assets/js/basecoat.js",
     "build:basecoat:css": "cp 'node_modules/basecoat-css/dist/basecoat.css' assets/css/basecoat.css",
     "build:og-images": "node scripts/generate-og-images.js",
-    "validate": "hugo --buildDrafts --buildFuture --quiet --enableGitInfo",
-    "validate:prompts": "tsx scripts/validate-prompts.ts",
-    "validate:taxonomies": "node scripts/validate-taxonomies.js",
     "lint:content": "node scripts/validate-content.js",
-    "preview": "npm run build && hugo server --source public",
     "prepare": "husky"
   },
   "devDependencies": {

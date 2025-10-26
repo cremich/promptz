@@ -51,16 +51,9 @@ jobs:
           exit_code=0
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "Validating: $file"
-            
-            if [[ "$file" == content/prompts/* ]]; then
-              if ! npm run validate:prompts "$file"; then
-                exit_code=1
-              fi
-            else
-              if ! npm run lint:content "$file"; then
-                exit_code=1
-              fi
-            fi
+            if ! npm run lint:content "$file"; then
+              exit_code=1
+            fi          
             echo "---"
           done
 

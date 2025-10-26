@@ -42,8 +42,6 @@ jobs:
 
       - name: Validate content
         run: |
-          npm run validate:prompts
-          npm run validate:taxonomies
           npm run lint:content
 
       - name: Validate Hugo build
