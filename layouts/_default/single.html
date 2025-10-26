@@ -196,7 +196,7 @@
         tabindex="-1"
         aria-selected="true"
       >
-        <div class="card" id="main-content">
+        <div class="card" id="main-content" data-pagefind-body>
           <div class="card-content prose prose-invert max-w-none px-4">
             {{ if eq .Section "agents" }}
               {{ .Content | safeHTML }}
