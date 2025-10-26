@@ -14,7 +14,6 @@ tags:
   - IDE
   - Chat
 title: "Parameterize Like a Pro: Supercharge Your JUnit 5 Tests!"
-featured: true
 aliases:
   [
     "/prompts/prompt/parameterize-like-a-pro-supercharge-your-junit-5-tests-5fb781ea",

@@ -24,7 +24,6 @@ tags:
 title: Implementation Plan
 createdAt: 2025-03-15T17:38:41.956Z
 updatedAt: 2025-06-13T09:53:42.581Z
-featured: true
 aliases: ["/prompts/prompt/implementation-plan-18ecdf89"]
 ---
 

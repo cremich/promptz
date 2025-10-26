@@ -14,6 +14,7 @@ images: []
 tags:
   - Python
 title: Python Programming Rules
+featured: true
 createdAt: 2025-05-21T14:16:44.197Z
 updatedAt: 2025-05-21T14:35:52.229Z
 aliases: ["/rules/rule/python-programming-rules-ea5dcae3"]

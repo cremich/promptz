@@ -36,7 +36,6 @@ tags:
 title: Project Intelligence
 createdAt: 2025-04-04T20:19:42.723Z
 updatedAt: 2025-04-04T20:19:42.723Z
-featured: true
 aliases: ["/prompts/prompt/project-intelligence-a073774b"]
 ---
 

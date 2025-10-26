@@ -20,6 +20,7 @@ tags:
 title: Typescript TDD Behavioural Test Specifications
 createdAt: 2025-04-23T14:04:36.745Z
 updatedAt: 2025-04-23T16:18:16.365Z
+featured: true
 aliases: ["/rules/rule/typescript-tdd-behavioural-test-specifications-bf2c9985"]
 ---
 

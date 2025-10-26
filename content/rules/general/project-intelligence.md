@@ -11,6 +11,7 @@ authors:
   - cremich
 categories:
   - general
+featured: true
 tags: ["IDE", "CLI", "Documentation"]
 ---
 

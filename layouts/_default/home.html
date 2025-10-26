@@ -194,7 +194,7 @@
             <a href="/prompts" class="btn-ghost">View All</a>
           </div>
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {{ range first 3 $featuredPrompts }}
+            {{ range first 6 $featuredPrompts }}
               {{ partial "content-card.html" . }}
             {{ end }}
           </div>
@@ -211,7 +211,7 @@
             <a href="/rules" class="btn-ghost">View All</a>
           </div>
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {{ range first 3 $featuredRules }}
+            {{ range first 6 $featuredRules }}
               {{ partial "content-card.html" . }}
             {{ end }}
           </div>
@@ -228,7 +228,7 @@
             <a href="/agents" class="btn-ghost">View All</a>
           </div>
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {{ range first 3 $featuredAgents }}
+            {{ range first 6 $featuredAgents }}
               {{ partial "content-card.html" . }}
             {{ end }}
           </div>
