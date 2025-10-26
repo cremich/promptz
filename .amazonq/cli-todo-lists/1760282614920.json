@@ -1,0 +1,43 @@
+{
+  "tasks": [
+    {
+      "task_description": "Create Zod schema for frontmatter validation based on existing PromptFrontmatter interface",
+      "completed": true
+    },
+    {
+      "task_description": "Implement security validation functions for suspicious content detection",
+      "completed": true
+    },
+    {
+      "task_description": "Create main validation function that processes single or multiple markdown files",
+      "completed": true
+    },
+    {
+      "task_description": "Implement user-friendly error reporting with clear messages and file locations",
+      "completed": true
+    },
+    {
+      "task_description": "Create CLI interface that accepts file path argument or validates all content files",
+      "completed": true
+    },
+    {
+      "task_description": "Add comprehensive tests for the validation script",
+      "completed": true
+    },
+    {
+      "task_description": "Update package.json with validation script command",
+      "completed": true
+    }
+  ],
+  "description": "Create a Node.js validation script for markdown prompt content with Zod schema validation and security checks",
+  "context": [
+    "Created comprehensive validation script with Zod schema validation, security checks, content validation, and user-friendly CLI interface. The script can validate all files or a single file and provides detailed error reporting.",
+    "Updated package.json to include validate:prompts script command",
+    "User suggested refactoring validation logic to lib/markdown folder for better separation of concerns and testability"
+  ],
+  "modified_files": [
+    "/Users/christian.bonzelet/Workspace/cremich/promptz/scripts/validate-prompts.js",
+    "/Users/christian.bonzelet/Workspace/cremich/promptz/package.json"
+  ],
+  "id": "1760282614920"
+}

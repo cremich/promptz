@@ -6,16 +6,22 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  # Combine lint and test jobs to reduce duplicate setup
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      HUGO_VERSION: ${{ vars.HUGO_VERSION }}
+      NODE_VERSION: ${{ vars.NODE_VERSION }}
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1 # Shallow clone for faster checkout
+          fetch-depth: 1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -23,25 +29,20 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
 
+      - name: Install Hugo
+        run: |
+          curl -sLJO "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
+          mkdir -p "${HOME}/.local/hugo"
+          tar -C "${HOME}/.local/hugo" -xf "hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
+          rm "hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
+          echo "${HOME}/.local/hugo" >> "${GITHUB_PATH}"
+
       - name: Install dependencies
         run: npm ci
 
-      - name: Create dummy amplify outputs
-        run: echo '{}' > amplify_outputs.json
-
-      - name: Run pull-request checks
+      - name: Validate content
         run: |
-          npm run pr
+          npm run lint:content
 
-      - name: Jest Coverage Comment
-        uses: MishaKav/jest-coverage-comment@main
-        with:
-          coverage-summary-path: ./coverage/coverage-final.json
-
-    # Add timeout to prevent hanging jobs
-    timeout-minutes: 10
-
-    # Add concurrency to cancel redundant workflow runs
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
+      - name: Validate Hugo build
+        run: npm run build

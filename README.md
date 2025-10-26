@@ -10,6 +10,7 @@ Promptz is the ultimate prompting hub for Amazon Q Developer, designed to help y
 
 - [Prerequisites](#-prerequisites)
 - [Getting Started](#-getting-started)
+- [Contributing Prompts](#-contributing-prompts)
 - [End-to-End Testing](#-end-to-end-testing)
 - [Contributing](#contributing)
 - [License](#license)
@@ -67,13 +68,14 @@ This command will create a sandbox environment that provides an isolated develop
 While you are waiting for your app to deploy (~5 mins). Learn about the project structure
 
 - `amplify/` Contains Amplify backend configuration
+- `content/` Markdown-based prompt content organized by category
+- `templates/` Templates for creating new prompts
 - `/app`: Next.js app router pages and layouts
 - `/components`: React components used throughout the application
 - `/contexts`: React context providers
 - `/hooks`: Custom React hooks
-- `/models`: Data models and types
+- `/lib`: Utility functions, markdown processing, and data models
 - `/public`: Static assets
-- `/utils`: Utility functions and helpers
 
 When the build completes, visit the newly deployed branch by selecting "View deployed URL".
 
@@ -82,6 +84,71 @@ When the build completes, visit the newly deployed branch by selecting "View dep
 Run `npm run dev` to start a local development server using the amplify configuration downloaded in step 4.
 
 After starting the development server, open your browser and navigate to `http://localhost:3000`.
+
+## 📝 Contributing Prompts
+
+Promptz uses a markdown-based content management system for prompts. All prompts are stored as markdown files in the `content/prompts/` directory and managed through GitHub pull requests.
+
+### Quick Start for Contributors
+
+1. **Fork the repository** and create a new branch
+2. **Choose the right directory** for your prompt:
+   - `architecture/` - Diagrams, system design, blueprints
+   - `code-generation/` - Generate code, scaffolding, boilerplate
+   - `documentation/` - ADRs, specs, project docs
+   - `testing/` - Unit tests, test generation, QA
+   - `analysis/` - Code review, security, optimization
+   - `aws/` - AWS-specific infrastructure and services
+   - `scaffolding/` - Project setup, environment configuration
+   - `spec-driven-development/` - Specification creation and planning
+   - `solutions/` - Complete applications and services
+   - `persona/` - AI behavior and role-setting prompts
+   - `general/` - Miscellaneous utilities
+
+3. **Copy the template**: Use `templates/prompt-template.md` as your starting point
+4. **Create your prompt**: Follow the frontmatter schema and content structure
+5. **Submit a pull request**: Use the "Prompt Changes" template
+
+### Frontmatter Schema
+
+Each prompt requires frontmatter with these fields:
+
+```yaml
+---
+title: "Your Prompt Title" # Required: Display name
+description: "Brief description" # Required: What it does
+author: "your-github-username" # Required: Your GitHub username
+tags: ["IDE", "Chat", "CLI"] # Optional: Additional tags
+sourceURL: "https://github.com/your-repo" # Optional: Reference link
+---
+```
+
+### Content Structure
+
+```markdown
+# Your Prompt Title
+
+Main prompt content goes here...
+
+## How to Use
+
+Step-by-step instructions:
+
+1. Copy the prompt above
+2. Customize parameters
+3. Use with Amazon Q Developer
+```
+
+### Validation
+
+All prompts are automatically validated for:
+
+- ✅ Required frontmatter fields
+- ✅ File naming conventions (`lowercase-with-hyphens.md`)
+- ✅ Content structure and security
+- ✅ Markdown parsing
+
+For detailed guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 🧪 End-to-End Testing
 

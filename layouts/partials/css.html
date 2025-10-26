@@ -1,0 +1,24 @@
+<!-- Pagefind UI Assets -->
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+
+{{ with resources.Get "css/main.css" }}
+  {{ $opts := dict "minify" (not
+    hugo.IsDevelopment)
+  }}
+  {{ with . | css.TailwindCSS $opts }}
+    {{ if
+      hugo.IsDevelopment
+    }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" />
+    {{ else }}
+      {{ with . | fingerprint }}
+        <link
+          rel="stylesheet"
+          href="{{ .RelPermalink }}"
+          integrity="{{ .Data.Integrity }}"
+          crossorigin="anonymous"
+        />
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}

@@ -1,0 +1,14 @@
+{{ define "main" }}
+  <div class="max-w-6xl mx-auto px-6 py-8">
+    <h1 class="text-4xl font-bold text-primary mb-4">{{ .Site.Title }}</h1>
+    <p class="text-lg text-muted-foreground">{{ .Site.Params.description }}</p>
+
+    <div class="mt-8 p-6 bg-secondary rounded-lg border">
+      <h2 class="text-2xl font-semibold mb-2">Hugo + Tailwind CSS Test</h2>
+      <p class="text-secondary-foreground">
+        If you can see this styled content, Hugo's native Tailwind CSS
+        processing is working!
+      </p>
+    </div>
+  </div>
+{{ end }}

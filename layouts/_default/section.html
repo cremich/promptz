@@ -1,0 +1,214 @@
+{{ define "main" }}
+  <!-- Condensed Hero Section -->
+  <div
+    class="relative overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 border-b border-border/40"
+  >
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10"
+    ></div>
+    <div class="relative max-w-6xl mx-auto px-6 py-6">
+      <div class="flex items-center gap-4">
+        {{ if eq .Section "prompts" }}
+          <div
+            class="p-3 rounded-xl bg-primary/10 border border-primary/20 text-primary"
+          >
+            {{ partial "icons/bolt.html" (dict "class" "w-6 h-6") }}
+          </div>
+        {{ else if eq .Section "rules" }}
+          <div
+            class="p-3 rounded-xl bg-primary/10 border border-primary/20 text-primary"
+          >
+            {{ partial "icons/shield-check.html" (dict "class" "w-6 h-6") }}
+          </div>
+        {{ else if eq .Section "agents" }}
+          <div
+            class="p-3 rounded-xl bg-primary/10 border border-primary/20 text-primary"
+          >
+            {{ partial "icons/desktop-computer.html" (dict "class" "w-6 h-6") }}
+          </div>
+        {{ else }}
+          <div
+            class="p-3 rounded-xl bg-primary/10 border border-primary/20 text-primary"
+          >
+            {{ partial "icons/folder.html" (dict "class" "w-6 h-6") }}
+          </div>
+        {{ end }}
+        <div>
+          <h1
+            class="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent"
+          >
+            {{ .Title }}
+          </h1>
+          {{ if .Description }}
+            <p class="text-muted-foreground mt-1">{{ .Description }}</p>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div id="content" class="max-w-6xl mx-auto px-6 py-8">
+    <!-- Breadcrumb -->
+    <ol
+      class="text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5 mb-6"
+    >
+      <li class="inline-flex items-center gap-1.5">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+      </li>
+      <li>
+        {{ partial "icons/chevron-right.html" (dict "class" "size-3.5") }}
+      </li>
+      {{ if and .Parent (ne .Parent.Kind "home") }}
+        <li class="inline-flex items-center gap-1.5">
+          <a
+            href="{{ .Parent.RelPermalink }}"
+            class="hover:text-foreground transition-colors"
+            >{{ .Parent.Title }}</a
+          >
+        </li>
+        <li>
+          {{ partial "icons/chevron-right.html" (dict "class" "size-3.5") }}
+        </li>
+      {{ end }}
+      <li class="inline-flex items-center gap-1.5">
+        <span class="text-foreground font-normal">{{ .Title }}</span>
+      </li>
+    </ol>
+
+    {{ $sections := .Sections }}
+    {{ $regularPages := .RegularPages }}
+    {{ if
+      $sections
+    }}
+      <!-- Show subcategories -->
+      {{ range $sections }}
+        <section class="mb-12">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+              {{ $iconName := "folder" }}
+              {{ if eq .Title "Architecture" }}
+                {{ $iconName = "building" }}
+              {{ end }}
+              {{ if eq .Title "Code Generation" }}
+                {{ $iconName = "code" }}
+              {{ end }}
+              {{ if eq .Title "Documentation" }}
+                {{ $iconName = "document-text" }}
+              {{ end }}
+              {{ if eq .Title "Testing" }}{{ $iconName = "beaker" }}{{ end }}
+              {{ if eq .Title "Analysis" }}{{ $iconName = "search" }}{{ end }}
+              {{ if eq .Title "AWS" }}
+                {{ $iconName =
+                  "cloud"
+                }}
+              {{ end }}
+              {{ if eq .Title "Scaffolding" }}
+                {{ $iconName =
+                  "beaker"
+                }}
+              {{ end }}
+              {{ if eq .Title "Spec-Driven Development" }}
+                {{ $iconName = "document-text" }}
+              {{ end }}
+              {{ if eq .Title "Solutions" }}{{ $iconName = "puzzle" }}{{ end }}
+              {{ if eq .Title "Persona" }}{{ $iconName = "user" }}{{ end }}
+              {{ if eq .Title "General" }}
+                {{ $iconName
+                  = "star"
+                }}
+              {{ end }}
+              {{ if eq .Title "Engineering" }}
+                {{ $iconName =
+                  "cog"
+                }}
+              {{ end }}
+              {{ if eq .Title "Infrastructure" }}
+                {{ $iconName =
+                  "server"
+                }}
+              {{ end }}
+              {{ if eq .Title "Project Management" }}
+                {{ $iconName
+                  = "clipboard"
+                }}
+              {{ end }}
+              {{ partial (printf "icons/%s.html" $iconName)
+                (dict "class" "w-5 h-5 text-primary")
+              }}
+
+
+              <h2 class="text-2xl font-semibold">
+                <a
+                  href="{{ .RelPermalink }}"
+                  class="hover:text-primary transition-colors"
+                >
+                  {{ .Title }}
+                </a>
+              </h2>
+              <span
+                class="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20"
+              >
+                {{ len .RegularPages }}
+              </span>
+            </div>
+            <a
+              href="{{ .RelPermalink }}"
+              class="inline-flex items-center gap-1 text-sm text-primary hover:text-primary/80 font-medium transition-colors"
+            >
+              View all
+              {{ partial "icons/arrow-right.html" (dict "class" "w-4 h-4") }}
+            </a>
+          </div>
+
+          {{ if .Description }}
+            <p class="text-muted-foreground mb-6">{{ .Description }}</p>
+          {{ end }}
+          {{ if .RegularPages }}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {{ range first 3 .RegularPages }}
+                {{ partial "content-card.html" . }}
+              {{ end }}
+            </div>
+          {{ else }}
+            <div
+              class="text-center py-8 border border-dashed border-border rounded-lg"
+            >
+              <p class="text-muted-foreground text-sm">
+                No content in this category yet.
+              </p>
+            </div>
+          {{ end }}
+        </section>
+      {{ end }}
+    {{ end }}
+    {{ if $regularPages }}
+      <!-- Show pages in this section -->
+      {{ if not $sections }}
+        <section class="mb-8">
+          <div class="flex items-center gap-3 mb-6">
+            <h2 class="text-2xl font-semibold">All {{ .Title }}</h2>
+            <span
+              class="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20"
+            >
+              {{ len $regularPages }}
+            </span>
+          </div>
+        </section>
+      {{ end }}
+
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {{ range $regularPages }}{{ partial "content-card.html" . }}{{ end }}
+      </div>
+    {{ end }}
+    {{ if and (not $sections) (not $regularPages) }}
+      <div class="text-center py-12">
+        <h3 class="text-lg font-medium">No content found</h3>
+        <p class="mt-2 text-muted-foreground">
+          There are no items in this section yet.
+        </p>
+      </div>
+    {{ end }}
+  </div>
+{{ end }}

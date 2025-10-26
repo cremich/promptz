@@ -1,0 +1,50 @@
+baseURL: "https://promptz.dev"
+languageCode: "en-us"
+title: "Promptz for Amazon Q Developer"
+enableGitInfo: true
+
+caches:
+  images:
+    dir: ":cacheDir/images"
+
+params:
+  description: "Discover, create, and perfect prompts, rules and custom agents for Amazon Q Developer. The ultimate library for AI-assisted development."
+  author: "Promptz Community"
+  social:
+    twitter: "@promptzdev"
+
+taxonomies:
+  tag: "tags"
+  category: "categories"
+  author: "authors"
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    style: "github-dark"
+    lineNos: true
+    codeFences: true
+
+outputs:
+  home: ["HTML", "RSS", "JSON"]
+  page: ["HTML"]
+  section: ["HTML", "RSS"]
+
+build:
+  buildStats:
+    enable: true
+  cachebusters:
+    - source: 'assets/notwatching/hugo_stats\.json'
+      target: "css"
+    - source: '(postcss|tailwind)\.config\.js'
+      target: "css"
+
+module:
+  mounts:
+    - source: "assets"
+      target: "assets"
+    - source: "hugo_stats.json"
+      target: "assets/notwatching/hugo_stats.json"
+      disableWatch: true
