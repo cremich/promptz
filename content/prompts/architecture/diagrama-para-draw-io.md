@@ -12,6 +12,7 @@ title: Diagrama para draw.io
 createdAt: 2025-08-19T21:47:54.854Z
 updatedAt: 2025-08-19T21:48:18.336Z
 aliases: ["/prompts/prompt/diagrama-para-draw-io-3467695c"]
+tags: ["draw.io", "diagrams", "aws", "xml", "architecture"]
 ---
 
 @workspace generate a draw.io diagram in an xml format of this application.

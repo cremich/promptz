@@ -14,6 +14,8 @@ aliases:
   [
     "/prompts/prompt/draw-like-a-pro-sequence-diagrams-for-a-system-flow-33ece251",
   ]
+tags:
+  ["sequence-diagrams", "mermaid", "system-flow", "architecture", "diagrams"]
 ---
 
 @workspace Analyze the code in the workspace and create a mermaid sequence diagram that illustrates the <ENTER YOUR FLOW> with these specifications:

@@ -13,6 +13,7 @@ title: Markdown Best Practices
 createdAt: 2025-04-23T14:14:44.079Z
 updatedAt: 2025-04-23T14:14:44.079Z
 aliases: ["/rules/rule/markdown-best-practices-5e54a502"]
+tags: ["markdown", "linting", "best-practices", "documentation", "style-guide"]
 ---
 
 # Concise Markdown Style Guide

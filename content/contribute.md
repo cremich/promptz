@@ -3,6 +3,7 @@ title: Contributing Guide
 description: Learn how to contribute prompts, project rules, and custom agent configurations to help the Amazon Q Developer community
 draft: false
 layout: contribute
+tags: ["contributing", "community", "prompts", "rules", "agents"]
 ---
 
 # Contributing Guide

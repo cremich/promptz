@@ -27,6 +27,7 @@ howToUse:
   Sample usage of the utility: packages/GenAICDKAnalyzer/blobs/6aec4cd1b96c975dff5f1a8950b1b0ab70be7399/--/main.py#L184"
 images: []
 title: Identifying metrics/alarms related to AWS Resources
+tags: ["aws", "monitoring", "metrics", "alarms", "cloudwatch", "best-practices"]
 aliases:
   [
     "/prompts/prompt/identifying-metrics-alarms-related-to-aws-resources-342fe6c9",

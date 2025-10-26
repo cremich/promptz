@@ -14,6 +14,7 @@ images: []
 authors: ["hanisverse"]
 categories:
   - engineering
+tags: ["documentation", "project-intelligence", "productivity", "living-docs"]
 ---
 
 ```json

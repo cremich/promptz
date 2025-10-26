@@ -26,6 +26,8 @@ howToUse:
   Sample usage of the utility: packages/GenAICDKAnalyzer/blobs/6aec4cd1b96c975dff5f1a8950b1b0ab70be7399/--/main.py#L184"
 images: []
 title: Identifying metrics/alarms related to service health
+tags:
+  ["aws", "monitoring", "service-health", "metrics", "alarms", "best-practices"]
 aliases:
   [
     "/prompts/prompt/identifying-metrics-alarms-related-to-service-health-0fdb45f1",

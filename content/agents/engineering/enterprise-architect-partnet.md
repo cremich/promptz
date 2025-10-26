@@ -15,6 +15,8 @@ images: []
 authors: ["hanisverse"]
 categories:
   - engineering
+tags:
+  ["architecture", "enterprise", "security", "modular-design", "system-design"]
 ---
 
 ```json
