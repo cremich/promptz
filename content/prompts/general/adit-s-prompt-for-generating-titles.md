@@ -7,7 +7,8 @@ description: >-
   The prompt is useful for generating catchy titles
 draft: false
 images: []
-authors: ["Adit Modi"]
+authors:
+  - Adit Modi
 categories:
   - general
 tags: ["Design", "IDE", "Chat"]

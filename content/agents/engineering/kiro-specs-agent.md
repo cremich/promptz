@@ -15,7 +15,8 @@ tags:
   - Implement
   - Requirements
   - Design
-authors: ["cremich"]
+authors:
+  - cremich
 categories:
   - engineering
 ---

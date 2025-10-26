@@ -12,7 +12,8 @@ description: >-
   orchestration layers.
 draft: false
 images: []
-authors: ["hanisverse"]
+authors:
+  - hanisverse
 categories:
   - engineering
 tags:

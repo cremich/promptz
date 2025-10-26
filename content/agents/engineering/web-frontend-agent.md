@@ -16,7 +16,8 @@ tags:
   - Implement
   - Test
   - Design
-authors: ["cremich"]
+authors:
+  - cremich
 categories:
   - engineering
 ---

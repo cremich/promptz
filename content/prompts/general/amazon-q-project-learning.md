@@ -1,6 +1,6 @@
 ---
 authors:
-  - cremich
+  - haken
 categories:
   - general
 description: Update Amazon Q Knowledge of a given project

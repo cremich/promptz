@@ -9,7 +9,8 @@ tags:
   - Implement
   - IDE
   - Dev Agent
-authors: ["ashirhs"]
+authors:
+  - ashirhs
 ---
 
 # Python code for external libraries

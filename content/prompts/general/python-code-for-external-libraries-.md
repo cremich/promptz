@@ -7,7 +7,8 @@ description: >-
   This will generate ready to use python code using external libraries
 draft: false
 images: []
-authors: ["ashirhs"]
+authors:
+  - ashirhs
 categories:
   - general
 tags: ["Implement", "IDE", "Dev Agent"]

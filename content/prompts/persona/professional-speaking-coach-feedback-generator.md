@@ -1,6 +1,6 @@
 ---
 authors:
-  - cremich
+  - trag
 categories:
   - persona
 description:

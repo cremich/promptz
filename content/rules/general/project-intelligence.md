@@ -7,7 +7,8 @@ description: >-
   The project intelligence documentation system transforms Amazon Q Developer from a stateless assistant into a persistent development partner by providing comprehensive context about your application across various sessions. Once the rule was added to your repository, you can ask Q Developer to initialize the project intelligence with "Initialize Project Intelligence". If already in place, you can force an update by asking Q "Update Project Intelligence".
 draft: false
 images: []
-authors: ["cremich"]
+authors:
+  - cremich
 categories:
   - general
 tags: ["IDE", "CLI", "Documentation"]

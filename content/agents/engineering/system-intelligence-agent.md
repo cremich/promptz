@@ -11,7 +11,8 @@ description: >-
   available via promptz.dev.
 draft: false
 images: []
-authors: ["hanisverse"]
+authors:
+  - hanisverse
 categories:
   - engineering
 tags: ["documentation", "project-intelligence", "productivity", "living-docs"]

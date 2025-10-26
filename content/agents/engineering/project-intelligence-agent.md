@@ -15,7 +15,8 @@ images: []
 tags:
   - CLI
   - Documentation
-authors: ["cremich"]
+authors:
+  - cremich
 categories:
   - engineering
 ---
