@@ -16,6 +16,7 @@ tags:
 title: Amazon Q Learning Files
 createdAt: 2025-07-19T20:22:57.240Z
 updatedAt: 2025-07-19T20:22:57.240Z
+featured: true
 aliases: ["/rules/rule/amazon-q-learning-files-4a6f6cb8"]
 ---
 
