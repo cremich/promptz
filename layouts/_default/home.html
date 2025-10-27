@@ -259,7 +259,13 @@
         </p>
       </div>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {{ range first 6 (where .Site.RegularPages "Section" "in" (slice "prompts" "rules" "agents")) }}
+        {{ $pages := where .Site.RegularPages "Section" "in" (slice "prompts" "rules" "agents") }}
+        {{ $migratedPages := where $pages "Params.createdAt" "!=" nil }}
+        {{ $newPages := where $pages "Params.createdAt" nil }}
+        {{ $sortedMigrated := $migratedPages.ByParam "createdAt" }}
+        {{ $sortedNew := $newPages.ByDate }}
+        {{ $allSorted := union $sortedNew.Reverse $sortedMigrated.Reverse }}
+        {{ range first 6 $allSorted }}
           {{ partial "content-card.html" . }}
         {{ end }}
       </div>
