@@ -1,0 +1,294 @@
+{{ define "main" }}
+  <div class="max-w-6xl mx-auto px-6 py-8">
+    <!-- Hero Section -->
+    <div
+      class="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-background rounded-2xl p-8 lg:p-12 mb-12"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-violet-500/10 via-transparent to-blue-500/10"
+      ></div>
+      <div class="relative text-center">
+        <div
+          class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-400 via-rose-400 to-orange-400 bg-clip-text text-transparent border border-pink-400/30 rounded-full text-sm font-medium mb-6"
+        >
+          {{ partial "icons/star.html" (dict "class" "w-4 h-4 text-pink-400") }}
+          Major Update
+        </div>
+        <h1
+          class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-violet-400 bg-clip-text text-transparent"
+        >
+          {{ .Title }}
+        </h1>
+        <p
+          class="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto"
+        >
+          {{ .Description }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Summary Section -->
+    <div class=" mx-auto  mb-12">
+      <p class="text-lg mb-6">
+        After running promptz for almost a year, I learned that the
+        browser-based contribution introduced friction in your workflows. The
+        community wanted to contribute content using familiar git-based
+        workflows rather than through a web interface.
+      </p>
+      <p class="text-lg mb-6">
+        <strong>The key goal of v2:</strong> Improve your developer experience
+        and reduce friction in contribution, collaboration, and usage by
+        embracing the tools and workflows you already know and love.
+      </p>
+      <p class="text-lg">
+        All prompts, project rules, and custom agents are now managed as
+        markdown files in the promptz repository, making it easier than ever to
+        contribute, collaborate, and maintain high-quality content for the
+        Amazon Q Developer community.
+      </p>
+    </div>
+
+    <!-- Key Changes Grid -->
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+      <div class="card">
+        <div class="card-content p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="p-2 bg-green-500/10 rounded-lg">
+              <svg
+                class="w-6 h-6 text-green-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <h2 class="text-xl font-semibold">Git-Based Workflow</h2>
+          </div>
+          <p class="text-muted-foreground mb-4">
+            No more browser forms! Contribute using familiar git workflows with
+            markdown files and pull requests.
+          </p>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-center gap-2">
+              <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+              Fork repository on GitHub
+            </li>
+            <li class="flex items-center gap-2">
+              <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+              Create markdown files with frontmatter
+            </li>
+            <li class="flex items-center gap-2">
+              <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+              Automated validation & approval
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-content p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="p-2 bg-blue-500/10 rounded-lg">
+              <svg
+                class="w-6 h-6 text-blue-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                />
+              </svg>
+            </div>
+            <h2 class="text-xl font-semibold">Better Performance</h2>
+          </div>
+          <p class="text-muted-foreground mb-4">
+            Static site generation delivers blazing-fast loading times and
+            enhanced search capabilities.
+          </p>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-center gap-2">
+              <div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+              Static site generation
+            </li>
+            <li class="flex items-center gap-2">
+              <div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+              Optimized search
+            </li>
+            <li class="flex items-center gap-2">
+              <div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+              Enhanced content discovery
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Important Notice -->
+    <div class="card border-orange-500/20 bg-orange-500/5 mb-12">
+      <div class="card-content p-6">
+        <div class="flex items-start gap-4">
+          <div class="p-2 bg-orange-500/10 rounded-lg flex-shrink-0">
+            <svg
+              class="w-6 h-6 text-orange-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+              />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-orange-500 mb-2">
+              Action Required: If you stored private content on promptz.dev
+            </h3>
+            <p class="text-muted-foreground mb-4">
+              Your private content wasn't migrated to prevent accidental
+              exposure. You need to download it before
+              <strong>December 31, 2024</strong>.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a
+                href="https://prod.d1joxcmtvugnj8.amplifyapp.com/"
+                target="_blank"
+                class="btn btn-outline"
+              >
+                Access Old Platform
+              </a>
+              <span class="text-sm text-muted-foreground flex items-center">
+                <svg
+                  class="w-4 h-4 mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                Deadline: Dec 31, 2024
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Benefits Grid -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold text-center mb-8">Key Benefits of v2</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="text-center p-6">
+          <div
+            class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4"
+          >
+            {{ partial "icons/rocket.html" (dict "class" "w-6 h-6 text-white") }}
+          </div>
+          <h3 class="font-semibold mb-2">Developer-First Experience</h3>
+          <p class="text-sm text-muted-foreground">
+            Use familiar git workflows and your preferred editor
+          </p>
+        </div>
+
+        <div class="text-center p-6">
+          <div
+            class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4"
+          >
+            {{ partial "icons/refresh.html" (dict "class" "w-6 h-6 text-white") }}
+          </div>
+          <h3 class="font-semibold mb-2">Improved Collaboration</h3>
+          <p class="text-sm text-muted-foreground">
+            Community-driven quality assurance and transparent process
+          </p>
+        </div>
+
+        <div class="text-center p-6">
+          <div
+            class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4"
+          >
+            {{ partial "icons/bolt.html" (dict "class" "w-6 h-6 text-white") }}
+          </div>
+          <h3 class="font-semibold mb-2">Better Performance</h3>
+          <p class="text-sm text-muted-foreground">
+            Static site generation for blazing-fast loading
+          </p>
+        </div>
+
+        <div class="text-center p-6">
+          <div
+            class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4"
+          >
+            {{ partial "icons/target.html" (dict "class" "w-6 h-6 text-white") }}
+          </div>
+          <h3 class="font-semibold mb-2">Enhanced Discovery</h3>
+          <p class="text-sm text-muted-foreground">
+            Better categorization and improved search functionality
+          </p>
+        </div>
+
+        <div class="text-center p-6">
+          <div
+            class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4"
+          >
+            {{ partial "icons/shield-check.html" (dict "class" "w-6 h-6 text-white") }}
+          </div>
+          <h3 class="font-semibold mb-2">Quality Assurance</h3>
+          <p class="text-sm text-muted-foreground">
+            Automated validation and consistent formatting
+          </p>
+        </div>
+
+        <div class="text-center p-6">
+          <div
+            class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4"
+          >
+            {{ partial "icons/heart.html" (dict "class" "w-6 h-6 text-white") }}
+          </div>
+          <h3 class="font-semibold mb-2">Community Driven</h3>
+          <p class="text-sm text-muted-foreground">
+            Built by and for the Amazon Q Developer community
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="text-center">
+      <div
+        class="card bg-gradient-to-r from-primary/10 via-primary/5 to-background p-8"
+      >
+        <h2 class="text-2xl font-bold mb-4">Ready to Get Started?</h2>
+        <p class="text-muted-foreground mb-6">
+          Join the community and start contributing to promptz.dev v2
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/contribute" class="btn btn-primary"> Start Contributing </a>
+          <a
+            href="https://github.com/cremich/promptz/issues"
+            target="_blank"
+            class="btn btn-outline"
+          >
+            Get Help
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{ end }}

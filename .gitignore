@@ -30,3 +30,5 @@ yarn-error.log*
 
 # Amazon Q Developer
 /.amazonq/conversations/
+
+export/**
