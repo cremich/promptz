@@ -83,103 +83,97 @@
     }}
       <!-- Show subcategories -->
       {{ range $sections }}
-        <section class="mb-12">
-          <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-3">
-              {{ $iconName := "folder" }}
-              {{ if eq .Title "Architecture" }}
-                {{ $iconName = "building" }}
-              {{ end }}
-              {{ if eq .Title "Code Generation" }}
-                {{ $iconName = "code" }}
-              {{ end }}
-              {{ if eq .Title "Documentation" }}
-                {{ $iconName = "document-text" }}
-              {{ end }}
-              {{ if eq .Title "Testing" }}{{ $iconName = "beaker" }}{{ end }}
-              {{ if eq .Title "Analysis" }}{{ $iconName = "search" }}{{ end }}
-              {{ if eq .Title "AWS" }}
-                {{ $iconName =
-                  "cloud"
+        {{ if .RegularPages }}
+          <section class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center gap-3">
+                {{ $iconName := "folder" }}
+                {{ if eq .Title "Architecture" }}
+                  {{ $iconName = "building" }}
+                {{ end }}
+                {{ if eq .Title "Code Generation" }}
+                  {{ $iconName = "code" }}
+                {{ end }}
+                {{ if eq .Title "Documentation" }}
+                  {{ $iconName = "document-text" }}
+                {{ end }}
+                {{ if eq .Title "Testing" }}{{ $iconName = "beaker" }}{{ end }}
+                {{ if eq .Title "Analysis" }}{{ $iconName = "search" }}{{ end }}
+                {{ if eq .Title "AWS" }}
+                  {{ $iconName =
+                    "cloud"
+                  }}
+                {{ end }}
+                {{ if eq .Title "Scaffolding" }}
+                  {{ $iconName =
+                    "beaker"
+                  }}
+                {{ end }}
+                {{ if eq .Title "Spec-Driven Development" }}
+                  {{ $iconName = "document-text" }}
+                {{ end }}
+                {{ if eq .Title "Solutions" }}
+                  {{ $iconName = "puzzle" }}
+                {{ end }}
+                {{ if eq .Title "Persona" }}{{ $iconName = "user" }}{{ end }}
+                {{ if eq .Title "General" }}
+                  {{ $iconName
+                    = "star"
+                  }}
+                {{ end }}
+                {{ if eq .Title "Engineering" }}
+                  {{ $iconName =
+                    "cog"
+                  }}
+                {{ end }}
+                {{ if eq .Title "Infrastructure" }}
+                  {{ $iconName =
+                    "server"
+                  }}
+                {{ end }}
+                {{ if eq .Title "Project Management" }}
+                  {{ $iconName
+                    = "clipboard"
+                  }}
+                {{ end }}
+                {{ partial (printf "icons/%s.html" $iconName)
+                  (dict "class" "w-5 h-5 text-primary")
                 }}
-              {{ end }}
-              {{ if eq .Title "Scaffolding" }}
-                {{ $iconName =
-                  "beaker"
-                }}
-              {{ end }}
-              {{ if eq .Title "Spec-Driven Development" }}
-                {{ $iconName = "document-text" }}
-              {{ end }}
-              {{ if eq .Title "Solutions" }}{{ $iconName = "puzzle" }}{{ end }}
-              {{ if eq .Title "Persona" }}{{ $iconName = "user" }}{{ end }}
-              {{ if eq .Title "General" }}
-                {{ $iconName
-                  = "star"
-                }}
-              {{ end }}
-              {{ if eq .Title "Engineering" }}
-                {{ $iconName =
-                  "cog"
-                }}
-              {{ end }}
-              {{ if eq .Title "Infrastructure" }}
-                {{ $iconName =
-                  "server"
-                }}
-              {{ end }}
-              {{ if eq .Title "Project Management" }}
-                {{ $iconName
-                  = "clipboard"
-                }}
-              {{ end }}
-              {{ partial (printf "icons/%s.html" $iconName)
-                (dict "class" "w-5 h-5 text-primary")
-              }}
 
 
-              <h2 class="text-2xl font-semibold">
-                <a
-                  href="{{ .RelPermalink }}"
-                  class="hover:text-primary transition-colors"
+                <h2 class="text-2xl font-semibold">
+                  <a
+                    href="{{ .RelPermalink }}"
+                    class="hover:text-primary transition-colors"
+                  >
+                    {{ .Title }}
+                  </a>
+                </h2>
+                <span
+                  class="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20"
                 >
-                  {{ .Title }}
-                </a>
-              </h2>
-              <span
-                class="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20"
+                  {{ len .RegularPages }}
+                </span>
+              </div>
+              <a
+                href="{{ .RelPermalink }}"
+                class="inline-flex items-center gap-1 text-sm text-primary hover:text-primary/80 font-medium transition-colors"
               >
-                {{ len .RegularPages }}
-              </span>
+                View all
+                {{ partial "icons/arrow-right.html" (dict "class" "w-4 h-4") }}
+              </a>
             </div>
-            <a
-              href="{{ .RelPermalink }}"
-              class="inline-flex items-center gap-1 text-sm text-primary hover:text-primary/80 font-medium transition-colors"
-            >
-              View all
-              {{ partial "icons/arrow-right.html" (dict "class" "w-4 h-4") }}
-            </a>
-          </div>
 
-          {{ if .Description }}
-            <p class="text-muted-foreground mb-6">{{ .Description }}</p>
-          {{ end }}
-          {{ if .RegularPages }}
+            {{ if .Description }}
+              <p class="text-muted-foreground mb-6">{{ .Description }}</p>
+            {{ end }}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {{ range first 3 .RegularPages }}
                 {{ partial "content-card.html" . }}
               {{ end }}
             </div>
-          {{ else }}
-            <div
-              class="text-center py-8 border border-dashed border-border rounded-lg"
-            >
-              <p class="text-muted-foreground text-sm">
-                No content in this category yet.
-              </p>
-            </div>
-          {{ end }}
-        </section>
+          </section>
+        {{ end }}
       {{ end }}
     {{ end }}
     {{ if $regularPages }}
