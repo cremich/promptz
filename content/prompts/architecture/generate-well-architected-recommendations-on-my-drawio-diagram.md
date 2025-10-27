@@ -20,6 +20,8 @@ aliases:
   [
     "/prompts/prompt/generate-well-architected-recommendations-on-my-drawio-diagram-adcfeb01",
   ]
+createdAt: "2024-11-06T08:20:23.978Z"
+updatedAt: "2025-03-23T16:16:59.332Z"
 ---
 
 @workspace is this application well architected, if not what should I improve?

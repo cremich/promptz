@@ -23,6 +23,8 @@ aliases:
   [
     "/prompts/prompt/generate-mermaid-application-flow-diagram-from-code-31f51737",
   ]
+createdAt: "2024-11-04T20:02:26.177Z"
+updatedAt: "2025-04-23T12:39:03.218Z"
 ---
 
 @workspace can you generate a mermaid flow diagram of my application (data flow from up to bottom, use colors, keep formatting simple)

@@ -18,6 +18,8 @@ aliases:
   [
     "/prompts/prompt/parameterize-like-a-pro-supercharge-your-junit-5-tests-5fb781ea",
   ]
+createdAt: "2025-03-05T04:53:18.100Z"
+updatedAt: "2025-03-05T04:53:18.100Z"
 ---
 
 Craft powerful JUnit 5 parameterized tests that'll make my code bulletproof! Show me how to use @ParameterizedTest, @ValueSource, and @CsvSource to create flexible, data-driven test cases that'll catch edge cases and boost my test coverage. Bonus points for demonstrating custom ArgumentsProvider implementations!

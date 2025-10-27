@@ -17,6 +17,8 @@ aliases:
   [
     "/prompts/prompt/aws-architecture-blueprint-for-a-scalable-file-processing-pipeline-36142aff",
   ]
+createdAt: "2024-10-28T10:26:02.678Z"
+updatedAt: "2024-10-28T10:26:02.678Z"
 ---
 
 Create an extendable AWS architecture blueprint using AWS CDK for a scalable file-processing pipeline, capable of handling periodic CSV file uploads for processing and notifications.

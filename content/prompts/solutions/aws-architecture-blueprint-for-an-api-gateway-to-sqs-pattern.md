@@ -20,6 +20,8 @@ aliases:
   [
     "/prompts/prompt/aws-architecture-blueprint-for-an-api-gateway-to-sqs-pattern-8e823250",
   ]
+createdAt: "2024-11-05T11:03:20.977Z"
+updatedAt: "2024-11-05T11:03:20.977Z"
 ---
 
 Blueprint Requirements:

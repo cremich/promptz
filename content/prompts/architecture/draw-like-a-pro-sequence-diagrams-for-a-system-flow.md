@@ -16,6 +16,8 @@ aliases:
   ]
 tags:
   ["sequence-diagrams", "mermaid", "system-flow", "architecture", "diagrams"]
+createdAt: "2025-03-06T17:42:11.632Z"
+updatedAt: "2025-03-06T17:42:11.632Z"
 ---
 
 @workspace Analyze the code in the workspace and create a mermaid sequence diagram that illustrates the <ENTER YOUR FLOW> with these specifications:

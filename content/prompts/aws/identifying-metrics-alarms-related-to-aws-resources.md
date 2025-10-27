@@ -32,6 +32,8 @@ aliases:
   [
     "/prompts/prompt/identifying-metrics-alarms-related-to-aws-resources-342fe6c9",
   ]
+createdAt: "2025-03-13T06:03:24.224Z"
+updatedAt: "2025-03-17T11:05:46.517Z"
 ---
 
 <task>

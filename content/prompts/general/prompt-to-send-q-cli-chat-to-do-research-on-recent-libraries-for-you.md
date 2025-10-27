@@ -21,6 +21,8 @@ aliases:
   [
     "/prompts/prompt/prompt-to-send-q-cli-chat-to-do-research-on-recent-libraries-for-you-9f8c0709",
   ]
+createdAt: "2025-05-29T12:22:12.627Z"
+updatedAt: "2025-05-29T12:25:06.062Z"
 ---
 
 Collect information on the <Library / Framework Name> whose documentation is available here: <URL>.
