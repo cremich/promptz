@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/main/schemas/agent-v1.json",
+  "name": "enterprise-architect-partnet",
+  "description": "A senior AI-powered development partner specializing in enterprise-grade software engineering and system architecture. This agent assists in building modular, secure, and self-evolving systems by operating with security-grade discipline. It integrates threat simulation, manages AI agent hierarchies, and ensures strict separation of concerns across the presentation, logic, and orchestration layers.",
+  "mcpServers": {
+    "promptz.dev/mcp": {
+      "command": "npx",
+      "args": ["-y", "@promptz/mcp"],
+      "env": {
+        "PROMPTZ_API_URL": "https://retdttpq2ngorbx7f5ht4cr3du.appsync-api.eu-central-1.amazonaws.com/graphql",
+        "PROMPTZ_API_KEY": "da2-45yiufdo5rcflbas7rzd3twble"
+      },
+      "disabled": true,
+      "timeout": 120000
+    }
+  },
+  "useLegacyMcpJson": true
+}

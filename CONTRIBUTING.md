@@ -144,31 +144,62 @@ Place your agent in the appropriate functional category:
 
 ### Creating a Custom Agent
 
-1. **Copy the template**:
+Agents use a **page bundle structure** with separate files for better organization:
+
+1. **Create the agent directory**:
 
    ```bash
-   cp templates/agent-template.md content/agents/CATEGORY/your-agent-name.md
+   mkdir -p content/agents/CATEGORY/your-agent-name
    ```
 
-2. **Fill out the frontmatter**:
+2. **Copy the templates**:
+
+   ```bash
+   cp templates/agent-index-template.md content/agents/CATEGORY/your-agent-name/index.md
+   cp templates/agent-prompt-template.md content/agents/CATEGORY/your-agent-name/prompt.md
+   cp templates/agent-config-template.json content/agents/CATEGORY/your-agent-name/agent.json
+   ```
+
+3. **Fill out the files**:
+
+   **index.md** - Frontmatter and description:
 
    ```yaml
    ---
+   authors:
+     - your-github-username
    categories:
-     - category-name # Choose from the directories above
+     - category-name
    description: Brief description of this agent's capabilities
-   draft: false
-   featured: false
-   images: []
+   title: Your Agent Title
    tags:
      - CLI
-     - Implement
      - Agent
-   title: Your Agent Title
+     - YourTag
    ---
+   Brief description of what this agent does and when to use it.
    ```
 
-3. **Configure the agent JSON** with proper schema, tools, and prompt
+   **prompt.md** - System prompt (plain markdown):
+
+   ```markdown
+   Your system prompt goes here...
+
+   Describe the agent's role, capabilities, and behavior.
+   ```
+
+   **agent.json** - Configuration (clean JSON):
+
+   ```json
+   {
+     "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/main/schemas/agent-v1.json",
+     "name": "your-agent-name",
+     "description": "Brief description",
+     "tools": [],
+     "allowedTools": [],
+     "resources": []
+   }
+   ```
 
 ### Agent Guidelines
 

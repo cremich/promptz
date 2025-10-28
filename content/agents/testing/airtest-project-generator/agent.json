@@ -1,0 +1,8 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/main/schemas/agent-v1.json",
+  "name": "airtest-project-generator",
+  "description": "Generate new Airtest mobile automation projects with complete directory structure, configuration files, and test templates",
+  "tools": ["*"],
+  "allowedTools": ["fs_read", "fs_write", "execute_bash", "*"],
+  "useLegacyMcpJson": false
+}

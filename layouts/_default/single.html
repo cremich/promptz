@@ -199,7 +199,24 @@
         <div class="card" id="main-content" data-pagefind-body>
           <div class="card-content prose prose-invert max-w-none px-4">
             {{ if eq .Section "agents" }}
+              {{ $promptResource := .Resources.Get "prompt.md" }}
+              {{ $configResource := .Resources.Get "agent.json" }}
+
               {{ .Content | safeHTML }}
+
+              {{ if and $promptResource $configResource }}
+                {{ $prompt := $promptResource.RawContent }}
+                {{ $config := $configResource.Content | unmarshal }}
+                {{ $config = merge $config (dict "prompt" $prompt) }}
+                {{ $formattedJson := $config | jsonify (dict "indent" "  ") }}
+
+
+                <h2>Agent Configuration</h2>
+
+                <div data-copy="{{ $formattedJson }}">
+                  <pre><code class="language-json">{{ $formattedJson }}</code></pre>
+                </div>
+              {{ end }}
             {{ else }}
               {{ .Content }}
             {{ end }}

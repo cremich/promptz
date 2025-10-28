@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/main/schemas/agent-v1.json",
+  "name": "backlog-agent",
+  "description": "Keeps your Github backlog up-to-date with feature requests and bug fixes.",
+  "tools": ["fs_read", "execute_bash", "@context7"],
+  "allowedTools": ["fs_read", "@context7"],
+  "resources": ["file://.github/ISSUE_TEMPLATES/*.md", "file://README.md"],
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "env": {},
+      "disabled": false,
+      "timeout": 120000
+    }
+  },
+  "useLegacyMcpJson": false
+}

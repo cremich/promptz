@@ -1,32 +1,25 @@
----
-categories:
-  - category-name
-description: Brief description of this custom agent's capabilities and use cases
-draft: false
-featured: false
-images: []
-tags:
-  - CLI
-  - Implement
-  - Agent
-title: Your Agent Title
----
+# Agent Template (Page Bundle Structure)
 
-## Agent Configuration
+Agents use a page bundle structure with separate files for better organization:
 
-```json
-{
-  "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/main/schemas/agent-v1.json",
-  "name": "your-agent-name",
-  "description": "Brief description of this custom agent's capabilities and use cases",
-  "prompt": "Your system prompt here...",
-  "tools": [],
-  "mcpServers": {},
-  "resources": [],
-  "hooks": {},
-  "toolsSettings": {},
-  "toolAliases": {},
-  "allowedTools": [],
-  "useLegacyMcpJson": false
-}
+## Directory Structure
+
 ```
+your-agent-name/
+├── index.md      # Frontmatter and description
+├── prompt.md     # System prompt content
+└── agent.json    # Agent configuration
+```
+
+## Template Files
+
+- Use `agent-index-template.md` for the index.md file
+- Use `agent-prompt-template.md` for the prompt.md file
+- Use `agent-config-template.json` for the agent.json file
+
+## Benefits
+
+- Clean separation of concerns
+- Easy to edit system prompts as markdown
+- JSON configuration without escaped strings
+- Better version control and collaboration

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/main/schemas/agent-v1.json",
+  "name": "system-intelligence-agent",
+  "description": "Maintains the documentation system called Project Intelligence as a living documentation for both human engineers and AI assistants. The goal is to help engineers improve their productivity by providing detailed and up-to-date documentation. Make sure to also use the project-intelligence project rules available via promptz.dev.",
+  "tools": [
+    "fs_read",
+    "fs_write",
+    "execute_bash",
+    "knowledge",
+    "thinking",
+    "use_aws",
+    "*",
+    "@builtin",
+    "@promptz",
+    "@filesystem",
+    "@github"
+  ],
+  "mcpServers": {
+    "github": {
+      "command": "GitHub",
+      "args": ["npx", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": ""
+      },
+      "disabled": false,
+      "timeout": 120000
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem"],
+      "env": {
+        "ALLOWED_DIRECTORIES": "/Users/wmh"
+      },
+      "disabled": false,
+      "timeout": 120000
+    },
+    "promptz": {
+      "command": "npc",
+      "args": ["-y", "@promptz/mcp"],
+      "env": {
+        "PROMPTZ_API_URL": "https://retdttpq2ngorbx7f5ht4cr3du.appsync-api.eu-central-1.amazonaws.com/graphql",
+        "PROMPTZ_API_KEY": "da2-45yiufdo5rcflbas7rzd3twble"
+      },
+      "disabled": false,
+      "timeout": 60
+    }
+  },
+  "useLegacyMcpJson": false
+}
