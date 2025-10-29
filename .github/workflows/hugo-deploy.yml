@@ -85,12 +85,7 @@ jobs:
         run: npm run build:og-images
 
       - name: Build Hugo site
-        run: |
-          hugo \
-            --gc \
-            --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/" \
-            --enableGitInfo
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4

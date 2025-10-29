@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Agent Config - Tree Hierarchy</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .node circle {
+        fill: #fff;
+        stroke: steelblue;
+        stroke-width: 3px;
+        cursor: pointer;
+      }
+      .node.agent circle {
+        fill: #ff6b6b;
+      }
+      .node.tool circle {
+        fill: #4ecdc4;
+      }
+      .node.resource circle {
+        fill: #45b7d1;
+      }
+      .node.prompt circle {
+        fill: #96ceb4;
+      }
+      .node.mcp circle {
+        fill: #feca57;
+      }
+      .node text {
+        font: 12px sans-serif;
+      }
+      .link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 2px;
+      }
+      .tooltip {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px;
+        border-radius: 4px;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Backlog Agent - Tree Hierarchy Visualization</h1>
+    <svg width="800" height="600"></svg>
+
+    <script>
+      const agentConfig = {
+        name: "backlog-agent",
+        description:
+          "Keeps your Github backlog up-to-date with feature requests and bug fixes.",
+        tools: ["fs_read", "execute_bash", "@context7"],
+        allowedTools: ["fs_read", "@context7"],
+        resources: ["file://.github/ISSUE_TEMPLATES/*.md", "file://README.md"],
+        prompt:
+          "Your task is to maintain the backlog of this repository on Github...",
+      };
+
+      const treeData = {
+        name: agentConfig.name,
+        type: "agent",
+        description: agentConfig.description,
+        children: [
+          {
+            name: "Tools",
+            type: "category",
+            children: agentConfig.tools.map((tool) => ({
+              name: tool,
+              type: "tool",
+              description: `Tool: ${tool}`,
+            })),
+          },
+          {
+            name: "Resources",
+            type: "category",
+            children: agentConfig.resources.map((res) => ({
+              name: res.split("/").pop(),
+              type: "resource",
+              description: res,
+            })),
+          },
+          {
+            name: "System Prompt",
+            type: "prompt",
+            description: agentConfig.prompt.substring(0, 100) + "...",
+          },
+          {
+            name: "MCP Servers",
+            type: "mcp",
+            description: "Model Context Protocol configuration",
+          },
+        ],
+      };
+
+      const svg = d3.select("svg");
+      const width = +svg.attr("width");
+      const height = +svg.attr("height");
+      const g = svg.append("g").attr("transform", "translate(40,0)");
+
+      const tree = d3.tree().size([height, width - 160]);
+      const root = d3.hierarchy(treeData);
+
+      tree(root);
+
+      const link = g
+        .selectAll(".link")
+        .data(root.descendants().slice(1))
+        .enter()
+        .append("path")
+        .attr("class", "link")
+        .attr(
+          "d",
+          (d) =>
+            `M${d.y},${d.x}C${(d.y + d.parent.y) / 2},${d.x} ${(d.y + d.parent.y) / 2},${d.parent.x} ${d.parent.y},${d.parent.x}`,
+        );
+
+      const node = g
+        .selectAll(".node")
+        .data(root.descendants())
+        .enter()
+        .append("g")
+        .attr("class", (d) => `node ${d.data.type || "default"}`)
+        .attr("transform", (d) => `translate(${d.y},${d.x})`);
+
+      node.append("circle").attr("r", 10);
+
+      node
+        .append("text")
+        .attr("dy", ".35em")
+        .attr("x", (d) => (d.children ? -13 : 13))
+        .style("text-anchor", (d) => (d.children ? "end" : "start"))
+        .text((d) => d.data.name);
+
+      // Tooltip
+      const tooltip = d3
+        .select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+      node
+        .on("mouseover", function (event, d) {
+          if (d.data.description) {
+            tooltip.transition().duration(200).style("opacity", 0.9);
+            tooltip
+              .html(`<strong>${d.data.name}</strong><br/>${d.data.description}`)
+              .style("left", event.pageX + 10 + "px")
+              .style("top", event.pageY - 28 + "px");
+          }
+        })
+        .on("mouseout", function (d) {
+          tooltip.transition().duration(500).style("opacity", 0);
+        });
+    </script>
+  </body>
+</html>

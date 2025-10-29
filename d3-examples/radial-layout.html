@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Agent Config - Radial Layout</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .node {
+        cursor: pointer;
+      }
+      .node.agent {
+        fill: #ff6b6b;
+        stroke: #d63031;
+      }
+      .node.tool {
+        fill: #4ecdc4;
+        stroke: #00b894;
+      }
+      .node.resource {
+        fill: #45b7d1;
+        stroke: #0984e3;
+      }
+      .node.prompt {
+        fill: #96ceb4;
+        stroke: #00b894;
+      }
+      .node.mcp {
+        fill: #feca57;
+        stroke: #fdcb6e;
+      }
+      .link {
+        stroke: #999;
+        stroke-opacity: 0.6;
+        stroke-width: 2px;
+      }
+      .label {
+        font: 12px sans-serif;
+        text-anchor: middle;
+      }
+      .tooltip {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px;
+        border-radius: 4px;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Backlog Agent - Radial Layout Visualization</h1>
+    <svg width="800" height="600"></svg>
+
+    <script>
+      const agentConfig = {
+        name: "backlog-agent",
+        description:
+          "Keeps your Github backlog up-to-date with feature requests and bug fixes.",
+        tools: ["fs_read", "execute_bash", "@context7"],
+        allowedTools: ["fs_read", "@context7"],
+        resources: ["file://.github/ISSUE_TEMPLATES/*.md", "file://README.md"],
+        prompt:
+          "Your task is to maintain the backlog of this repository on Github...",
+      };
+
+      const svg = d3.select("svg");
+      const width = +svg.attr("width");
+      const height = +svg.attr("height");
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const radius = 150;
+
+      // Create nodes
+      const nodes = [
+        {
+          id: "agent",
+          type: "agent",
+          name: agentConfig.name,
+          description: agentConfig.description,
+          x: centerX,
+          y: centerY,
+        },
+      ];
+
+      // Add surrounding nodes
+      const components = [
+        ...agentConfig.tools.map((tool) => ({
+          id: tool,
+          type: "tool",
+          name: tool,
+          description: `Tool: ${tool}`,
+        })),
+        ...agentConfig.resources.map((res, i) => ({
+          id: `res-${i}`,
+          type: "resource",
+          name: res.split("/").pop(),
+          description: res,
+        })),
+        {
+          id: "prompt",
+          type: "prompt",
+          name: "System Prompt",
+          description: agentConfig.prompt.substring(0, 100) + "...",
+        },
+        {
+          id: "mcp",
+          type: "mcp",
+          name: "MCP Servers",
+          description: "Model Context Protocol servers",
+        },
+      ];
+
+      // Position nodes in circle around center
+      components.forEach((node, i) => {
+        const angle = (i / components.length) * 2 * Math.PI;
+        node.x = centerX + radius * Math.cos(angle);
+        node.y = centerY + radius * Math.sin(angle);
+        nodes.push(node);
+      });
+
+      // Create links from center to all components
+      const links = components.map((comp) => ({
+        source: "agent",
+        target: comp.id,
+      }));
+
+      // Draw links
+      const link = svg
+        .append("g")
+        .selectAll("line")
+        .data(links)
+        .join("line")
+        .attr("class", "link")
+        .attr("x1", centerX)
+        .attr("y1", centerY)
+        .attr("x2", (d) => nodes.find((n) => n.id === d.target).x)
+        .attr("y2", (d) => nodes.find((n) => n.id === d.target).y);
+
+      // Draw nodes
+      const node = svg
+        .append("g")
+        .selectAll("circle")
+        .data(nodes)
+        .join("circle")
+        .attr("class", (d) => `node ${d.type}`)
+        .attr("r", (d) => (d.type === "agent" ? 30 : 20))
+        .attr("cx", (d) => d.x)
+        .attr("cy", (d) => d.y)
+        .attr("stroke-width", 3);
+
+      // Add labels
+      const labels = svg
+        .append("g")
+        .selectAll("text")
+        .data(nodes)
+        .join("text")
+        .attr("class", "label")
+        .attr("x", (d) => d.x)
+        .attr("y", (d) => d.y + (d.type === "agent" ? 45 : 35))
+        .text((d) => d.name)
+        .style("font-weight", (d) => (d.type === "agent" ? "bold" : "normal"));
+
+      // Tooltip
+      const tooltip = d3
+        .select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+      node
+        .on("mouseover", function (event, d) {
+          tooltip.transition().duration(200).style("opacity", 0.9);
+          tooltip
+            .html(`<strong>${d.name}</strong><br/>${d.description}`)
+            .style("left", event.pageX + 10 + "px")
+            .style("top", event.pageY - 28 + "px");
+        })
+        .on("mouseout", function (d) {
+          tooltip.transition().duration(500).style("opacity", 0);
+        });
+
+      // Add animation
+      node
+        .transition()
+        .duration(1000)
+        .attr("r", (d) => (d.type === "agent" ? 30 : 20));
+
+      link.transition().duration(1000).style("stroke-opacity", 0.6);
+    </script>
+  </body>
+</html>

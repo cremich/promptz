@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Agent Config - Component Cards</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f8f9fa;
+      }
+      .card {
+        fill: white;
+        stroke: #ddd;
+        stroke-width: 2px;
+        rx: 8;
+        cursor: pointer;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+      }
+      .card.agent {
+        stroke: #ff6b6b;
+      }
+      .card.tool {
+        stroke: #4ecdc4;
+      }
+      .card.resource {
+        stroke: #45b7d1;
+      }
+      .card.prompt {
+        stroke: #96ceb4;
+      }
+      .card.mcp {
+        stroke: #feca57;
+      }
+      .card:hover {
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+      }
+      .card-title {
+        font: bold 14px sans-serif;
+        text-anchor: middle;
+      }
+      .card-content {
+        font: 12px sans-serif;
+        text-anchor: middle;
+        fill: #666;
+      }
+      .connection {
+        stroke: #999;
+        stroke-width: 2px;
+        stroke-dasharray: 5, 5;
+        opacity: 0.6;
+      }
+      .connection.active {
+        stroke: #ff6b6b;
+        stroke-width: 3px;
+        opacity: 1;
+      }
+      .tooltip {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px;
+        border-radius: 4px;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Backlog Agent - Component Cards Visualization</h1>
+    <svg width="900" height="700"></svg>
+
+    <script>
+      const agentConfig = {
+        name: "backlog-agent",
+        description:
+          "Keeps your Github backlog up-to-date with feature requests and bug fixes.",
+        tools: ["fs_read", "execute_bash", "@context7"],
+        allowedTools: ["fs_read", "@context7"],
+        resources: ["file://.github/ISSUE_TEMPLATES/*.md", "file://README.md"],
+        prompt:
+          "Your task is to maintain the backlog of this repository on Github...",
+      };
+
+      const svg = d3.select("svg");
+      const width = +svg.attr("width");
+      const height = +svg.attr("height");
+
+      // Define card positions and sizes
+      const cards = [
+        {
+          id: "agent",
+          type: "agent",
+          name: agentConfig.name,
+          description: agentConfig.description,
+          x: width / 2 - 100,
+          y: height / 2 - 50,
+          width: 200,
+          height: 100,
+        },
+        {
+          id: "tools",
+          type: "tool",
+          name: "Tools",
+          description: agentConfig.tools.join(", "),
+          x: 50,
+          y: 100,
+          width: 180,
+          height: 120,
+        },
+        {
+          id: "resources",
+          type: "resource",
+          name: "Resources",
+          description: agentConfig.resources.join(", "),
+          x: width - 230,
+          y: 100,
+          width: 180,
+          height: 120,
+        },
+        {
+          id: "prompt",
+          type: "prompt",
+          name: "System Prompt",
+          description: agentConfig.prompt.substring(0, 80) + "...",
+          x: 50,
+          y: height - 220,
+          width: 180,
+          height: 120,
+        },
+        {
+          id: "mcp",
+          type: "mcp",
+          name: "MCP Servers",
+          description: "Model Context Protocol configuration",
+          x: width - 230,
+          y: height - 220,
+          width: 180,
+          height: 120,
+        },
+      ];
+
+      // Create connections from agent to all other components
+      const connections = cards
+        .filter((c) => c.id !== "agent")
+        .map((card) => ({
+          source: cards.find((c) => c.id === "agent"),
+          target: card,
+        }));
+
+      // Draw connections
+      const connectionGroup = svg.append("g");
+      const connectionLines = connectionGroup
+        .selectAll("line")
+        .data(connections)
+        .join("line")
+        .attr("class", "connection")
+        .attr("x1", (d) => d.source.x + d.source.width / 2)
+        .attr("y1", (d) => d.source.y + d.source.height / 2)
+        .attr("x2", (d) => d.target.x + d.target.width / 2)
+        .attr("y2", (d) => d.target.y + d.target.height / 2);
+
+      // Draw cards
+      const cardGroup = svg.append("g");
+      const cardRects = cardGroup
+        .selectAll("rect")
+        .data(cards)
+        .join("rect")
+        .attr("class", (d) => `card ${d.type}`)
+        .attr("x", (d) => d.x)
+        .attr("y", (d) => d.y)
+        .attr("width", (d) => d.width)
+        .attr("height", (d) => d.height);
+
+      // Add card titles
+      const cardTitles = cardGroup
+        .selectAll(".card-title")
+        .data(cards)
+        .join("text")
+        .attr("class", "card-title")
+        .attr("x", (d) => d.x + d.width / 2)
+        .attr("y", (d) => d.y + 25)
+        .text((d) => d.name);
+
+      // Add card content (split long text into multiple lines)
+      const cardContent = cardGroup
+        .selectAll(".card-content")
+        .data(cards)
+        .join("text")
+        .attr("class", "card-content")
+        .attr("x", (d) => d.x + d.width / 2)
+        .attr("y", (d) => d.y + 50)
+        .each(function (d) {
+          const text = d3.select(this);
+          const words = d.description.split(/\s+/);
+          const lineHeight = 14;
+          const maxWidth = d.width - 20;
+
+          let line = [];
+          let lineNumber = 0;
+
+          words.forEach((word) => {
+            line.push(word);
+            text.text(line.join(" "));
+
+            if (
+              text.node().getComputedTextLength() > maxWidth &&
+              line.length > 1
+            ) {
+              line.pop();
+              text.text(line.join(" "));
+
+              const tspan = text
+                .append("tspan")
+                .attr("x", d.x + d.width / 2)
+                .attr("dy", lineHeight)
+                .text(word);
+
+              line = [word];
+              lineNumber++;
+
+              if (lineNumber >= 3) return; // Limit to 4 lines
+            }
+          });
+        });
+
+      // Tooltip
+      const tooltip = d3
+        .select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+      // Add interactivity
+      cardRects
+        .on("mouseover", function (event, d) {
+          // Highlight connections
+          connectionLines.classed(
+            "active",
+            (conn) => conn.source.id === d.id || conn.target.id === d.id,
+          );
+
+          tooltip.transition().duration(200).style("opacity", 0.9);
+          tooltip
+            .html(`<strong>${d.name}</strong><br/>${d.description}`)
+            .style("left", event.pageX + 10 + "px")
+            .style("top", event.pageY - 28 + "px");
+        })
+        .on("mouseout", function (d) {
+          connectionLines.classed("active", false);
+          tooltip.transition().duration(500).style("opacity", 0);
+        });
+
+      // Add entrance animation
+      cardRects
+        .style("opacity", 0)
+        .transition()
+        .duration(800)
+        .delay((d, i) => i * 200)
+        .style("opacity", 1);
+
+      connectionLines
+        .style("opacity", 0)
+        .transition()
+        .duration(800)
+        .delay(1000)
+        .style("opacity", 0.6);
+    </script>
+  </body>
+</html>
