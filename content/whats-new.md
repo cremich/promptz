@@ -43,7 +43,7 @@ During the migration, I intentionally did not migrate private content to prevent
 1. **Visit the old version** at [prod.d1joxcmtvugnj8.amplifyapp.com](https://prod.d1joxcmtvugnj8.amplifyapp.com/)
 2. **Log in** with your existing credentials
 3. **Access and download** your private prompts, rules, and agents
-4. **Important deadline**: The old platform will be shut down by **December 31, 2024**
+4. **Important deadline**: The old platform will be shut down by **December 31, 2025**
 
 After that date, all data will be permanently deleted and cannot be recovered.
 
