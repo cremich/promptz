@@ -2,235 +2,179 @@
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge)](http://commitizen.github.io/cz-cli/)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](./CODE_OF_CONDUCT.md)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=for-the-badge)](https://github.com/prettier/prettier)
 
-Promptz is the ultimate prompting hub for Amazon Q Developer, designed to help you discover, create, and perfect your prompts for every step of the software development lifecycle.
+Promptz is the ultimate library for Amazon Q Developer, designed to help developers discover, create, and perfect their prompts, project rules, and custom agents for every step of the software development lifecycle.
 
 ## Table of Contents
 
-- [Prerequisites](#-prerequisites)
+- [About Promptz v2](#-about-promptz-v2)
 - [Getting Started](#-getting-started)
-- [Contributing Prompts](#-contributing-prompts)
-- [End-to-End Testing](#-end-to-end-testing)
+- [Contributing Content](#-contributing-content)
+- [Development](#-development)
 - [Contributing](#contributing)
 - [License](#license)
 
-## 📝 Prerequisites
+## 🚀 About Promptz v2
 
-- [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and log in.
-- [Configure AWS for local development](https://docs.amplify.aws/nextjs/start/account-setup/) with Amplify
+Promptz v2 is a complete rewrite as a Hugo-based static website, moving away from the previous Next.js application. This new architecture provides:
 
-Before you begin, make sure you have the following installed:
+- **Git-based content management** - All content is managed through markdown files and GitHub pull requests
+- **Static site performance** - Lightning-fast loading with Hugo's static site generation
+- **Modern dark theme** - Built with Basecoat CSS and Tailwind for a developer-focused experience
+- **Advanced search** - Powered by Pagefind for instant content discovery
+- **Three content types**:
+  - **Prompts** - AI instructions for specific development tasks
+  - **Project Rules** - Coding standards and development guidelines
+  - **Custom Agents** - Specialized AI assistants for workflows
 
-- Node.js v14.x or later
-- npm v6.14.4 or later
-- git v2.14.1 or later
+## 🏃 Getting Started
 
-## 🚀 Getting Started
+### Prerequisites
 
-Promptz is built with AWS Amplify Gen 2 and next.js.
+- Hugo Extended v0.112.0 or later
+- Node.js v18.x or later
+- npm v8.x or later
+- Git v2.14.1 or later
 
-### 1. Clone the repository
+### Local Development
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/cremich/promptz.git
+   cd promptz
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**:
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser** and navigate to `http://localhost:1313`
+
+### Project Structure
 
 ```
-git clone https://github.com/cremich/promptz.git
-cd promptz
+promptz/
+├── content/           # Markdown content organized by type
+│   ├── prompts/      # AI prompts for development tasks
+│   ├── rules/        # Project rules and coding standards
+│   └── agents/       # Custom agent configurations
+├── layouts/          # Hugo templates and layouts
+├── assets/           # CSS, JavaScript, and other assets
+├── static/           # Static files (images, icons)
+├── templates/        # Content templates for contributors
+└── docs/specs/       # Technical specifications
 ```
 
-### 2. Install dependencies
+## 📝 Contributing Content
 
-Install all required dependencies via `npm i`.
-
-### 3. Setup local AWS credentials
-
-To deploy the app and make backend updates, Amplify requires AWS credentials to deploy backend updates from your local machine. Follow the official Amplify documentation to [configure AWS for local development](https://docs.amplify.aws/nextjs/start/account-setup/).
-
-### 4. Deploy the app as sandbox in your AWS account
-
-Now that the repository has been setup, deploy the Amplify App in your own AWS account by running
-
-```
-npm run sandbox
-```
-
-This command will create a sandbox environment that provides an isolated development space to rapidly build, test, and iterate on. The sandbox environment is fully functional. However the sandbox configuration is slightly different from the production configuration:
-
-- The sandbox environment does not configure social idPs for Amazon Cognito.
-- Amazon Cognito is configured to send verification e-mails instead of using Amazon SES with the official noreply@promptz.dev email adress.
-- DynamoDB Tables and Amazon Cognito Userpools have turned off deletion protection to not cause stale resources in your AWS accont once you delete the sandbox environment.
-- DynamoDB Tables have no point-in-time-recovery enabled.
-- AWS Appsync is configured without X-Ray and logging to Amazon Cloudwatch.
-
-> ⚠️ **Your deployment will fail if you if you create your sandbox environment with the amplify default approach** calling `npx ampx sandbox`.
->
-> `npm run sandbox` will set an environment variable `PROMPTZ_ENV` that is evaluated when provisioning the backend resources. Only if this variable is set to `sandbox`, certain configurations like Amazon SES, Social Provicer idPs are deactivated.
-
-While you are waiting for your app to deploy (~5 mins). Learn about the project structure
-
-- `amplify/` Contains Amplify backend configuration
-- `content/` Markdown-based prompt content organized by category
-- `templates/` Templates for creating new prompts
-- `/app`: Next.js app router pages and layouts
-- `/components`: React components used throughout the application
-- `/contexts`: React context providers
-- `/hooks`: Custom React hooks
-- `/lib`: Utility functions, markdown processing, and data models
-- `/public`: Static assets
-
-When the build completes, visit the newly deployed branch by selecting "View deployed URL".
-
-### 5. Start a local development server
-
-Run `npm run dev` to start a local development server using the amplify configuration downloaded in step 4.
-
-After starting the development server, open your browser and navigate to `http://localhost:3000`.
-
-## 📝 Contributing Prompts
-
-Promptz uses a markdown-based content management system for prompts. All prompts are stored as markdown files in the `content/prompts/` directory and managed through GitHub pull requests.
+Promptz v2 uses a git-based workflow where all content is managed through markdown files and GitHub pull requests. No authentication or complex setup required!
 
 ### Quick Start for Contributors
 
-1. **Fork the repository** and create a new branch
-2. **Choose the right directory** for your prompt:
-   - `architecture/` - Diagrams, system design, blueprints
-   - `code-generation/` - Generate code, scaffolding, boilerplate
-   - `documentation/` - ADRs, specs, project docs
-   - `testing/` - Unit tests, test generation, QA
-   - `analysis/` - Code review, security, optimization
-   - `aws/` - AWS-specific infrastructure and services
-   - `scaffolding/` - Project setup, environment configuration
-   - `spec-driven-development/` - Specification creation and planning
-   - `solutions/` - Complete applications and services
-   - `persona/` - AI behavior and role-setting prompts
-   - `general/` - Miscellaneous utilities
+1. **Fork the repository** on GitHub
+2. **Choose your content type**:
+   - **Prompts** - Instructions for Amazon Q Developer
+   - **Project Rules** - Development standards and guidelines
+   - **Custom Agents** - Specialized AI assistant configurations
+3. **Use the templates** in the `templates/` directory
+4. **Submit a pull request**
 
-3. **Copy the template**: Use `templates/prompt-template.md` as your starting point
-4. **Create your prompt**: Follow the frontmatter schema and content structure
-5. **Submit a pull request**: Use the "Prompt Changes" template
+### Content Types
 
-### Frontmatter Schema
+#### Prompts
 
-Each prompt requires frontmatter with these fields:
+AI instructions organized by category:
+
+- `analysis/` - Code review, security, optimization
+- `architecture/` - System design, diagrams
+- `aws/` - AWS-specific tasks
+- `code-generation/` - Scaffolding, boilerplate
+- `documentation/` - ADRs, specs, docs
+- `testing/` - Unit tests, QA processes
+- And more...
+
+#### Project Rules
+
+Development standards organized by technology:
+
+- `nextjs/` - Next.js best practices
+- `typescript/` - TypeScript standards
+- `security/` - Security guidelines
+- `testing/` - Testing practices
+- And more...
+
+#### Custom Agents
+
+Specialized AI assistants organized by function:
+
+- `documentation/` - Doc generation agents
+- `engineering/` - Development assistants
+- `testing/` - QA automation agents
+- And more...
+
+### Content Guidelines
+
+All content uses structured frontmatter and follows validation rules:
 
 ```yaml
 ---
-title: "Your Prompt Title" # Required: Display name
-description: "Brief description" # Required: What it does
-author: "your-github-username" # Required: Your GitHub username
-tags: ["IDE", "Chat", "CLI"] # Optional: Additional tags
-sourceURL: "https://github.com/your-repo" # Optional: Reference link
+title: "Your Content Title"
+description: "Brief description"
+categories: ["category-name"]
+tags: ["CLI", "Chat", "IDE"]
+draft: false
 ---
 ```
 
-### Content Structure
+For detailed contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-```markdown
-# Your Prompt Title
+## 🛠 Development
 
-Main prompt content goes here...
+### Available Scripts
 
-## How to Use
+- `npm run dev` - Start Hugo development server
+- `npm run build` - Build the static site
+- `npm run build:search` - Build search index with Pagefind
+- `npm run validate` - Validate content and frontmatter
+- `npm run lint:content` - Check content quality
 
-Step-by-step instructions:
+### Architecture
 
-1. Copy the prompt above
-2. Customize parameters
-3. Use with Amazon Q Developer
-```
+Promptz v2 is built with:
 
-### Validation
+- **Hugo** - Static site generator with fast builds
+- **Tailwind CSS** - Utility-first CSS framework
+- **Basecoat CSS** - Shadcn/ui-compatible components for Hugo
+- **Pagefind** - Static search without external dependencies
+- **GitHub Actions** - Automated validation and deployment
+- **GitHub Pages** - Static hosting with custom domain
 
-All prompts are automatically validated for:
+### Content Validation
 
-- ✅ Required frontmatter fields
-- ✅ File naming conventions (`lowercase-with-hyphens.md`)
-- ✅ Content structure and security
-- ✅ Markdown parsing
+All content is automatically validated for:
 
-For detailed guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
+- Required frontmatter fields
+- File naming conventions
+- Content structure and security
+- Markdown syntax
 
-## 🧪 End-to-End Testing
+### Deployment
 
-Promptz uses Playwright for automated end-to-end testing to ensure the application works correctly across different browsers and user scenarios. The tests use MailSlurp for email-based authentication flows, allowing automated testing of passwordless login and signup processes.
+The site automatically deploys to GitHub Pages when changes are pushed to the main branch. The deployment includes:
 
-### Prerequisites for E2E Testing
-
-Before running end-to-end tests, ensure you have:
-
-1. **Completed the Getting Started setup** - Your sandbox environment must be deployed and running
-2. **MailSlurp API Key** - Required for email automation during authentication tests
-
-### MailSlurp Setup
-
-The E2E tests rely on MailSlurp to handle email verification codes during authentication flows:
-
-1. **Create a MailSlurp account**:
-   - Sign up at [MailSlurp](https://www.mailslurp.com/) for a free account
-   - Get your API key from the dashboard
-
-2. **Create a permanent inbox for login tests**:
-   - In your MailSlurp dashboard, create a permanent inbox
-   - Note the inbox ID for the login test user
-
-3. **Configure environment variables**:
-   ```bash
-   # Add to your .env file
-   echo "MAILSLURP_API_KEY=your-mailslurp-api-key" >> .env
-   echo "MAILSLURP_PLAYWRIGHT_USER_INBOX_ID=your-inbox-id" >> .env
-   echo "PLAYWRIGHT_BASE_URL=http://127.0.0.1:3000" >> .env
-   ```
-
-### Test User Setup
-
-The E2E tests require a dedicated test user in your Cognito user pool that corresponds to your MailSlurp inbox:
-
-1. **Identify your Cognito User Pool ID**:
-   - After deploying your sandbox, check the Amplify console or AWS Console
-   - Look for the Cognito User Pool created by your sandbox deployment
-   - Note the User Pool ID (format: `region_xxxxxxxxx`)
-
-2. **Create the test user** using AWS CLI:
-
-   ```bash
-   aws cognito-idp admin-create-user \
-     --user-pool-id YOUR_USER_POOL_ID \
-     --username "your-mailslurp-inbox-email@mailslurp.biz" \
-     --user-attributes Name=email,Value="your-mailslurp-inbox-email@mailslurp.biz" Name=preferred_username,Value="playwright" \
-     --message-action SUPPRESS \
-     --region YOUR_AWS_REGION
-   ```
-
-   Replace:
-   - `YOUR_USER_POOL_ID` with your actual User Pool ID
-   - `your-mailslurp-inbox-email@mailslurp.biz` with your MailSlurp inbox email address
-   - `YOUR_AWS_REGION` with your deployment region
-
-### Running E2E Tests
-
-Once your MailSlurp and test user setup is complete **Run Playwright tests**:
-
-```bash
-# Run all E2E tests
-npm run e2e
-```
-
-### Test Architecture
-
-The E2E tests are organized as follows:
-
-- **Authentication Tests**: Handle login and signup flows using MailSlurp for email verification
-  - `login.spec.ts`: Tests passwordless login with existing user
-  - `signup.spec.ts`: Tests new user registration and first login
-- **Helper Functions**: Utility functions for common test operations
-  - `authentication.ts`: Email code extraction utilities
-
-### Test Environment Notes
-
-- Tests run against your local development server (`http://localhost:3000`) by default.
-- Authentication state is persisted in `.playwright/.auth/user.json` to avoid hitting the free quotas of mailslurp due to repetitive logins or signups.
-- The signup test creates temporary inboxes that are automatically cleaned up
-- The login test uses a permanent inbox for consistent testing
+- Hugo site build
+- Tailwind CSS compilation
+- Pagefind search index generation
+- Asset optimization
 
 ## Contributing
 
@@ -244,6 +188,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 To learn more about the technologies used in this project, check out the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [AWS Amplify Documentation](https://docs.amplify.aws/)
-- [Cloudscape Design System](https://cloudscape.design/)
+- [Hugo Documentation](https://gohugo.io/documentation/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Basecoat CSS Documentation](https://basecoat.dev/)
+- [Pagefind Documentation](https://pagefind.app/)
