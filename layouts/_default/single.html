@@ -286,7 +286,7 @@
                   </h4>
                   <pre
                     class="bg-muted/50 p-3 rounded-md text-sm overflow-x-auto"
-                  ><code>mkdir -p .amazonq/cli-prompts && curl -o .amazonq/cli-prompts/{{ .File.BaseFileName }}.md {{ .Permalink }}</code></pre>
+                  ><code>mkdir -p .amazonq/cli-prompts && curl -o .amazonq/cli-prompts/{{ .File.BaseFileName }}.md {{ .Permalink }}index.md</code></pre>
                 </div>
                 <div>
                   <h4 class="font-medium mb-2">2. Use with Q CLI:</h4>
@@ -305,7 +305,7 @@
                   </h4>
                   <pre
                     class="bg-muted/50 p-3 rounded-md text-sm overflow-x-auto"
-                  ><code>mkdir -p .amazonq/rules && curl -o .amazonq/rules/{{ .File.BaseFileName }}.md {{ .Permalink }}</code></pre>
+                  ><code>mkdir -p .amazonq/rules && curl -o .amazonq/rules/{{ .File.BaseFileName }}.md {{ .Permalink }}index.md</code></pre>
                 </div>
               </div>
             {{ else if eq .Section "agents" }}

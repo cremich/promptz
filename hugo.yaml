@@ -29,8 +29,15 @@ markup:
 
 outputs:
   home: ["HTML", "RSS", "JSON"]
-  page: ["HTML"]
+  page: ["HTML", "MD"]
   section: ["HTML", "RSS"]
+
+outputFormats:
+  MD:
+    mediaType: "text/markdown"
+    baseName: "index"
+    isPlainText: true
+    permalinkable: true
 
 build:
   buildStats:
