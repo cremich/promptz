@@ -88,11 +88,15 @@ jobs:
             return Array.from(existingContentAuthors);
 
       - name: Request author review
-        if: steps.author-check.outputs.result != '[]'
         uses: actions/github-script@v7
         with:
           script: |
-            const authors = JSON.parse('${{ steps.author-check.outputs.result }}');
+            const authors = JSON.parse('${{ steps.author-check.outputs.result }}' || '[]');
+            
+            if (authors.length === 0) {
+              console.log('No authors to review');
+              return;
+            }
 
             await github.rest.pulls.requestReviewers({
               owner: context.repo.owner,
