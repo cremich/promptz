@@ -23,8 +23,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: ${{ vars.HUGO_VERSION }}
-      NODE_VERSION: ${{ vars.NODE_VERSION }}
+      HUGO_VERSION: ${{ vars.HUGO_VERSION || '0.152.2' }}
+      NODE_VERSION: ${{ vars.NODE_VERSION || '22' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5

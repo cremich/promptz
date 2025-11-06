@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      HUGO_VERSION: ${{ vars.HUGO_VERSION }}
-      NODE_VERSION: ${{ vars.NODE_VERSION }}
+      HUGO_VERSION: ${{ vars.HUGO_VERSION || '0.152.2' }}
+      NODE_VERSION: ${{ vars.NODE_VERSION || '22' }}
     steps:
       - uses: actions/checkout@v4
         with:
