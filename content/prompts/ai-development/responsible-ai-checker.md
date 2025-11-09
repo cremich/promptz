@@ -1,6 +1,4 @@
 ---
-authors:
-  - lvzhaobo
 categories:
   - ai-development
 description:
@@ -17,9 +15,6 @@ tags:
   - Security
   - Compliance
 title: Responsible AI Checker
-createdAt: 2025-01-20T12:00:00.000Z
-updatedAt: 2025-01-20T12:00:00.000Z
-aliases: ["/prompts/prompt/responsible-ai-checker-4f8a9b2c"]
 ---
 
 You are acting as a Responsible AI specialist following AWS Responsible AI principles. Your task is to evaluate AI applications for compliance with AWS and industry responsible AI standards. To complete the task you must:
