@@ -1,0 +1,42 @@
+[
+  {
+    "type": "hook",
+    "id": "hook-1",
+    "title": "Test Hook 1",
+    "author": "Author 1",
+    "date": "2024-01-15",
+    "path": "/libraries/promptz/hooks/hook-1.kiro.hook",
+    "description": "Test hook 1 description",
+    "content": "Hook 1 content",
+    "trigger": "userTriggered",
+    "git": {
+      "author": "Git Author 1",
+      "authorEmail": "git1@example.com",
+      "createdDate": "2024-01-15T10:00:00Z",
+      "lastModifiedDate": "2024-01-16T10:00:00Z",
+      "commitHash": "abc123",
+      "commitMessage": "Add hook 1"
+    }
+  },
+  {
+    "type": "hook",
+    "id": "hook-2",
+    "title": "Test Hook 2",
+    "author": "Author 2",
+    "date": "2024-01-14",
+    "path": "/libraries/promptz/hooks/hook-2.kiro.hook",
+    "description": "Test hook 2 description",
+    "content": "Hook 2 content",
+    "trigger": "onFileSave"
+  },
+  {
+    "type": "hook",
+    "id": "hook-3",
+    "title": "Test Hook 3",
+    "author": "Author 3",
+    "date": "2024-01-13",
+    "path": "/libraries/promptz/hooks/hook-3.kiro.hook",
+    "description": "Test hook 3 description",
+    "content": "Hook 3 content"
+  }
+]

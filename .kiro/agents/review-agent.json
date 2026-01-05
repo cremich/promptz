@@ -1,0 +1,74 @@
+{
+  "name": "review-agent",
+  "description": "Code review agent for validating PR implementations against specs and guardrails",
+  "prompt": "file://../prompts/review-agent.md",
+  "mcpServers": {
+    "next-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "next-devtools-mcp@latest"
+      ]
+    }
+  },
+  "resources": [
+    "file://.kiro/steering/*.md",
+    "file://~/.kiro/steering/testing.md",
+    "file://~/.kiro/steering/git.md",
+    "file://~/.kiro/steering/error-handling.md",
+    "file://~/.kiro/steering/naming.md",
+    "file://~/.kiro/steering/security.md",
+    "file://~/.kiro/steering/docs.md",
+    "file://README.md",
+    "file://AGENTS.md"
+  ],
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "git diff main...HEAD --name-only",
+        "description": "List changed files in PR"
+      },
+      {
+        "command": "git log main..HEAD --oneline",
+        "description": "PR commit history"
+      }
+    ]
+  },
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "web_search",
+    "web_fetch",
+    "@next-devtools"
+  ],
+  "allowedTools": [
+    "web_search",
+    "web_fetch"
+  ],  
+  "toolsSettings": {
+    "read": {
+      "allowedPaths": [
+        ".kiro/steering/**",
+        ".kiro/rules/**",
+        "app/**",
+        "lib/**",
+        "public/**",
+        "__tests__/**"
+      ]
+    },
+    "write": {
+      "allowedPaths": [
+        ".kiro/reviews/**"
+      ]
+    },
+    "shell": {
+      "allowedCommands": [
+        "git diff",
+        "git log",
+        "grep",
+        "find"
+      ]
+    }
+  }
+}

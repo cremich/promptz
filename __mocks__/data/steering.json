@@ -1,0 +1,45 @@
+[
+  {
+    "type": "steering",
+    "id": "steering-b",
+    "title": "Steering B",
+    "author": "Author B",
+    "date": "2024-01-16",
+    "path": "libraries/promptz/steering/steering-b.md",
+    "content": "Steering B content",
+    "git": {
+      "author": "Git Author B",
+      "authorEmail": "gitb@example.com",
+      "createdDate": "2024-01-16T10:00:00Z",
+      "lastModifiedDate": "2024-01-16T10:00:00Z",
+      "commitHash": "def456",
+      "commitMessage": "Add steering B"
+    }
+  },
+  {
+    "type": "steering",
+    "id": "steering-a",
+    "title": "Steering A",
+    "author": "Author A",
+    "date": "2024-01-15",
+    "path": "libraries/promptz/steering/steering-a.md",
+    "content": "Steering A content",
+    "git": {
+      "author": "Git Author A",
+      "authorEmail": "gita@example.com",
+      "createdDate": "2024-01-15T10:00:00Z",
+      "lastModifiedDate": "2024-01-15T10:00:00Z",
+      "commitHash": "abc123",
+      "commitMessage": "Add steering A"
+    }
+  },
+  {
+    "type": "steering",
+    "id": "steering-c",
+    "title": "Steering C",
+    "author": "Author C",
+    "date": "2024-01-14",
+    "path": "libraries/kiro-powers/steering/steering-c.md",
+    "content": "Steering C content"
+  }
+]

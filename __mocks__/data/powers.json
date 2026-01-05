@@ -1,0 +1,58 @@
+[
+  {
+    "type": "power",
+    "id": "promptz-power",
+    "title": "Promptz Power",
+    "author": "Promptz Author",
+    "date": "2024-01-15",
+    "path": "libraries/promptz/powers/promptz-power/POWER.md",
+    "content": "Promptz power content",
+    "description": "A power from promptz library",
+    "displayName": "Promptz Test Power",
+    "keywords": ["promptz", "test"],
+    "mcpConfig": {
+      "mcpServers": {
+        "server1": {
+          "command": "test-server"
+        }
+      }
+    },
+    "steeringFiles": ["guide1.md"],
+    "git": {
+      "author": "Git Author 1",
+      "authorEmail": "git1@example.com",
+      "createdDate": "2024-01-15T10:00:00Z",
+      "lastModifiedDate": "2024-01-15T10:00:00Z",
+      "commitHash": "abc123",
+      "commitMessage": "Add promptz power"
+    }
+  },
+  {
+    "type": "power",
+    "id": "kiro-power",
+    "title": "Kiro Power",
+    "author": "Kiro Author",
+    "date": "2024-01-16",
+    "path": "libraries/kiro-powers/stripe/POWER.md",
+    "content": "Kiro power content",
+    "description": "A power from kiro-powers library",
+    "displayName": "Kiro Test Power",
+    "keywords": ["kiro", "stripe"],
+    "mcpConfig": {
+      "mcpServers": {
+        "server2": {
+          "command": "stripe-server"
+        }
+      }
+    },
+    "steeringFiles": ["guide2.md"],
+    "git": {
+      "author": "Git Author 2",
+      "authorEmail": "git2@example.com",
+      "createdDate": "2024-01-20T10:00:00Z",
+      "lastModifiedDate": "2024-01-17T10:00:00Z",
+      "commitHash": "def456",
+      "commitMessage": "Add kiro power"
+    }
+  }
+]

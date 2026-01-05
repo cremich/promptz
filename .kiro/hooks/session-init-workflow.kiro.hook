@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Session Initialization Workflow",
+  "description": "Triggers when a user starts a new session to retrieve information from long-term memory, ask clarifying questions about ambiguities, and research relevant documentation before proceeding with tasks",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Please follow this session initialization workflow:\n\n1. **Retrieve from Memory**: \n   - Use the memory MCP server tools to retrieve all relevant information from your knowledge graph\n   - Always refer to your knowledge graph as your \"memory\"\n   - Begin by saying only \"Remembering...\" and then retrieve the information\n\n2. **Ask Clarifying Questions**:\n   - Identify any ambiguities in the user's request\n   - Ask specific questions to ensure you understand the expected outcome\n   - Wait for the user to answer the questions before proceeding\n   - Do not make assumptions about unclear requirements\n\n3. **Research Documentation**:\n   - Use the context7 tools to research relevant documentation\n   - Ensure that your planned implementation is feasible\n   - This will help improve efficiency by preventing unnecessary implementation steps\n\nOnly proceed with the actual task after completing all three steps above."
+  },
+  "shortName": "session-init-workflow"
+}

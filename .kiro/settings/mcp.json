@@ -1,0 +1,76 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs",
+        "query-docs"
+      ]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "chrome-devtools-mcp@latest"
+      ],
+      "disabledTools": [
+        "click",
+        "close_page",
+        "drag",
+        "emulate",
+        "evaluate_script",
+        "fill",
+        "fill_form",
+        "get_console_message",
+        "get_network_request",
+        "handle_dialog",
+        "hover",
+        "list_console_messages",
+        "list_network_requests",
+        "list_pages",
+        "navigate_page",
+        "new_page",
+        "performance_analyze_insight",
+        "performance_start_trace",
+        "performance_stop_trace",
+        "press_key",
+        "resize_page",
+        "select_page",
+        "take_screenshot",
+        "take_snapshot",
+        "upload_file",
+        "wait_for"
+      ]
+    },
+    "next-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "next-devtools-mcp@latest"
+      ],
+      "autoApprove": [
+        "nextjs_docs",
+        "init"
+      ]
+    },
+    "shadcn": {
+      "command": "npx",
+      "args": [
+        "shadcn@latest",
+        "mcp"
+      ],
+      "autoApprove": [
+        "list_items_in_registries",
+        "search_items_in_registries",
+        "get_add_command_for_items",
+        "get_project_registries"
+      ]
+    }
+  }
+}

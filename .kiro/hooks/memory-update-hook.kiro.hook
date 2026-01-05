@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Memory Update Hook",
+  "description": "Automatically prompts the agent to update long-term memory with new information gathered during conversations, including establishing entities for users, customer personas, and products, along with their relationships and observations",
+  "version": "1",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review the conversation that just completed and identify any new information that should be added to your long-term memory. You must:\n\n1. Establish entities for:\n   - The user that interacted with you (if not already established)\n   - Any customer personas mentioned or discussed\n   - The product or system being worked on\n\n2. Establish relations between these entities\n3. Store facts about entities as observations, including:\n   - User preferences, skills, or context\n   - Product features, requirements, or characteristics\n   - Customer persona details, needs, or behaviors\n   - Any technical decisions, patterns, or insights discovered\n\n4. Update your memory with this information using the memory MCP server tools\n\nFocus on capturing information that will be valuable for future conversations and maintaining context about the user, their work, and the products they're building."
+  },
+  "shortName": "memory-update-hook"
+}
