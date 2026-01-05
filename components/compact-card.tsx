@@ -5,6 +5,7 @@ import { idToSlug } from '@/lib/formatter/slug'
 import { getDisplayAuthor, getDisplayTitle } from '@/lib/formatter/content'
 import { ContentTypeBadge } from '@/components/content-type-badge'
 import { LibraryBadge } from '@/components/library-badge'
+import { ModalityBadge, getModalitySupport } from '@/components/modality-badge'
 import { BadgeContainer } from '@/components/badge-container'
 import { GitHash } from '@/components/git-hash'
 import { ContentDate } from '@/components/content-date'
@@ -82,6 +83,11 @@ export function CompactCard({ item, className }: CompactCardProps) {
             <div className="text-sm text-muted-foreground">
               <span className="font-medium">Author:</span> {displayAuthor}
             </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground font-medium">Supports:</span>
+              <ModalityBadge support={getModalitySupport(item.type)} />
+            </div>
           </div>
         </CardContent>
 
@@ -112,6 +118,13 @@ export function CompactCardSkeleton({ className }: { className?: string }) {
           <Skeleton className="h-4 w-32" />
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-4 w-28" />
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-4 w-16" />
+            <div className="flex gap-1">
+              <Skeleton className="h-5 w-12 rounded-full" />
+              <Skeleton className="h-5 w-12 rounded-full" />
+            </div>
+          </div>
         </div>
       </CardContent>
 

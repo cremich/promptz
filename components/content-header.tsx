@@ -1,5 +1,6 @@
 import { ContentTypeBadge } from '@/components/content-type-badge'
 import { LibraryBadge } from '@/components/library-badge'
+import { ModalityBadge, getModalitySupport } from '@/components/modality-badge'
 import { BadgeContainer } from '@/components/badge-container'
 import type { ContentItem } from '@/lib/types/content'
 
@@ -38,6 +39,7 @@ export function ContentHeader({ content }: ContentHeaderProps) {
       <BadgeContainer context="detail-header" className="mb-4">
         <ContentTypeBadge contentType={content.type} />
         <LibraryBadge content={content} />
+        <ModalityBadge support={getModalitySupport(content.type)} />
       </BadgeContainer>
 
       {/* Title */}
