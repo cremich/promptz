@@ -1,5 +1,0 @@
-# pagefind.yml
-site: public
-output_subdir: pagefind
-
-glob: "{agents,prompts,rules}/**/*.html"
