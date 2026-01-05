@@ -7,6 +7,8 @@ frontend:
         - git submodule update --init --recursive
     build:
       commands:
+        - echo "NEXT_PUBLIC_POSTHOG_KEY=$NEXT_PUBLIC_POSTHOG_KEY" >> .env.local
+        - echo "NEXT_PUBLIC_POSTHOG_HOST=$NEXT_PUBLIC_POSTHOG_HOST" >> .env.local
         - npm run build
   artifacts:
     baseDirectory: .next
