@@ -49,7 +49,7 @@ The platform enables creation, discovery, and sharing of AI development resource
 
 1. **Clone the repository with submodules**:
 ```bash
-git clone https://github.com/your-org/promptz.dev.git
+git clone --recursive https://github.com/your-org/promptz.dev.git
 cd promptz.dev
 ```
 
