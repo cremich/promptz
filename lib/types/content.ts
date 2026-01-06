@@ -41,13 +41,17 @@ export interface AgentConfig {
     url?: string
     disabled?: boolean
     autoApprove?: string[]
+    env?: Record<string, string>
+    [key: string]: unknown
   }>
   tools?: string[]
   toolAliases?: Record<string, string>
+  allowedTools?: string[]
   resources?: string[]
   hooks?: Record<string, unknown>
   toolsSettings?: Record<string, unknown>
   useLegacyMcpJson?: boolean
+  includeMcpJson?: boolean
   model?: string | null
   [key: string]: unknown
 }

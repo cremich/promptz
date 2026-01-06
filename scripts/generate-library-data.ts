@@ -305,14 +305,15 @@ async function readPowers(libraryName: string, powersPath: string): Promise<Powe
 
 /**
  * Read agents from a directory
- * Replicates logic from lib/content-service.ts
+ * Updated to handle both JSON-only and JSON+MD agent patterns
  */
 async function readAgents(libraryName: string, agentsPath: string): Promise<Agent[]> {
   if (!(await directoryExists(agentsPath))) {
     return []
   }
   
-  const agentFiles = await getFilesWithExtension(agentsPath, '.md')
+  // Look for JSON configuration files instead of MD files
+  const agentFiles = await getFilesWithExtension(agentsPath, '.json')
   const agents: Agent[] = []
   
   for (const agentFile of agentFiles) {

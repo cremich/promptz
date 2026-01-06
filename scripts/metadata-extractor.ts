@@ -131,8 +131,8 @@ export async function extractPowerMetadata(
 }
 
 /**
- * Extract agent metadata from file
- * Build-time version without Next.js cache
+ * Extract agent metadata from JSON configuration file
+ * Updated to handle both embedded prompts and external MD files
  */
 export async function extractAgentMetadata(
   libraryName: string,
@@ -140,28 +140,15 @@ export async function extractAgentMetadata(
   agentPath: string
 ): Promise<Agent | null> {
   try {
-    // Read agent markdown file
-    const agentContent = await safeFileRead(agentPath)
-    if (!agentContent) {
-      console.warn(`Failed to read agent file: ${agentFile}`)
-      return null
-    }
+    const config = await parseAgentConfig(agentPath, agentFile)
+    if (!config) return null
     
-    // Parse frontmatter
-    const { content, data } = parseYamlFrontmatter(agentContent)
+    const agentName = path.basename(agentFile, '.json')
+    const title = typeof config.name === 'string' ? config.name : generateTitleFromFilename(agentName)
+    const description = typeof config.description === 'string' ? config.description : ''
     
-    // Extract author and date with git fallback
-    const { author, date, git } = await getAuthorAndDate(data, agentPath)
-    
-    // Look for corresponding JSON config file with same base name
-    const agentDir = path.dirname(agentPath)
-    const agentName = path.basename(agentFile, '.md')
-    const configPath = path.join(agentDir, `${agentName}.json`)
-    const config = await parseJsonConfig(configPath) || {}
-    
-    // Extract metadata
-    const title = typeof data.title === 'string' ? data.title : generateTitleFromFilename(agentName)
-    const description = typeof data.description === 'string' ? data.description : ''
+    const promptContent = await extractPromptContent(config, agentPath)
+    const { author, date, git } = await getAuthorAndDate(config, agentPath)
     
     return {
       type: 'agent',
@@ -171,7 +158,7 @@ export async function extractAgentMetadata(
       author,
       date,
       path: agentPath,
-      content,
+      content: promptContent,
       config,
       git
     }
@@ -180,6 +167,80 @@ export async function extractAgentMetadata(
     console.warn(`Failed to extract agent metadata: ${agentFile}`, error)
     return null
   }
+}
+
+/**
+ * Parse agent JSON configuration file
+ */
+async function parseAgentConfig(agentPath: string, agentFile: string): Promise<Record<string, unknown> | null> {
+  const agentContent = await safeFileRead(agentPath)
+  if (!agentContent) {
+    console.warn(`Failed to read agent file: ${agentFile}`)
+    return null
+  }
+  
+  try {
+    return JSON.parse(agentContent)
+  } catch (error) {
+    console.warn(`Failed to parse agent JSON: ${agentFile}`, error)
+    return null
+  }
+}
+
+/**
+ * Extract prompt content from config (embedded or external file)
+ */
+async function extractPromptContent(config: Record<string, unknown>, agentPath: string): Promise<string> {
+  if (typeof config.prompt !== 'string') {
+    return ''
+  }
+  
+  if (config.prompt.startsWith('file://')) {
+    return await readExternalPromptFile(config.prompt, agentPath, config)
+  }
+  
+  return config.prompt
+}
+
+/**
+ * Read external prompt file and handle frontmatter
+ */
+async function readExternalPromptFile(
+  promptRef: string, 
+  agentPath: string, 
+  config: Record<string, unknown>
+): Promise<string> {
+  const promptFileName = promptRef.replace('file://', '').replace('./', '')
+  const promptPath = path.join(path.dirname(agentPath), promptFileName)
+  const externalPrompt = await safeFileRead(promptPath)
+  
+  if (!externalPrompt) {
+    console.warn(`Failed to read external prompt file: ${promptPath}`)
+    return promptRef // Fallback to the file reference
+  }
+  
+  if (promptFileName.endsWith('.md')) {
+    return handleMarkdownPrompt(externalPrompt, config)
+  }
+  
+  return externalPrompt
+}
+
+/**
+ * Handle markdown prompt with frontmatter
+ */
+function handleMarkdownPrompt(externalPrompt: string, config: Record<string, unknown>): string {
+  const { content, data } = parseYamlFrontmatter(externalPrompt)
+  
+  // Use frontmatter data if available and config doesn't have it
+  if (typeof data.title === 'string' && !config.name) {
+    config.name = data.title
+  }
+  if (typeof data.description === 'string' && !config.description) {
+    config.description = data.description
+  }
+  
+  return content
 }
 
 /**

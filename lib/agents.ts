@@ -14,7 +14,8 @@ import agentsData from '@/data/agents.json'
 export const getAllAgents = cache(async (): Promise<Agent[]> => {
   try {
     // Cast imported JSON to proper TypeScript type
-    const allAgents = agentsData as Agent[]
+    // Use unknown first to avoid TypeScript union type issues
+    const allAgents = agentsData as unknown as Agent[]
     
     // Sort by creation date (newest first)
     // Use git creation date if available, otherwise fallback to frontmatter date
