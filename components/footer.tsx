@@ -32,6 +32,12 @@ function GitHubIcon({ className }: { className?: string }) {
   )
 }
 
+/**
+ * Render the site footer containing brand, link sections, and a bottom bar with copyright and credits.
+ *
+ * @param className - Optional additional CSS classes to apply to the footer root element
+ * @returns The footer React element with brand, Resources, Community, Tools sections, and the bottom copyright/credits bar
+ */
 export function Footer({ className }: { className?: string }) {
   const currentYear = new Date().getFullYear()
 
@@ -125,9 +131,17 @@ export function Footer({ className }: { className?: string }) {
 
         {/* Bottom bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/40 pt-8 md:flex-row">
-          <p className="text-xs text-muted-foreground">
-            © {currentYear} Promptz. Open source under MIT License.
-          </p>
+          <div className="flex flex-col items-center gap-2 md:flex-row md:gap-4">
+            <p className="text-xs text-muted-foreground">
+              © {currentYear} Promptz. Open source under MIT License.
+            </p>
+            <Link 
+              href="/privacy" 
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Privacy Policy
+            </Link>
+          </div>
           <p className="text-xs text-muted-foreground">
             Made with Kiro for{' '}
             <a
