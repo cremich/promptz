@@ -6,6 +6,7 @@ import Fuse from 'fuse.js'
 import type { SearchIndexItem, SearchIndex } from '@/lib/types/content'
 import type { SearchError } from '@/lib/search'
 import { validateSearchIndex, createSearchError } from '@/lib/search'
+import { analytics } from '@/lib/analytics'
 
 const FUSE_OPTIONS = {
   keys: [
@@ -19,6 +20,13 @@ const FUSE_OPTIONS = {
   includeMatches: true,
   minMatchCharLength: 2,
   ignoreLocation: true
+}
+
+// Search configuration
+const SEARCH_CONFIG = {
+  DEBOUNCE_DELAY: 300, // Wait 300ms after user stops typing
+  MIN_QUERY_LENGTH: 2, // Minimum characters before searching
+  MAX_RESULTS: 10
 }
 
 export interface UseSearchModalOptions {
@@ -122,20 +130,25 @@ export function useSearchModal({
     if (!fuse) return
 
     const timeoutId = setTimeout(() => {
-      if (!query.trim()) {
+      const trimmedQuery = query.trim()
+      
+      if (!trimmedQuery || trimmedQuery.length < SEARCH_CONFIG.MIN_QUERY_LENGTH) {
         setResults([])
         setSelectedIndex(0)
         return
       }
 
       try {
-        const searchResults = fuse.search(query, { limit: 10 })
+        const searchResults = fuse.search(trimmedQuery, { limit: SEARCH_CONFIG.MAX_RESULTS })
         setResults(searchResults)
         setSelectedIndex(0)
+        
+        // Track search performed (only for meaningful queries, debounced)
+        analytics.trackSearch(trimmedQuery, searchResults.length, searchResults.length > 0)
       } catch {
         setResults([])
       }
-    }, 150)
+    }, SEARCH_CONFIG.DEBOUNCE_DELAY)
 
     return () => clearTimeout(timeoutId)
   }, [query, fuse])
