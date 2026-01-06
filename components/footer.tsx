@@ -32,6 +32,12 @@ function GitHubIcon({ className }: { className?: string }) {
   )
 }
 
+/**
+ * Render the site footer containing brand, link sections, and a bottom bar with copyright and credits.
+ *
+ * @param className - Optional additional CSS classes to apply to the footer root element
+ * @returns The footer React element with brand, Resources, Community, Tools sections, and the bottom copyright/credits bar
+ */
 export function Footer({ className }: { className?: string }) {
   const currentYear = new Date().getFullYear()
 
