@@ -1,8 +1,12 @@
 import type { NextConfig } from "next";
+import createMDX from '@next/mdx';
 
 const nextConfig: NextConfig = {
   // Enable Cache Components for optimal performance
   cacheComponents: true,
+  
+  // Configure pageExtensions to include MDX files
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   
   async redirects() {
     return [
@@ -147,4 +151,14 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [
+      // Use string format for Turbopack compatibility
+      'remark-gfm',
+    ],
+    rehypePlugins: [],
+  },
+});
+
+export default withMDX(nextConfig);
