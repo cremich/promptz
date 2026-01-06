@@ -1,303 +1,191 @@
-# Contributing Guide
-
-Thank you for considering contributing to Promptz! This guide will help you contribute prompts, project rules, and custom agent configurations to help the Amazon Q Developer community.
+# Contributing to Promptz.dev
 
-## Quick Start
-
-1. **Fork the repository** on GitHub
-2. **Choose your content type**: Prompts, Project Rules, or Custom Agents
-3. **Use the appropriate template** from the `templates/` directory
-4. **Follow the content guidelines** below
-5. **Submit a pull request**
-
-## Contributing Prompts
-
-Prompts are AI instructions that help developers accomplish specific tasks with Amazon Q Developer.
-
-### Directory Structure
-
-Place your prompt in the appropriate category:
-
-- **`analysis/`** - Code review, security analysis, optimization
-- **`architecture/`** - System design, diagrams, architectural blueprints
-- **`aws/`** - AWS-specific infrastructure and services
-- **`code-generation/`** - Code scaffolding, boilerplate generation
-- **`documentation/`** - ADRs, specifications, project documentation
-- **`general/`** - Miscellaneous utilities and tools
-- **`persona/`** - AI behavior and role-setting prompts
-- **`scaffolding/`** - Project setup, environment configuration
-- **`solutions/`** - Complete applications and end-to-end solutions
-- **`spec-driven-development/`** - Specification creation and planning
-- **`testing/`** - Unit tests, test generation, QA processes
-
-### Creating a Prompt
-
-1. **Copy the template**:
-
-   ```bash
-   cp templates/prompt-template.md content/prompts/CATEGORY/your-prompt-name.md
-   ```
-
-2. **Fill out the frontmatter**:
-
-   ```yaml
-   ---
-   categories:
-     - category-name # Choose from the directories above
-   description: Brief description of what this prompt does
-   draft: false
-   featured: false
-   howToUse: |
-     Instructions on how to use this prompt effectively.
-     Include specific steps and context where it works best.
-   images: []
-   tags:
-     - CLI
-     - Chat
-     - IDE
-   title: Your Prompt Title
-   ---
-   ```
+Thank you for your interest in contributing to Promptz.dev! We welcome contributions that help improve the platform and expand the AI-assisted development community.
 
-3. **Add your prompt content** below the frontmatter
+## Types of Contributions
 
-### Prompt Guidelines
+There are two main ways to contribute to Promptz.dev:
 
-- **Be specific**: Clear instructions produce better results
-- **Include context**: Explain when and how to use the prompt
-- **Test thoroughly**: Verify the prompt works as expected
-- **Use descriptive titles**: Help users find relevant prompts
-- **Follow naming convention**: `lowercase-with-hyphens.md`
+### 1. Content Contributions
+Add AI development resources to our integrated content libraries.
 
-## Contributing Project Rules
+### 2. Website Contributions
+Improve the platform itself through code contributions.
 
-Project rules define coding standards, architectural patterns, and development guidelines that Amazon Q Developer should follow.
-
-### Directory Structure
-
-Place your rule in the appropriate technology category:
-
-- **`amplify/`** - AWS Amplify development rules
-- **`aws/`** - General AWS development practices
-- **`cdk/`** - AWS CDK development standards
-- **`general/`** - Language-agnostic development rules
-- **`javascript/`** - JavaScript-specific rules
-- **`mobile/`** - Mobile development guidelines
-- **`nextjs/`** - Next.js development standards
-- **`python/`** - Python development rules
-- **`react/`** - React development guidelines
-- **`security/`** - Security-focused development rules
-- **`testing/`** - Testing standards and practices
-- **`typescript/`** - TypeScript development rules
-- **`vue/`** - Vue.js development guidelines
+---
 
-### Creating a Project Rule
-
-1. **Copy the template**:
-
-   ```bash
-   cp templates/rule-template.md content/rules/CATEGORY/your-rule-name.md
-   ```
-
-2. **Fill out the frontmatter**:
-
-   ```yaml
-   ---
-   categories:
-     - category-name # Choose from the directories above
-   description: Brief description of these project rules and their purpose
-   draft: false
-   featured: false
-   images: []
-   tags:
-     - Standards
-     - IDE
-     - CLI
-   title: Your Rule Title
-   ---
-   ```
-
-3. **Structure your rule** with Purpose, Instructions, Priority, and Error Handling sections
-
-### Rule Guidelines
-
-- **Be actionable**: Use clear directives (ALWAYS, NEVER, WHEN)
-- **Set priorities**: Help resolve conflicts between rules
-- **Include error handling**: Define fallback strategies
-- **Add unique IDs**: Use (ID: IDENTIFIER) for traceability
-- **Provide examples**: Show correct and incorrect implementations
+## Content Contributions
 
-## Contributing Custom Agents
+Content contributions involve adding prompts, steering documents, custom agents, agent hooks, or Kiro powers to our integrated libraries.
 
-Custom agents are specialized AI assistants configured for specific development workflows.
+### Contributing to Promptz.lib (Community Library)
 
-### Directory Structure
+The [promptz.lib](https://github.com/cremich/promptz.lib) repository accepts raw Kiro files from your `.kiro` folders.
 
-Place your agent in the appropriate functional category:
+**What you can contribute:**
+- **Steering Documents** - Markdown files with development standards and guidelines
+- **Prompts** - Reusable AI instructions for specific tasks
+- **Agent Hooks** - `.hook` JSON configuration files for IDE automation
+- **Custom Agents** - Agent configurations with optional system prompts
+- **Kiro Powers** - Complete power bundles as defined by Kiro
 
-- **`documentation/`** - Documentation generation and maintenance
-- **`engineering/`** - Software development and coding assistance
-- **`infrastructure/`** - Infrastructure management and operations
-- **`operations/`** - Operational tasks and troubleshooting
-- **`project-management/`** - Project planning and management
-- **`testing/`** - Testing automation and quality assurance
+**How to contribute:**
+1. Fork the [promptz.lib repository](https://github.com/cremich/promptz.lib)
+2. Add your files from your `.kiro` folder (global or workspace-specific) to the appropriate directory:
+   - `steering/` for steering documents
+   - `prompts/` for AI prompts
+   - `hooks/` for agent hooks
+   - `agents/` for custom agents
+   - `powers/` for Kiro powers
+3. Create a pull request with a descriptive title and description
+4. Once merged, your content will automatically appear on promptz.dev
 
-### Creating a Custom Agent
+**File Sources:**
+Your contributions typically come from:
+- **Global Kiro folder**: `~/.kiro/` (user-wide configurations)
+- **Workspace Kiro folder**: `<project>/.kiro/` (project-specific configurations)
 
-Agents use a **page bundle structure** with separate files for better organization:
+For detailed guidelines, see the [promptz.lib CONTRIBUTING.md](https://github.com/cremich/promptz.lib/blob/main/CONTRIBUTING.md).
 
-1. **Create the agent directory**:
+### Contributing to Official Kiro Powers
 
-   ```bash
-   mkdir -p content/agents/CATEGORY/your-agent-name
-   ```
+The official Kiro Powers library has a structured submission process.
 
-2. **Copy the templates**:
+**How to contribute:**
+Visit [https://kiro.dev/powers/submit/](https://kiro.dev/powers/submit/) for the complete submission guidelines and requirements.
 
-   ```bash
-   cp templates/agent-index-template.md content/agents/CATEGORY/your-agent-name/index.md
-   cp templates/agent-prompt-template.md content/agents/CATEGORY/your-agent-name/prompt.md
-   cp templates/agent-config-template.json content/agents/CATEGORY/your-agent-name/agent.json
-   ```
+---
 
-3. **Fill out the files**:
+## Website Contributions
 
-   **index.md** - Frontmatter and description:
+Website contributions help improve the Promptz.dev platform itself.
 
-   ```yaml
-   ---
-   authors:
-     - your-github-username
-   categories:
-     - category-name
-   description: Brief description of this agent's capabilities
-   title: Your Agent Title
-   tags:
-     - CLI
-     - Agent
-     - YourTag
-   ---
-   Brief description of what this agent does and when to use it.
-   ```
+### Types of Website Contributions
 
-   **prompt.md** - System prompt (plain markdown):
+1. **Bug Fixes** - Fix issues with the website functionality
+2. **New Features** - Add new capabilities to the platform
+3. **Additional Libraries** - Integrate new content libraries as git submodules
+4. **Performance Improvements** - Optimize build processes, search, or UI performance
+5. **Documentation** - Improve developer documentation and guides
 
-   ```markdown
-   Your system prompt goes here...
+### Development Setup
 
-   Describe the agent's role, capabilities, and behavior.
-   ```
+1. **Fork and clone the repository:**
+```bash
+git clone --recursive https://github.com/your-username/promptz.dev.git
+cd promptz.dev
+```
 
-   **agent.json** - Configuration (clean JSON):
+2. **Install dependencies:**
+```bash
+npm install
+```
 
-   ```json
-   {
-     "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/main/schemas/agent-v1.json",
-     "name": "your-agent-name",
-     "description": "Brief description",
-     "tools": [],
-     "allowedTools": [],
-     "resources": []
-   }
-   ```
+3. **Initialize submodules** (if not cloned with `--recursive`):
+```bash
+git submodule update --init --recursive
+```
 
-### Agent Guidelines
+4. **Start development server:**
+```bash
+npm run dev
+```
 
-- **Define clear purpose**: Explain what the agent does and when to use it
-- **Configure appropriate tools**: Only include necessary tools and permissions
-- **Write effective prompts**: Clear system prompts produce better results
-- **Test thoroughly**: Verify the agent works in real scenarios
-- **Document requirements**: List prerequisites and setup steps
+### Development Workflow
 
-## Validation and Quality
+1. **Create a feature branch:**
+```bash
+git checkout -b feature/your-feature-name
+```
 
-All content is automatically validated for:
+2. **Make your changes** following our coding standards:
+   - Follow TypeScript strict mode requirements
+   - Use established naming conventions (kebab-case for files, PascalCase for components)
+   - Write tests for new functionality
+   - Follow security best practices
 
-- **Frontmatter schema**: Required fields and proper formatting
-- **File naming**: `lowercase-with-hyphens.md` convention
-- **Content structure**: Appropriate sections and formatting
-- **Security**: No sensitive information or security violations
-- **Markdown syntax**: Valid markdown parsing
+3. **Test your changes:**
+```bash
+npm run test           # Run tests
+npm run lint           # Check code quality
+npm run build          # Ensure build succeeds
+```
 
-## Submission Process
+4. **Commit your changes:**
+```bash
+git commit -m "feat: add your feature description"
+```
+Use [conventional commit format](https://www.conventionalcommits.org/) for commit messages.
 
-1. **Create a branch**:
+5. **Push and create a pull request:**
+```bash
+git push origin feature/your-feature-name
+```
 
-   ```bash
-   git checkout -b add-content-your-content-name
-   ```
+### Adding New Content Libraries
 
-2. **Add your content** to the appropriate directory
+To integrate additional content libraries as git submodules:
 
-3. **Commit your changes**:
+1. **Add the submodule:**
+```bash
+git submodule add <repository-url> libraries/<library-name>
+```
 
-   ```bash
-   git add content/TYPE/CATEGORY/your-file.md
-   git commit -m "feat: add [content name] for [category]"
-   ```
+2. **Update the build scripts** in `scripts/generate-library-data.ts` to process the new library
 
-4. **Push and create a pull request**:
-   ```bash
-   git push origin add-content-your-content-name
-   ```
+3. **Add content type support** if the library introduces new content types
 
-## Review Process
+4. **Update documentation** to reflect the new library
 
-**Automated Checks:**
+### Code Quality Standards
 
-- Validation requirements must pass
-- Build process must succeed
-- No security violations
+- **TypeScript**: Strict mode enabled, comprehensive type definitions
+- **Testing**: Unit tests with Jest and React Testing Library
+- **Linting**: ESLint with Next.js and TypeScript configurations
+- **Formatting**: Prettier with automated formatting on commit
+- **Performance**: Server Components by default, Client Components only when needed
 
-**Manual Review:**
+### Architecture Guidelines
 
-- Content quality and usefulness
-- Appropriate categorization
-- Clear instructions and documentation
-- Community guidelines compliance
+- **Next.js 16 App Router** - Use Server Components by default
+- **Build-time Processing** - Content processed during build for optimal performance
+- **Type Safety** - Union types for cross-content operations
+- **Error Handling** - Graceful degradation for missing or corrupted content
+
+---
+
+## Pull Request Guidelines
+
+### For All Contributions
+
+1. **Descriptive Title** - Clearly describe what your PR does
+2. **Detailed Description** - Explain the changes and their purpose
+3. **Testing** - Ensure all tests pass and add new tests for new functionality
+4. **Documentation** - Update relevant documentation for your changes
+
+### Review Process
+
+1. **Automated Checks** - All PRs must pass automated tests and linting
+2. **Code Review** - Maintainers will review your code for quality and consistency
+3. **Testing** - Changes will be tested in a staging environment
+4. **Merge** - Approved PRs will be merged and deployed automatically
+
+---
 
 ## Getting Help
 
-- **Templates**: Use files in `templates/` directory as starting points
-- **Examples**: Browse existing content for reference
-- **Issues**: Open an [issue](https://github.com/cremich/promptz/issues) for questions
-- **Discussions**: Join conversations in pull requests
+- **Issues** - Use GitHub issues for bug reports and feature requests
+- **Discussions** - Use GitHub discussions for questions and community support
+- **Documentation** - Check the README and inline code documentation
 
-## Code Contributions
+## Code of Conduct
 
-For website improvements, bug fixes, and feature development:
+This project follows the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md). By participating, you agree to uphold this code.
 
-### Pull Requests
+## License
 
-We use the [GitHub flow](https://guides.github.com/introduction/flow/) as main versioning workflow. In a nutshell:
+By contributing to Promptz.dev, you agree that your contributions will be licensed under the same license as the project (MIT License).
 
-1. Fork this repository
-2. Create a new branch for each feature, fix or improvement
-3. Send a pull request from each feature branch to the **main** branch
+---
 
-### Git Commit Guidelines
-
-We have rules over how our git commit messages must be formatted. Please ensure to
-[squash](https://help.github.com/articles/about-git-rebase/#commands-available-while-rebasing) unnecessary commits so that your commit history is clean.
-
-If the commit only involves documentation changes you can skip the continuous integration pipelines using `[ci skip]` or `[skip ci]` in your commit message header.
-
-All commits must adhere to the [Conventional Commits specification](https://conventionalcommits.org/). Depending on the type of your change, please choose one of the following to give your commit some more semantic context:
-
-- **feat:** A new feature
-- **fix:** A bug fix
-- **docs:** Documentation only changes
-- **style:** Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-- **refactor:** A code change that neither fixes a bug nor adds a feature
-- **perf:** A code change that improves performance
-- **test:** Adding missing tests or correcting existing tests
-- **build:** Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
-- **ci:** Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
-- **chore:** Other changes that don't modify src or test files
-- **revert:** Reverts a previous commit
-
-In addition to the specification we use tooling to ensure the proper use:
-
-- [Commitizen](https://commitizen-tools.github.io/commitizen/)
-- [Commitlint](https://commitlint.js.org)
-- [Husky](https://typicode.github.io/husky)
+Thank you for contributing to the AI-assisted development community! 🚀

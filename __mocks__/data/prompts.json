@@ -1,0 +1,45 @@
+[
+  {
+    "type": "prompt",
+    "id": "prompt-b",
+    "title": "Prompt B",
+    "author": "Author B",
+    "date": "2024-01-16",
+    "path": "libraries/promptz/prompts/b.md",
+    "content": "Content B",
+    "git": {
+      "author": "Git Author B",
+      "authorEmail": "b@example.com",
+      "createdDate": "2024-01-16T10:00:00Z",
+      "lastModifiedDate": "2024-01-16T10:00:00Z",
+      "commitHash": "def456",
+      "commitMessage": "Add prompt B"
+    }
+  },
+  {
+    "type": "prompt",
+    "id": "prompt-a",
+    "title": "Prompt A",
+    "author": "Author A",
+    "date": "2024-01-15",
+    "path": "libraries/promptz/prompts/a.md",
+    "content": "Content A",
+    "git": {
+      "author": "Git Author A",
+      "authorEmail": "a@example.com",
+      "createdDate": "2024-01-15T10:00:00Z",
+      "lastModifiedDate": "2024-01-15T10:00:00Z",
+      "commitHash": "abc123",
+      "commitMessage": "Add prompt A"
+    }
+  },
+  {
+    "type": "prompt",
+    "id": "prompt-c",
+    "title": "Prompt C",
+    "author": "Author C",
+    "date": "2024-01-14",
+    "path": "libraries/promptz/prompts/c.md",
+    "content": "Content C"
+  }
+]

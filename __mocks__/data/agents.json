@@ -1,0 +1,44 @@
+[
+  {
+    "type": "agent",
+    "id": "agent-2",
+    "title": "Agent 2",
+    "author": "Author 2",
+    "date": "2024-01-16",
+    "path": "libraries/promptz/agents/agent-2.md",
+    "content": "Agent 2 content",
+    "description": "Description 2",
+    "config": {
+      "mcpServers": ["server2"]
+    },
+    "git": {
+      "author": "Git Author 2",
+      "authorEmail": "git2@example.com",
+      "createdDate": "2024-01-16T10:00:00Z",
+      "lastModifiedDate": "2024-01-16T10:00:00Z",
+      "commitHash": "def456",
+      "commitMessage": "Add agent 2"
+    }
+  },
+  {
+    "type": "agent",
+    "id": "agent-1",
+    "title": "Agent 1",
+    "author": "Author 1",
+    "date": "2024-01-15",
+    "path": "libraries/promptz/agents/agent-1.md",
+    "content": "Agent 1 content",
+    "description": "Description 1",
+    "config": {
+      "mcpServers": ["server1"]
+    },
+    "git": {
+      "author": "Git Author 1",
+      "authorEmail": "git1@example.com",
+      "createdDate": "2024-01-15T10:00:00Z",
+      "lastModifiedDate": "2024-01-15T10:00:00Z",
+      "commitHash": "abc123",
+      "commitMessage": "Add agent 1"
+    }
+  }
+]
