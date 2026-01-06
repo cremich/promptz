@@ -87,37 +87,37 @@ const nextConfig: NextConfig = {
       // Rules → Steering redirects from old nested structure to new slug format
       {
         source: '/rules/general/amazon-q-learning-files/:path*',
-        destination: '/steerings/promptz-steering-amazon-q-learning-files',
+        destination: '/steering/promptz-steering-amazon-q-learning-files',
         permanent: true,
       },
       {
         source: '/rules/cdk/cdk-project-structure/:path*',
-        destination: '/steerings/promptz-steering-cdk-project-structure',
+        destination: '/steering/promptz-steering-cdk-project-structure',
         permanent: true,
       },
       {
         source: '/rules/general/kiro-specs/:path*',
-        destination: '/steerings/promptz-steering-kiro-specs',
+        destination: '/steering/promptz-steering-kiro-specs',
         permanent: true,
       },
       {
         source: '/rules/general/project-intelligence/:path*',
-        destination: '/steerings/promptz-steering-project-intelligence',
+        destination: '/steering/promptz-steering-project-intelligence',
         permanent: true,
       },
       {
         source: '/rules/python/python-programming-rules/:path*',
-        destination: '/steerings/promptz-steering-python-programming-rules',
+        destination: '/steering/promptz-steering-python-programming-rules',
         permanent: true,
       },
       {
         source: '/rules/typescript/typescript-tdd-behavioural-test-specifications/:path*',
-        destination: '/steerings/promptz-steering-typescript-tdd-behavioural-test-specifications',
+        destination: '/steering/promptz-steering-typescript-tdd-behavioural-test-specifications',
         permanent: true,
       },
       {
         source: '/rules/mobile/mobile-testing-automation/:path*',
-        destination: '/steerings/promptz-steering-mobile-testing-automation',
+        destination: '/steering/promptz-steering-mobile-testing-automation',
         permanent: true,
       },
       
