@@ -15,6 +15,7 @@ const footerLinks = {
   ],
   community: [
     { href: '/contribute', label: 'Contribute' },
+    { href: '/faq', label: 'FAQ' },
     { href: 'https://github.com/cremich/promptz', label: 'GitHub', external: true },
     { href: 'https://github.com/cremich/promptz/issues', label: 'Issues', external: true },
     { href: 'https://github.com/cremich/promptz/discussions', label: 'Discussions', external: true },

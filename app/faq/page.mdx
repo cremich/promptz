@@ -1,0 +1,312 @@
+# Frequently Asked Questions
+
+Welcome to the Promptz FAQ! Find answers to common questions about contributing, installation, and using AI development resources across Kiro CLI and IDE environments.
+
+<Accordion type="single" collapsible className="w-full">
+
+<AccordionItem value="contributing">
+<AccordionTrigger>How do I contribute to promptz?</AccordionTrigger>
+<AccordionContent>
+
+Contributing to Promptz is straightforward! We accept raw Kiro files from your `.kiro` folders - the same files you use locally with Kiro IDE and CLI.
+
+**Quick Steps:**
+1. Fork the [promptz.lib repository](https://github.com/cremich/promptz.lib)
+2. Copy files from your `~/.kiro/` or `<project>/.kiro/` folders
+3. Place in appropriate directories: `steering/`, `prompts/`, `agents/`, `hooks/`, `powers/`
+4. Remove sensitive data and use kebab-case naming
+5. Create a pull request with a clear description
+
+For detailed contribution guidelines, visit our [Contribute page](/contribute).
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="what-to-contribute">
+<AccordionTrigger>What should I contribute?</AccordionTrigger>
+<AccordionContent>
+
+Focus on resources that solve common development challenges:
+- **Steering documents** that define useful coding standards
+- **Prompts** for frequent development tasks
+- **Custom agents** for specialized CLI workflows
+- **Agent hooks** for IDE automation
+- **Kiro powers** for complete tool packages
+
+**Consider broad applicability:**
+- Will other developers find this useful?
+- Does it solve a common problem?
+- Is it generic enough to work in different projects?
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="prepare-files">
+<AccordionTrigger>How do I prepare my files for contribution?</AccordionTrigger>
+<AccordionContent>
+
+Before contributing:
+- Remove sensitive information (API keys, personal data, absolute paths)
+- Test configurations in a clean Kiro environment
+- Use kebab-case naming for all files
+- Verify correct file extensions (`.kiro.hook` for hooks)
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="feature-compatibility">
+<AccordionTrigger>What features can I use in CLI vs IDE?</AccordionTrigger>
+<AccordionContent>
+
+Different content types work in different environments. Here's the compatibility matrix:
+
+#### Universal Content (CLI + IDE)
+<ModalityBadge support="both" />
+
+Works in both Kiro CLI and Kiro IDE environments:
+
+- **Steering Documents** - Development standards and coding guidelines
+- **Prompts** - Reusable AI instructions for development tasks
+
+*Note: CLI supports local managed prompt libraries*
+
+#### CLI-Only Content
+<ModalityBadge support="cli" />
+
+Specialized for command-line workflows:
+
+- **Custom Agents** - AI assistants configured for terminal-based development
+
+#### IDE-Only Content
+<ModalityBadge support="ide" />
+
+Designed for the integrated development environment:
+
+- **Agent Hooks** - Event-driven automation from promptz.lib library
+- **Kiro Powers** - Complete tool packages with specialized knowledge
+
+#### Different Implementations
+- **Hooks** have different implementations in CLI vs IDE environments
+
+**Why don't all features work everywhere?**
+
+Each environment has different capabilities:
+- **CLI** excels at terminal-based workflows and custom agent configurations
+- **IDE** provides rich integration with file system events and visual interfaces
+- **Both** support core AI assistance through prompts and steering documents
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="installation">
+<AccordionTrigger>How do I install prompts/steering/agents/powers/hooks?</AccordionTrigger>
+<AccordionContent>
+
+**Simple Answer:** Copy any content from promptz libraries directly into your `.kiro/` folders. That's it!
+
+#### Installation Steps
+1. **Download or copy** content files from promptz libraries
+2. **Place them** in the appropriate `.kiro/` directory:
+   - **Global** (all projects): `~/.kiro/steering/`, `~/.kiro/prompts/`, `~/.kiro/agents/`, `~/.kiro/hooks/`, `~/.kiro/powers/`
+   - **Project-specific**: `<project>/.kiro/steering/`, `<project>/.kiro/prompts/`, `<project>/.kiro/agents/`, `<project>/.kiro/hooks/`, `<project>/.kiro/powers/`
+3. **Restart** Kiro CLI or reload IDE to pick up new content
+
+#### Important Notes
+- **Same installation method** works for both Kiro CLI and IDE
+- **Content compatibility** varies by environment (see compatibility matrix above)
+- **File structure** should match the original library organization
+- **Remove sensitive data** before copying (API keys, personal paths, etc.)
+
+For environment-specific usage instructions, refer to the [official Kiro documentation](https://kiro.dev/docs/).
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="file-placement">
+<AccordionTrigger>Where do I put the files after downloading?</AccordionTrigger>
+<AccordionContent>
+
+File placement depends on scope:
+
+**Global Configuration** (`~/.kiro/`):
+- `steering/` - User-wide development standards
+- `prompts/` - Personal AI instruction templates
+- `agents/` - Custom CLI agents
+
+**Project-Specific** (`<project>/.kiro/`):
+- `steering/` - Project-specific standards
+- `hooks/` - Project automation (IDE)
+- `agents/` - Domain-specific agents
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="content-types">
+<AccordionTrigger>What are the different content types available?</AccordionTrigger>
+<AccordionContent>
+
+Promptz hosts five main types of AI development resources:
+
+#### Prompts
+<ModalityBadge support="both" />
+
+AI instructions for specific development tasks like code generation, testing, documentation, and architecture. These work in both CLI and IDE environments.
+
+**Examples:**
+- Automated code review instructions
+- Git commit message generation
+- Unit test generation prompts
+- Security analysis guidelines
+
+#### Steering Documents
+<ModalityBadge support="both" />
+
+Configuration files that ensure AI assistants consistently follow established patterns, libraries, and standards across your projects.
+
+**Examples:**
+- Git conventions and workflows
+- TypeScript coding standards
+- Testing guidelines
+- Framework-specific best practices
+
+#### Custom Agents
+<ModalityBadge support="cli" />
+
+Specialized AI assistants configured for specific workflows and development processes in CLI environments.
+
+**Examples:**
+- AWS operations agent
+- Kanban workflow agent
+- Web frontend specialist
+- System intelligence agent
+
+#### Agent Hooks
+<ModalityBadge support="ide" />
+
+Automation tools that execute predefined agent actions when specific IDE events occur, like file saves or commits.
+
+**Examples:**
+- Auto-format on save
+- Run tests on commit
+- Session initialization workflows
+- Code quality checks
+
+#### Kiro Powers
+<ModalityBadge support="ide" />
+
+Packaged tools, workflows, and best practices that Kiro can activate on-demand, providing specialized knowledge and capabilities.
+
+**Examples:**
+- Stripe integration tools
+- AWS infrastructure as code
+- Terraform management
+- API testing suites
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="choose-content-type">
+<AccordionTrigger>How do I know which content type I need?</AccordionTrigger>
+<AccordionContent>
+
+Choose based on your workflow:
+- **Need consistent coding standards?** → Steering Documents
+- **Want reusable AI instructions?** → Prompts
+- **Building CLI workflows?** → Custom Agents
+- **Automating IDE tasks?** → Agent Hooks
+- **Need complete tool packages?** → Kiro Powers
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="search-functionality">
+<AccordionTrigger>How do I search for specific content?</AccordionTrigger>
+<AccordionContent>
+
+Promptz provides powerful search capabilities:
+
+#### Global Search Modal
+- **Keyboard shortcut**: Press `⌘K` (Mac) or `Ctrl+K` (Windows/Linux)
+- **Click**: Use the search button in the navigation bar
+- **Mobile**: Tap the search icon
+
+#### Search Features
+- **Fuzzy matching** - Find content even with typos
+- **Content type filtering** - Search within specific types
+- **Match highlighting** - See why results matched your query
+- **Relevance scoring** - Most relevant results appear first
+
+#### Search Tips
+- Use specific keywords related to your development task
+- Try different terms if you don't find what you're looking for
+- Browse by content type using the navigation menu
+- Check the [Library page](/library) for a comprehensive overview
+
+#### What can I search for?
+The search covers all content including:
+- Content titles and descriptions
+- Author information
+- Keywords and tags
+- File content and documentation
+- Library sources
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="getting-help">
+<AccordionTrigger>Where can I get help?</AccordionTrigger>
+<AccordionContent>
+
+Several resources are available:
+
+#### GitHub Issues
+- **Questions**: [Open an issue](https://github.com/cremich/promptz.lib/issues/new?labels=question) with the "question" label
+- **Bug reports**: [Report problems](https://github.com/cremich/promptz.lib/issues/new?labels=bug) with the "bug" label
+- **Feature requests**: [Share ideas](https://github.com/cremich/promptz.lib/issues/new?labels=enhancement) with the "enhancement" label
+
+#### Official Documentation
+- [Kiro Documentation](https://docs.kiro.dev) - Complete guides for CLI and IDE
+- [Contribution Guidelines](/contribute) - Detailed contribution instructions
+
+#### Community
+- Browse existing content for examples and inspiration
+- Learn from other contributors' implementations
+- Share your own solutions to help others
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="report-problem">
+<AccordionTrigger>How do I report a problem?</AccordionTrigger>
+<AccordionContent>
+
+1. **Check existing issues** to see if it's already reported
+2. **Gather information** about your environment and the problem
+3. **Create a detailed issue** with steps to reproduce
+4. **Use appropriate labels** (bug, question, enhancement)
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="request-feature">
+<AccordionTrigger>How do I request a new feature for the promptz.dev website?</AccordionTrigger>
+<AccordionContent>
+
+To request new features for the promptz.dev platform (search improvements, UI enhancements, new content types, etc.):
+
+1. **Visit the website repository**: [promptz.dev GitHub Issues](https://github.com/cremich/promptz/issues/new)
+2. **Search existing requests** to avoid duplicates
+3. **Describe the use case** and why it would be valuable for the platform
+4. **Provide examples** of how the feature would work
+5. **Use the "enhancement" label** when creating the issue
+
+**Note**: For Kiro IDE/CLI feature requests, use the [official Kiro feedback channels](https://kiro.dev/faq/) instead.
+
+</AccordionContent>
+</AccordionItem>
+
+</Accordion>
+
+---
+
+**Still have questions?** Feel free to [open an issue](https://github.com/cremich/promptz.lib/issues/new) on GitHub or explore our [contribution guidelines](/contribute) for more detailed information.
