@@ -1,6 +1,8 @@
 import type { MDXComponents } from 'mdx/types'
 import Image, { ImageProps } from 'next/image'
 import { cn } from '@/lib/utils'
+import { ModalityBadge } from '@/components/modality-badge'
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -8,6 +10,13 @@ import { cn } from '@/lib/utils'
 // your design system.
 
 const components: MDXComponents = {
+  // Custom components
+  ModalityBadge,
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+  
   // Customize built-in components with Tailwind styling
   h1: ({ children, className, ...props }) => (
     <h1 

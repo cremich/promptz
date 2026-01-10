@@ -34,13 +34,11 @@ describe('Hero', () => {
     expect(screen.getByText(/Discover and share prompts, powers, agents, and steering documents/)).toBeInTheDocument()
   })
 
-  it('renders Contribute CTA with external link', () => {
+  it('renders Contribute CTA with internal link', () => {
     render(<Hero />)
     
     const contributeLink = screen.getByRole('link', { name: /Contribute/i })
-    expect(contributeLink).toHaveAttribute('href', 'https://github.com/cremich/promptz.lib/blob/main/CONTRIBUTING.md')
-    expect(contributeLink).toHaveAttribute('target', '_blank')
-    expect(contributeLink).toHaveAttribute('rel', 'noopener noreferrer')
+    expect(contributeLink).toHaveAttribute('href', '/contribute')
   })
 
   it('renders Browse Library CTA with internal link', () => {

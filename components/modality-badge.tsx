@@ -37,10 +37,10 @@ export function getModalitySupport(contentType: string): ModalitySupport {
     case 'prompt':
       return 'both'
     case 'agent':
-      return 'cli'
+      return 'cli' // CLI-focused
     case 'hook':
     case 'power':
-      return 'ide'
+      return 'ide' // IDE-focused
     default:
       return 'both' // fallback
   }
