@@ -140,17 +140,23 @@ const components: MDXComponents = {
       alt={props.alt || ""}
     />
   ),
-  a: ({ children, className, ...props }) => (
-    <a 
-      className={cn(
-        "font-medium text-indigo-600 underline underline-offset-4 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300",
-        className
-      )} 
-      {...props}
-    >
-      {children}
-    </a>
-  ),
+  a: ({ href, children, className, ...props }) => {
+    const isExternal = href?.startsWith('http') || href?.startsWith('//');
+    return (
+      <a 
+        href={href}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noopener noreferrer' : undefined}
+        className={cn(
+          "font-medium text-indigo-600 underline underline-offset-4 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300",
+          className
+        )} 
+        {...props}
+      >
+        {children}
+      </a>
+    );
+  },
   table: ({ children, className, ...props }) => (
     <div className="my-6 w-full overflow-y-auto">
       <table 

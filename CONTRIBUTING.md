@@ -18,43 +18,7 @@ Improve the platform itself through code contributions.
 
 Content contributions involve adding prompts, steering documents, custom agents, agent hooks, or Kiro powers to our integrated libraries.
 
-### Contributing to Promptz.lib (Community Library)
-
-The [promptz.lib](https://github.com/cremich/promptz.lib) repository accepts raw Kiro files from your `.kiro` folders.
-
-**What you can contribute:**
-- **Steering Documents** - Markdown files with development standards and guidelines
-- **Prompts** - Reusable AI instructions for specific tasks
-- **Agent Hooks** - `.hook` JSON configuration files for IDE automation
-- **Custom Agents** - Agent configurations with optional system prompts
-- **Kiro Powers** - Complete power bundles as defined by Kiro
-
-**How to contribute:**
-1. Fork the [promptz.lib repository](https://github.com/cremich/promptz.lib)
-2. Add your files from your `.kiro` folder (global or workspace-specific) to the appropriate directory:
-   - `steering/` for steering documents
-   - `prompts/` for AI prompts
-   - `hooks/` for agent hooks
-   - `agents/` for custom agents
-   - `powers/` for Kiro powers
-3. Create a pull request with a descriptive title and description
-4. Once merged, your content will automatically appear on promptz.dev
-
-**File Sources:**
-Your contributions typically come from:
-- **Global Kiro folder**: `~/.kiro/` (user-wide configurations)
-- **Workspace Kiro folder**: `<project>/.kiro/` (project-specific configurations)
-
-For detailed guidelines, see the [promptz.lib CONTRIBUTING.md](https://github.com/cremich/promptz.lib/blob/main/CONTRIBUTING.md).
-
-### Contributing to Official Kiro Powers
-
-The official Kiro Powers library has a structured submission process.
-
-**How to contribute:**
-Visit [https://kiro.dev/powers/submit/](https://kiro.dev/powers/submit/) for the complete submission guidelines and requirements.
-
----
+Follow the detailed steps in the [contribution guidelines](https://github.com/cremich/promptz.lib/blob/main/CONTRIBUTING.md) of the promptz.lib repository. 
 
 ## Website Contributions
 
