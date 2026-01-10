@@ -9,6 +9,16 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/
 // React component you want, including components from
 // your design system.
 
+// Utility function to generate slug from heading text
+function generateSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single
+    .trim()
+}
+
 const components: MDXComponents = {
   // Custom components
   ModalityBadge,
@@ -18,51 +28,67 @@ const components: MDXComponents = {
   AccordionContent,
   
   // Customize built-in components with Tailwind styling
-  h1: ({ children, className, ...props }) => (
-    <h1 
-      className={cn(
-        "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-6",
-        "bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent",
-        className
-      )} 
-      {...props}
-    >
-      {children}
-    </h1>
-  ),
-  h2: ({ children, className, ...props }) => (
-    <h2 
-      className={cn(
-        "scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 mt-8 mb-4",
-        className
-      )} 
-      {...props}
-    >
-      {children}
-    </h2>
-  ),
-  h3: ({ children, className, ...props }) => (
-    <h3 
-      className={cn(
-        "scroll-m-20 text-2xl font-semibold tracking-tight mt-6 mb-3",
-        className
-      )} 
-      {...props}
-    >
-      {children}
-    </h3>
-  ),
-  h4: ({ children, className, ...props }) => (
-    <h4 
-      className={cn(
-        "scroll-m-20 text-xl font-semibold tracking-tight mt-4 mb-2",
-        className
-      )} 
-      {...props}
-    >
-      {children}
-    </h4>
-  ),
+  h1: ({ children, className, id, ...props }) => {
+    const headingId = id || (typeof children === 'string' ? generateSlug(children) : undefined)
+    return (
+      <h1 
+        id={headingId}
+        className={cn(
+          "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-6",
+          "bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent",
+          className
+        )} 
+        {...props}
+      >
+        {children}
+      </h1>
+    )
+  },
+  h2: ({ children, className, id, ...props }) => {
+    const headingId = id || (typeof children === 'string' ? generateSlug(children) : undefined)
+    return (
+      <h2 
+        id={headingId}
+        className={cn(
+          "scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 mt-8 mb-4",
+          className
+        )} 
+        {...props}
+      >
+        {children}
+      </h2>
+    )
+  },
+  h3: ({ children, className, id, ...props }) => {
+    const headingId = id || (typeof children === 'string' ? generateSlug(children) : undefined)
+    return (
+      <h3 
+        id={headingId}
+        className={cn(
+          "scroll-m-20 text-2xl font-semibold tracking-tight mt-6 mb-3",
+          className
+        )} 
+        {...props}
+      >
+        {children}
+      </h3>
+    )
+  },
+  h4: ({ children, className, id, ...props }) => {
+    const headingId = id || (typeof children === 'string' ? generateSlug(children) : undefined)
+    return (
+      <h4 
+        id={headingId}
+        className={cn(
+          "scroll-m-20 text-xl font-semibold tracking-tight mt-4 mb-2",
+          className
+        )} 
+        {...props}
+      >
+        {children}
+      </h4>
+    )
+  },
   p: ({ children, className, ...props }) => (
     <p 
       className={cn(
