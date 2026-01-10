@@ -22,11 +22,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/contribute',
-        destination: '/',
-        permanent: true,
-      },
-      {
         source: '/categories',
         destination: '/',
         permanent: true,

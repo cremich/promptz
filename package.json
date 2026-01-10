@@ -1,7 +1,14 @@
 {
   "name": "promptz.dev",
-  "version": "0.1.0",
+  "version": "2.1.0",
   "private": true,
+  "repository": {
+    "url": "https://github.com/cremich/promptz"
+  },
+  "author": {
+    "email": "christian.bonzelet@gmail.com",
+    "name": "Christian Bonzelet"
+  },
   "scripts": {
     "dev": "next dev",
     "prebuild": "npx tsx scripts/generate-library-data.ts && npx tsx scripts/build-search-index.ts",

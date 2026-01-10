@@ -14,6 +14,7 @@ const footerLinks = {
     { href: '/hooks', label: 'Hooks' },
   ],
   community: [
+    { href: '/contribute', label: 'Contribute' },
     { href: 'https://github.com/cremich/promptz', label: 'GitHub', external: true },
     { href: 'https://github.com/cremich/promptz/issues', label: 'Issues', external: true },
     { href: 'https://github.com/cremich/promptz/discussions', label: 'Discussions', external: true },
@@ -96,14 +97,23 @@ export function Footer({ className }: { className?: string }) {
             <ul className="space-y-2">
               {footerLinks.community.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {link.label}
-                  </a>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

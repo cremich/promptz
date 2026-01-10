@@ -41,16 +41,12 @@ export function Hero() {
             <Button
               asChild
               size="lg"
-              className="h-11 bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] px-6 text-white hover:opacity-90"
+              className="h-12 bg-gradient-to-r from-[#4F46E5] via-[#7C3AED] to-[#06B6D4] px-8 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 font-semibold"
             >
-              <a
-                href="https://github.com/cremich/promptz.lib/blob/main/CONTRIBUTING.md"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <Link href="/contribute">
                 Contribute
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
+              </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="h-11 px-6">
               <Link href="/library">Browse Library</Link>
