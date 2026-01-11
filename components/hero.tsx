@@ -49,7 +49,7 @@ export function Hero() {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="h-11 px-6">
-              <Link href="/library">Browse Library</Link>
+              <Link href="/library">Browse Libraries</Link>
             </Button>
           </div>
         </div>

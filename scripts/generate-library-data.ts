@@ -1,5 +1,7 @@
 #!/usr/bin/env tsx
 
+/* eslint-disable max-lines */
+
 /**
  * Build-time script to generate static JSON data for all content types
  * Replaces runtime content service with pre-generated static data

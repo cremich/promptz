@@ -2,114 +2,150 @@ import { Suspense } from 'react'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { PageHeader, Emphasis } from '@/components/page-header'
-import { Grid, GridSkeleton } from '@/components/grid'
-import { getAllContent } from '@/lib/library'
-import { getAllPrompts } from '@/lib/prompts'
-import { getAllAgents } from '@/lib/agents'
-import { getAllPowers } from '@/lib/powers'
-import { getAllSteering } from '@/lib/steering'
-import { getAllHooks } from '@/lib/hooks'
+import { LibraryCard } from '@/components/library-card'
+import { getAllLibraries } from '@/lib/libraries'
+import { Package, Users, FileText } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Browse Library | Promptz.dev',
+  title: 'Libraries | Promptz.dev',
   description:
-    'Explore the complete collection of prompts, powers, agents, steering documents, and hooks for Kiro and Amazon Q Developer.',
+    'Discover AI development libraries with prompts, powers, agents, steering documents, and hooks for Kiro and Amazon Q Developer.',
   keywords: [
-    'AI prompts',
+    'AI libraries',
     'Kiro powers',
-    'custom agents',
-    'steering documents',
-    'agent hooks',
-    'AI-assisted development',
+    'prompt libraries',
+    'AI development resources',
+    'community libraries',
+    'git submodules',
   ],
   openGraph: {
-    title: 'Browse Library | Promptz.dev',
+    title: 'Libraries | Promptz.dev',
     description:
-      'Explore the complete collection of AI development resources for Kiro.',
+      'Discover AI development libraries for Kiro and Amazon Q Developer.',
     type: 'website',
   },
 }
 
-interface ContentStats {
-  prompts: number
-  agents: number
-  powers: number
-  steering: number
-  hooks: number
-  total: number
-}
-
-async function getContentStats(): Promise<ContentStats> {
-  const [prompts, agents, powers, steering, hooks] = await Promise.all([
-    getAllPrompts(),
-    getAllAgents(),
-    getAllPowers(),
-    getAllSteering(),
-    getAllHooks(),
-  ])
-
-  return {
-    prompts: prompts.length,
-    agents: agents.length,
-    powers: powers.length,
-    steering: steering.length,
-    hooks: hooks.length,
-    total:
-      prompts.length +
-      agents.length +
-      powers.length +
-      steering.length +
-      hooks.length,
+interface LibraryStats {
+  totalLibraries: number
+  totalContent: number
+  categories: {
+    official: number
+    community: number
+    specialized: number
   }
 }
 
-const contentTypes = [
-  { href: '/prompts', label: 'Prompts', key: 'prompts' as const },
-  { href: '/agents', label: 'Agents', key: 'agents' as const },
-  { href: '/powers', label: 'Powers', key: 'powers' as const },
-  { href: '/steering', label: 'Steering', key: 'steering' as const },
-  { href: '/hooks', label: 'Hooks', key: 'hooks' as const },
+async function getLibraryStats(): Promise<LibraryStats> {
+  const libraries = await getAllLibraries()
+  
+  const stats: LibraryStats = {
+    totalLibraries: libraries.length,
+    totalContent: 0,
+    categories: {
+      official: 0,
+      community: 0,
+      specialized: 0
+    }
+  }
+  
+  for (const library of libraries) {
+    stats.totalContent += library.contentStats.total
+    stats.categories[library.category]++
+  }
+  
+  return stats
+}
+
+const quickLinks = [
+  { href: '/prompts', label: 'Browse Prompts', icon: FileText },
+  { href: '/agents', label: 'Browse Agents', icon: Users },
+  { href: '/powers', label: 'Browse Powers', icon: Package },
 ]
 
-function LibraryLoading() {
-  return <GridSkeleton count={12} />
-}
-
-async function LibraryContent() {
-  const content = await getAllContent()
-  return <Grid items={content} />
-}
-
-async function ContentTypeNav() {
-  const stats = await getContentStats()
-
+function LibrariesLoading() {
   return (
-    <div className="flex flex-wrap gap-2">
-      {contentTypes.map((type) => (
-        <Link
-          key={type.href}
-          href={type.href}
-          className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/50 px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-        >
-          {type.label}
-          <span className="rounded-full bg-muted px-2 py-0.5 text-xs">
-            {stats[type.key]}
-          </span>
-        </Link>
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="h-64 animate-pulse rounded-lg bg-muted" />
       ))}
     </div>
   )
 }
 
-function ContentTypeNavSkeleton() {
+async function LibrariesGrid() {
+  const libraries = await getAllLibraries()
+  
+  if (libraries.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <Package className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+        <h3 className="text-lg font-semibold mb-2">No Libraries Found</h3>
+        <p className="text-muted-foreground">
+          No libraries are currently available. Check back later.
+        </p>
+      </div>
+    )
+  }
+  
   return (
-    <div className="flex flex-wrap gap-2">
-      {contentTypes.map((type) => (
-        <div
-          key={type.href}
-          className="inline-flex h-10 w-28 animate-pulse rounded-full bg-muted"
-        />
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {libraries.map((library) => (
+        <LibraryCard key={library.id} library={library} />
       ))}
+    </div>
+  )
+}
+
+async function LibraryStatsBar() {
+  const stats = await getLibraryStats()
+  
+  return (
+    <div className="flex flex-wrap gap-4 items-center justify-between">
+      <div className="flex flex-wrap gap-4">
+        <div className="flex items-center gap-2 text-sm">
+          <Package className="h-4 w-4 text-muted-foreground" />
+          <span className="font-medium">{stats.totalLibraries}</span>
+          <span className="text-muted-foreground">Libraries</span>
+        </div>
+        <div className="flex items-center gap-2 text-sm">
+          <FileText className="h-4 w-4 text-muted-foreground" />
+          <span className="font-medium">{stats.totalContent}</span>
+          <span className="text-muted-foreground">Total Items</span>
+        </div>
+      </div>
+      
+      <div className="flex flex-wrap gap-2">
+        {quickLinks.map((link) => {
+          const Icon = link.icon
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/50 px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            >
+              <Icon className="h-3.5 w-3.5" />
+              {link.label}
+            </Link>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function LibraryStatsBarSkeleton() {
+  return (
+    <div className="flex flex-wrap gap-4 items-center justify-between">
+      <div className="flex flex-wrap gap-4">
+        <div className="h-5 w-24 animate-pulse rounded bg-muted" />
+        <div className="h-5 w-28 animate-pulse rounded bg-muted" />
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {quickLinks.map((link) => (
+          <div key={link.href} className="h-8 w-32 animate-pulse rounded-full bg-muted" />
+        ))}
+      </div>
     </div>
   )
 }
@@ -118,18 +154,18 @@ export default function LibraryPage() {
   return (
     <>
       <PageHeader
-        title={<>Browse the <Emphasis>Community Library</Emphasis></>}
-        description="Find battle-tested prompts, powers, agents, and steering documents shared by the Kiro community. Copy, customize, and ship faster."
-        showLibraryLegend={true}
+        title={<>Discover AI Development <Emphasis>Libraries</Emphasis></>}
+        description="Explore curated libraries of prompts, powers, agents, and steering documents from the Kiro community. Each library is maintained as an independent repository with its own focus and expertise."
+        showLibraryLegend={false}
       >
-        <Suspense fallback={<ContentTypeNavSkeleton />}>
-          <ContentTypeNav />
+        <Suspense fallback={<LibraryStatsBarSkeleton />}>
+          <LibraryStatsBar />
         </Suspense>
       </PageHeader>
 
       <section className="container mx-auto max-w-7xl px-6 py-12">
-        <Suspense fallback={<LibraryLoading />}>
-          <LibraryContent />
+        <Suspense fallback={<LibrariesLoading />}>
+          <LibrariesGrid />
         </Suspense>
       </section>
     </>

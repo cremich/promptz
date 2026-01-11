@@ -4,10 +4,12 @@ import type { ContentItem } from '@/lib/types/content'
 import { getLibraryName } from '@/lib/library'
 
 interface GitHubLinkProps {
-  content: ContentItem
+  content?: ContentItem
+  url?: string
   className?: string
   variant?: 'default' | 'outline' | 'ghost'
   size?: 'default' | 'sm' | 'lg' | 'icon'
+  showLabel?: boolean
 }
 
 function GitHubIcon({ className }: { className?: string }) {
@@ -42,17 +44,29 @@ function constructGitHubUrl(content: ContentItem): string {
 
 export function GitHubLink({
   content,
+  url,
   className,
   variant = 'outline',
   size = 'sm',
+  showLabel = true,
 }: GitHubLinkProps) {
-  const githubUrl = constructGitHubUrl(content)
+  const githubUrl = url || (content ? constructGitHubUrl(content) : '#')
+
+  if (size === 'icon') {
+    return (
+      <Button variant={variant} size={size} className={className} asChild>
+        <a href={githubUrl} target="_blank" rel="noopener noreferrer" aria-label="View on GitHub">
+          <GitHubIcon className="h-4 w-4" />
+        </a>
+      </Button>
+    )
+  }
 
   return (
     <Button variant={variant} size={size} className={className} asChild>
       <a href={githubUrl} target="_blank" rel="noopener noreferrer">
         <GitHubIcon className="h-4 w-4" />
-        View on GitHub
+        {showLabel && 'View on GitHub'}
         <ExternalLink className="h-3 w-3" />
       </a>
     </Button>

@@ -41,10 +41,10 @@ describe('Hero', () => {
     expect(contributeLink).toHaveAttribute('href', '/contribute')
   })
 
-  it('renders Browse Library CTA with internal link', () => {
+  it('renders Browse Libraries CTA with internal link', () => {
     render(<Hero />)
     
-    const browseLink = screen.getByRole('link', { name: 'Browse Library' })
+    const browseLink = screen.getByRole('link', { name: 'Browse Libraries' })
     expect(browseLink).toHaveAttribute('href', '/library')
   })
 
