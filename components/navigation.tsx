@@ -9,7 +9,6 @@ import { cn } from '@/lib/utils'
 import { useState } from 'react'
 
 const navLinks = [
-  { href: '/library', label: 'Library' },
   { href: '/prompts', label: 'Prompts' },
   { href: '/agents', label: 'Agents' },
   { href: '/powers', label: 'Powers' },
