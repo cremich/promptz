@@ -6,48 +6,68 @@
 promptz.dev/
 ├── app/                    # Next.js App Router pages and layouts
 │   ├── agents/             # Custom agents listing and detail pages
-│   │   ├── [slug]/         # Dynamic agent detail pages
+│   │   ├── [id]/           # Dynamic agent detail pages
 │   │   └── page.tsx        # Agents listing page
+│   ├── contribute/         # Contribution guidelines and information
+│   │   ├── layout.tsx      # Contribute section layout
+│   │   └── page.mdx        # Contribution guide (MDX format)
+│   ├── faq/                # Frequently asked questions
+│   │   ├── layout.tsx      # FAQ section layout
+│   │   └── page.mdx        # FAQ content (MDX format)
 │   ├── hooks/              # Agent hooks listing and detail pages
-│   │   ├── [slug]/         # Dynamic hook detail pages
+│   │   ├── [id]/           # Dynamic hook detail pages
 │   │   └── page.tsx        # Hooks listing page
-│   ├── library/            # Unified library browsing page
-│   │   └── page.tsx        # All content types listing with filters
+│   ├── library/            # Library browsing and detail pages
+│   │   ├── [id]/           # Dynamic library detail pages
+│   │   └── page.tsx        # All libraries listing with statistics
 │   ├── powers/             # Kiro powers listing and detail pages
-│   │   ├── [slug]/         # Dynamic power detail pages
+│   │   ├── [id]/           # Dynamic power detail pages
 │   │   └── page.tsx        # Powers listing page
+│   ├── privacy/            # Privacy policy and legal information
+│   │   ├── layout.tsx      # Privacy section layout
+│   │   └── page.mdx        # Privacy policy (MDX format)
 │   ├── prompts/            # Prompts listing and detail pages
-│   │   ├── [slug]/         # Dynamic prompt detail pages
+│   │   ├── [id]/           # Dynamic prompt detail pages
 │   │   └── page.tsx        # Prompts listing page
 │   ├── steering/           # Steering documents listing and detail pages
-│   │   ├── [slug]/         # Dynamic steering detail pages
+│   │   ├── [id]/           # Dynamic steering detail pages
 │   │   └── page.tsx        # Steering listing page
 │   ├── layout.tsx          # Root layout with fonts and metadata
 │   ├── page.tsx            # Homepage with latest content sections
 │   ├── globals.css         # Global styles with Tailwind imports
-│   └── favicon.ico         # Site favicon
+│   └── sitemap.ts          # Dynamic sitemap generation
 ├── components/             # React components
 │   ├── ui/                 # Shadcn UI components
 │   ├── search/             # Search modal components
-│   ├── *-card.tsx          # Content type-specific card components
-│   ├── compact-card.tsx    # Unified compact card with type gradients
-│   ├── navigation.tsx      # Sticky header with nav links and search
-│   ├── hero.tsx            # Landing page hero section
-│   ├── footer.tsx          # Site footer with links and branding
-│   ├── pixel-particles.tsx # Canvas-based animated particle effect
+│   ├── animations/         # Animation components
 │   ├── badge-container.tsx # Badge grouping utility component
+│   ├── compact-card.tsx    # Unified compact card with type gradients
 │   ├── content-date.tsx    # Date formatting and display component
 │   ├── content-header.tsx  # Standardized content headers
 │   ├── content-type-badge.tsx # Content type indicator badges
 │   ├── contributor-info.tsx # Author and git information display
+│   ├── detail-layout.tsx   # Layout component for detail pages
+│   ├── footer.tsx          # Site footer with links and branding
 │   ├── git-hash.tsx        # Git commit hash display component
 │   ├── github-link.tsx     # Repository link component
 │   ├── grid.tsx            # Responsive grid with skeleton states
+│   ├── hero.tsx            # Landing page hero section
 │   ├── hook-trigger-badge.tsx # Hook trigger type display
 │   ├── keywords.tsx        # Keyword tag display component
-│   └── library-badge.tsx   # Library source indicator badges
+│   ├── library-badge.tsx   # Library source indicator badges
+│   ├── library-card.tsx    # Library display card with statistics
+│   ├── modality-badge.tsx  # Modality indicator badges
+│   ├── navigation.tsx      # Sticky header with nav links and search
+│   ├── page-header.tsx     # Enhanced page headers with library legend
+│   ├── search-button.tsx   # Search trigger button
+│   └── search-provider.tsx # Search context provider
 ├── data/                   # Generated static JSON files (build output)
 │   ├── agents.json         # Pre-generated agents data
+│   ├── hooks.json          # Pre-generated hooks data
+│   ├── powers.json         # Pre-generated powers data
+│   ├── prompts.json        # Pre-generated prompts data
+│   ├── search-index.json   # Pre-generated search index for Fuse.js
+│   └── steering.json       # Pre-generated steering data
 │   ├── hooks.json          # Pre-generated hooks data
 │   ├── powers.json         # Pre-generated powers data
 │   ├── prompts.json        # Pre-generated prompts data
@@ -68,7 +88,10 @@ promptz.dev/
 │   ├── steering.ts         # Steering data loading service
 │   └── utils.ts            # General utility functions
 ├── libraries/              # Git submodules for content libraries
+│   ├── kiro-best-practices/ # Best practices from AWS Hero contributors
+│   ├── kiro-for-product/   # Product-focused Kiro resources (local, not in .gitmodules)
 │   ├── kiro-powers/        # Official Kiro powers library
+│   ├── product-teams/      # AWS Samples for product teams
 │   └── promptz/            # Community prompts and resources
 ├── scripts/                # Build-time scripts
 │   ├── generate-library-data.ts # Main build-time data generation script
@@ -93,35 +116,63 @@ promptz.dev/
 - **lib/formatter/git.ts**: Git information formatting utilities
 - **lib/formatter/slug.ts**: URL slug generation utilities
 - **lib/library.ts**: Library name extraction and unified content aggregation utilities
+- **lib/libraries.ts**: Library metadata management and statistics service
 - **lib/search.ts**: Search utilities, validation, and error handling
 - **lib/{type}.ts**: Type-specific data loading services (prompts.ts, agents.ts, etc.)
 
 ### Build Scripts Structure
-- **scripts/generate-library-data.ts**: Main build-time data generation script
-- **scripts/library-file-parser.ts**: File system utilities and parsing functions
-- **scripts/metadata-extractor.ts**: Content-specific metadata extraction logic
+- **scripts/generate-library-data.ts**: Main build-time data generation script with multi-library support
+- **scripts/library-file-parser.ts**: File system utilities and parsing functions for multiple library structures
+- **scripts/metadata-extractor.ts**: Content-specific metadata extraction logic with library attribution
 
 ### Content Service Features
+- **Multi-library processing**: Support for multiple git submodules with different structures
 - **Build-time processing**: All content processed during build for optimal performance
 - **Static data generation**: Pre-compiled JSON files in `data/` directory
+- **Library metadata extraction**: Automatic parsing of .gitmodules and repository information
 - **Intelligent metadata extraction**: Multi-source fallback strategy (frontmatter → git → placeholders)
 - **Git integration**: Author attribution, commit history, and content lifecycle tracking
 - **Error resilience**: Graceful handling of missing files and corrupted data during build
 - **Content validation**: Filtering of incomplete or invalid content during build process
+- **Library categorization**: Automatic categorization (official, community, specialized) based on repository ownership
 
 ### Content Type System
 ```typescript
 // Union type for type-safe operations across all content
 type ContentItem = Prompt | Agent | Power | SteeringDocument | Hook
 
-// Base interface with git integration
+// Base interface with git integration and library attribution
 interface BaseContent {
   id: string           // Path-based ID generation
   title: string        // From frontmatter or filename
   author: string       // From frontmatter or git history
   date: string         // From frontmatter or git commits
   path: string         // File system path
+  library: string      // Library name for attribution
   git?: GitInfo        // Optional git metadata
+}
+
+// Library information interface
+interface LibraryInfo {
+  id: string
+  name: string
+  displayName: string
+  description: string
+  repositoryUrl: string
+  owner: string
+  path: string
+  readme?: string
+  license?: string
+  contentStats: {
+    prompts: number
+    agents: number
+    powers: number
+    steering: number
+    hooks: number
+    total: number
+  }
+  lastUpdated?: string
+  category: 'official' | 'community' | 'individual'
 }
 
 // Search index types for Fuse.js integration
@@ -144,6 +195,7 @@ interface SearchIndex {
     generatedAt: string
     totalItems: number
     itemsByType: Record<string, number>
+    itemsByLibrary: Record<string, number>
   }
 }
 ```
@@ -158,16 +210,28 @@ interface SearchIndex {
 - **app/favicon.ico**: Site favicon and branding assets
 
 ### Content Type Pages
-- **app/prompts/page.tsx**: Prompts listing with static data loading
-- **app/prompts/[slug]/page.tsx**: Dynamic prompt detail pages with slug routing
-- **app/agents/page.tsx**: Custom agents listing with metadata display
-- **app/agents/[slug]/page.tsx**: Dynamic agent detail pages with slug routing
+- **app/prompts/page.tsx**: Prompts listing with static data loading and library legend
+- **app/prompts/[id]/page.tsx**: Dynamic prompt detail pages with ID-based routing
+- **app/agents/page.tsx**: Custom agents listing with metadata display and library legend
+- **app/agents/[id]/page.tsx**: Dynamic agent detail pages with ID-based routing
 - **app/powers/page.tsx**: Kiro powers listing with MCP configuration info
-- **app/powers/[slug]/page.tsx**: Dynamic power detail pages with slug routing
-- **app/steering/page.tsx**: Steering documents listing with category filtering
-- **app/steering/[slug]/page.tsx**: Dynamic steering detail pages with slug routing
-- **app/hooks/page.tsx**: Agent hooks listing with trigger information
-- **app/hooks/[slug]/page.tsx**: Dynamic hook detail pages with slug routing
+- **app/powers/[id]/page.tsx**: Dynamic power detail pages with ID-based routing
+- **app/steering/page.tsx**: Steering documents listing with category filtering and library legend
+- **app/steering/[id]/page.tsx**: Dynamic steering detail pages with ID-based routing
+- **app/hooks/page.tsx**: Agent hooks listing with trigger information and library legend
+- **app/hooks/[id]/page.tsx**: Dynamic hook detail pages with ID-based routing
+
+### Library Pages
+- **app/library/page.tsx**: Library browsing page with all libraries, statistics, and quick links
+- **app/library/[id]/page.tsx**: Dynamic library detail pages with comprehensive metadata and content statistics
+
+### Static Content Pages (MDX)
+- **app/contribute/page.mdx**: Contribution guidelines and information
+- **app/faq/page.mdx**: Frequently asked questions
+- **app/privacy/page.mdx**: Privacy policy and legal information
+- **app/contribute/layout.tsx**: Layout for contribute section
+- **app/faq/layout.tsx**: Layout for FAQ section
+- **app/privacy/layout.tsx**: Layout for privacy section
 
 ### Testing Interface
 - **Removed**: Test content interface has been removed in favor of build-time validation
@@ -191,23 +255,25 @@ interface SearchIndex {
 - **components/power-card.tsx**: Power card with keywords and MCP info
 - **components/steering-card.tsx**: Steering document card with category
 - **components/hook-card.tsx**: Hook card with trigger information
+- **components/library-card.tsx**: Library display card with statistics and metadata
 - **components/compact-card.tsx**: Unified compact card with type-specific gradient backgrounds
 - **Reusable Content Components**:
   - **components/content-header.tsx**: Standardized content headers with title and metadata
   - **components/content-date.tsx**: Date formatting and display component
   - **components/contributor-info.tsx**: Author and git information display
   - **components/git-hash.tsx**: Git commit hash display component
-  - **components/github-link.tsx**: Repository link component
+  - **components/github-link.tsx**: Repository link component with multi-library support
   - **components/keywords.tsx**: Keyword tag display component
   - **components/badge-container.tsx**: Badge grouping utility component
   - **components/content-type-badge.tsx**: Content type indicator badges
-  - **components/library-badge.tsx**: Library source indicator badges
+  - **components/library-badge.tsx**: Library source indicator badges with category-specific styling
   - **components/hook-trigger-badge.tsx**: Hook trigger type display
 - **Layout Components**:
   - **components/navigation.tsx**: Sticky header with logo, nav links, and search button
-  - **components/hero.tsx**: Landing page hero with gradient background, badge, and CTAs
+  - **components/hero.tsx**: Landing page hero with gradient background, badge, and CTAs (updated to "Browse Libraries")
   - **components/footer.tsx**: Site footer with resource links, community links, and branding
   - **components/pixel-particles.tsx**: Canvas-based animated pixel particle effect
+  - **components/page-header.tsx**: Enhanced page headers with library legend support
 - **Search Components** (`components/search/`):
   - **components/search-provider.tsx**: React context for global search state
   - **components/search-button.tsx**: Search trigger with keyboard shortcut display
@@ -228,11 +294,16 @@ interface SearchIndex {
 
 ## Libraries Directory (Git Submodules)
 
+### Multi-Library Ecosystem
+The platform now supports five specialized libraries, with four managed as git submodules and one as a local directory:
+
 ### kiro-powers/
-Collection of Kiro powers for enhanced AI agent capabilities:
+Official Kiro powers for enhanced AI agent capabilities:
 - **Individual power directories**: Each power has its own folder with POWER.md, mcp.json, and steering files
 - **Power structure**: POWER.md (documentation), mcp.json (MCP server configuration), steering/ (guidance files)
 - **Examples**: stripe/, aws-infrastructure-as-code/, terraform/, datadog/
+- **Category**: Official
+- **Status**: Git submodule
 
 ### promptz/
 Community-driven library for AI development resources:
@@ -241,6 +312,32 @@ Community-driven library for AI development resources:
 - **powers/**: Additional power definitions and configurations
 - **prompts/**: AI instruction templates for development tasks
 - **steering/**: Shared steering documents for development standards
+- **Category**: Community
+- **Status**: Git submodule
+
+### kiro-best-practices/
+Best practices and patterns from AWS Hero contributors:
+- **hooks/**: 17+ agent hooks for development automation
+- **steering/**: 11+ steering documents with development standards
+- **Structure**: Uses .kiro directory structure for organization
+- **Focus**: Professional development patterns and best practices
+- **Category**: Community
+- **Status**: Git submodule
+
+### product-teams/
+Specialized resources for product development workflows:
+- **prompts/**: Product-focused AI instructions and templates
+- **agents/**: Product management and development agents
+- **Focus**: Product team workflows and development processes
+- **Source**: AWS Samples repository
+- **Category**: Specialized
+- **Status**: Git submodule
+
+### kiro-for-product/
+Product-focused Kiro resources and documentation:
+- **Focus**: Product-specific Kiro capabilities and workflows
+- **Category**: Official
+- **Status**: Local directory (not in .gitmodules)
 
 ## Configuration Files Location
 

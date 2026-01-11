@@ -2,7 +2,7 @@
 
 ## Core Purpose
 
-Promptz.dev is a comprehensive library and community platform for AI-assisted development, serving as the central hub for developers using Kiro, Kiro CLI, and Amazon Q Developer. The platform enables creation, discovery, and sharing of AI development resources across the entire software development lifecycle.
+Promptz.dev is a comprehensive library and community platform for AI-assisted development, serving as the central hub for developers using Kiro, Kiro CLI, and Amazon Q Developer. The platform enables creation, discovery, and sharing of AI development resources across the entire software development lifecycle through a multi-library ecosystem.
 
 ## Primary Content Types
 
@@ -11,6 +11,14 @@ Promptz.dev is a comprehensive library and community platform for AI-assisted de
 - **Custom Agents**: Specialized AI assistants for specific workflows and development processes
 - **Agent Hooks**: Automation tools that execute predefined agent actions when specific IDE events occur
 - **Kiro Powers**: Packaged tools, workflows, and best practices that Kiro can activate on-demand
+
+## Multi-Library Ecosystem
+
+The platform now supports multiple specialized libraries as git submodules, each serving different domains and audiences:
+
+- **Official Libraries**: Core Kiro resources maintained by the Kiro team
+- **Community Libraries**: Community-contributed resources from developers and practitioners
+- **Individual Libraries**: Domain-specific resources for particular use cases (product teams, AWS, etc.)
 
 ## Target Audience
 
@@ -21,14 +29,18 @@ Promptz.dev is a comprehensive library and community platform for AI-assisted de
 
 ## Key Features
 
-- **Git-based content management** through libraries added as git submodules
+- **Multi-library ecosystem** with specialized git submodules for different domains and use cases
+- **Dynamic library browsing** with dedicated library detail pages and comprehensive metadata
+- **Library categorization** (official, community, specialized) with visual indicators and filtering
+- **Git-based content management** through libraries added as git submodules with independent versioning
 - **Build-time data generation** with pre-compiled JSON files for optimal performance
 - **Rich metadata extraction** from YAML frontmatter, JSON configs, and git history during build
 - **Git integration** providing author attribution, commit history, and content lifecycle tracking
 - **Type-safe content processing** using union types for cross-content operations
-- **Dynamic detail pages** with slug-based routing for all content types
+- **Dynamic detail pages** with slug-based routing for all content types and libraries
 - **Global search functionality** with fuzzy matching across all content types using Fuse.js
 - **Efficient content discovery** across multiple libraries with static data serving
+- **Library statistics and analytics** showing content distribution and contributor activity
 - **Community analytics** showing contributor activity, content evolution, and collaboration patterns
 - **Graceful error handling** ensuring platform stability despite missing or corrupted content
 - **Performance optimization** through build-time processing and static data generation
@@ -38,11 +50,18 @@ Promptz.dev is a comprehensive library and community platform for AI-assisted de
 
 ## Content Organization Strategy
 
-- **Libraries are managed as git submodules** for independent versioning and contribution
-- **Each library focuses on specific domains** or use cases (official powers vs community content)
+- **Multi-library architecture** with each library managed as an independent git submodule
+- **Library specialization** with each library focusing on specific domains, audiences, or use cases:
+  - **kiro-powers**: Official Kiro powers and tools
+  - **promptz**: Community prompts and general AI development resources
+  - **kiro-best-practices**: Best practices and patterns from AWS Hero contributors
+  - **product-teams**: Specialized resources for product development workflows
+  - **kiro-for-product**: Product-focused Kiro resources and documentation
+- **Independent versioning** allowing libraries to evolve at their own pace
 - **Content is organized by type** (prompts, steering, agents, hooks, powers) with consistent interfaces
 - **Build-time processing** generates static JSON files for optimal performance and reliability
-- **Dynamic routing** enables detailed content pages with slug-based URLs for all content types
+- **Dynamic routing** enables detailed content pages with slug-based URLs for all content types and libraries
+- **Library metadata extraction** from .gitmodules, README files, and repository information
 - **Metadata is intelligently extracted** from multiple sources with fallback strategies:
   - Primary: YAML frontmatter and JSON configuration files
   - Secondary: Git history for author attribution and dates
@@ -68,34 +87,29 @@ Promptz.dev is a comprehensive library and community platform for AI-assisted de
 - **Dark mode first** with light mode alternative
 - **Progressive loading** with skeleton states and Suspense boundaries
 - **Dynamic content pages** with slug-based routing for detailed content views
+- **Dynamic library pages** with individual library detail views and content statistics
+- **Library browsing interface** with categorization and comprehensive metadata display
 - **Global search modal** with keyboard shortcuts (⌘K/Ctrl+K) for quick content discovery
 - **Fuzzy search** with match highlighting and relevance scoring across all content types
 - **Modular component system** with reusable content display components
 - **Fast static data serving** with pre-generated JSON files for optimal performance
 - **Rich metadata display** including git history, contributor information, and content analytics
+- **Library statistics** showing content distribution, contributor activity, and repository information
 - **Accessible UI components** with ARIA labels, semantic HTML, and keyboard navigation
 - **Branded visual identity** with gradient text effects and animated pixel particles
 - **Unified navigation** with sticky header and comprehensive footer
 - **Library browsing page** for exploring all content types with filtering by category
 - **Compact card design** for efficient content preview with type-specific gradient backgrounds
+- **Library legend** showing visual indicators for different library categories and sources
 
 ## Success Metrics
 
-- **Content Quality and Coverage**
-  - Number of active contributors across libraries (tracked via git history)
-  - Content completeness and metadata coverage percentages
-  - Git integration coverage and data quality metrics
-- **Platform Adoption and Usage**
-  - Usage and adoption of shared prompts and steering documents
-  - Integration success with Kiro ecosystem tools
-  - API usage patterns and content discovery metrics
-- **Community Engagement**
-  - Quality and effectiveness of AI-assisted development workflows
-  - Community engagement and collaboration levels
+  - Library diversity and completness
+  - Library browsing and discovery engagement
+  - Community engagement and collaboration levels across multiple libraries
   - Contributor activity patterns and retention rates
-  - Content evolution and update frequency
+  - Content evolution and update frequency per library
+  - Cross-library collaboration and content sharing
 - **Technical Performance**
-  - Content service response times and caching effectiveness
-  - Error rates and graceful degradation success
-  - Build and deployment success rates
   - Core Web Vitals scores and user experience metrics
+  - Library metadata extraction and processing performance
