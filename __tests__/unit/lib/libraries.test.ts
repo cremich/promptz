@@ -26,6 +26,7 @@ jest.mock('@/lib/hooks', () => ({
   getAllHooks: jest.fn(() => Promise.resolve([])),
 }))
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const mockReadFile = require('fs/promises').readFile as jest.MockedFunction<typeof import('fs/promises').readFile>
 
 describe('Libraries Service', () => {
@@ -109,7 +110,7 @@ describe('Libraries Service', () => {
       expect(bestPractices?.owner).toBe('awsdataarchitect')
       
       const productTeams = libraries.find(lib => lib.id === 'product-teams')
-      expect(productTeams?.category).toBe('specialized')
+      expect(productTeams?.category).toBe('individual')
       expect(productTeams?.owner).toBe('aws-samples')
     })
 

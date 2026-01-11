@@ -33,7 +33,7 @@ export interface LibraryInfo {
     total: number
   }
   lastUpdated?: string
-  category: 'official' | 'community' | 'specialized'
+  category: 'official' | 'community' | 'individual'
 }
 
 /**
@@ -101,7 +101,7 @@ async function getLibraryReadme(libraryPath: string): Promise<string | undefined
     const readmePath = join(libraryPath, 'README.md')
     const content = await readFile(readmePath, 'utf-8')
     return content
-  } catch (error) {
+  } catch {
     // README not found or not readable
     return undefined
   }
@@ -134,13 +134,13 @@ function extractDescription(readme: string): string {
 /**
  * Determine library category based on owner and name
  */
-function getLibraryCategory(owner: string, name: string): 'official' | 'community' | 'specialized' {
-  if (owner.includes('kirodotdev') || name.includes('kiro-powers')) {
+function getLibraryCategory(owner: string, name: string): 'official' | 'community' | 'individual' {
+  if (owner.includes('kirodotdev') || name.includes('kiro-powers') || name.includes('kiro-for-product')) {
     return 'official'
   }
   
   if (name.includes('product-teams')) {
-    return 'specialized'
+    return 'individual'
   }
   
   return 'community'
@@ -154,7 +154,7 @@ function extractOwner(repositoryUrl: string): string {
     const url = new URL(repositoryUrl.replace('git@github.com:', 'https://github.com/'))
     const pathParts = url.pathname.split('/').filter(part => part)
     return pathParts[0] || 'unknown'
-  } catch (error) {
+  } catch {
     return 'unknown'
   }
 }
@@ -274,12 +274,20 @@ export const getAllLibraries = cache(async (): Promise<LibraryInfo[]> => {
       libraries.push(library)
     }
     
-    // Sort by category (official first) then by name
+    // Sort by total content count (descending), then by category (official first), then by name
     return libraries.sort((a, b) => {
+      // First, sort by content count (most content first)
+      if (a.contentStats.total !== b.contentStats.total) {
+        return b.contentStats.total - a.contentStats.total
+      }
+      
+      // If content count is the same, sort by category
       if (a.category !== b.category) {
-        const categoryOrder = { official: 0, specialized: 1, community: 2 }
+        const categoryOrder = { official: 0, community: 1, individual: 2 }
         return categoryOrder[a.category] - categoryOrder[b.category]
       }
+      
+      // Finally, sort by display name
       return a.displayName.localeCompare(b.displayName)
     })
   } catch {

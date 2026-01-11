@@ -32,7 +32,7 @@ interface LibraryStats {
   categories: {
     official: number
     community: number
-    specialized: number
+    individual: number
   }
 }
 
@@ -45,7 +45,7 @@ async function getLibraryStats(): Promise<LibraryStats> {
     categories: {
       official: 0,
       community: 0,
-      specialized: 0
+      individual: 0
     }
   }
   

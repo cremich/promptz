@@ -61,8 +61,8 @@ const categoryConfig = {
     label: 'Community',
     className: 'bg-violet-500/10 text-violet-600 border-violet-500/20 dark:text-violet-400',
   },
-  specialized: {
-    label: 'Specialized',
+  individual: {
+    label: 'Individual',
     className: 'bg-cyan-500/10 text-cyan-600 border-cyan-500/20 dark:text-cyan-400',
   },
 }
