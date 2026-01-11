@@ -25,6 +25,16 @@ describe('GitHubLink', () => {
     content: 'Test prompt content'
   }
 
+  const mockKiroBestPracticesPrompt: Prompt = {
+    id: 'best-practice-prompt',
+    type: 'prompt',
+    title: 'Best Practice Prompt',
+    author: 'Test Author',
+    date: '2024-01-01',
+    path: 'libraries/kiro-best-practices/prompts/best-practice.md',
+    content: 'Best practice content'
+  }
+
   it('should render GitHub link with correct URL for kiro-powers library', () => {
     render(<GitHubLink content={mockKiroPowersAgent} />)
     
@@ -41,6 +51,14 @@ describe('GitHubLink', () => {
     const link = screen.getByRole('link', { name: /view on github/i })
     expect(link).toBeInTheDocument()
     expect(link).toHaveAttribute('href', 'https://github.com/cremich/promptz.lib/blob/main/prompts/test-prompt.md')
+  })
+
+  it('should render GitHub link with correct URL for kiro-best-practices library', () => {
+    render(<GitHubLink content={mockKiroBestPracticesPrompt} />)
+    
+    const link = screen.getByRole('link', { name: /view on github/i })
+    expect(link).toBeInTheDocument()
+    expect(link).toHaveAttribute('href', 'https://github.com/awsdataarchitect/kiro-best-practices/blob/main/prompts/best-practice.md')
   })
 
   it('should use default GitHub URL for unknown library', () => {

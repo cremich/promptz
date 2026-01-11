@@ -20,10 +20,16 @@ function GitHubIcon({ className }: { className?: string }) {
 
 function constructGitHubUrl(content: ContentItem): string {
   const libraryName = getLibraryName(content.path)
-  const baseUrl =
-    libraryName === 'kiro-powers'
-      ? 'https://github.com/kirodotdev/powers/blob/main'
-      : 'https://github.com/cremich/promptz.lib/blob/main'
+  
+  // Map library names to their GitHub repository URLs
+  const libraryUrlMap: Record<string, string> = {
+    'kiro-powers': 'https://github.com/kirodotdev/powers/blob/main',
+    'promptz': 'https://github.com/cremich/promptz.lib/blob/main',
+    'kiro-best-practices': 'https://github.com/awsdataarchitect/kiro-best-practices/blob/main',
+  }
+  
+  // Default to promptz.lib for unknown libraries
+  const baseUrl = libraryUrlMap[libraryName] || 'https://github.com/cremich/promptz.lib/blob/main'
 
   // Extract relative path from the full path
   const pathParts = content.path.split('/')
