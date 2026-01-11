@@ -40,12 +40,12 @@ describe('Navigation', () => {
   it('renders all navigation links', () => {
     render(<Navigation />)
     
-    expect(screen.getByRole('link', { name: 'Library' })).toHaveAttribute('href', '/library')
     expect(screen.getByRole('link', { name: 'Prompts' })).toHaveAttribute('href', '/prompts')
     expect(screen.getByRole('link', { name: 'Agents' })).toHaveAttribute('href', '/agents')
     expect(screen.getByRole('link', { name: 'Powers' })).toHaveAttribute('href', '/powers')
     expect(screen.getByRole('link', { name: 'Steering' })).toHaveAttribute('href', '/steering')
     expect(screen.getByRole('link', { name: 'Hooks' })).toHaveAttribute('href', '/hooks')
+    expect(screen.getByRole('link', { name: 'Contribute' })).toHaveAttribute('href', '/contribute')
   })
 
   it('renders search button', () => {
