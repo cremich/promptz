@@ -35,6 +35,7 @@ export default function AgentsPage() {
       <PageHeader
         title={<>Custom <Emphasis>Agents</Emphasis> for specialized tasks</>}
         description="Pre-configured AI assistants tailored for specific workflows. From code reviews to infrastructure setup, find an agent that fits your needs."
+        showLibraryLegend={true}
       />
 
       <section className="container mx-auto max-w-7xl px-6 py-12">

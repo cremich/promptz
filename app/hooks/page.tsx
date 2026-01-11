@@ -35,6 +35,7 @@ export default function HooksPage() {
       <PageHeader
         title={<><Emphasis>Hooks</Emphasis> that automate your IDE</>}
         description="Trigger agent actions automatically when you save files, open projects, or hit specific events. Set up once, benefit forever."
+        showLibraryLegend={true}
       />
 
       <section className="container mx-auto max-w-7xl px-6 py-12">

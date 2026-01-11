@@ -35,6 +35,7 @@ export default function PromptsPage() {
       <PageHeader
         title={<><Emphasis>Prompts</Emphasis> that accelerate your workflow</>}
         description="Ready-to-use AI instructions for code generation, testing, documentation, and architecture. Copy a prompt, paste it into Kiro, and get results instantly."
+        showLibraryLegend={true}
       />
 
       <section className="container mx-auto max-w-7xl px-6 py-12">

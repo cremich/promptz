@@ -26,6 +26,7 @@ function constructGitHubUrl(content: ContentItem): string {
     'kiro-powers': 'https://github.com/kirodotdev/powers/blob/main',
     'promptz': 'https://github.com/cremich/promptz.lib/blob/main',
     'kiro-best-practices': 'https://github.com/awsdataarchitect/kiro-best-practices/blob/main',
+    'product-teams': 'https://github.com/aws-samples/sample-kiro-cli-prompts-for-product-teams/blob/main',
   }
   
   // Default to promptz.lib for unknown libraries

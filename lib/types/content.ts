@@ -15,6 +15,7 @@ export interface BaseContent {
   author: string
   date: string
   path: string
+  library: string
   git?: GitInfo
 }
 
@@ -77,6 +78,12 @@ export interface Hook extends BaseContent {
   description: string
   content: string
   trigger?: string
+  enabled?: boolean
+  action?: {
+    type: string
+    prompt?: string
+    [key: string]: unknown
+  }
 }
 
 export interface Library {

@@ -110,3 +110,15 @@ export function generateTitleFromFilename(filename: string): string {
 export function generatePathId(libraryName: string, contentType: string, itemName: string): string {
   return `${libraryName}/${contentType}/${itemName}`
 }
+
+/**
+ * Convert filename to URL-safe slug
+ */
+export function filenameToSlug(filename: string): string {
+  return filename
+    .toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with hyphens
+    .replace(/[^a-z0-9-]/g, '')     // Remove non-alphanumeric characters except hyphens
+    .replace(/-+/g, '-')            // Replace multiple hyphens with single hyphen
+    .replace(/^-|-$/g, '')          // Remove leading/trailing hyphens
+}

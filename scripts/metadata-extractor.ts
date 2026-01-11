@@ -5,6 +5,7 @@ import {
   parseJsonConfig, 
   generateTitleFromFilename,
   generatePathId,
+  filenameToSlug,
   directoryExists,
   getFilesWithExtension
 } from './library-file-parser'
@@ -18,7 +19,7 @@ const PLACEHOLDER_DATE = 'Unknown Date'
  * Get author and date with git fallback
  * Build-time version with git integration
  */
-async function getAuthorAndDate(
+export async function getAuthorAndDate(
   frontmatterData: Record<string, unknown>,
   filePath: string,
   useDirectory = false
@@ -115,6 +116,7 @@ export async function extractPowerMetadata(
       displayName,
       description,
       keywords,
+      library: libraryName,
       author,
       date,
       path: powerPath,
@@ -155,6 +157,7 @@ export async function extractAgentMetadata(
       id: generatePathId(libraryName, 'agents', agentName),
       title,
       description,
+      library: libraryName,
       author,
       date,
       path: agentPath,
@@ -268,13 +271,15 @@ export async function extractPromptMetadata(
     
     // Extract metadata
     const promptName = path.basename(promptFile, '.md')
+    const promptSlug = filenameToSlug(promptName)
     const title = typeof data.title === 'string' ? data.title : generateTitleFromFilename(promptName)
     const category = typeof data.category === 'string' ? data.category : undefined
     
     return {
       type: 'prompt',
-      id: generatePathId(libraryName, 'prompts', promptName),
+      id: generatePathId(libraryName, 'prompts', promptSlug),
       title,
+      library: libraryName,
       author,
       date,
       path: promptPath,
@@ -314,13 +319,15 @@ export async function extractSteeringMetadata(
     
     // Extract metadata
     const steeringName = path.basename(steeringFile, '.md')
+    const steeringSlug = filenameToSlug(steeringName)
     const title = typeof data.title === 'string' ? data.title : generateTitleFromFilename(steeringName)
     const category = typeof data.category === 'string' ? data.category : undefined
     
     return {
       type: 'steering',
-      id: generatePathId(libraryName, 'steering', steeringName),
+      id: generatePathId(libraryName, 'steering', steeringSlug),
       title,
+      library: libraryName,
       author,
       date,
       path: steeringPath,
@@ -366,15 +373,17 @@ export async function extractHookMetadata(
     
     // Extract metadata
     const hookName = path.basename(hookFile, '.kiro.hook')
+    const hookSlug = filenameToSlug(hookName)
     const title = typeof hookData.title === 'string' ? hookData.title : generateTitleFromFilename(hookName)
     const description = typeof hookData.description === 'string' ? hookData.description : ''
     const trigger = typeof hookData.trigger === 'string' ? hookData.trigger : undefined
     
     return {
       type: 'hook',
-      id: generatePathId(libraryName, 'hooks', hookName),
+      id: generatePathId(libraryName, 'hooks', hookSlug),
       title,
       description,
+      library: libraryName,
       author,
       date,
       path: hookPath,

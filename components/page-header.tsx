@@ -53,7 +53,7 @@ function LibraryLegend() {
       <Info className="mt-0.5 h-4 w-4 text-muted-foreground flex-shrink-0" />
       <div className="space-y-2 text-sm">
         <p className="font-medium text-foreground">Library Sources:</p>
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="flex items-center gap-2">
             <Badge 
               variant="outline"
@@ -77,6 +77,30 @@ function LibraryLegend() {
               promptz
             </Badge>
             <span className="text-muted-foreground">Community library</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Badge 
+              variant="outline"
+              className={cn(
+                "text-xs font-medium",
+                "border-green-200 text-green-700 dark:border-green-800 dark:text-green-300"
+              )}
+            >
+              kiro-best-practices
+            </Badge>
+            <span className="text-muted-foreground">Best practices</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Badge 
+              variant="outline"
+              className={cn(
+                "text-xs font-medium",
+                "border-orange-200 text-orange-700 dark:border-orange-800 dark:text-orange-300"
+              )}
+            >
+              product-teams
+            </Badge>
+            <span className="text-muted-foreground">AWS Samples</span>
           </div>
         </div>
       </div>

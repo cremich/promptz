@@ -7,3 +7,6 @@
 [submodule "libraries/kiro-best-practices"]
 	path = libraries/kiro-best-practices
 	url = https://github.com/awsdataarchitect/kiro-best-practices.git
+[submodule "libraries/product-teams"]
+	path = libraries/product-teams
+	url = https://github.com/aws-samples/sample-kiro-cli-prompts-for-product-teams.git

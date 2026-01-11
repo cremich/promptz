@@ -11,14 +11,17 @@ import fs from 'fs/promises'
 import { 
   directoryExists, 
   getDirectories, 
-  getFilesWithExtension 
+  getFilesWithExtension,
+  generatePathId,
+  filenameToSlug
 } from './library-file-parser'
 import {
   extractPowerMetadata,
   extractAgentMetadata,
   extractPromptMetadata,
   extractSteeringMetadata,
-  extractHookMetadata
+  extractHookMetadata,
+  getAuthorAndDate
 } from './metadata-extractor'
 import { compareDatesNewestFirst } from '../lib/formatter/date'
 import type { Library, Power, Agent, Prompt, SteeringDocument, Hook } from '../lib/types/content'
@@ -36,17 +39,19 @@ async function generateLibraryData() {
     // Ensure data directory exists
     await ensureDataDirectory()
     
-    // Read all three libraries
-    const [promptzLibrary, kiroLibrary, kiroBestPracticesLibrary] = await Promise.allSettled([
+    // Read all four libraries
+    const [promptzLibrary, kiroLibrary, kiroBestPracticesLibrary, productTeamsLibrary] = await Promise.allSettled([
       readPromptzLibrary(),
       readKiroLibrary(),
-      readKiroBestPracticesLibrary()
+      readKiroBestPracticesLibrary(),
+      readProductTeamsLibrary()
     ])
     
     // Extract data from successful library reads
     const promptzData = promptzLibrary.status === 'fulfilled' ? promptzLibrary.value : createEmptyLibrary('promptz', '')
     const kiroData = kiroLibrary.status === 'fulfilled' ? kiroLibrary.value : createEmptyLibrary('kiro-powers', '')
     const kiroBestPracticesData = kiroBestPracticesLibrary.status === 'fulfilled' ? kiroBestPracticesLibrary.value : createEmptyLibrary('kiro-best-practices', '')
+    const productTeamsData = productTeamsLibrary.status === 'fulfilled' ? productTeamsLibrary.value : createEmptyLibrary('product-teams', '')
     
     // Log any library read failures
     if (promptzLibrary.status === 'rejected') {
@@ -58,14 +63,17 @@ async function generateLibraryData() {
     if (kiroBestPracticesLibrary.status === 'rejected') {
       console.warn('⚠️  Failed to read kiro-best-practices library:', kiroBestPracticesLibrary.reason)
     }
+    if (productTeamsLibrary.status === 'rejected') {
+      console.warn('⚠️  Failed to read product-teams library:', productTeamsLibrary.reason)
+    }
     
     // Generate JSON files for each content type
     await Promise.all([
-      generatePromptsData(promptzData),
+      generatePromptsData(promptzData, productTeamsData),
       generateAgentsData(promptzData),
       generatePowersData(promptzData, kiroData),
-      generateSteeringData(promptzData, kiroData, kiroBestPracticesData),
-      generateHooksData(promptzData, kiroBestPracticesData)
+      generateSteeringData(promptzData, kiroData, kiroBestPracticesData, productTeamsData),
+      generateHooksData(promptzData, kiroBestPracticesData, productTeamsData)
     ])
     
     console.log('✅ Library data generation completed successfully!')
@@ -93,9 +101,12 @@ async function ensureDataDirectory() {
 /**
  * Generate prompts.json
  */
-async function generatePromptsData(promptzLibrary: Library) {
+async function generatePromptsData(promptzLibrary: Library, productTeamsLibrary: Library) {
   try {
-    const allPrompts = promptzLibrary.prompts
+    const allPrompts = [
+      ...promptzLibrary.prompts,
+      ...productTeamsLibrary.prompts
+    ]
     
     // Sort by creation date (newest first)
     const sortedPrompts = allPrompts.sort((a, b) => {
@@ -166,13 +177,14 @@ async function generatePowersData(promptzLibrary: Library, kiroLibrary: Library)
 /**
  * Generate steering.json
  */
-async function generateSteeringData(promptzLibrary: Library, kiroLibrary: Library, kiroBestPracticesLibrary: Library) {
+async function generateSteeringData(promptzLibrary: Library, kiroLibrary: Library, kiroBestPracticesLibrary: Library, productTeamsLibrary: Library) {
   try {
-    // Combine steering documents from all three libraries
+    // Combine steering documents from all four libraries
     const allSteering = [
       ...promptzLibrary.steering,
       ...kiroLibrary.steering,
-      ...kiroBestPracticesLibrary.steering
+      ...kiroBestPracticesLibrary.steering,
+      ...productTeamsLibrary.steering
     ]
     
     // Sort by creation date (newest first)
@@ -194,12 +206,13 @@ async function generateSteeringData(promptzLibrary: Library, kiroLibrary: Librar
 /**
  * Generate hooks.json
  */
-async function generateHooksData(promptzLibrary: Library, kiroBestPracticesLibrary: Library) {
+async function generateHooksData(promptzLibrary: Library, kiroBestPracticesLibrary: Library, productTeamsLibrary: Library) {
   try {
-    // Combine hooks from both libraries that contain them
+    // Combine hooks from all three libraries that contain them
     const allHooks = [
       ...promptzLibrary.hooks,
-      ...kiroBestPracticesLibrary.hooks
+      ...kiroBestPracticesLibrary.hooks,
+      ...productTeamsLibrary.hooks
     ]
     
     // Sort by creation date (newest first)
@@ -309,6 +322,38 @@ async function readKiroBestPracticesLibrary(): Promise<Library> {
     name: libraryName,
     path: libraryPath,
     prompts: [],
+    agents: [],
+    powers: [],
+    steering,
+    hooks
+  }
+}
+
+/**
+ * Read and parse the Product Teams library
+ * Contains prompts, steering documents, and hooks for product development workflows
+ */
+async function readProductTeamsLibrary(): Promise<Library> {
+  const libraryPath = path.join(LIBRARIES_PATH, 'product-teams')
+  const libraryName = 'product-teams'
+  
+  if (!(await directoryExists(libraryPath))) {
+    console.warn('Product Teams library not found')
+    return createEmptyLibrary(libraryName, libraryPath)
+  }
+  
+  // Product Teams library contains prompts, steering, and hooks
+  const kiroPath = path.join(libraryPath, '.kiro')
+  const [prompts, steering, hooks] = await Promise.all([
+    readPrompts(libraryName, path.join(libraryPath, 'prompts')),
+    readSteering(libraryName, path.join(kiroPath, 'steering')),
+    readHooksFromJson(libraryName, path.join(kiroPath, 'hooks.json'))
+  ])
+  
+  return {
+    name: libraryName,
+    path: libraryPath,
+    prompts,
     agents: [],
     powers: [],
     steering,
@@ -459,6 +504,59 @@ async function readHooks(libraryName: string, hooksPath: string): Promise<Hook[]
   }
   
   return hooks
+}
+
+/**
+ * Read hooks from a JSON configuration file
+ * Used for libraries that store hooks in a single JSON file like product-teams
+ */
+async function readHooksFromJson(libraryName: string, hooksJsonPath: string): Promise<Hook[]> {
+  try {
+    const fileContent = await fs.readFile(hooksJsonPath, 'utf-8')
+    const hooksConfig = JSON.parse(fileContent)
+    
+    if (!hooksConfig.hooks || !Array.isArray(hooksConfig.hooks)) {
+      console.warn(`Invalid hooks.json structure in ${hooksJsonPath}`)
+      return []
+    }
+    
+    // Get git metadata for the JSON file itself
+    const { author, date, git } = await getAuthorAndDate({}, hooksJsonPath)
+    
+    const hooks: Hook[] = []
+    
+    for (const hookConfig of hooksConfig.hooks) {
+      try {
+        // Convert JSON hook config to Hook interface
+        const hookSlug = filenameToSlug(hookConfig.name)
+        const hook: Hook = {
+          id: generatePathId(libraryName, 'hooks', hookSlug),
+          type: 'hook',
+          title: hookConfig.name,
+          description: hookConfig.description || '',
+          content: hookConfig.action?.prompt || JSON.stringify(hookConfig, null, 2),
+          library: libraryName,
+          path: hooksJsonPath,
+          author,
+          date,
+          trigger: hookConfig.trigger?.type || 'manual',
+          enabled: hookConfig.enabled !== false,
+          action: hookConfig.action || { type: 'agentPrompt', prompt: '' },
+          git
+        }
+        
+        hooks.push(hook)
+      } catch (error) {
+        console.warn(`⚠️  Error processing hook config ${hookConfig.name}:`, error)
+        // Continue processing other hooks
+      }
+    }
+    
+    return hooks
+  } catch (error) {
+    console.warn(`⚠️  Error reading hooks JSON file ${hooksJsonPath}:`, error)
+    return []
+  }
 }
 
 /**

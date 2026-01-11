@@ -30,6 +30,16 @@ function getLibraryBadgeVariant(libraryName: string): {
         variant: 'outline',
         className: 'border-purple-200 text-purple-700 dark:border-purple-800 dark:text-purple-300'
       }
+    case 'kiro-best-practices':
+      return { 
+        variant: 'outline',
+        className: 'border-green-200 text-green-700 dark:border-green-800 dark:text-green-300'
+      }
+    case 'product-teams':
+      return { 
+        variant: 'outline',
+        className: 'border-orange-200 text-orange-700 dark:border-orange-800 dark:text-orange-300'
+      }
     default:
       return { variant: 'outline' }
   }

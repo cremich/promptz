@@ -35,6 +35,7 @@ export default function SteeringPage() {
       <PageHeader
         title={<><Emphasis>Steering</Emphasis> for consistent AI behavior</>}
         description="Define coding standards, architectural patterns, and team conventions. Steering documents ensure Kiro follows your rules across every interaction."
+        showLibraryLegend={true}
       />
 
       <section className="container mx-auto max-w-7xl px-6 py-12">
