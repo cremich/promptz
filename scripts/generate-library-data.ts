@@ -36,15 +36,17 @@ async function generateLibraryData() {
     // Ensure data directory exists
     await ensureDataDirectory()
     
-    // Read both libraries
-    const [promptzLibrary, kiroLibrary] = await Promise.allSettled([
+    // Read all three libraries
+    const [promptzLibrary, kiroLibrary, kiroBestPracticesLibrary] = await Promise.allSettled([
       readPromptzLibrary(),
-      readKiroLibrary()
+      readKiroLibrary(),
+      readKiroBestPracticesLibrary()
     ])
     
     // Extract data from successful library reads
     const promptzData = promptzLibrary.status === 'fulfilled' ? promptzLibrary.value : createEmptyLibrary('promptz', '')
     const kiroData = kiroLibrary.status === 'fulfilled' ? kiroLibrary.value : createEmptyLibrary('kiro-powers', '')
+    const kiroBestPracticesData = kiroBestPracticesLibrary.status === 'fulfilled' ? kiroBestPracticesLibrary.value : createEmptyLibrary('kiro-best-practices', '')
     
     // Log any library read failures
     if (promptzLibrary.status === 'rejected') {
@@ -53,14 +55,17 @@ async function generateLibraryData() {
     if (kiroLibrary.status === 'rejected') {
       console.warn('⚠️  Failed to read kiro library:', kiroLibrary.reason)
     }
+    if (kiroBestPracticesLibrary.status === 'rejected') {
+      console.warn('⚠️  Failed to read kiro-best-practices library:', kiroBestPracticesLibrary.reason)
+    }
     
     // Generate JSON files for each content type
     await Promise.all([
       generatePromptsData(promptzData),
       generateAgentsData(promptzData),
       generatePowersData(promptzData, kiroData),
-      generateSteeringData(promptzData, kiroData),
-      generateHooksData(promptzData)
+      generateSteeringData(promptzData, kiroData, kiroBestPracticesData),
+      generateHooksData(promptzData, kiroBestPracticesData)
     ])
     
     console.log('✅ Library data generation completed successfully!')
@@ -161,12 +166,13 @@ async function generatePowersData(promptzLibrary: Library, kiroLibrary: Library)
 /**
  * Generate steering.json
  */
-async function generateSteeringData(promptzLibrary: Library, kiroLibrary: Library) {
+async function generateSteeringData(promptzLibrary: Library, kiroLibrary: Library, kiroBestPracticesLibrary: Library) {
   try {
-    // Combine steering documents from both libraries
+    // Combine steering documents from all three libraries
     const allSteering = [
       ...promptzLibrary.steering,
-      ...kiroLibrary.steering
+      ...kiroLibrary.steering,
+      ...kiroBestPracticesLibrary.steering
     ]
     
     // Sort by creation date (newest first)
@@ -188,9 +194,13 @@ async function generateSteeringData(promptzLibrary: Library, kiroLibrary: Librar
 /**
  * Generate hooks.json
  */
-async function generateHooksData(promptzLibrary: Library) {
+async function generateHooksData(promptzLibrary: Library, kiroBestPracticesLibrary: Library) {
   try {
-    const allHooks = promptzLibrary.hooks
+    // Combine hooks from both libraries that contain them
+    const allHooks = [
+      ...promptzLibrary.hooks,
+      ...kiroBestPracticesLibrary.hooks
+    ]
     
     // Sort by creation date (newest first)
     const sortedHooks = allHooks.sort((a, b) => {
@@ -272,6 +282,37 @@ async function readKiroLibrary(): Promise<Library> {
     powers,
     steering: [],
     hooks: []
+  }
+}
+
+/**
+ * Read and parse the Kiro Best Practices library
+ * Contains hooks and steering documents in .kiro directory structure
+ */
+async function readKiroBestPracticesLibrary(): Promise<Library> {
+  const libraryPath = path.join(LIBRARIES_PATH, 'kiro-best-practices')
+  const libraryName = 'kiro-best-practices'
+  
+  if (!(await directoryExists(libraryPath))) {
+    console.warn('Kiro Best Practices library not found')
+    return createEmptyLibrary(libraryName, libraryPath)
+  }
+  
+  // Kiro Best Practices library contains hooks and steering in .kiro directory
+  const kiroPath = path.join(libraryPath, '.kiro')
+  const [steering, hooks] = await Promise.all([
+    readSteering(libraryName, path.join(kiroPath, 'steering')),
+    readHooks(libraryName, path.join(kiroPath, 'hooks'))
+  ])
+  
+  return {
+    name: libraryName,
+    path: libraryPath,
+    prompts: [],
+    agents: [],
+    powers: [],
+    steering,
+    hooks
   }
 }
 /**

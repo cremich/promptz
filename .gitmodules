@@ -4,3 +4,6 @@
 [submodule "libraries/promptz"]
 	path = libraries/promptz
 	url = https://github.com/cremich/promptz.lib.git
+[submodule "libraries/kiro-best-practices"]
+	path = libraries/kiro-best-practices
+	url = https://github.com/awsdataarchitect/kiro-best-practices.git

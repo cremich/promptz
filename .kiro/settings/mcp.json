@@ -56,7 +56,8 @@
       ],
       "autoApprove": [
         "nextjs_docs",
-        "init"
+        "init",
+        "browser_eval"
       ]
     },
     "shadcn": {
