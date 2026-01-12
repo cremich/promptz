@@ -56,7 +56,6 @@ The platform now supports multiple specialized libraries as git submodules, each
   - **promptz**: Community prompts and general AI development resources
   - **kiro-best-practices**: Best practices and patterns from AWS Hero contributors
   - **product-teams**: Specialized resources for product development workflows
-  - **kiro-for-product**: Product-focused Kiro resources and documentation
 - **Independent versioning** allowing libraries to evolve at their own pace
 - **Content is organized by type** (prompts, steering, agents, hooks, powers) with consistent interfaces
 - **Build-time processing** generates static JSON files for optimal performance and reliability

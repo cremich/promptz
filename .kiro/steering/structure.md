@@ -89,7 +89,6 @@ promptz.dev/
 │   └── utils.ts            # General utility functions
 ├── libraries/              # Git submodules for content libraries
 │   ├── kiro-best-practices/ # Best practices from AWS Hero contributors
-│   ├── kiro-for-product/   # Product-focused Kiro resources (local, not in .gitmodules)
 │   ├── kiro-powers/        # Official Kiro powers library
 │   ├── product-teams/      # AWS Samples for product teams
 │   └── promptz/            # Community prompts and resources
@@ -332,12 +331,6 @@ Individual resources for product development workflows:
 - **Source**: AWS Samples repository
 - **Category**: Individual
 - **Status**: Git submodule
-
-### kiro-for-product/
-Product-focused Kiro resources and documentation:
-- **Focus**: Product-specific Kiro capabilities and workflows
-- **Category**: Official
-- **Status**: Local directory (not in .gitmodules)
 
 ## Configuration Files Location
 

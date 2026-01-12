@@ -135,7 +135,7 @@ function extractDescription(readme: string): string {
  * Determine library category based on owner and name
  */
 function getLibraryCategory(owner: string, name: string): 'official' | 'community' | 'individual' {
-  if (owner.includes('kirodotdev') || name.includes('kiro-powers') || name.includes('kiro-for-product')) {
+  if (owner.includes('kirodotdev') || name.includes('kiro-powers')) {
     return 'official'
   }
   

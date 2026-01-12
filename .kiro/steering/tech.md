@@ -54,7 +54,6 @@
   - **promptz**: Community prompts and general AI development resources  
   - **kiro-best-practices**: Best practices from AWS Hero contributors
   - **product-teams**: Individual resources for product development workflows
-  - **kiro-for-product**: Product-focused Kiro resources and documentation
 - **Build-time Data Generation**: Static JSON files created during build process via `scripts/generate-library-data.ts`
 - **Library Metadata Extraction**: Automatic parsing of .gitmodules, README files, and repository information
 - **Library Categorization**: Automatic categorization (official, community, individual) based on repository ownership
@@ -233,7 +232,6 @@ git submodule update --remote libraries/kiro-powers
 git submodule update --remote libraries/promptz
 git submodule update --remote libraries/kiro-best-practices
 git submodule update --remote libraries/product-teams
-git submodule update --remote libraries/kiro-for-product
 
 # Add new submodule
 git submodule add <repository-url> libraries/<library-name>
@@ -264,7 +262,6 @@ cd libraries/kiro-powers
 cd libraries/promptz
 cd libraries/kiro-best-practices
 cd libraries/product-teams
-cd libraries/kiro-for-product
 
 # Create new content in appropriate library
 mkdir new-content-name
@@ -322,7 +319,6 @@ git commit -m "feat: update <library-name> library"
 - **promptz**: Community prompts library (https://github.com/cremich/promptz.lib.git)
 - **kiro-best-practices**: Best practices from AWS Hero contributors (https://github.com/awsdataarchitect/kiro-best-practices.git)
 - **product-teams**: AWS Samples for product teams (https://github.com/aws-samples/sample-kiro-cli-prompts-for-product-teams.git)
-- **kiro-for-product**: Product-focused Kiro resources (added as latest submodule)
 
 ### Content Types Support
 - **Powers**: POWER.md with MCP configuration and steering files
@@ -332,7 +328,7 @@ git commit -m "feat: update <library-name> library"
 - **Hooks**: .kiro.hook files with trigger configuration from multiple sources
 
 ### Library Categories
-- **Official**: kiro-powers, kiro-for-product (maintained by Kiro team)
+- **Official**: kiro-powers (maintained by Kiro team)
 - **Community**: promptz, kiro-best-practices (community-contributed)
 - **Individual**: product-teams (domain-specific for product development)
 
