@@ -31,7 +31,7 @@ The platform now supports multiple specialized libraries as git submodules, each
 
 - **Multi-library ecosystem** with specialized git submodules for different domains and use cases
 - **Dynamic library browsing** with dedicated library detail pages and comprehensive metadata
-- **Library categorization** (official, community, specialized) with visual indicators and filtering
+- **Library categorization** (official, community, individual) with visual indicators and filtering
 - **Git-based content management** through libraries added as git submodules with independent versioning
 - **Build-time data generation** with pre-compiled JSON files for optimal performance
 - **Rich metadata extraction** from YAML frontmatter, JSON configs, and git history during build

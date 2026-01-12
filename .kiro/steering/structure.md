@@ -134,7 +134,7 @@ promptz.dev/
 - **Git integration**: Author attribution, commit history, and content lifecycle tracking
 - **Error resilience**: Graceful handling of missing files and corrupted data during build
 - **Content validation**: Filtering of incomplete or invalid content during build process
-- **Library categorization**: Automatic categorization (official, community, specialized) based on repository ownership
+- **Library categorization**: Automatic categorization (official, community, individual) based on repository ownership
 
 ### Content Type System
 ```typescript
@@ -325,12 +325,12 @@ Best practices and patterns from AWS Hero contributors:
 - **Status**: Git submodule
 
 ### product-teams/
-Specialized resources for product development workflows:
+Individual resources for product development workflows:
 - **prompts/**: Product-focused AI instructions and templates
 - **agents/**: Product management and development agents
 - **Focus**: Product team workflows and development processes
 - **Source**: AWS Samples repository
-- **Category**: Specialized
+- **Category**: Individual
 - **Status**: Git submodule
 
 ### kiro-for-product/

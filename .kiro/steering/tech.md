@@ -53,11 +53,11 @@
   - **kiro-powers**: Official Kiro powers and tools
   - **promptz**: Community prompts and general AI development resources  
   - **kiro-best-practices**: Best practices from AWS Hero contributors
-  - **product-teams**: Specialized resources for product development workflows
+  - **product-teams**: Individual resources for product development workflows
   - **kiro-for-product**: Product-focused Kiro resources and documentation
 - **Build-time Data Generation**: Static JSON files created during build process via `scripts/generate-library-data.ts`
 - **Library Metadata Extraction**: Automatic parsing of .gitmodules, README files, and repository information
-- **Library Categorization**: Automatic categorization (official, community, specialized) based on repository ownership
+- **Library Categorization**: Automatic categorization (official, community, individual) based on repository ownership
 - **Metadata Processing**: Multi-source extraction from YAML frontmatter, JSON configs, and git history with library attribution
 - **Git Integration**: Repository analysis using simple-git library during build time across multiple libraries
 - **Dynamic Routing**: Next.js App Router with slug-based detail pages for all content types and libraries
@@ -110,7 +110,7 @@
 - **Error Resilience**: Graceful handling of missing files and corrupted data during build
 - **Git Integration**: Author attribution, commit history, and content lifecycle tracking across libraries
 - **Content Validation**: Filtering of incomplete or invalid content during build process
-- **Library Categorization**: Automatic categorization (official, community, specialized) based on repository ownership
+- **Library Categorization**: Automatic categorization (official, community, individual) based on repository ownership
 
 ### Content Processing Flow
 1. **Build Trigger**: `prebuild` script runs before Next.js build
@@ -118,7 +118,7 @@
 3. **Multi-library Scanning**: Scan all library directories for content across different structures
 4. **Parsing**: Extract content from markdown, JSON, and YAML files with library attribution
 5. **Git Analysis**: Retrieve author, dates, and commit information per library
-6. **Library Categorization**: Categorize libraries as official, community, or specialized
+6. **Library Categorization**: Categorize libraries as official, community, or individual
 7. **Validation**: Filter incomplete or invalid content
 8. **JSON Generation**: Create static JSON files in `data/` directory with library metadata
 9. **Runtime Loading**: Services load pre-generated JSON data with library information
@@ -334,7 +334,7 @@ git commit -m "feat: update <library-name> library"
 ### Library Categories
 - **Official**: kiro-powers, kiro-for-product (maintained by Kiro team)
 - **Community**: promptz, kiro-best-practices (community-contributed)
-- **Specialized**: product-teams (domain-specific for product development)
+- **Individual**: product-teams (domain-specific for product development)
 
 ## Deployment Architecture
 
