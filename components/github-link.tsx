@@ -34,11 +34,19 @@ function constructGitHubUrl(content: ContentItem): string {
   // Default to promptz.lib for unknown libraries
   const baseUrl = libraryUrlMap[libraryName] || 'https://github.com/cremich/promptz.lib/blob/main'
 
-  // Extract relative path from the full path
+  // Extract relative path from the full path, excluding the libraries/{libraryName}/ prefix
   const pathParts = content.path.split('/')
+  const librariesIndex = pathParts.findIndex((part) => part === 'libraries')
+  
+  if (librariesIndex !== -1 && librariesIndex + 2 < pathParts.length) {
+    // Skip 'libraries' and the library name to get the actual content path
+    const relativePath = pathParts.slice(librariesIndex + 2).join('/')
+    return `${baseUrl}/${relativePath}`
+  }
+  
+  // Fallback: if path doesn't contain 'libraries', use the original logic
   const libraryIndex = pathParts.findIndex((part) => part === libraryName)
   const relativePath = pathParts.slice(libraryIndex + 1).join('/')
-
   return `${baseUrl}/${relativePath}`
 }
 
