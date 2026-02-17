@@ -122,3 +122,11 @@ export function filenameToSlug(filename: string): string {
     .replace(/-+/g, '-')            // Replace multiple hyphens with single hyphen
     .replace(/^-|-$/g, '')          // Remove leading/trailing hyphens
 }
+
+/**
+ * Strip HTML tags from text to prevent XSS via untrusted submodule content.
+ * Applied to titles, authors, and descriptions during build-time data generation.
+ */
+export function sanitizeText(text: string): string {
+  return text.replace(/<[^>]*>/g, '')
+}

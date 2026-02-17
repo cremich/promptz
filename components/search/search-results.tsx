@@ -44,12 +44,9 @@ export function SearchResults({
               </Badge>
 
               <div className="flex-1 min-w-0">
-                <h3
-                  className="font-medium text-sm truncate mb-1"
-                  dangerouslySetInnerHTML={{
-                    __html: highlightMatches(result.item.title, result.matches)
-                  }}
-                />
+                <h3 className="font-medium text-sm truncate mb-1">
+                  {highlightMatches(result.item.title, result.matches)}
+                </h3>
 
                 <p className="text-xs text-muted-foreground line-clamp-2 mb-2">
                   {result.item.description}

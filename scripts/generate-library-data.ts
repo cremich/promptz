@@ -26,6 +26,7 @@ import {
   getAuthorAndDate
 } from './metadata-extractor'
 import { compareDatesNewestFirst } from '../lib/formatter/date'
+import { PROMPT_CATEGORIES } from './prompt-categories'
 import type { Library, Power, Agent, Prompt, SteeringDocument, Hook } from '../lib/types/content'
 
 const LIBRARIES_PATH = path.join(process.cwd(), 'libraries')
@@ -113,7 +114,10 @@ async function generatePromptsData(promptzLibrary: Library, productTeamsLibrary:
     const allPrompts = [
       ...promptzLibrary.prompts,
       ...productTeamsLibrary.prompts
-    ]
+    ].map(prompt => ({
+      ...prompt,
+      category: prompt.category || PROMPT_CATEGORIES[prompt.id] || undefined
+    }))
     
     // Sort by creation date (newest first)
     const sortedPrompts = allPrompts.sort((a, b) => {

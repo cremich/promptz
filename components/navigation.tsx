@@ -15,6 +15,7 @@ const navLinks = [
   { href: '/powers', label: 'Powers' },
   { href: '/steering', label: 'Steering' },
   { href: '/hooks', label: 'Hooks' },
+  { href: '/workshop', label: 'Workshop' },
 ]
 
 const contributeLink = { href: '/contribute', label: 'Contribute' }

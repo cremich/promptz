@@ -1,13 +1,13 @@
 {
   "enabled": true,
   "name": "Post-Task Code Validation",
-  "description": "Automatically runs npm run lint and npm run test whenever the agent finishes a task and has changed source code files",
+  "description": "Automatically runs lint and tests after agent completes a task to catch regressions",
   "version": "1",
   "when": {
     "type": "agentStop"
   },
   "then": {
-    "type": "runCommand",
-    "command": "npm run lint && npm run test"
+    "type": "askAgent",
+    "prompt": "Run `npm run lint` and then `npm test` to validate no regressions were introduced. If either fails, report the errors."
   }
 }

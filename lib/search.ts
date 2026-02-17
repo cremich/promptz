@@ -1,5 +1,6 @@
 import type { FuseResultMatch } from 'fuse.js'
 import type { SearchIndexItem } from '@/lib/types/content'
+import React from 'react'
 
 /**
  * Error types for search functionality
@@ -14,27 +15,41 @@ export interface SearchError {
 }
 
 /**
- * Highlights matching text within a string based on Fuse.js match indices
- * Returns HTML string with <mark> tags around matched portions
+ * Highlights matching text within a string based on Fuse.js match indices.
+ * Returns an array of React elements with <mark> tags around matched portions.
+ * This avoids dangerouslySetInnerHTML and prevents XSS from untrusted content titles.
  */
-export function highlightMatches(text: string, matches?: readonly FuseResultMatch[]): string {
+export function highlightMatches(text: string, matches?: readonly FuseResultMatch[]): React.ReactNode {
   if (!matches || matches.length === 0) return text
   
   // Find matches for the title field
   const titleMatch = matches.find(match => match.key === 'title')
   if (!titleMatch || !titleMatch.indices) return text
   
-  let highlightedText = text
-  const indices = [...titleMatch.indices].reverse() // Reverse to avoid index shifting
+  // Sort indices by start position ascending, then build segments
+  const indices = [...titleMatch.indices].sort((a, b) => a[0] - b[0])
+  const parts: React.ReactNode[] = []
+  let cursor = 0
   
-  indices.forEach(([start, end]) => {
-    const before = highlightedText.slice(0, start)
-    const match = highlightedText.slice(start, end + 1)
-    const after = highlightedText.slice(end + 1)
-    highlightedText = `${before}<mark class="bg-yellow-200 dark:bg-yellow-800 px-0.5 rounded">${match}</mark>${after}`
+  indices.forEach(([start, end], i) => {
+    if (start > cursor) {
+      parts.push(text.slice(cursor, start))
+    }
+    parts.push(
+      React.createElement(
+        'mark',
+        { key: i, className: 'bg-yellow-200 dark:bg-yellow-800 px-0.5 rounded' },
+        text.slice(start, end + 1)
+      )
+    )
+    cursor = end + 1
   })
   
-  return highlightedText
+  if (cursor < text.length) {
+    parts.push(text.slice(cursor))
+  }
+  
+  return parts
 }
 
 /**

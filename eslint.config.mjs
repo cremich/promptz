@@ -16,7 +16,8 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "app/test-content/**",
-    "coverage"
+    "coverage",
+    "libraries/**"
   ]),
 
   {

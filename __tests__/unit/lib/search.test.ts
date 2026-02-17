@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   highlightMatches,
   validateSearchIndex,
@@ -6,19 +7,41 @@ import {
 } from '@/lib/search'
 import type { FuseResultMatch } from 'fuse.js'
 
+/**
+ * Helper to extract text content and mark elements from highlightMatches result
+ */
+function getPartsFromResult(result: React.ReactNode): { texts: string[]; marks: string[] } {
+  const texts: string[] = []
+  const marks: string[] = []
+  if (typeof result === 'string') {
+    texts.push(result)
+    return { texts, marks }
+  }
+  if (Array.isArray(result)) {
+    for (const part of result) {
+      if (typeof part === 'string') {
+        texts.push(part)
+      } else if (React.isValidElement(part) && part.type === 'mark') {
+        marks.push(String(part.props.children))
+      }
+    }
+  }
+  return { texts, marks }
+}
+
 describe('highlightMatches', () => {
-  it('returns original text when no matches provided', () => {
+  test('returns original text when no matches provided', () => {
     const text = 'Hello World'
     expect(highlightMatches(text)).toBe(text)
     expect(highlightMatches(text, undefined)).toBe(text)
   })
 
-  it('returns original text when matches array is empty', () => {
+  test('returns original text when matches array is empty', () => {
     const text = 'Hello World'
     expect(highlightMatches(text, [])).toBe(text)
   })
 
-  it('returns original text when no title match exists', () => {
+  test('returns original text when no title match exists', () => {
     const text = 'Hello World'
     const matches: FuseResultMatch[] = [
       { key: 'description', value: 'test', indices: [[0, 3]], refIndex: 0 }
@@ -26,7 +49,7 @@ describe('highlightMatches', () => {
     expect(highlightMatches(text, matches)).toBe(text)
   })
 
-  it('returns original text when title match has no indices', () => {
+  test('returns original text when title match has no indices', () => {
     const text = 'Hello World'
     const matches: FuseResultMatch[] = [
       { key: 'title', value: 'Hello World', refIndex: 0 }
@@ -34,42 +57,60 @@ describe('highlightMatches', () => {
     expect(highlightMatches(text, matches)).toBe(text)
   })
 
-  it('highlights single match in text', () => {
+  test('highlights single match as React elements', () => {
     const text = 'Hello World'
     const matches: FuseResultMatch[] = [
       { key: 'title', value: 'Hello World', indices: [[0, 4]], refIndex: 0 }
     ]
     const result = highlightMatches(text, matches)
-    expect(result).toBe('<mark class="bg-yellow-200 dark:bg-yellow-800 px-0.5 rounded">Hello</mark> World')
+    const { texts, marks } = getPartsFromResult(result)
+    expect(marks).toEqual(['Hello'])
+    expect(texts).toEqual([' World'])
   })
 
-  it('highlights multiple matches in text', () => {
+  test('highlights multiple matches as React elements', () => {
     const text = 'Hello World'
     const matches: FuseResultMatch[] = [
       { key: 'title', value: 'Hello World', indices: [[0, 4], [6, 10]], refIndex: 0 }
     ]
     const result = highlightMatches(text, matches)
-    expect(result).toContain('<mark')
-    expect(result).toContain('Hello')
-    expect(result).toContain('World')
+    const { texts, marks } = getPartsFromResult(result)
+    expect(marks).toEqual(['Hello', 'World'])
+    expect(texts).toEqual([' '])
   })
 
-  it('highlights match at end of text', () => {
+  test('highlights match at end of text', () => {
     const text = 'Hello World'
     const matches: FuseResultMatch[] = [
       { key: 'title', value: 'Hello World', indices: [[6, 10]], refIndex: 0 }
     ]
     const result = highlightMatches(text, matches)
-    expect(result).toBe('Hello <mark class="bg-yellow-200 dark:bg-yellow-800 px-0.5 rounded">World</mark>')
+    const { texts, marks } = getPartsFromResult(result)
+    expect(texts).toEqual(['Hello '])
+    expect(marks).toEqual(['World'])
   })
 
-  it('highlights match in middle of text', () => {
+  test('highlights match in middle of text', () => {
     const text = 'Hello Beautiful World'
     const matches: FuseResultMatch[] = [
       { key: 'title', value: 'Hello Beautiful World', indices: [[6, 14]], refIndex: 0 }
     ]
     const result = highlightMatches(text, matches)
-    expect(result).toBe('Hello <mark class="bg-yellow-200 dark:bg-yellow-800 px-0.5 rounded">Beautiful</mark> World')
+    const { texts, marks } = getPartsFromResult(result)
+    expect(texts).toEqual(['Hello ', ' World'])
+    expect(marks).toEqual(['Beautiful'])
+  })
+
+  test('does not render HTML from malicious titles (XSS prevention)', () => {
+    const text = '<img onerror=alert(1)>'
+    const matches: FuseResultMatch[] = [
+      { key: 'title', value: text, indices: [[0, 3]], refIndex: 0 }
+    ]
+    const result = highlightMatches(text, matches)
+    const { texts, marks } = getPartsFromResult(result)
+    // The malicious HTML is treated as plain text, not parsed as HTML
+    expect(marks).toEqual(['<img'])
+    expect(texts).toEqual([' onerror=alert(1)>'])
   })
 })
 

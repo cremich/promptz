@@ -7,7 +7,8 @@ import {
   generatePathId,
   filenameToSlug,
   directoryExists,
-  getFilesWithExtension
+  getFilesWithExtension,
+  sanitizeText
 } from './library-file-parser'
 import { extractGitFileInfo, extractGitDirectoryInfo, formatGitDate, getShortHash } from './git-extractor'
 import type { Power, Agent, Prompt, SteeringDocument, Hook, GitInfo } from '../lib/types/content'
@@ -61,7 +62,7 @@ export async function getAuthorAndDate(
   
   // Final fallback to placeholders if no frontmatter or git data
   return {
-    author: author || PLACEHOLDER_AUTHOR,
+    author: sanitizeText(author || PLACEHOLDER_AUTHOR),
     date: date || PLACEHOLDER_DATE,
     git: gitInfo
   }
@@ -105,8 +106,8 @@ export async function extractPowerMetadata(
     }
     
     // Extract metadata
-    const displayName = typeof data.displayName === 'string' ? data.displayName : generateTitleFromFilename(powerName)
-    const description = typeof data.description === 'string' ? data.description : ''
+    const displayName = sanitizeText(typeof data.displayName === 'string' ? data.displayName : generateTitleFromFilename(powerName))
+    const description = sanitizeText(typeof data.description === 'string' ? data.description : '')
     const keywords = Array.isArray(data.keywords) ? data.keywords.filter(k => typeof k === 'string') : []
     
     return {
@@ -146,8 +147,8 @@ export async function extractAgentMetadata(
     if (!config) return null
     
     const agentName = path.basename(agentFile, '.json')
-    const title = typeof config.name === 'string' ? config.name : generateTitleFromFilename(agentName)
-    const description = typeof config.description === 'string' ? config.description : ''
+    const title = sanitizeText(typeof config.name === 'string' ? config.name : generateTitleFromFilename(agentName))
+    const description = sanitizeText(typeof config.description === 'string' ? config.description : '')
     
     const promptContent = await extractPromptContent(config, agentPath)
     const { author, date, git } = await getAuthorAndDate(config, agentPath)
@@ -272,7 +273,7 @@ export async function extractPromptMetadata(
     // Extract metadata
     const promptName = path.basename(promptFile, '.md')
     const promptSlug = filenameToSlug(promptName)
-    const title = typeof data.title === 'string' ? data.title : generateTitleFromFilename(promptName)
+    const title = sanitizeText(typeof data.title === 'string' ? data.title : generateTitleFromFilename(promptName))
     const category = typeof data.category === 'string' ? data.category : undefined
     
     return {
@@ -320,7 +321,7 @@ export async function extractSteeringMetadata(
     // Extract metadata
     const steeringName = path.basename(steeringFile, '.md')
     const steeringSlug = filenameToSlug(steeringName)
-    const title = typeof data.title === 'string' ? data.title : generateTitleFromFilename(steeringName)
+    const title = sanitizeText(typeof data.title === 'string' ? data.title : generateTitleFromFilename(steeringName))
     const category = typeof data.category === 'string' ? data.category : undefined
     
     return {
@@ -374,8 +375,8 @@ export async function extractHookMetadata(
     // Extract metadata
     const hookName = path.basename(hookFile, '.kiro.hook')
     const hookSlug = filenameToSlug(hookName)
-    const title = typeof hookData.title === 'string' ? hookData.title : generateTitleFromFilename(hookName)
-    const description = typeof hookData.description === 'string' ? hookData.description : ''
+    const title = sanitizeText(typeof hookData.title === 'string' ? hookData.title : generateTitleFromFilename(hookName))
+    const description = sanitizeText(typeof hookData.description === 'string' ? hookData.description : '')
     const trigger = typeof hookData.trigger === 'string' ? hookData.trigger : undefined
     
     return {

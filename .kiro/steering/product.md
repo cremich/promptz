@@ -1,114 +1,31 @@
-# Product Overview
+# Promptz.dev — Product Overview
 
-## Core Purpose
+Promptz.dev is a library and community platform for AI-assisted development resources. It serves developers using Kiro, Kiro CLI, and Amazon Q Developer — enabling discovery, creation, and sharing of AI development resources.
 
-Promptz.dev is a comprehensive library and community platform for AI-assisted development, serving as the central hub for developers using Kiro, Kiro CLI, and Amazon Q Developer. The platform enables creation, discovery, and sharing of AI development resources across the entire software development lifecycle through a multi-library ecosystem.
+## Content Types
 
-## Primary Content Types
-
-- **Prompts**: AI instructions for specific development tasks (code generation, testing, documentation, architecture)
-- **Steering Documents**: Configuration files that ensure AI assistants consistently follow established patterns, libraries, and standards
-- **Custom Agents**: Specialized AI assistants for specific workflows and development processes
-- **Agent Hooks**: Automation tools that execute predefined agent actions when specific IDE events occur
-- **Kiro Powers**: Packaged tools, workflows, and best practices that Kiro can activate on-demand
+- **Prompts**: AI instruction templates for development tasks
+- **Steering Documents**: Configuration files that guide AI assistants to follow established patterns and standards
+- **Custom Agents**: Specialized AI assistants with specific workflows and tool configurations
+- **Agent Hooks**: Automation triggers that execute agent actions on IDE events
+- **Kiro Powers**: Packaged tools, workflows, and best practices activated on-demand in Kiro
 
 ## Multi-Library Ecosystem
 
-The platform now supports multiple specialized libraries as git submodules, each serving different domains and audiences:
+Content is sourced from multiple git submodules in `libraries/`, each independently versioned:
 
-- **Official Libraries**: Core Kiro resources maintained by the Kiro team
-- **Community Libraries**: Community-contributed resources from developers and practitioners
-- **Individual Libraries**: Domain-specific resources for particular use cases (product teams, AWS, etc.)
+| Library | Category | Description |
+|---------|----------|-------------|
+| kiro-powers | Official | Core Kiro powers maintained by the Kiro team |
+| promptz | Community | Community prompts and general AI dev resources |
+| kiro-best-practices | Community | Best practices from AWS Hero contributors |
+| product-teams | Individual | Product development workflow resources |
+| genai-startups | Individual | GenAI startup resources |
 
-## Target Audience
+## Key Architectural Decisions
 
-- Developers using Kiro, Kiro CLI, and Amazon Q Developer for AI-assisted development
-- Development teams establishing coding standards and AI workflows
-- Contributors creating and sharing AI prompts and development patterns
-- Organizations implementing AI-assisted development practices at scale
-
-## Key Features
-
-- **Multi-library ecosystem** with specialized git submodules for different domains and use cases
-- **Dynamic library browsing** with dedicated library detail pages and comprehensive metadata
-- **Library categorization** (official, community, individual) with visual indicators and filtering
-- **Git-based content management** through libraries added as git submodules with independent versioning
-- **Build-time data generation** with pre-compiled JSON files for optimal performance
-- **Rich metadata extraction** from YAML frontmatter, JSON configs, and git history during build
-- **Git integration** providing author attribution, commit history, and content lifecycle tracking
-- **Type-safe content processing** using union types for cross-content operations
-- **Dynamic detail pages** with slug-based routing for all content types and libraries
-- **Global search functionality** with fuzzy matching across all content types using Fuse.js
-- **Efficient content discovery** across multiple libraries with static data serving
-- **Library statistics and analytics** showing content distribution and contributor activity
-- **Community analytics** showing contributor activity, content evolution, and collaboration patterns
-- **Graceful error handling** ensuring platform stability despite missing or corrupted content
-- **Performance optimization** through build-time processing and static data generation
-- **Modern UI/UX** with modular Shadcn UI components, Tailwind CSS, and responsive design
-- **Server-side rendering** with Next.js App Router for optimal performance
-- **Comprehensive testing** with Jest, React Testing Library, and extensive component coverage
-
-## Content Organization Strategy
-
-- **Multi-library architecture** with each library managed as an independent git submodule
-- **Library specialization** with each library focusing on specific domains, audiences, or use cases:
-  - **kiro-powers**: Official Kiro powers and tools
-  - **promptz**: Community prompts and general AI development resources
-  - **kiro-best-practices**: Best practices and patterns from AWS Hero contributors
-  - **product-teams**: Specialized resources for product development workflows
-- **Independent versioning** allowing libraries to evolve at their own pace
-- **Content is organized by type** (prompts, steering, agents, hooks, powers) with consistent interfaces
-- **Build-time processing** generates static JSON files for optimal performance and reliability
-- **Dynamic routing** enables detailed content pages with slug-based URLs for all content types and libraries
-- **Library metadata extraction** from .gitmodules, README files, and repository information
-- **Metadata is intelligently extracted** from multiple sources with fallback strategies:
-  - Primary: YAML frontmatter and JSON configuration files
-  - Secondary: Git history for author attribution and dates
-  - Fallback: Generated metadata with placeholder values
-- **Community contributions are encouraged** through standardized formats and git-based workflows
-- **Content validation and filtering** ensures only complete, valid content is processed during build
-- **Static data serving** provides fast, reliable content delivery with pre-generated analytics
-
-## Platform Architecture
-
-- **Next.js 16 App Router** for modern React architecture with server components
-- **TypeScript-first development** with strict type checking and comprehensive interfaces
-- **Shadcn UI component library** for consistent, accessible user interface
-- **Tailwind CSS** for utility-first styling with dark mode support
-- **React Server Components** for optimal performance and SEO
-- **Suspense boundaries** for progressive loading and better user experience
-- **Git submodule integration** for decentralized content management
-- **Automated testing** with unit, integration, and property-based tests
-
-## User Experience
-
-- **Responsive design** optimized for desktop and mobile devices
-- **Dark mode first** with light mode alternative
-- **Progressive loading** with skeleton states and Suspense boundaries
-- **Dynamic content pages** with slug-based routing for detailed content views
-- **Dynamic library pages** with individual library detail views and content statistics
-- **Library browsing interface** with categorization and comprehensive metadata display
-- **Global search modal** with keyboard shortcuts (⌘K/Ctrl+K) for quick content discovery
-- **Fuzzy search** with match highlighting and relevance scoring across all content types
-- **Modular component system** with reusable content display components
-- **Fast static data serving** with pre-generated JSON files for optimal performance
-- **Rich metadata display** including git history, contributor information, and content analytics
-- **Library statistics** showing content distribution, contributor activity, and repository information
-- **Accessible UI components** with ARIA labels, semantic HTML, and keyboard navigation
-- **Branded visual identity** with gradient text effects and animated pixel particles
-- **Unified navigation** with sticky header and comprehensive footer
-- **Library browsing page** for exploring all content types with filtering by category
-- **Compact card design** for efficient content preview with type-specific gradient backgrounds
-- **Library legend** showing visual indicators for different library categories and sources
-
-## Success Metrics
-
-  - Library diversity and completness
-  - Library browsing and discovery engagement
-  - Community engagement and collaboration levels across multiple libraries
-  - Contributor activity patterns and retention rates
-  - Content evolution and update frequency per library
-  - Cross-library collaboration and content sharing
-- **Technical Performance**
-  - Core Web Vitals scores and user experience metrics
-  - Library metadata extraction and processing performance
+- All content is processed at build time into static JSON files (`data/`) for performance
+- Metadata is extracted from YAML frontmatter, JSON configs, and git history with fallback strategies
+- No backend/database — content lives in git submodules, served as static data
+- Global search uses Fuse.js for client-side fuzzy matching across all content types
+- Dark mode first design with light mode alternative
