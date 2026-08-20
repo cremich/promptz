@@ -203,6 +203,17 @@ describe('Powers Service', () => {
       expect(result?.title).toBe('Kiro Power')
     })
 
+    test('should include inlined steering file contents from static JSON', async () => {
+      const result = await getPowerById('promptz-power')
+
+      expect(result?.steeringFiles).toEqual([
+        {
+          filename: 'guide1.md',
+          content: '# Guide 1\n\nSteering guidance for the Promptz power.',
+        },
+      ])
+    })
+
     test('should return null when power not found', async () => {
       const result = await getPowerById('non-existent-power')
 
