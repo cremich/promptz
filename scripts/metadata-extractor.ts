@@ -10,7 +10,7 @@ import {
   getFilesWithExtension
 } from './library-file-parser'
 import { extractGitFileInfo, extractGitDirectoryInfo, formatGitDate, getShortHash } from './git-extractor'
-import type { Power, Agent, Prompt, SteeringDocument, Hook, GitInfo } from '../lib/types/content'
+import type { Power, PowerSteeringFile, Agent, Prompt, SteeringDocument, Hook, GitInfo } from '../lib/types/content'
 
 const PLACEHOLDER_AUTHOR = 'Unknown Author'
 const PLACEHOLDER_DATE = 'Unknown Date'
@@ -96,12 +96,18 @@ export async function extractPowerMetadata(
     // Read MCP configuration if it exists
     const mcpConfig = await parseJsonConfig(mcpConfigPath)
     
-    // Check for steering files
+    // Inline steering file contents at build time (same pattern as content and mcpConfig)
     const steeringPath = path.join(powerPath, 'steering')
-    const steeringFiles: string[] = []
+    const steeringFiles: PowerSteeringFile[] = []
     if (await directoryExists(steeringPath)) {
       const files = await getFilesWithExtension(steeringPath, '.md')
-      steeringFiles.push(...files)
+      for (const filename of files) {
+        const steeringFilePath = path.join(steeringPath, filename)
+        const steeringContent = await safeFileRead(steeringFilePath)
+        if (steeringContent !== null) {
+          steeringFiles.push({ filename, content: steeringContent })
+        }
+      }
     }
     
     // Extract metadata

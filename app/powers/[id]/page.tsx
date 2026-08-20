@@ -90,46 +90,9 @@ export async function generateMetadata({
   }
 }
 
-async function loadSteeringFileContent(
-  power: Power,
-  filename: string
-): Promise<string> {
-  try {
-    const powerDir = power.path.replace('/POWER.md', '')
-    const steeringFilePath = `${powerDir}/steering/${filename}`
-    const fs = await import('fs')
-    const content = await fs.promises.readFile(steeringFilePath, 'utf-8')
-    return content
-  } catch (error) {
-    console.warn(`Failed to load steering file: ${filename}`, error)
-    return `Failed to load content for ${filename}`
-  }
-}
+function PowerContentTabs({ power }: { power: Power }) {
+  const steeringFiles = power.steeringFiles ?? []
 
-async function loadAllSteeringFiles(
-  power: Power
-): Promise<Array<{ filename: string; content: string }>> {
-  if (!power.steeringFiles || power.steeringFiles.length === 0) {
-    return []
-  }
-
-  const steeringContents = await Promise.all(
-    power.steeringFiles.map(async (filename) => ({
-      filename,
-      content: await loadSteeringFileContent(power, filename),
-    }))
-  )
-
-  return steeringContents
-}
-
-function PowerContentTabs({
-  power,
-  steeringContents,
-}: {
-  power: Power
-  steeringContents: Array<{ filename: string; content: string }>
-}) {
   return (
     <Card className="border-border/40 bg-card/50">
       <CardHeader>
@@ -142,7 +105,7 @@ function PowerContentTabs({
             <TabsTrigger value="configuration" disabled={!power.mcpConfig}>
               MCP Configuration
             </TabsTrigger>
-            <TabsTrigger value="steering" disabled={steeringContents.length === 0}>
+            <TabsTrigger value="steering" disabled={steeringFiles.length === 0}>
               Steering Files
             </TabsTrigger>
           </TabsList>
@@ -180,10 +143,10 @@ function PowerContentTabs({
               <h3 className="text-sm font-medium text-muted-foreground">
                 Steering Files
               </h3>
-              {steeringContents.length > 0 ? (
+              {steeringFiles.length > 0 ? (
                 <Accordion type="single" collapsible className="w-full">
-                  {steeringContents.map((steeringFile, index) => (
-                    <AccordionItem key={index} value={`steering-${index}`}>
+                  {steeringFiles.map((steeringFile, index) => (
+                    <AccordionItem key={steeringFile.filename} value={`steering-${index}`}>
                       <AccordionTrigger className="text-left">
                         {steeringFile.filename}
                       </AccordionTrigger>
@@ -220,8 +183,6 @@ async function PowerDetail({ slug }: { slug: string }) {
     notFound()
   }
 
-  const steeringContents = await loadAllSteeringFiles(power)
-
   return (
     <DetailLayout backHref="/powers" backLabel="Back to Powers">
       {/* Header */}
@@ -234,7 +195,7 @@ async function PowerDetail({ slug }: { slug: string }) {
       <ContributorInfo content={power} />
 
       {/* Power Content Tabs */}
-      <PowerContentTabs power={power} steeringContents={steeringContents} />
+      <PowerContentTabs power={power} />
     </DetailLayout>
   )
 }

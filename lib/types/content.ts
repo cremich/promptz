@@ -57,6 +57,11 @@ export interface AgentConfig {
   [key: string]: unknown
 }
 
+export interface PowerSteeringFile {
+  filename: string
+  content: string
+}
+
 export interface Power extends BaseContent {
   type: 'power'
   displayName: string
@@ -64,7 +69,7 @@ export interface Power extends BaseContent {
   keywords: string[]
   content: string
   mcpConfig?: Record<string, unknown>
-  steeringFiles?: string[]
+  steeringFiles?: PowerSteeringFile[]
 }
 
 export interface SteeringDocument extends BaseContent {

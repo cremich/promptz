@@ -17,7 +17,12 @@
         }
       }
     },
-    "steeringFiles": ["guide1.md"],
+    "steeringFiles": [
+      {
+        "filename": "guide1.md",
+        "content": "# Guide 1\n\nSteering guidance for the Promptz power."
+      }
+    ],
     "git": {
       "author": "Git Author 1",
       "authorEmail": "git1@example.com",
@@ -45,7 +50,12 @@
         }
       }
     },
-    "steeringFiles": ["guide2.md"],
+    "steeringFiles": [
+      {
+        "filename": "guide2.md",
+        "content": "# Guide 2\n\nSteering guidance for the Kiro power."
+      }
+    ],
     "git": {
       "author": "Git Author 2",
       "authorEmail": "git2@example.com",
